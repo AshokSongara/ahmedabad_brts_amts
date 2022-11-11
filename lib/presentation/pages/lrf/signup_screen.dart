@@ -190,6 +190,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         SizedBox(
                           width: Dimensions.dp15,
                         ),
+
                         genderVal == 1
                             ? SvgPicture.asset(ImageConstant.iUnSelectedMan)
                             : SvgPicture.asset(
