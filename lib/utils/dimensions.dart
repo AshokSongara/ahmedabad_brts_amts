@@ -18,6 +18,7 @@ class Dimensions {
   static const double dp8 = 8.0;
   static const double dp10 = 10.0;
   static const double dp15 = 15.0;
+  static const double dp18 = 18.0;
   static const double dp134 = 134.0;
   static const double dp140 = 140.0;
   static const double dp5 = 5.0;

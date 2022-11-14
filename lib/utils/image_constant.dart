@@ -10,11 +10,17 @@ class ImageConstant {
   static const String iSelectedWoman = 'assets/images/ic_selected_woman.svg';
   static const String iUnSelectedMan = 'assets/images/ic_unselected_man.svg';
   static const String iUnSelectedWoman = 'assets/images/ic_unselected_woman.svg';
-
   static const String iHome = 'assets/images/ic_home.png';
   static const String iBooking = 'assets/images/ic_booking.png';
   static const String iNotification = 'assets/images/ic_notification.png';
   static const String iProfile = 'assets/images/ic_user_png.png';
   static const String iMenu = 'assets/images/ic_menu.svg';
+  static const String iThreeDots = 'assets/images/ic_three_dots.svg';
+  static const String iWhiteRightArrow = 'assets/images/ic_right_arrow_white.svg';
+  static const String iJanmarg = 'assets/images/ic_janmarg.png';
+  static const String iRedBus = 'assets/images/ic_red_bus.svg';
+  static const String iRightGrayArrow = 'assets/images/ic_right_gray_arrow.svg';
+  static const String iRoute = 'assets/images/ic_route.svg';
+  static const String iInfo = 'assets/images/ic_info.svg';
 
 }

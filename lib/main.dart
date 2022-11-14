@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'core/theme/dark_theme_data.dart';
 import 'helper/route_helper.dart';
 import 'injection_container.dart' as di;
+import 'presentation/pages/dashboard/search_result_screen.dart';
 import 'utils/app_colors.dart';
 
 void main() async {
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
       theme: darkThemeData,
       themeMode: ThemeMode.dark,
       darkTheme: darkThemeData,
-      home: SplashScreen(),
+      home: SearchResultScreen(),
       initialRoute: RouteHelper.getInitialRoute(),
       getPages: RouteHelper.routes,
     );
