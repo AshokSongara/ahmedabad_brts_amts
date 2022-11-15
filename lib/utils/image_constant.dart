@@ -20,8 +20,17 @@ class ImageConstant {
   static const String iRightGrayArrow = 'assets/images/ic_right_gray_arrow.svg';
   static const String iRoute = 'assets/images/ic_route.svg';
   static const String iInfo = 'assets/images/ic_info.svg';
+  static const String iFromBus = 'assets/images/ic_from_bus.svg';
+  static const String iToBus = 'assets/images/ic_to_bus.svg';
+  static const String iArrowDownUp = 'assets/images/ic_arrow_down_up.svg';
+  static const String iCalendar = 'assets/images/ic_calendar.svg';
+  static const String iTime = 'assets/images/ic_time.svg';
   static const String iRedTime = 'assets/images/ic_red_time.svg';
   static const String iTicket = 'assets/images/ic_ticket.svg';
   static const String iLocationSolid = 'assets/images/ic_location.svg';
+  static const String iMobileRed = 'assets/images/ic_mobile_red.svg';
+  static const String iRate = 'assets/images/ic_rate.svg';
+  static const String iMap = 'assets/images/ic_map.svg';
+  static const String iChat = 'assets/images/ic_chat.svg';
 
 }
