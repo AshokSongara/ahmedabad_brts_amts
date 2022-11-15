@@ -141,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                   borderRadius:
-                      BorderRadius.all(Radius.circular(Dimensions.dp16))),
+                      BorderRadius.all(Radius.circular(Dimensions.dp16),),),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: Dimensions.dp35, vertical: Dimensions.dp19),

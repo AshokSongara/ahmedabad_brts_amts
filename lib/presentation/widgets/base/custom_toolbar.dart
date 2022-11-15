@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CustomToolbar extends StatelessWidget {
-  CustomToolbar({Key? key, required this.title}) : super(key: key);
+  CustomToolbar({Key? key, required this.title,this.showOption=true}) : super(key: key);
   final String title;
+  final bool showOption;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,7 @@ class CustomToolbar extends StatelessWidget {
               ),
             ),
           ),
+          if(showOption)
           SvgPicture.asset(ImageConstant.iThreeDots),
         ],
       ),
