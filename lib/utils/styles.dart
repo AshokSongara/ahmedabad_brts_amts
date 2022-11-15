@@ -25,6 +25,12 @@ const satoshiRegularSmall = TextStyle(
     fontSize: 16,
     color: Colors.white);
 
+const satoshiRegularSmallDark = TextStyle(
+    fontFamily: 'Satoshi',
+    fontWeight: FontWeight.w700,
+    fontSize: 16,
+    color: AppColors.darkGray);
+
 final poppinsMedium = TextStyle(
     fontFamily: 'Poppins',
     fontWeight: FontWeight.w500,

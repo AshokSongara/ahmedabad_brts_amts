@@ -1,3 +1,4 @@
+import '../presentation/widgets/base/order_tracker.dart';
 
 class AppConstant {
 
@@ -15,5 +16,23 @@ class AppConstant {
   static String checkAppVersionInterface = "Check_App_Version";
   static String resendOtpInterface = "ReSendOTPCustomer";
   static String updateFirebaseInterface = "UpdateCustomer_Firebaseid";
+
+
+  static List<TextDto> orderList = [
+    TextDto("Your order has been placed", "+ 11 Stops"),
+  ];
+
+  static List<TextDto> shippedList = [
+    TextDto("Your order has been shipped", "+ 11 Stops"),
+    TextDto("Your item has been received in the nearest hub to you.", null),
+  ];
+
+  static List<TextDto> outOfDeliveryList = [
+    TextDto("Your order is out for delivery", "+ 11 Stops"),
+  ];
+
+  static List<TextDto> deliveredList = [
+    TextDto("Your order has been delivered", "+ 11 Stops"),
+  ];
 
 }

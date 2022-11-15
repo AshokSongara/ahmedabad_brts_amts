@@ -1,5 +1,7 @@
+import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/route_title_widget.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/search_result_item.dart';
+import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
@@ -17,30 +19,11 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.appBackground,
       body: Column(children: [
         SizedBox(height: 25),
-        Container(
-          margin:
-              EdgeInsets.only(left: Dimensions.dp15, right: Dimensions.dp20),
-          padding:
-              EdgeInsets.only(top: Dimensions.dp10, bottom: Dimensions.dp10),
-          child: Row(
-            children: [
-              SvgPicture.asset(ImageConstant.iLeftArrow),
-              Expanded(
-                child: Center(
-                  child: Text(
-                    "Search Result",
-                    style: screenTitle,
-                  ),
-                ),
-              ),
-              SvgPicture.asset(ImageConstant.iThreeDots),
-            ],
-          ),
-        ),
-        RouteTitleWidget(),
+        CustomToolbar(title: "Search Result"),
+        RouteTitleWidget(mainAxisAlignment: MainAxisAlignment.center),
         Expanded(
           child: ListView.builder(
               padding: EdgeInsets.only(top: 10),

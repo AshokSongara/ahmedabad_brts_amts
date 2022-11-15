@@ -22,5 +22,8 @@ class ImageConstant {
   static const String iRightGrayArrow = 'assets/images/ic_right_gray_arrow.svg';
   static const String iRoute = 'assets/images/ic_route.svg';
   static const String iInfo = 'assets/images/ic_info.svg';
+  static const String iRedTime = 'assets/images/ic_red_time.svg';
+  static const String iTicket = 'assets/images/ic_ticket.svg';
+  static const String iLocationSolid = 'assets/images/ic_location.svg';
 
 }

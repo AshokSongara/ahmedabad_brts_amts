@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class RouteTitleWidget extends StatelessWidget {
-  const RouteTitleWidget({Key? key}) : super(key: key);
+  RouteTitleWidget({Key? key, required this.mainAxisAlignment})
+      : super(key: key);
+
+  final MainAxisAlignment mainAxisAlignment;
 
   @override
   Widget build(BuildContext context) {
@@ -15,14 +18,14 @@ class RouteTitleWidget extends StatelessWidget {
       padding: EdgeInsets.all(Dimensions.dp15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: mainAxisAlignment,
         children: [
           Text(
             "Adalaj Gam",
             style: satoshiRegularSmall,
           ),
           Padding(
-            padding: const EdgeInsets.only(left: 8.0,right: 8.0),
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
             child: SvgPicture.asset(ImageConstant.iWhiteRightArrow),
           ),
           Text(
