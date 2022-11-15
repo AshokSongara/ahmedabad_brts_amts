@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_text_field.dart';
@@ -26,8 +28,13 @@ class _SignupScreenState extends State<SignupScreen> {
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
   final FocusNode _confirmPasswordFocus = FocusNode();
-  int genderVal = 0;
+  StreamController<int>? genderValue = StreamController();
 
+  @override
+  void initState() {
+    super.initState();
+    genderValue?.add(0);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -171,32 +178,48 @@ class _SignupScreenState extends State<SignupScreen> {
                     SizedBox(
                       height: Dimensions.dp20,
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          "Gender",
-                          style: satoshiRegular.copyWith(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.darkGray),
-                        ),
-                        SizedBox(
-                          width: Dimensions.dp15,
-                        ),
-                        genderVal == 0
-                            ? SvgPicture.asset(ImageConstant.iSelectedMan)
-                            : SvgPicture.asset(
-                                ImageConstant.iSelectedWoman),
-                        SizedBox(
-                          width: Dimensions.dp15,
-                        ),
-
-                        genderVal == 1
-                            ? SvgPicture.asset(ImageConstant.iUnSelectedMan)
-                            : SvgPicture.asset(
-                                ImageConstant.iUnSelectedWoman),
-                      ],
-                    ),
+                    StreamBuilder<int>(
+                        stream: genderValue?.stream,
+                        builder: (context, snapshot) {
+                          return Row(
+                            children: [
+                              Text(
+                                "Gender",
+                                style: satoshiRegular.copyWith(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.darkGray),
+                              ),
+                              SizedBox(
+                                width: Dimensions.dp15,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  genderValue?.add(0);
+                                },
+                                child: SvgPicture.asset(
+                                  ImageConstant.iSelectedMan,
+                                  color: snapshot.data == 0
+                                      ? AppColors.primaryColor
+                                      : AppColors.lightGray,
+                                ),
+                              ),
+                              SizedBox(
+                                width: Dimensions.dp15,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  genderValue?.add(1);
+                                },
+                                child: SvgPicture.asset(
+                                    ImageConstant.iSelectedWoman,
+                                    color: snapshot.data == 1
+                                        ? AppColors.primaryColor
+                                        : AppColors.lightGray),
+                              ),
+                            ],
+                          );
+                        }),
                     SizedBox(
                       height: Dimensions.dp100,
                     ),
@@ -227,5 +250,11 @@ class _SignupScreenState extends State<SignupScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    genderValue?.close();
   }
 }
