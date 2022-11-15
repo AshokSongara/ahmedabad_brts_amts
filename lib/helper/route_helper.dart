@@ -1,8 +1,10 @@
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/dashboard_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/route_details_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/enter_code_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/login_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/mobile_number_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/signup_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/passenger_details/passenger_details.dart';
 import 'package:get/get.dart';
 import '../presentation/pages/dashboard/search_result_screen.dart';
 import '../presentation/pages/lrf/splash_screen.dart';
@@ -16,6 +18,8 @@ class RouteHelper {
   static const String enterCode = '/enterCode';
   static const String dashboard = '/dashboard';
   static const String searchResult = '/searchResult';
+  static const String routeDetails = '/routeDetails';
+  static const String passengerDetails = '/passengerDetails';
 
   static String getInitialRoute() => '$initial';
 
@@ -33,6 +37,10 @@ class RouteHelper {
 
   static String getSearchResultRoute() => '$searchResult';
 
+  static String getRouteDetailsRoute() => '$routeDetails';
+
+  static String getPassengerDetailsRoute() => '$passengerDetails';
+
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => SplashScreen()),
     GetPage(name: splash, page: () => SplashScreen()),
@@ -42,5 +50,7 @@ class RouteHelper {
     GetPage(name: enterCode, page: () => EnterCodeScreen()),
     GetPage(name: dashboard, page: () => DashboardScreen(pageIndex: 0,)),
     GetPage(name: searchResult, page: () => SearchResultScreen()),
+    GetPage(name: routeDetails, page: () => RouteDetailScreen()),
+    GetPage(name: passengerDetails, page: () => PassengerDetails()),
   ];
 }

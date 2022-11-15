@@ -15,6 +15,7 @@ class Dimensions {
   static const double dp35 = 35.0;
   static const double dp40 = 40.0;
   static const double dp50 = 50.0;
+  static const double dp55 = 55.0;
   static const double dp56 = 56.0;
   static const double dp8 = 8.0;
   static const double dp10 = 10.0;

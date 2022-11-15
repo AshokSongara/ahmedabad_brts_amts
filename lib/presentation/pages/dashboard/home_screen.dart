@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: Dimensions.dp40,
+              height: Dimensions.dp10,
             ),
             Row(
               children: [
@@ -144,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       BorderRadius.all(Radius.circular(Dimensions.dp16),),),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
-                    horizontal: Dimensions.dp35, vertical: Dimensions.dp19),
+                    horizontal: Dimensions.dp10, vertical: Dimensions.dp19),
                 child: Column(
                   children: [
                     SizedBox(
@@ -194,7 +194,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: 21),
+                      padding: EdgeInsets.only(top: Dimensions.dp20),
                       child: Row(
                         children: [
                           Expanded(
@@ -212,8 +212,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     color: Colors.transparent,
                                     elevation: 0,
-                                    child: Container(
-                                      height: Dimensions.dp70,
+                                    child: SizedBox(
+                                      height: Dimensions.dp55,
                                       child: Padding(
                                         padding: const EdgeInsets.only(
                                             left: Dimensions.dp18,
@@ -284,8 +284,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   color: Colors.transparent,
                                   elevation: 0,
-                                  child: Container(
-                                    height: Dimensions.dp70,
+                                  child: SizedBox(
+                                    height: Dimensions.dp55,
                                     child: Padding(
                                       padding: const EdgeInsets.only(
                                           left: Dimensions.dp18,
@@ -347,11 +347,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     Container(
                       margin:
-                          const EdgeInsets.only(left: Dimensions.dp19, right: Dimensions.dp19, top: Dimensions.dp25),
+                          const EdgeInsets.only(left: Dimensions.dp10, right: Dimensions.dp10, top: Dimensions.dp15),
                       child: CustomButton(
                         text: "Show Route & Fare",
                         width: MediaQuery.of(context).size.width,
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.toNamed(RouteHelper.getSearchResultRoute());
+                        },
                         style: satoshiRegular.copyWith(
                             fontSize: Dimensions.dp20,
                             fontWeight: FontWeight.w700,
@@ -364,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             SizedBox(
-              height: Dimensions.dp20,
+              height: Dimensions.dp18,
             ),
             Container(
               margin: const EdgeInsets.only(
@@ -391,15 +393,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   borderRadius:
                       BorderRadius.all(Radius.circular(Dimensions.dp16))),
               child: Container(
-                height: 212,
+                height: 200,
                 width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.all(Dimensions.dp22),
+                padding: EdgeInsets.all(Dimensions.dp20),
                 child: GridView.builder(
+                  physics: new NeverScrollableScrollPhysics(),
                   itemCount: quickLinkList.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
-                      crossAxisSpacing: Dimensions.dp4,
-                      mainAxisSpacing: Dimensions.dp18),
+                      crossAxisSpacing: Dimensions.dp10,
+                    mainAxisSpacing: 10
+                      ),
                   itemBuilder: (BuildContext context, int index) {
                     return getGridItemWidget(quickLinkList[index]);
                   },
@@ -411,29 +415,25 @@ class _HomeScreenState extends State<HomeScreen> {
         ));
   }
   Widget getGridItemWidget(QuickLinkInternalModel model){
-    return  SizedBox(
-      height: Dimensions.dp150,
-      width: Dimensions.dp150,
-      child: Column(
-        children: [
-          SvgPicture.asset(
-            model.imagePath,
-            height: Dimensions.dp37,
-            width: Dimensions.dp37,
-          ),
-          SizedBox(
-            height: Dimensions.dp5,
-          ),
-          Text(
-            model.title,
-            textAlign: TextAlign.center,
-            style: satoshiRegular.copyWith(
-                fontSize: Dimensions.dp14,
-                fontWeight: FontWeight.w500,
-                color: AppColors.darkGray),
-          )
-        ],
-      ),
+    return Column(
+      children: [
+        SvgPicture.asset(
+          model.imagePath,
+          height: Dimensions.dp35,
+          width: Dimensions.dp35,
+        ),
+        SizedBox(
+          height: Dimensions.dp4,
+        ),
+        Text(
+          model.title,
+          textAlign: TextAlign.center,
+          style: satoshiRegular.copyWith(
+              fontSize: Dimensions.dp14,
+              fontWeight: FontWeight.w500,
+              color: AppColors.darkGray),
+        )
+      ],
     );
   }
 }

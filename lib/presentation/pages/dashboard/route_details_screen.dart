@@ -1,3 +1,4 @@
+import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/route_title_widget.dart';
@@ -7,6 +8,7 @@ import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import '../../widgets/base/order_tracker.dart';
 
 class RouteDetailScreen extends StatefulWidget {
@@ -162,7 +164,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                       text: "Book Tickets",
                       width: MediaQuery.of(context).size.width / 2,
                       onPressed: () {
-                        //Get.toNamed(RouteHelper.getSignUpRoute());
+                        Get.toNamed(RouteHelper.getPassengerDetailsRoute());
                       },
                       color: AppColors.primaryColor,
                       style: poppinsMedium.copyWith(

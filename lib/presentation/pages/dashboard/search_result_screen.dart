@@ -1,3 +1,4 @@
+import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/route_title_widget.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/search_result_item.dart';
@@ -7,6 +8,7 @@ import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class SearchResultScreen extends StatefulWidget {
   const SearchResultScreen({Key? key}) : super(key: key);
@@ -29,7 +31,9 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
               padding: EdgeInsets.only(top: 10),
               itemCount: 3,
               itemBuilder: (BuildContext context, int index) {
-                return SearchResultItem();
+                return GestureDetector(onTap: (){
+                  Get.toNamed(RouteHelper.getRouteDetailsRoute());
+                }, child: SearchResultItem());
               }),
         ),
       ]),
