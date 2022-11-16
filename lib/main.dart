@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'core/theme/dark_theme_data.dart';
 import 'helper/route_helper.dart';
 import 'injection_container.dart' as di;
+import 'presentation/pages/card_details/card_detail_screen.dart';
 import 'presentation/pages/dashboard/search_result_screen.dart';
 import 'utils/app_colors.dart';
 
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
       theme: darkThemeData,
       themeMode: ThemeMode.dark,
       darkTheme: darkThemeData,
-      home: NearByScreen(),
+      home: CardDetailsScreen(),
       initialRoute: RouteHelper.getInitialRoute(),
       getPages: RouteHelper.routes,
     );
