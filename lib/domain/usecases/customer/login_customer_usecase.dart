@@ -11,7 +11,7 @@ class LoginCustomerUseCase implements UseCase<LoginResponse, Params> {
 
   @override
   Future<LoginResponse> call(Params params) {
-    return customerRepository.loginUser(params.data);
+    return customerRepository.registerUser(params.data);
   }
 }
 

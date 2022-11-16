@@ -23,42 +23,11 @@ class ApiClient extends GetxService {
     // );
   }
 
-  // void updateHeader(String token, List<int> zoneIDs, String languageCode, int moduleID) {
-  //   Map<String, String> _header = {
-  //     'Content-Type': 'application/json; charset=UTF-8',
-  //     AppConstants.ZONE_ID: zoneIDs != null ? jsonEncode(zoneIDs) : null,
-  //     AppConstants.LOCALIZATION_KEY: languageCode ?? AppConstants.languages[0].languageCode,
-  //     'Authorization': 'Bearer $token'
-  //   };
-  //   if(moduleID != null) {
-  //     _header.addAll({AppConstants.MODULE_ID: moduleID.toString()});
-  //   }
-  //   _mainHeaders = _header;
-  // }
-
-  // Future<Response> getData(String uri,
-  //     {Map<String, dynamic> query, Map<String, String> headers}) async {
-  //   try {
-  //     if (Foundation.kDebugMode) {
-  //       print('====> API Call: $uri\nHeader: $_mainHeaders');
-  //       print('====> Ashok API Call: $uri\nHeader: $uri');
-  //     }
-  //     Http.Response _response = await Http.get(
-  //       Uri.parse(appBaseUrl + uri),
-  //       headers: headers ?? _mainHeaders,
-  //     ).timeout(Duration(seconds: timeoutInSeconds));
-  //     return handleResponse(_response, uri);
-  //   } catch (e) {
-  //     print('------------${e.toString()}');
-  //     return Response(statusCode: 1, statusText: noInternetMessage);
-  //   }
-  // }
-
   Future<Response> postData(String endPoint, Map<String,String> body) async {
     try {
       Http.Response response = await Http.post (
         Uri.parse(appBaseUrl! + endPoint),
-        body: body,
+        body: jsonEncode(body),
       ).timeout(Duration(seconds: timeoutInSeconds));
       print("postData: response   $response");
       return handleResponse(response, endPoint);

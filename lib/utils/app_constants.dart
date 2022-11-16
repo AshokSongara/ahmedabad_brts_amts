@@ -2,16 +2,31 @@ import '../presentation/widgets/base/order_tracker.dart';
 
 class AppConstant {
 
-  static String tarakKey = "fgnmnbvcfghjuy2345678ikjhgfd";
-  static String apiUrl = "http://api.sowindia.in/api/";
+  static String apiUrl = "http://103.69.196.78:8082/";
   static String mapKey = "AIzaSyB-f76UEQUmRrsajG14qz2cobJCiVLTz3A";
 
   static String loginWithEmail = "Login with Email";
   static String loginWithMobile = "Login with Mobile Number";
   static String loginWithGuest = "Login as Guest";
-
+  // 1) http://localhost:5000/User/otp/generate
+  // 2) http://localhost:5000/User/sign-in/otp
+  // 3) http://localhost:5000/User/{userId}/activate/{activate}
+  // 4) http://localhost:5000/User
+  // 5) http://localhost:5000/User/{userId}
+  // 6) http://localhost:5000/User/{userId}
+  // 7) http://localhost:5000/User/{userId}
+  // 8) http://localhost:5000/User/{userId}/confirm-email
+  // 9) http://localhost:5000/User/forgot-password
+  // 10) http://localhost:5000/User/reset-password
+  // 11) http://localhost:5000/User/search
+  // 12) http://localhost:5000/User/sign-in
+  // 13) http://localhost:5000/User/sign-out
+  // 14) http://localhost:5000/User/{userId}/unlock
+  // 15) http://localhost:5000/User/refresh-token
   //Login Register End Points
-  static String registerInterface = "RegistrationCustomer";
+
+  //APIs End Points
+  static String registerInterface = "User";
   static String loginInterface = "LoginWithOTPCustomer";
   static String checkAppVersionInterface = "Check_App_Version";
   static String resendOtpInterface = "ReSendOTPCustomer";
