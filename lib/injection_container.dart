@@ -21,10 +21,6 @@ Future<void> init() async {
     () => SignupBloc(signupUserUseCase: injector()),
   );
 
-  injector.registerFactory<SignupBloc>(
-    () => SignupBloc(signupUserUseCase: injector()),
-  );
-
   injector.registerLazySingleton(() => SignupUserUseCase(injector()));
 
   injector.registerLazySingleton<UserRepository>(
