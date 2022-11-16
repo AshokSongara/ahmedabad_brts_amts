@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
+import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_text_field.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/password_text_field.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
+import 'package:ahmedabad_brts_amts/utils/app_util.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
@@ -35,6 +37,7 @@ class _SignupScreenState extends State<SignupScreen> {
     super.initState();
     genderValue?.add(0);
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -238,7 +241,25 @@ class _SignupScreenState extends State<SignupScreen> {
                   text: "Sign Up",
                   width: MediaQuery.of(context).size.width,
                   onPressed: () {
-                    Get.toNamed(RouteHelper.getMobileNumberRoute());
+                    // Get.toNamed(RouteHelper.getMobileNumberRoute());
+                    if (_nameController.text.toString().isEmpty) {
+                      showCustomSnackBar("Please Enter Name", context);
+                    } else if (_emailController.text.toString().isEmpty) {
+                      showCustomSnackBar("Please Enter EmailID", context);
+                    } else if (!_emailController.text.isValidEmail()) {
+                      showCustomSnackBar("Please Enter Valid EmailID", context);
+                    } else if (_passwordController.text.toString().isEmpty) {
+                      showCustomSnackBar("Please Enter Password", context);
+                    } else if (_confirmPasswordController.text
+                        .toString()
+                        .isEmpty) {
+                      showCustomSnackBar(
+                          "Please Enter Confirm Password", context);
+                    } else if (_passwordController.text.toString() !=
+                        _confirmPasswordController.text.toString()) {
+                      showCustomSnackBar(
+                          "Password and Confirm Password Not Matched", context);
+                    }
                   },
                   style:
                       poppinsMedium.copyWith(color: Colors.white, fontSize: 15),

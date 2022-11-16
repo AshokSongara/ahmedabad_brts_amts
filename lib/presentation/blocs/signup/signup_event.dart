@@ -1,16 +1,16 @@
 import 'package:equatable/equatable.dart';
 
-abstract class LoginEvent extends Equatable {
-  const LoginEvent();
+abstract class SignupEvent extends Equatable {
+  const SignupEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class LoginUserEvent extends LoginEvent {
+class SignupUserEvent extends SignupEvent {
   final Map<String,String> data;
 
-  LoginUserEvent({required this.data});
+  SignupUserEvent({required this.data});
 
   @override
   List<Object> get props => [data];

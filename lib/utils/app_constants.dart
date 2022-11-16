@@ -27,7 +27,7 @@ class AppConstant {
 
   //APIs End Points
   static String registerInterface = "User";
-  static String loginInterface = "LoginWithOTPCustomer";
+  static String loginInterface = "User/sign-in";
   static String checkAppVersionInterface = "Check_App_Version";
   static String resendOtpInterface = "ReSendOTPCustomer";
   static String updateFirebaseInterface = "UpdateCustomer_Firebaseid";

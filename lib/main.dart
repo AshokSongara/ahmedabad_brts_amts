@@ -1,5 +1,6 @@
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/dashboard_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/route_details_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/lrf/signup_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/splash_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/nearby/nearby_sreen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/passenger_details/passenger_details.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
       theme: darkThemeData,
       themeMode: ThemeMode.dark,
       darkTheme: darkThemeData,
-      home: CardDetailsScreen(),
+      home: SignupScreen(),
       initialRoute: RouteHelper.getInitialRoute(),
       getPages: RouteHelper.routes,
     );
