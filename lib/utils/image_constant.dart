@@ -33,5 +33,6 @@ class ImageConstant {
   static const String iMap = 'assets/images/ic_map.svg';
   static const String iChat = 'assets/images/ic_chat.svg';
   static const String iArrowRight = 'assets/images/ic_arrow_right.svg';
+  static const String iSearch = 'assets/images/ic_search.svg';
 
 }
