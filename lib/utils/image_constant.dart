@@ -37,5 +37,10 @@ class ImageConstant {
   static const String iSearch = 'assets/images/ic_search.svg';
   static const String iCurrentLocation = 'assets/images/ic_current_location.svg';
   static const String iClock = 'assets/images/ic_clock.svg';
+  static const String iMostSatisfied = 'assets/images/ic_most_satisfied.svg';
+  static const String iSatisfied = 'assets/images/ic_satisfied.svg';
+  static const String iNeutral = 'assets/images/ic_neutral.svg';
+  static const String iDissatisfied = 'assets/images/ic_dissatisfied.svg';
+  static const String iVeryDissatisfied = 'assets/images/ic_very_dissatisfied.svg';
 
 }

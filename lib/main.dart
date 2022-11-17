@@ -13,6 +13,7 @@ import 'helper/route_helper.dart';
 import 'injection_container.dart' as di;
 import 'presentation/pages/card_details/card_detail_screen.dart';
 import 'presentation/pages/dashboard/search_result_screen.dart';
+import 'presentation/pages/feedback/feedback_screen.dart';
 import 'presentation/pages/my_routes/my_routes_screen.dart';
 import 'utils/app_colors.dart';
 
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
       theme: darkThemeData,
       themeMode: ThemeMode.dark,
       darkTheme: darkThemeData,
-      home: MyRoutesScreen(),
+      home: FeedBackScreen(),
       initialRoute: RouteHelper.getInitialRoute(),
       getPages: RouteHelper.routes,
     );
