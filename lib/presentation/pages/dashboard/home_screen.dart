@@ -1,4 +1,3 @@
-import 'package:ahmedabad_brts_amts/data/models/quick_link_internal_model.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/source_destination_widget.dart';
@@ -9,6 +8,8 @@ import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
+import '../../../data/responseModels/quick_link_internal_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

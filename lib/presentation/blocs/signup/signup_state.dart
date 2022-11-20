@@ -1,4 +1,4 @@
-import 'package:ahmedabad_brts_amts/data/models/login_response.dart';
+import 'package:ahmedabad_brts_amts/data/responseModels/signup_response.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class SignupState extends Equatable {
@@ -13,9 +13,9 @@ class SignupInitialState extends SignupState {}
 class SignupLoadingState extends SignupState {}
 
 class SignupSuccessState extends SignupState {
-  final LoginResponse loginResponse;
+  final SignUpResponse signUpResponse;
 
-  SignupSuccessState({required this.loginResponse});
+  SignupSuccessState({required this.signUpResponse});
 
   @override
   List<Object> get props => [];

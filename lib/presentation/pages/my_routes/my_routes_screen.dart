@@ -1,4 +1,3 @@
-import 'package:ahmedabad_brts_amts/data/models/my_routes_internal_model.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
@@ -6,6 +5,8 @@ import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../data/responseModels/my_routes_internal_model.dart';
 
 class MyRoutesScreen extends StatefulWidget {
   const MyRoutesScreen({Key? key}) : super(key: key);

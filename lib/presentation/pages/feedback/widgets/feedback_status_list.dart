@@ -1,9 +1,10 @@
-import 'package:ahmedabad_brts_amts/data/models/feedback_status_list_item.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../../data/responseModels/feedback_status_list_item.dart';
 
 class FeedBackStatusList extends StatefulWidget {
   final Function(int) selectedIndex;

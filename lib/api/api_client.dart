@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:flutter/foundation.dart' as Foundation;
 import 'package:http/http.dart' as Http;
 
-import '../data/models/error_response.dart';
+import '../data/responseModels/error_response.dart';
 
 class ApiClient extends GetxService {
   final String? appBaseUrl;
@@ -23,11 +23,14 @@ class ApiClient extends GetxService {
     // );
   }
 
-  Future<Response> postData(String endPoint, Map<String,String> body) async {
+  Future<Response> postData(String endPoint, String body) async {
     try {
       Http.Response response = await Http.post (
         Uri.parse(appBaseUrl! + endPoint),
-        body: jsonEncode(body),
+        body: body,
+        headers: {
+          "Content-Type": "application/json"
+        },
       ).timeout(Duration(seconds: timeoutInSeconds));
       print("postData: response   $response");
       return handleResponse(response, endPoint);

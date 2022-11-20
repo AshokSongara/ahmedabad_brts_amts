@@ -1,13 +1,13 @@
-import 'dart:async';
-
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/round_container_widget.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
 import '../../../utils/image_constant.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -42,8 +42,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: Dimensions.dp20,
               ),
               Container(
-                margin:
-                const EdgeInsets.only(left: Dimensions.dp30, right: Dimensions.dp30),
+                margin: const EdgeInsets.only(
+                    left: Dimensions.dp30, right: Dimensions.dp30),
                 height: 0.3,
                 color: AppColors.lightPrimary,
               ),
@@ -86,9 +86,14 @@ class _SplashScreenState extends State<SplashScreen> {
                         style: satoshiRegular.copyWith(
                             fontSize: 14, fontWeight: FontWeight.w700)),
                     TextSpan(
-                        text: "Sign Up",
-                        style: satoshiRegular.copyWith(
-                            fontSize: 14, fontWeight: FontWeight.w700)),
+                      text: "Sign Up",
+                      style: satoshiRegular.copyWith(
+                          fontSize: 14, fontWeight: FontWeight.w700),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => {
+                        Get.toNamed(RouteHelper.signup)
+                        },
+                    ),
                   ],
                 ),
               ),

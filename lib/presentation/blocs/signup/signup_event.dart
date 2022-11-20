@@ -1,3 +1,4 @@
+import 'package:ahmedabad_brts_amts/data/requestmodels/signup_request.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class SignupEvent extends Equatable {
@@ -8,7 +9,7 @@ abstract class SignupEvent extends Equatable {
 }
 
 class SignupUserEvent extends SignupEvent {
-  final Map<String,String> data;
+  final SignupRequest data;
 
   SignupUserEvent({required this.data});
 

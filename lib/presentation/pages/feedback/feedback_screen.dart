@@ -1,4 +1,3 @@
-import 'package:ahmedabad_brts_amts/data/models/feedback_status_list_item.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/feedback/widgets/feedback_status_list.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
@@ -8,7 +7,8 @@ import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../../data/responseModels/feedback_status_list_item.dart';
 
 class FeedBackScreen extends StatefulWidget {
   const FeedBackScreen({Key? key}) : super(key: key);
