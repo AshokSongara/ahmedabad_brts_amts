@@ -45,7 +45,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                       ),
                       child: Padding(
                         padding:
-                            const EdgeInsets.only(left: 18, right: 18, top: 16),
+                        EdgeInsets.only(left: 18, right: 18, top: MediaQuery.of(context).size.height*0.04),
                         child: Column(
                           children: [
                             Row(
