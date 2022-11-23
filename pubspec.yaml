@@ -73,6 +73,7 @@ dependencies:
   google_api_headers: ^1.0.0
   tuple: ^2.0.0-nullsafety.0
   image_picker: ^0.8.6
+  ticket_widget: ^0.0.1
 
 flutter_icons:
   android: true

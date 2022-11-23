@@ -42,5 +42,6 @@ class ImageConstant {
   static const String iNeutral = 'assets/images/ic_neutral.svg';
   static const String iDissatisfied = 'assets/images/ic_dissatisfied.svg';
   static const String iVeryDissatisfied = 'assets/images/ic_very_dissatisfied.svg';
+  static const String iTopRedArrow = 'assets/images/ic_top_red_arrow.svg';
 
 }
