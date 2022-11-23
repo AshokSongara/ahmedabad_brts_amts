@@ -1,4 +1,5 @@
 import 'package:ahmedabad_brts_amts/injection_container.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/login/logic_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,9 @@ void main() async {
       providers: [
         BlocProvider<SignupBloc>(
           create: (context) => injector<SignupBloc>(),
+        ),
+        BlocProvider<LoginBloc>(
+          create: (context) => injector<LoginBloc>(),
         ),
       ],
       child: MyApp(),

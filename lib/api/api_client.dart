@@ -32,7 +32,6 @@ class ApiClient extends GetxService {
           "Content-Type": "application/json"
         },
       ).timeout(Duration(seconds: timeoutInSeconds));
-      print("postData: response   $response");
       return handleResponse(response, endPoint);
     } catch (e) {
       return Response(statusCode: 1, statusText: noInternetMessage);

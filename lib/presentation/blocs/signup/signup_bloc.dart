@@ -15,7 +15,6 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   @override
   Stream<SignupState> mapEventToState(SignupEvent event) async* {
     if (event is SignupUserEvent) {
-      print("GetTodoListEvent : called");
       yield SignupLoadingState();
       SignUpResponse signUpResponse =
           await signupUserUseCase(Params(data: event.data));
