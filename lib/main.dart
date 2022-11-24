@@ -1,5 +1,6 @@
 import 'package:ahmedabad_brts_amts/injection_container.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/logic_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobile_number_login_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,9 @@ void main() async {
         BlocProvider<LoginBloc>(
           create: (context) => injector<LoginBloc>(),
         ),
+        BlocProvider<MobileNumberLoginBloc>(
+          create: (context) => injector<MobileNumberLoginBloc>(),
+        ),
       ],
       child: MyApp(),
     ),
@@ -48,7 +52,7 @@ class MyApp extends StatelessWidget {
           theme: darkThemeData,
           themeMode: ThemeMode.dark,
           darkTheme: darkThemeData,
-          home: PaymentDetailsScreen(),
+          home: SplashScreen(),
           initialRoute: RouteHelper.getInitialRoute(),
           getPages: RouteHelper.routes,
         );

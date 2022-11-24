@@ -25,6 +25,7 @@ class AppConstant {
   // 13) http://localhost:5000/User/sign-out
   // 14) http://localhost:5000/User/{userId}/unlock
   // 15) http://localhost:5000/User/refresh-token
+  // 15) http://localhost:5000/NearMe
   //Login Register End Points
 
   //APIs End Points
@@ -33,6 +34,7 @@ class AppConstant {
   static String checkAppVersionInterface = "Check_App_Version";
   static String resendOtpInterface = "ReSendOTPCustomer";
   static String updateFirebaseInterface = "UpdateCustomer_Firebaseid";
+  static String userOtp = "User/otp/generate";
 
 
   static List<TextDto> orderList = [

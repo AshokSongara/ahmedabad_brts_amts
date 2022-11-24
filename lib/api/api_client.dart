@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 
 import 'package:get/get.dart';
@@ -25,6 +26,7 @@ class ApiClient extends GetxService {
 
   Future<Response> postData(String endPoint, String body) async {
     try {
+      debugPrint("postData request==> $body");
       Http.Response response = await Http.post (
         Uri.parse(appBaseUrl! + endPoint),
         body: body,
