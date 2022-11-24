@@ -5,6 +5,7 @@ import 'package:ahmedabad_brts_amts/presentation/pages/lrf/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'core/theme/dark_theme_data.dart';
@@ -39,14 +40,19 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: darkThemeData,
-      themeMode: ThemeMode.dark,
-      darkTheme: darkThemeData,
-      home: SplashScreen(),
-      initialRoute: RouteHelper.getInitialRoute(),
-      getPages: RouteHelper.routes,
+    return ScreenUtilInit(
+      designSize: const Size(428, 926),
+      builder: (BuildContext context, Widget? child) {
+        return GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: darkThemeData,
+          themeMode: ThemeMode.dark,
+          darkTheme: darkThemeData,
+          home: PaymentDetailsScreen(),
+          initialRoute: RouteHelper.getInitialRoute(),
+          getPages: RouteHelper.routes,
+        );
+      },
     );
   }
 }
