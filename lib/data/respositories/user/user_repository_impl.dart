@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:ahmedabad_brts_amts/api/api_client.dart';
+import 'package:ahmedabad_brts_amts/data/requestmodels/mobile_number_otp_request_param.dart';
 import 'package:ahmedabad_brts_amts/data/responseModels/signup_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/login_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/mobile_number_otp_response_entity.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:get/get.dart';
@@ -15,7 +17,18 @@ class UserRepositoryImpl implements UserRepository {
 
   UserRepositoryImpl(
       {required this.apiClient, required this.sharedPreferences});
+  @override
+  Future<MobileNumberOtpResponseEntity> getOtp(
+      MobileNumberOtpRequestParam body) async {
+    Response response = await apiClient.postData(
+        AppConstant.userOtp, body.toJson().toString());
+    MobileNumberOtpResponseEntity mobileNumberOtpResponseEntity =
+    MobileNumberOtpResponseEntity.fromJson(response.body);
 
+    try {} on Exception catch (exception) {
+    } catch (error) {}
+    return mobileNumberOtpResponseEntity;
+  }
   @override
   Future<SignUpResponse> signupUser(body) async {
     //TODO remove

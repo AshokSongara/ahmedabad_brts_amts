@@ -1,7 +1,5 @@
 import 'package:ahmedabad_brts_amts/api/api_client.dart';
-import 'package:ahmedabad_brts_amts/data/respositories/user/mobile_number_login_repository_impl.dart';
 import 'package:ahmedabad_brts_amts/data/respositories/user/user_repository_impl.dart';
-import 'package:ahmedabad_brts_amts/domain/repositories/user/mobile_number_login_repository.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/login_user_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/mobile_number_login_usecase.dart';
@@ -41,10 +39,6 @@ Future<void> init() async {
 
   injector.registerLazySingleton<UserRepository>(
     () => UserRepositoryImpl(
-        apiClient: injector(), sharedPreferences: injector()),
-  );
-  injector.registerLazySingleton<MobileNumberLoginRepository>(
-        () => MobileNumberLoginRepositoryImpl(
         apiClient: injector(), sharedPreferences: injector()),
   );
 }
