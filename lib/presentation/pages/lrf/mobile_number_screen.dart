@@ -12,6 +12,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
+import '../../../core/loader/overylay_loader.dart';
+
 class MobileNumberScreen extends StatefulWidget {
   const MobileNumberScreen({Key? key}) : super(key: key);
 
@@ -60,11 +62,16 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
           BlocConsumer<MobileNumberLoginBloc, MobileNumberLoginState>(
               listener: (BuildContext context, state) {
             if (state is MobileNumberLoginSuccessState) {
+              Loader.hide();
               Get.toNamed(RouteHelper.getEnterCodeRoute());
             } else if (state is MobileNumberLoginErrorState) {
+              Loader.hide();
               debugPrint("Api Call Error");
+            } else if (state is MobileNumberLoadingState) {
+              Loader.show(context);
             } else if (state is MobileNumberValidationErrorState) {
-              debugPrint("Validation Error");
+              Loader.hide();
+               debugPrint("Validation Error");
             }
           }, builder: (context, state) {
             return Column(

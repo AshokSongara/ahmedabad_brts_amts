@@ -14,6 +14,7 @@ class MobileNumberLoginBloc
   Stream<MobileNumberLoginState> mapEventToState(
       MobileNumberLoginEvent event) async* {
     if (event is PhoneNumberSubmitEvent) {
+      yield MobileNumberLoadingState();
       if (event.phoneNumber.length != 10) {
         yield MobileNumberValidationErrorState();
       } else {

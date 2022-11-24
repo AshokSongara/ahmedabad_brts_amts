@@ -11,3 +11,4 @@ class MobileNumberLoginInitialState extends MobileNumberLoginState{}
 class MobileNumberValidationErrorState extends MobileNumberLoginState{}
 class MobileNumberLoginErrorState extends MobileNumberLoginState{}
 class MobileNumberLoginSuccessState extends MobileNumberLoginState{}
+class MobileNumberLoadingState extends MobileNumberLoginState{}
