@@ -57,20 +57,36 @@ class _SplashScreenState extends State<SplashScreen> {
               const SizedBox(
                 height: Dimensions.dp25,
               ),
-              const RoundContainerWidget(
-                  imagePath: ImageConstant.iMail,
-                  menuTitle: "Login with Email"),
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(RouteHelper.getLoginRoute());
+                },
+                child: const RoundContainerWidget(
+                    imagePath: ImageConstant.iMail,
+                    menuTitle: "Login with Email"),
+              ),
               const SizedBox(
                 height: 16,
               ),
-              const RoundContainerWidget(
-                  imagePath: ImageConstant.iMobile,
-                  menuTitle: "Login with Mobile Number"),
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(RouteHelper.getMobileNumberRoute());
+                },
+                child: const RoundContainerWidget(
+                    imagePath: ImageConstant.iMobile,
+                    menuTitle: "Login with Mobile Number"),
+              ),
               const SizedBox(
                 height: 16,
               ),
-              const RoundContainerWidget(
-                  imagePath: ImageConstant.iUser, menuTitle: "Login as Guest"),
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(RouteHelper.getDashboardRoute());
+                },
+                child: const RoundContainerWidget(
+                    imagePath: ImageConstant.iUser,
+                    menuTitle: "Login as Guest"),
+              ),
               const SizedBox(
                 height: Dimensions.dp25,
               ),
@@ -90,9 +106,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       style: satoshiRegular.copyWith(
                           fontSize: 14, fontWeight: FontWeight.w700),
                       recognizer: TapGestureRecognizer()
-                        ..onTap = () => {
-                        Get.toNamed(RouteHelper.signup)
-                        },
+                        ..onTap = () => {Get.toNamed(RouteHelper.signup)},
                     ),
                   ],
                 ),

@@ -8,6 +8,8 @@ class AppConstant {
   static String loginWithEmail = "Login with Email";
   static String loginWithMobile = "Login with Mobile Number";
   static String loginWithGuest = "Login as Guest";
+
+  //TODO Remove
   // 1) http://localhost:5000/User/otp/generate
   // 2) http://localhost:5000/User/sign-in/otp
   // 3) http://localhost:5000/User/{userId}/activate/{activate}

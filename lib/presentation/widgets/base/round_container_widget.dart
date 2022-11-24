@@ -15,37 +15,32 @@ class RoundContainerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-        Get.toNamed(RouteHelper.getLoginRoute());
-      },
-      child: Container(
-        height: Dimensions.dp56,
-        margin:
-            const EdgeInsets.only(left: Dimensions.dp30, right: Dimensions.dp30),
-        decoration: BoxDecoration(
-            border: Border.all(
-              color: AppColors.buttonColor,
-            ),
+    return Container(
+      height: Dimensions.dp56,
+      margin:
+          const EdgeInsets.only(left: Dimensions.dp30, right: Dimensions.dp30),
+      decoration: BoxDecoration(
+          border: Border.all(
             color: AppColors.buttonColor,
-            borderRadius:
-                const BorderRadius.all(Radius.circular(Dimensions.dp8))),
-        child: Container(
-          margin: const EdgeInsets.only(left: Dimensions.dp50),
-          child: Row(children: [
-            SvgPicture.asset(imagePath),
-            const SizedBox(
-              width: Dimensions.dp10,
+          ),
+          color: AppColors.buttonColor,
+          borderRadius:
+              const BorderRadius.all(Radius.circular(Dimensions.dp8))),
+      child: Container(
+        margin: const EdgeInsets.only(left: Dimensions.dp50),
+        child: Row(children: [
+          SvgPicture.asset(imagePath),
+          const SizedBox(
+            width: Dimensions.dp10,
+          ),
+          Text(
+            menuTitle,
+            style: satoshiRegular.copyWith(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
             ),
-            Text(
-              menuTitle,
-              style: satoshiRegular.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-          ]),
-        ),
+          ),
+        ]),
       ),
     );
   }
