@@ -1,10 +1,14 @@
 import 'package:ahmedabad_brts_amts/api/api_client.dart';
+import 'package:ahmedabad_brts_amts/data/respositories/routes/route_repository_impl.dart';
 import 'package:ahmedabad_brts_amts/data/respositories/user/user_repository_impl.dart';
+import 'package:ahmedabad_brts_amts/domain/repositories/routes/routes_repository.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/route/nearme_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/login_user_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/mobile_number_login_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/signup_user_usecase.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/logic_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobile_number_login_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_bloc.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
@@ -29,16 +33,27 @@ Future<void> init() async {
     () => LoginBloc(loginUserUseCase: injector()),
   );
   injector.registerFactory<MobileNumberLoginBloc>(
-        () => MobileNumberLoginBloc(injector()),
+    () => MobileNumberLoginBloc(injector()),
+  );
+
+  injector.registerFactory<NearMeBloc>(
+    () => NearMeBloc(nearmeRouteUseCase: injector()),
   );
 
   injector.registerLazySingleton(() => SignupUserUseCase(injector()));
 
   injector.registerLazySingleton(() => LoginUserUseCase(injector()));
+
   injector.registerLazySingleton(() => MobileNumberLoginUseCase(injector()));
+
+  injector.registerLazySingleton(() => NearmeRouteUseCase(injector()));
 
   injector.registerLazySingleton<UserRepository>(
     () => UserRepositoryImpl(
+        apiClient: injector(), sharedPreferences: injector()),
+  );
+  injector.registerLazySingleton<RouteRepository>(
+    () => RouteRepositoryImpl(
         apiClient: injector(), sharedPreferences: injector()),
   );
 }

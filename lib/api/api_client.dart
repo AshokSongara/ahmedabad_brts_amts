@@ -26,13 +26,10 @@ class ApiClient extends GetxService {
 
   Future<Response> postData(String endPoint, String body) async {
     try {
-      debugPrint("postData request==> $body");
-      Http.Response response = await Http.post (
+      Http.Response response = await Http.post(
         Uri.parse(appBaseUrl! + endPoint),
         body: body,
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: {"Content-Type": "application/json"},
       ).timeout(Duration(seconds: timeoutInSeconds));
       return handleResponse(response, endPoint);
     } catch (e) {
@@ -42,10 +39,11 @@ class ApiClient extends GetxService {
 
   Future<Response> postApiFile(
       {required String endPoint,
-        required Map<String, File?> fileList,
-        required Map<String, String?> body}) async {
+      required Map<String, File?> fileList,
+      required Map<String, String?> body}) async {
     try {
-      var request = Http.MultipartRequest('POST', Uri.parse(appBaseUrl! + endPoint));
+      var request =
+          Http.MultipartRequest('POST', Uri.parse(appBaseUrl! + endPoint));
 
       body.forEach((key, value) {
         request.fields[key] = value!;
@@ -75,12 +73,14 @@ class ApiClient extends GetxService {
       return Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
+
   Future<dynamic> postApiFile2(
       {required String endPoint,
-        required Map<String, File?> fileList,
-        required Map<String, String?> body}) async {
+      required Map<String, File?> fileList,
+      required Map<String, String?> body}) async {
     try {
-      var request = Http.MultipartRequest('POST', Uri.parse(appBaseUrl! + endPoint));
+      var request =
+          Http.MultipartRequest('POST', Uri.parse(appBaseUrl! + endPoint));
 
       body.forEach((key, value) {
         request.fields[key] = value!;

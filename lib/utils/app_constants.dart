@@ -35,6 +35,7 @@ class AppConstant {
   static String resendOtpInterface = "ReSendOTPCustomer";
   static String updateFirebaseInterface = "UpdateCustomer_Firebaseid";
   static String userOtp = "User/otp/generate";
+  static String nearMeInterface = "NearMe";
 
 
   static List<TextDto> orderList = [

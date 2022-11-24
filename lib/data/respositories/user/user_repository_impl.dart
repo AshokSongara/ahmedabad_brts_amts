@@ -17,18 +17,26 @@ class UserRepositoryImpl implements UserRepository {
 
   UserRepositoryImpl(
       {required this.apiClient, required this.sharedPreferences});
+
   @override
   Future<MobileNumberOtpResponseEntity> getOtp(
       MobileNumberOtpRequestParam body) async {
-    Response response = await apiClient.postData(
-        AppConstant.userOtp, body.toJson().toString());
+    Map data = {
+      'phoneNumber': body.phoneNumber ?? "",
+    };
+
+    var bodyData = json.encode(data);
+
+    Response response = await apiClient.postData(AppConstant.userOtp, bodyData);
+
     MobileNumberOtpResponseEntity mobileNumberOtpResponseEntity =
-    MobileNumberOtpResponseEntity.fromJson(response.body);
+        MobileNumberOtpResponseEntity.fromJson(response.body);
 
     try {} on Exception catch (exception) {
     } catch (error) {}
     return mobileNumberOtpResponseEntity;
   }
+
   @override
   Future<SignUpResponse> signupUser(body) async {
     //TODO remove
