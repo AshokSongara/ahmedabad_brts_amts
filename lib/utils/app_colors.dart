@@ -19,6 +19,7 @@ class AppColors{
   static const Color appBackground = Color(0xffF5F5F5);
   static const Color lightGrey = Color(0xffEFEFEF);
   static const Color borderGrey = Color(0xffE5EDFF);
+  static const Color profileBackgroundGrey = Color(0xffD9D9D9);
   static const Color appBackground2 = Color(0xffF9FBFA);
 
 }

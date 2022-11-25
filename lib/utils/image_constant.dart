@@ -43,5 +43,15 @@ class ImageConstant {
   static const String iDissatisfied = 'assets/images/ic_dissatisfied.svg';
   static const String iVeryDissatisfied = 'assets/images/ic_very_dissatisfied.svg';
   static const String iTopRedArrow = 'assets/images/ic_top_red_arrow.svg';
+  static const String iClose = 'assets/images/ic_close.svg';
+  static const String iTransactionHistory = 'assets/images/ic_transaction_history.svg';
+  static const String iSpeaker = 'assets/images/ic_speaker.svg';
+  static const String iCall = 'assets/images/ic_call.svg';
+  static const String iSignOut = 'assets/images/ic_sign_out.svg';
+
+
+
+  //Temp Images
+  static const String iAvatar = 'assets/images/img_avatar.png';
 
 }

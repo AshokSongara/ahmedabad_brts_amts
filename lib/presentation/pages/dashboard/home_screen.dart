@@ -20,21 +20,259 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int selectedValue = 0;
-  List<QuickLinkInternalModel> quickLinkList=[];
+  List<QuickLinkInternalModel> quickLinkList = [];
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   void initState() {
     super.initState();
-    quickLinkList.add(QuickLinkInternalModel("M Ticket", ImageConstant.iTicket));
-    quickLinkList.add(QuickLinkInternalModel("Smart Recharge", ImageConstant.iMobileRed));
+    quickLinkList
+        .add(QuickLinkInternalModel("M Ticket", ImageConstant.iTicket));
+    quickLinkList.add(
+        QuickLinkInternalModel("Smart Recharge", ImageConstant.iMobileRed));
     quickLinkList.add(QuickLinkInternalModel("Stops", ImageConstant.iRoute));
     quickLinkList.add(QuickLinkInternalModel("My Routes", ImageConstant.iRate));
-    quickLinkList.add(QuickLinkInternalModel("Transit Map", ImageConstant.iMap));
+    quickLinkList
+        .add(QuickLinkInternalModel("Transit Map", ImageConstant.iMap));
     quickLinkList.add(QuickLinkInternalModel("Feedback", ImageConstant.iChat));
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
         backgroundColor: AppColors.appBackground,
+        endDrawer: Drawer(
+          backgroundColor: AppColors.primaryColor,
+          child: Padding(
+            padding:
+                EdgeInsets.only(top: Dimensions.dp24, left: Dimensions.dp43,right: Dimensions.dp43),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: SvgPicture.asset(ImageConstant.iClose)),
+                  Padding(
+                    padding: const EdgeInsets.only(top: Dimensions.dp35),
+                    child: Row(
+                      children: [
+                        CircleAvatar(
+                          radius: Dimensions.dp22,
+                          backgroundColor: AppColors.profileBackgroundGrey,
+                          child: ClipOval(
+                            child: Image.asset(
+                              ImageConstant.iAvatar,
+                              height: Dimensions.dp41,
+                              width: Dimensions.dp38,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: Dimensions.dp14,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "John Doe",
+                              style: satoshiRegular.copyWith(
+                                  fontSize: Dimensions.dp19,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white),
+                            ),
+                            Text(
+                              "View Profile",
+                              style: satoshiRegular.copyWith(
+                                  fontSize: Dimensions.dp12,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: Dimensions.dp28,
+                  ),
+                  const Divider(
+                    thickness: Dimensions.dp2,
+                    color: AppColors.gray6E8EE7,
+                  ),
+                  ListTile(
+                    leading: SvgPicture.asset(
+                      ImageConstant.iTicket,
+                      color: Colors.white,
+                      height: Dimensions.dp28,
+                      width: Dimensions.dp28,
+                    ),
+                    title: Text(
+                      "M Ticket",
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp19,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    leading: SvgPicture.asset(
+                      ImageConstant.iRoute,
+                      color: Colors.white,
+                      height: Dimensions.dp28,
+                      width: Dimensions.dp28,
+                    ),
+                    title: Text(
+                      "Stops",
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp19,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    leading: SvgPicture.asset(
+                      ImageConstant.iRate,
+                      color: Colors.white,
+                      height: Dimensions.dp28,
+                      width: Dimensions.dp28,
+                    ),
+                    title: Text(
+                      "My Routes",
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp19,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    leading: SvgPicture.asset(
+                      ImageConstant.iMap,
+                      color: Colors.white,
+                      height: Dimensions.dp28,
+                      width: Dimensions.dp28,
+                    ),
+                    title: Text(
+                      "Transit Map",
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp19,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    leading: SvgPicture.asset(
+                      ImageConstant.iTransactionHistory,
+                      color: Colors.white,
+                      height: Dimensions.dp28,
+                      width: Dimensions.dp28,
+                    ),
+                    title: Text(
+                      "Transaction History",
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp19,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    leading: SvgPicture.asset(
+                      ImageConstant.iChat,
+                      color: Colors.white,
+                      height: Dimensions.dp28,
+                      width: Dimensions.dp28,
+                    ),
+                    title: Text(
+                      "Feedback",
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp19,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    leading: SvgPicture.asset(
+                      ImageConstant.iSpeaker,
+                      color: Colors.white,
+                      height: Dimensions.dp28,
+                      width: Dimensions.dp28,
+                    ),
+                    title: Text(
+                      "Invite Friends",
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp19,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    leading: SvgPicture.asset(
+                      ImageConstant.iCall,
+                      color: Colors.white,
+                      height: Dimensions.dp28,
+                      width: Dimensions.dp28,
+                    ),
+                    title: Text(
+                      "Contact Us",
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp19,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    leading: SvgPicture.asset(
+                      ImageConstant.iSignOut,
+                      color: Colors.white,
+                      height: Dimensions.dp28,
+                      width: Dimensions.dp28,
+                    ),
+                    title: Text(
+                      "Signout",
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp19,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  SizedBox(
+                    height: Dimensions.dp50,
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
         body: ListView(
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -110,7 +348,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 Spacer(),
                 Container(
                     margin: EdgeInsets.only(right: Dimensions.dp20),
-                    child: SvgPicture.asset(ImageConstant.iMenu))
+                    child: InkWell(
+                        onTap: () {
+                          _scaffoldKey.currentState!.openEndDrawer();
+                        },
+                        child: SvgPicture.asset(ImageConstant.iMenu)))
               ],
             ),
             SizedBox(
@@ -134,15 +376,17 @@ class _HomeScreenState extends State<HomeScreen> {
               margin: const EdgeInsets.only(
                   left: Dimensions.dp20, right: Dimensions.dp30),
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: AppColors.gray6E8EE7,
-                      blurRadius: 5.0,
-                    ),
-                  ],
-                  borderRadius:
-                      BorderRadius.all(Radius.circular(Dimensions.dp16),),),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.gray6E8EE7,
+                    blurRadius: 5.0,
+                  ),
+                ],
+                borderRadius: BorderRadius.all(
+                  Radius.circular(Dimensions.dp16),
+                ),
+              ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(
                     horizontal: Dimensions.dp10, vertical: Dimensions.dp19),
@@ -347,8 +591,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Container(
-                      margin:
-                          const EdgeInsets.only(left: Dimensions.dp10, right: Dimensions.dp10, top: Dimensions.dp15),
+                      margin: const EdgeInsets.only(
+                          left: Dimensions.dp10,
+                          right: Dimensions.dp10,
+                          top: Dimensions.dp15),
                       child: CustomButton(
                         text: "Show Route & Fare",
                         width: MediaQuery.of(context).size.width,
@@ -382,7 +628,9 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Container(
               margin: const EdgeInsets.only(
-                  left: Dimensions.dp20, right: Dimensions.dp30,top:Dimensions.dp16),
+                  left: Dimensions.dp20,
+                  right: Dimensions.dp30,
+                  top: Dimensions.dp16),
               decoration: BoxDecoration(
                   color: Colors.white,
                   boxShadow: [
@@ -403,19 +651,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       crossAxisSpacing: Dimensions.dp10,
-                    mainAxisSpacing: 10
-                      ),
+                      mainAxisSpacing: 10),
                   itemBuilder: (BuildContext context, int index) {
                     return getGridItemWidget(quickLinkList[index]);
                   },
                 ),
               ),
             ),
-            SizedBox(height: Dimensions.dp40,)
+            SizedBox(
+              height: Dimensions.dp40,
+            )
           ],
         ));
   }
-  Widget getGridItemWidget(QuickLinkInternalModel model){
+
+  Widget getGridItemWidget(QuickLinkInternalModel model) {
     return Column(
       children: [
         SvgPicture.asset(
