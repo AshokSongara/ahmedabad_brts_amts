@@ -3,7 +3,6 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/login/logic_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobile_number_login_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_bloc.dart';
-import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/dashboard_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -57,7 +56,7 @@ class MyApp extends StatelessWidget {
           theme: darkThemeData,
           themeMode: ThemeMode.dark,
           darkTheme: darkThemeData,
-          home: DashboardScreen(pageIndex: 0,),
+          home: SplashScreen(),
           initialRoute: RouteHelper.getInitialRoute(),
           getPages: RouteHelper.routes,
         );
