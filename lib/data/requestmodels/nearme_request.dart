@@ -1,7 +1,7 @@
 class NearMeRequest {
-  String? stopType;
-  String? latitude;
-  String? longitude;
+  int? stopType;
+  double? latitude;
+  double? longitude;
 
   NearMeRequest({this.stopType, this.latitude, this.longitude});
 }

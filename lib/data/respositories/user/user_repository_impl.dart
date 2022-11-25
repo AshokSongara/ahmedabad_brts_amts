@@ -39,16 +39,13 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<SignUpResponse> signupUser(body) async {
-    //TODO remove
-    Random random = new Random();
-    int randomNumber = random.nextInt(100);
 
     Map data = {
       'firstName': body.name ?? "",
       'lastName': "",
       'email': body.email ?? "",
       'password': body.password ?? "",
-      'phoneNumber': randomNumber.toString() ?? ""
+      'phoneNumber': body.phoneNumber ?? ""
     };
 
     var bodyData = json.encode(data);

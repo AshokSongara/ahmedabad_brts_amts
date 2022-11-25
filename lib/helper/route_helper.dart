@@ -5,6 +5,7 @@ import 'package:ahmedabad_brts_amts/presentation/pages/lrf/enter_code_screen.dar
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/login_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/mobile_number_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/signup_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/nearby/nearby_sreen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/passenger_details/passenger_details.dart';
 import 'package:get/get.dart';
 import '../presentation/pages/dashboard/search_result_screen.dart';
@@ -22,6 +23,7 @@ class RouteHelper {
   static const String routeDetails = '/routeDetails';
   static const String passengerDetails = '/passengerDetails';
   static const String cardDetails = '/cardDetails';
+  static const String nearBy = '/nearBy';
 
   static String getInitialRoute() => '$initial';
 
@@ -45,6 +47,8 @@ class RouteHelper {
 
   static String getCardDetailsRoute() => '$passengerDetails';
 
+  static String getNearByRoute() => '$nearBy';
+
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => SplashScreen()),
     GetPage(name: splash, page: () => SplashScreen()),
@@ -52,10 +56,15 @@ class RouteHelper {
     GetPage(name: signup, page: () => SignupScreen()),
     GetPage(name: mobileNumber, page: () => MobileNumberScreen()),
     GetPage(name: enterCode, page: () => EnterCodeScreen()),
-    GetPage(name: dashboard, page: () => DashboardScreen(pageIndex: 0,)),
+    GetPage(
+        name: dashboard,
+        page: () => DashboardScreen(
+              pageIndex: 0,
+            )),
     GetPage(name: searchResult, page: () => SearchResultScreen()),
     GetPage(name: routeDetails, page: () => RouteDetailScreen()),
     GetPage(name: passengerDetails, page: () => PassengerDetails()),
     GetPage(name: cardDetails, page: () => CardDetailsScreen()),
+    GetPage(name: nearBy, page: () => NearByScreen()),
   ];
 }

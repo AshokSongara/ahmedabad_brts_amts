@@ -1,3 +1,4 @@
+import 'package:ahmedabad_brts_amts/data/responsemodels/nearme_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -7,7 +8,9 @@ import '../../../utils/image_constant.dart';
 import '../../../utils/styles.dart';
 
 class NearByItemWidget extends StatelessWidget {
-  const NearByItemWidget({Key? key}) : super(key: key);
+  const NearByItemWidget({Key? key, required this.nearme}) : super(key: key);
+
+  final Nearme nearme;
 
   @override
   Widget build(BuildContext context) {
@@ -21,22 +24,19 @@ class NearByItemWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.only(
-                left: 8.0, right: 8.0),
+            padding: const EdgeInsets.only(left: 8.0, right: 8.0),
             child: SvgPicture.asset(ImageConstant.iClock),
           ),
           Expanded(
             child: Text(
-              "Adalaj Gam",
-              style: satoshiRegularSmall.copyWith(
-                  color: AppColors.darkGray),
+              nearme.stopName ?? "",
+              style: satoshiRegularSmall.copyWith(color: AppColors.darkGray),
             ),
           ),
           Text(
-            "412 Mtr",
+            nearme.distance.toString() ?? "",
             style: satoshiRegularSmall.copyWith(
-                color: AppColors.gray777777,
-                fontWeight: FontWeight.w400),
+                color: AppColors.gray777777, fontWeight: FontWeight.w400),
           )
         ],
       ),

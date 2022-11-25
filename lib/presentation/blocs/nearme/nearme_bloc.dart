@@ -21,7 +21,7 @@ class NearMeBloc extends Bloc<NearMeEvent, NearmeState> {
       yield NearMeLoadingState();
       NearMeResponse nearMeResponse =
           await nearmeRouteUseCase(Params(data: event.nearMeRequest));
-      if (nearMeResponse.latitude == 200) {
+      if (nearMeResponse.statusCode == 200) {
         yield NearMeSuccessState(nearMeResponse: nearMeResponse);
       } else {
         yield NearMeFailedState();

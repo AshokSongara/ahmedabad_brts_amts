@@ -1,5 +1,7 @@
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
+import 'package:ahmedabad_brts_amts/data/requestmodels/nearme_request.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/dashedLine_painter.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/nearby_item_widget.dart';
@@ -23,6 +25,20 @@ class NearByScreen extends StatefulWidget {
 class _NearByScreenState extends State<NearByScreen> {
   final _serviceController = TextEditingController();
   final FocusNode _serviceFocus = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+
+    var nearByRequest = NearMeRequest();
+    nearByRequest.latitude = 72.5067986;
+    nearByRequest.longitude = 23.025965;
+    nearByRequest.stopType = 2;
+
+    BlocProvider.of<NearMeBloc>(context).add(
+      GetNearMeRouteEvent(nearMeRequest: nearByRequest),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -142,9 +158,10 @@ class _NearByScreenState extends State<NearByScreen> {
                                 child:
                                     CustomPaint(painter: DashedLinePainter())),
                             padding: EdgeInsets.only(top: 10),
-                            itemCount: 20,
+                            itemCount: state.nearMeResponse.nearme?.length ?? 0,
                             itemBuilder: (BuildContext context, int index) {
-                              return NearByItemWidget();
+                              return NearByItemWidget(
+                                  nearme: state.nearMeResponse.nearme![index]);
                             })),
                   ),
                 )
