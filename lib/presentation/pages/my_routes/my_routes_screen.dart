@@ -4,6 +4,7 @@ import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../data/responseModels/my_routes_internal_model.dart';
@@ -35,7 +36,7 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
       backgroundColor: AppColors.appBackground,
       body: Column(
         children: [
-          SizedBox(height: Dimensions.dp25),
+          const SizedBox(height: Dimensions.dp25),
           CustomToolbar(
             title: "My Routes",
             showOption: false,
@@ -54,10 +55,10 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
 
   Widget getMyRoutesWidget(MyRouteInternalModel model) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 19, vertical: 24),
+      padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 24),
       margin: const EdgeInsets.only(
           left: Dimensions.dp24, right: Dimensions.dp24, bottom: Dimensions.dp20),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: Colors.white,
         boxShadow: [
           BoxShadow(
@@ -80,21 +81,21 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
                   Text(
                     model.source,
                     style: satoshiRegular.copyWith(
-                        fontSize: Dimensions.dp16,
+                        fontSize: Dimensions.dp16.sp,
                         fontWeight: FontWeight.w500,
                         color: AppColors.darkGray),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 19,
                   ),
                   SvgPicture.asset(ImageConstant.iArrowRight),
-                  SizedBox(
+                  const SizedBox(
                     width: 19,
                   ),
                   Text(
                     model.destination,
                     style: satoshiRegular.copyWith(
-                        fontSize: Dimensions.dp16,
+                        fontSize: Dimensions.dp16.sp,
                         fontWeight: FontWeight.w500,
                         color: AppColors.darkGray),
                   ),
@@ -105,7 +106,7 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
           ),
           Text(model.schedule,
               style: satoshiRegular.copyWith(
-                  fontSize: Dimensions.dp10,
+                  fontSize: Dimensions.dp10.sp,
                   fontWeight: FontWeight.w400,
                   color: AppColors.darkGray)),
         ],

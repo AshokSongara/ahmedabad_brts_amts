@@ -15,7 +15,7 @@ class RouteTitleWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.primaryColor,
-      padding: EdgeInsets.all(Dimensions.dp15),
+      padding: const EdgeInsets.all(Dimensions.dp15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: mainAxisAlignment,

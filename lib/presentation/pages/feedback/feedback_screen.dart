@@ -7,6 +7,7 @@ import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../data/responseModels/feedback_status_list_item.dart';
 
@@ -59,7 +60,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                     // FilteringTextInputFormatter.digitsOnly,
                   ],
                   style: satoshiRegular.copyWith(
-                      fontSize: Dimensions.dp16,
+                      fontSize: Dimensions.dp16.sp,
                       fontWeight: FontWeight.w300,
                       color: AppColors.darkGray),
                   textAlign: TextAlign.start,
@@ -80,7 +81,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                     // const EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
                     hintText: "Route number",
                     hintStyle: satoshiRegular.copyWith(
-                        fontSize: Dimensions.dp16,
+                        fontSize: Dimensions.dp16.sp,
                         fontWeight: FontWeight.w300,
                         color: AppColors.lightGray),
                   ),
@@ -116,7 +117,6 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                 child: FeedBackStatusList(
                   list: list,
                   selectedIndex: (index) {
-                    print("index of feedback Item selection $index");
                   },
                 ),
               ),
@@ -131,7 +131,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                   width: MediaQuery.of(context).size.width,
                   onPressed: () {},
                   style: satoshiRegular.copyWith(
-                      fontSize: Dimensions.dp18,
+                      fontSize: Dimensions.dp18.sp,
                       fontWeight: FontWeight.w500,
                       color: Colors.white),
                   height: Dimensions.dp56,
@@ -150,7 +150,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
       child: Text(
         question,
         style: satoshiRegular.copyWith(
-            fontSize: Dimensions.dp16,
+            fontSize: Dimensions.dp16.sp,
             fontWeight: FontWeight.w500,
             color: AppColors.darkGray),
       ),

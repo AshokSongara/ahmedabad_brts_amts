@@ -5,6 +5,7 @@ import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class PassengerDetails extends StatefulWidget {
@@ -23,18 +24,18 @@ class _PassengerDetailsState extends State<PassengerDetails> {
       backgroundColor: AppColors.appBackground,
       body: Column(
         children: [
-          SizedBox(height: Dimensions.dp25),
+          const SizedBox(height: Dimensions.dp25),
           CustomToolbar(
             title: "Passenger Details",
             showOption: false,
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 19, vertical: 24),
+            padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 24),
             margin: const EdgeInsets.only(
                 left: Dimensions.dp24,
                 right: Dimensions.dp24,
                 top: Dimensions.dp35),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
@@ -62,7 +63,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                 left: Dimensions.dp24,
                 right: Dimensions.dp24,
                 top: Dimensions.dp35),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
@@ -75,7 +76,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
               ),
             ),
             child: Padding(
-              padding: EdgeInsets.only(top: 15, right: 18, left: 18),
+              padding: const EdgeInsets.only(top: 15, right: 18, left: 18),
               child: Column(
                 children: [
                   Row(
@@ -84,7 +85,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                       Text(
                         "Passenger Details",
                         style: satoshiRegular.copyWith(
-                            fontSize: Dimensions.dp16,
+                            fontSize: Dimensions.dp16.sp,
                             fontWeight: FontWeight.w500,
                             color: AppColors.darkGray),
                       ),
@@ -94,9 +95,9 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                         },
                         child: Container(
                           padding:
-                              EdgeInsets.symmetric(vertical: 4, horizontal: 9),
+                              const EdgeInsets.symmetric(vertical: 4, horizontal: 9),
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(
+                              borderRadius: const BorderRadius.all(
                                 Radius.circular(
                                   Dimensions.dp5,
                                 ),
@@ -105,14 +106,14 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                   Border.all(color: AppColors.primaryColor)),
                           child: Text("Add Passenger",
                               style: satoshiRegular.copyWith(
-                                  fontSize: Dimensions.dp10,
+                                  fontSize: Dimensions.dp10.sp,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.primaryColor)),
                         ),
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -125,20 +126,20 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                               Text(
                                 "Adults",
                                 style: satoshiRegular.copyWith(
-                                    fontSize: Dimensions.dp12,
+                                    fontSize: Dimensions.dp12.sp,
                                     fontWeight: FontWeight.w700,
                                     color: AppColors.darkGray),
                               ),
                               Text(
                                 "$_addedAdultsCount",
                                 style: satoshiRegular.copyWith(
-                                    fontSize: Dimensions.dp16,
+                                    fontSize: Dimensions.dp16.sp,
                                     fontWeight: FontWeight.w400,
                                     color: AppColors.darkGray),
                               ),
                             ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 30,
                           ),
                           Column(
@@ -146,14 +147,14 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                               Text(
                                 "Kids",
                                 style: satoshiRegular.copyWith(
-                                    fontSize: Dimensions.dp12,
+                                    fontSize: Dimensions.dp12.sp,
                                     fontWeight: FontWeight.w700,
                                     color: AppColors.darkGray),
                               ),
                               Text(
                                 "$_addedKidsCount",
                                 style: satoshiRegular.copyWith(
-                                    fontSize: Dimensions.dp16,
+                                    fontSize: Dimensions.dp16.sp,
                                     fontWeight: FontWeight.w400,
                                     color: AppColors.darkGray),
                               ),
@@ -166,14 +167,14 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                           Text(
                             "Total",
                             style: satoshiRegular.copyWith(
-                                fontSize: Dimensions.dp12,
+                                fontSize: Dimensions.dp12.sp,
                                 fontWeight: FontWeight.w700,
                                 color: AppColors.darkGray),
                           ),
                           Text(
                             "${_addedAdultsCount+_addedKidsCount}",
                             style: satoshiRegular.copyWith(
-                                fontSize: Dimensions.dp16,
+                                fontSize: Dimensions.dp16.sp,
                                 fontWeight: FontWeight.w400,
                                 color: AppColors.darkGray),
                           ),
@@ -181,7 +182,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                 ],
@@ -201,13 +202,13 @@ class _PassengerDetailsState extends State<PassengerDetails> {
           Text(
             title,
             style: satoshiRegular.copyWith(
-                fontSize: Dimensions.dp16,
+                fontSize: Dimensions.dp16.sp,
                 fontWeight: FontWeight.w500,
                 color: AppColors.darkGray),
           ),
           Text(schedule,
               style: satoshiRegular.copyWith(
-                  fontSize: Dimensions.dp10,
+                  fontSize: Dimensions.dp10.sp,
                   fontWeight: FontWeight.w400,
                   color: AppColors.darkGray)),
         ],
@@ -232,7 +233,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
           builder: (context,StateSetter setState) {
             return Container(
               height: 294,
-              padding: EdgeInsets.only(top: 22, right: 24, left: 24),
+              padding: const EdgeInsets.only(top: 22, right: 24, left: 24),
               child: Column(
                 children: [
                   Row(
@@ -241,20 +242,20 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                       Text(
                         "Passengers",
                         style: satoshiRegular.copyWith(
-                            fontSize: Dimensions.dp20,
+                            fontSize: Dimensions.dp20.sp,
                             fontWeight: FontWeight.w700,
                             color: AppColors.darkGray),
                       ),
                       Text(
                         "Cancel",
                         style: satoshiRegular.copyWith(
-                            fontSize: Dimensions.dp14,
+                            fontSize: Dimensions.dp14.sp,
                             fontWeight: FontWeight.w700,
                             color: AppColors.primaryColor),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 19,
                   ),
                   Row(
@@ -263,7 +264,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                       Text(
                         "Adults",
                         style: satoshiRegular.copyWith(
-                            fontSize: Dimensions.dp18,
+                            fontSize: Dimensions.dp18.sp,
                             fontWeight: FontWeight.w500,
                             color: AppColors.darkGray),
                       ),
@@ -280,7 +281,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                               height: 15,
                               width: 15,
                               color: AppColors.lightGrey,
-                              child: Center(
+                              child: const Center(
                                 child: Icon(
                                   Icons.remove,
                                   size: 12,
@@ -294,7 +295,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                             child: Text(
                               "$adultsCount",
                               style: satoshiRegular.copyWith(
-                                  fontSize: Dimensions.dp16,
+                                  fontSize: Dimensions.dp16.sp,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.darkGray),
                             ),
@@ -310,7 +311,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                               height: 15,
                               width: 15,
                               color: AppColors.primaryColor,
-                              child: Center(
+                              child: const Center(
                                 child: Icon(
                                   Icons.add,
                                   size: 12,
@@ -323,7 +324,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 27,
                   ),
                   Row(
@@ -332,7 +333,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                       Text(
                         "Kids",
                         style: satoshiRegular.copyWith(
-                            fontSize: Dimensions.dp18,
+                            fontSize: Dimensions.dp18.sp,
                             fontWeight: FontWeight.w500,
                             color: AppColors.darkGray),
                       ),
@@ -349,7 +350,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                               height: 15,
                               width: 15,
                               color: AppColors.lightGrey,
-                              child: Center(
+                              child: const Center(
                                 child: Icon(
                                   Icons.remove,
                                   size: 12,
@@ -363,7 +364,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                             child: Text(
                               "$kidsCount",
                               style: satoshiRegular.copyWith(
-                                  fontSize: Dimensions.dp16,
+                                  fontSize: Dimensions.dp16.sp,
                                   fontWeight: FontWeight.w500,
                                   color: AppColors.darkGray),
                             ),
@@ -377,7 +378,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                               height: 15,
                               width: 15,
                               color: AppColors.primaryColor,
-                              child: Center(
+                              child: const Center(
                                 child: Icon(
                                   Icons.add,
                                   size: 12,
@@ -401,7 +402,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                         Navigator.pop(context);
                       },
                       style: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp18,
+                          fontSize: Dimensions.dp18.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                       height: Dimensions.dp53,

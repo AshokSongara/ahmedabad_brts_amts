@@ -4,8 +4,8 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobile_number_login_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/dashboard_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/lrf/signup_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/splash_screen.dart';
-import 'package:ahmedabad_brts_amts/presentation/pages/nearby/nearby_sreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +15,7 @@ import 'package:get/get.dart';
 import 'core/theme/dark_theme_data.dart';
 import 'helper/route_helper.dart';
 import 'injection_container.dart' as di;
-import 'presentation/pages/payment_details/payment_details_screen.dart';
+import 'presentation/blocs/verify_otp/verify_otp_bloc.dart';
 import 'utils/app_colors.dart';
 
 void main() async {
@@ -41,6 +41,9 @@ void main() async {
         BlocProvider<MobileNumberLoginBloc>(
           create: (context) => injector<MobileNumberLoginBloc>(),
         ),
+        BlocProvider<VerifyOtpBloc>(
+          create: (context) => injector<VerifyOtpBloc>(),
+        ),
       ],
       child: MyApp(),
     ),
@@ -58,7 +61,7 @@ class MyApp extends StatelessWidget {
           theme: darkThemeData,
           themeMode: ThemeMode.dark,
           darkTheme: darkThemeData,
-          home: DashboardScreen(pageIndex: 0,),
+          home: const SplashScreen(),
           initialRoute: RouteHelper.getInitialRoute(),
           getPages: RouteHelper.routes,
         );

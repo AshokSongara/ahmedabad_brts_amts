@@ -3,6 +3,7 @@ import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class SourceDestinationWidget extends StatefulWidget {
@@ -60,7 +61,7 @@ class _SourceDestinationWidgetState extends State<SourceDestinationWidget> {
                             Text(
                               widget.contentTitle,
                               style: satoshiRegular.copyWith(
-                                  fontSize: Dimensions.dp18,
+                                  fontSize: Dimensions.dp18.sp,
                                   fontWeight: FontWeight.w700,
                                   color: AppColors.darkGray),
                             ),
@@ -69,7 +70,7 @@ class _SourceDestinationWidgetState extends State<SourceDestinationWidget> {
                               overflow: TextOverflow.fade,
                               maxLines: 1,
                               style: satoshiRegular.copyWith(
-                                  fontSize: Dimensions.dp12,
+                                  fontSize: Dimensions.dp12.sp,
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.darkGray),
                             ),
@@ -94,7 +95,7 @@ class _SourceDestinationWidgetState extends State<SourceDestinationWidget> {
                 style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w400,
-                    fontSize: Dimensions.dp14),
+                    fontSize: Dimensions.dp14.sp),
               ),
             )),
       ],

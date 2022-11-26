@@ -9,25 +9,6 @@ class AppConstant {
   static String loginWithMobile = "Login with Mobile Number";
   static String loginWithGuest = "Login as Guest";
 
-  //TODO Remove
-  // 1) http://localhost:5000/User/otp/generate
-  // 2) http://localhost:5000/User/sign-in/otp
-  // 3) http://localhost:5000/User/{userId}/activate/{activate}
-  // 4) http://localhost:5000/User
-  // 5) http://localhost:5000/User/{userId}
-  // 6) http://localhost:5000/User/{userId}
-  // 7) http://localhost:5000/User/{userId}
-  // 8) http://localhost:5000/User/{userId}/confirm-email
-  // 9) http://localhost:5000/User/forgot-password
-  // 10) http://localhost:5000/User/reset-password
-  // 11) http://localhost:5000/User/search
-  // 12) http://localhost:5000/User/sign-in
-  // 13) http://localhost:5000/User/sign-out
-  // 14) http://localhost:5000/User/{userId}/unlock
-  // 15) http://localhost:5000/User/refresh-token
-  // 15) http://localhost:5000/NearMe
-  //Login Register End Points
-
   //APIs End Points
   static String registerInterface = "User";
   static String loginInterface = "User/sign-in";
@@ -35,8 +16,13 @@ class AppConstant {
   static String resendOtpInterface = "ReSendOTPCustomer";
   static String updateFirebaseInterface = "UpdateCustomer_Firebaseid";
   static String userOtp = "User/otp/generate";
+  static String verifyOtp = "User/sign-in/otp";
   static String nearMeInterface = "NearMe";
 
+
+  //SharedPreferences Keys
+  static String accessToken = "accessToken";
+  static String email = "email";
 
   static List<TextDto> orderList = [
     TextDto("Your order has been placed", "+ 11 Stops"),

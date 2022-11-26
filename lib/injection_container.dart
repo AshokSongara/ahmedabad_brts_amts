@@ -7,10 +7,12 @@ import 'package:ahmedabad_brts_amts/domain/usecases/route/nearme_route_usecase.d
 import 'package:ahmedabad_brts_amts/domain/usecases/user/login_user_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/mobile_number_login_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/signup_user_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/user/verify_otp_usecase.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/logic_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobile_number_login_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/verify_otp/verify_otp_bloc.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -39,6 +41,9 @@ Future<void> init() async {
   injector.registerFactory<NearMeBloc>(
     () => NearMeBloc(nearmeRouteUseCase: injector()),
   );
+  injector.registerFactory<VerifyOtpBloc>(
+    () => VerifyOtpBloc(verifyOtpUseCase: injector()),
+  );
 
   injector.registerLazySingleton(() => SignupUserUseCase(injector()));
 
@@ -47,6 +52,8 @@ Future<void> init() async {
   injector.registerLazySingleton(() => MobileNumberLoginUseCase(injector()));
 
   injector.registerLazySingleton(() => NearmeRouteUseCase(injector()));
+
+  injector.registerLazySingleton(() => VerifyOtpUseCase(injector()));
 
   injector.registerLazySingleton<UserRepository>(
     () => UserRepositoryImpl(

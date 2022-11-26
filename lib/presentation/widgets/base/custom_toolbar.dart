@@ -12,8 +12,8 @@ class CustomToolbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: Dimensions.dp15, right: Dimensions.dp20),
-      padding: EdgeInsets.only(top: Dimensions.dp10, bottom: Dimensions.dp10),
+      margin: const EdgeInsets.only(left: Dimensions.dp15, right: Dimensions.dp20),
+      padding: const EdgeInsets.only(top: Dimensions.dp10, bottom: Dimensions.dp10),
       child: Row(
         children: [
           SvgPicture.asset(ImageConstant.iLeftArrow),

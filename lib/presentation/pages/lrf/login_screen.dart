@@ -10,14 +10,17 @@ import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.da
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_text_field.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/password_text_field.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
+import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:ahmedabad_brts_amts/utils/app_util.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -46,7 +49,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Loader.show(context);
             } else if (state is LoginSuccessState) {
               Loader.hide();
-              Get.toNamed(RouteHelper.dashboard);
+              saveMemberID(state.loginResponse.accessToken,state.loginResponse.email);
             } else {
               Loader.hide();
               showCustomSnackBar("Something Went Wrong Try again..!", context,
@@ -69,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: Dimensions.dp20,
                 ),
                 Column(
@@ -77,23 +80,23 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Container(
-                      margin: EdgeInsets.only(left: Dimensions.dp25),
+                      margin: const EdgeInsets.only(left: Dimensions.dp25),
                       child: Row(children: [
                         SvgPicture.asset(ImageConstant.iLeftArrow),
                         Text(
                           "Login",
                           style: satoshiRegular.copyWith(
-                              fontSize: 20,
+                              fontSize: 20.sp,
                               fontWeight: FontWeight.w700,
                               color: AppColors.darkGray),
                         ),
                       ]),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: Dimensions.dp20,
                     ),
                     Container(
-                      margin: EdgeInsets.only(
+                      margin: const EdgeInsets.only(
                           left: Dimensions.dp35, right: Dimensions.dp35),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Text(
                             "Email",
                             style: satoshiRegular.copyWith(
-                                fontSize: 15,
+                                fontSize: 15.sp,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.darkGray),
                           ),
@@ -118,13 +121,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             divider: false,
                             hintText: "johndoe@gmail.com",
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: Dimensions.dp20,
                           ),
                           Text(
                             "Password",
                             style: satoshiRegular.copyWith(
-                                fontSize: 15,
+                                fontSize: 15.sp,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.darkGray),
                           ),
@@ -142,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             divider: false,
                             hintText: "******",
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: Dimensions.dp75,
                           ),
                           Container(
@@ -173,11 +176,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                 }
                               },
                               style: poppinsMedium.copyWith(
-                                  color: Colors.white, fontSize: 15),
+                                  color: Colors.white, fontSize: 15.sp),
                               height: 53,
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: Dimensions.dp25,
                           ),
                           Center(
@@ -185,24 +188,24 @@ class _LoginScreenState extends State<LoginScreen> {
                               text: TextSpan(
                                 text: "Forgot Your Password?",
                                 style: satoshiRegular.copyWith(
-                                    fontSize: 14, color: AppColors.darkGray),
+                                    fontSize: 14.sp, color: AppColors.darkGray),
                                 children: <TextSpan>[
                                   TextSpan(
                                       text: " ",
                                       style: satoshiRegular.copyWith(
-                                          fontSize: 14,
+                                          fontSize: 14.sp,
                                           fontWeight: FontWeight.w700)),
                                   TextSpan(
                                       text: "Click Here",
                                       style: satoshiRegular.copyWith(
                                           color: AppColors.primaryColor,
-                                          fontSize: 14,
+                                          fontSize: 14.sp,
                                           fontWeight: FontWeight.w700)),
                                 ],
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: Dimensions.dp20,
                           ),
                           Center(
@@ -215,13 +218,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                   TextSpan(
                                       text: " ",
                                       style: satoshiRegular.copyWith(
-                                          fontSize: 14,
+                                          fontSize: 14.sp,
                                           fontWeight: FontWeight.w700)),
                                   TextSpan(
                                       text: "Sign Up",
                                       style: satoshiRegular.copyWith(
                                           color: AppColors.primaryColor,
-                                          fontSize: 14,
+                                          fontSize: 14.sp,
                                           fontWeight: FontWeight.w700)),
                                 ],
                               ),
@@ -238,5 +241,12 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  saveMemberID(String? token,String? email) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(AppConstant.accessToken, token ?? "");
+    prefs.setString(AppConstant.email, email ?? "");
+    Get.toNamed(RouteHelper.dashboard);
   }
 }

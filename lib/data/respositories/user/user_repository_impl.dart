@@ -3,9 +3,11 @@ import 'dart:math';
 
 import 'package:ahmedabad_brts_amts/api/api_client.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/mobile_number_otp_request_param.dart';
+import 'package:ahmedabad_brts_amts/data/requestmodels/otp_request.dart';
 import 'package:ahmedabad_brts_amts/data/responseModels/signup_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/login_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/mobile_number_otp_response_entity.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/verify_otp_response.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:get/get.dart';
@@ -39,7 +41,6 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<SignUpResponse> signupUser(body) async {
-
     Map data = {
       'firstName': body.name ?? "",
       'lastName': "",
@@ -75,5 +76,24 @@ class UserRepositoryImpl implements UserRepository {
     try {} on Exception catch (exception) {
     } catch (error) {}
     return loginResponse;
+  }
+
+  @override
+  Future<VerifyOtpResponse> verifyOtp(OtpRequest body) async {
+    Map data = {
+      'phoneNumber': body.phoneNumber ?? "",
+      'otp': body.otp ?? "",
+    };
+
+    var bodyData = json.encode(data);
+
+    Response response =
+        await apiClient.postData(AppConstant.verifyOtp, bodyData);
+    VerifyOtpResponse verifyOtpResponse =
+        VerifyOtpResponse.fromJson(response.body);
+
+    try {} on Exception catch (exception) {
+    } catch (error) {}
+    return verifyOtpResponse;
   }
 }

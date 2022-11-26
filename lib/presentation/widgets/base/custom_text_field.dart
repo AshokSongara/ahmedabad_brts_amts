@@ -2,6 +2,7 @@ import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomTextField extends StatefulWidget {
   final String hintText;
@@ -56,15 +57,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
           padding: const EdgeInsets.only(right: 17),
           child: TextField(
             decoration: InputDecoration(
-                enabledBorder: UnderlineInputBorder(
+                enabledBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: AppColors.lightGray),
                 ),
-                focusedBorder: UnderlineInputBorder(
+                focusedBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: AppColors.lightGray),
                 ),
                 hintText: widget.hintText,
                 hintStyle: satoshiRegular.copyWith(
-                    fontSize: 14, color: AppColors.lightGray)),
+                    fontSize: 14.sp, color: AppColors.lightGray)),
             maxLines: widget.maxLines,
             controller: widget.controller,
             focusNode: widget.focusNode,

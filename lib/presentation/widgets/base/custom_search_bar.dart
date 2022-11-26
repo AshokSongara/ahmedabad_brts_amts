@@ -42,7 +42,7 @@ class CustomSearchBar extends StatefulWidget {
       this.prefixSize = 14,
       this.divider = false,
       this.textAlign = TextAlign.start,
-      this.hintStyle = satoshiRegularSmall,
+      required this.hintStyle,
       this.fillColor = Colors.transparent,
       this.radius = 0});
 
@@ -76,10 +76,10 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
                 ]
               : null,
           decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(vertical: 10.0),
+            contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(widget.radius)),
-              borderSide: BorderSide(
+              borderSide: const BorderSide(
                 width: 0,
                 style: BorderStyle.none,
               ),
@@ -114,9 +114,9 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
           onChanged: (text) => widget.onChanged(text),
         ),
         widget.divider
-            ? Padding(
+            ? const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8), child: Divider())
-            : SizedBox(),
+            : const SizedBox(),
       ],
     );
   }

@@ -2,6 +2,7 @@ library numeric_keyboard;
 
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 typedef KeyboardTapCallback = void Function(String text);
 
@@ -116,7 +117,7 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
           child: Text(
             value,
             style: TextStyle(
-                fontSize: 25,
+                fontSize: 25.sp,
                 fontFamily: 'Poppins',
                 fontWeight: FontWeight.w600,
                 color: AppColors.darkGray),

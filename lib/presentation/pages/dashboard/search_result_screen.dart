@@ -3,11 +3,7 @@ import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dar
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/route_title_widget.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/search_result_item.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
-import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
-import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
-import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class SearchResultScreen extends StatefulWidget {

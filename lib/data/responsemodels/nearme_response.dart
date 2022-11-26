@@ -1,15 +1,15 @@
 class NearMeResponse {
   int? statusCode;
-  List<Nearme>? nearme;
+  List<NearByMe>? nearByMe;
 
-  NearMeResponse({this.statusCode, this.nearme});
+  NearMeResponse({this.statusCode, this.nearByMe});
 
   NearMeResponse.fromJson(Map<String, dynamic> json) {
     statusCode = json['statusCode'];
-    if (json['nearme'] != null) {
-      nearme = <Nearme>[];
-      json['nearme'].forEach((v) {
-        nearme!.add(new Nearme.fromJson(v));
+    if (json['nearByMe'] != null) {
+      nearByMe = <NearByMe>[];
+      json['nearByMe'].forEach((v) {
+        nearByMe!.add(new NearByMe.fromJson(v));
       });
     }
   }
@@ -17,14 +17,14 @@ class NearMeResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['statusCode'] = this.statusCode;
-    if (this.nearme != null) {
-      data['nearme'] = this.nearme!.map((v) => v.toJson()).toList();
+    if (this.nearByMe != null) {
+      data['nearByMe'] = this.nearByMe!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Nearme {
+class NearByMe {
   String? stationCode;
   String? stopCode;
   String? stopName;
@@ -34,7 +34,7 @@ class Nearme {
   double? distance;
   int? statusCode;
 
-  Nearme(
+  NearByMe(
       {this.stationCode,
         this.stopCode,
         this.stopName,
@@ -44,7 +44,7 @@ class Nearme {
         this.distance,
         this.statusCode});
 
-  Nearme.fromJson(Map<String, dynamic> json) {
+  NearByMe.fromJson(Map<String, dynamic> json) {
     stationCode = json['stationCode'];
     stopCode = json['stopCode'];
     stopName = json['stopName'];

@@ -10,6 +10,7 @@ import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import '../../../core/loader/overylay_loader.dart';
@@ -24,7 +25,7 @@ class MobileNumberScreen extends StatefulWidget {
 class _MobileNumberScreenState extends State<MobileNumberScreen> {
   final _mobileController = TextEditingController();
   final FocusNode _mobileFocus = FocusNode();
-  String _mobile = "";
+  late String _mobile;
 
   @override
   void initState() {
@@ -56,14 +57,14 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: Dimensions.dp30,
           ),
           BlocConsumer<MobileNumberLoginBloc, MobileNumberLoginState>(
               listener: (BuildContext context, state) {
             if (state is MobileNumberLoginSuccessState) {
               Loader.hide();
-              Get.toNamed(RouteHelper.getEnterCodeRoute());
+              Get.toNamed(RouteHelper.getEnterCodeRoute(_mobileController.text.toString()));
             } else if (state is MobileNumberLoginErrorState) {
               Loader.hide();
               debugPrint("Api Call Error");
@@ -71,7 +72,7 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
               Loader.show(context);
             } else if (state is MobileNumberValidationErrorState) {
               Loader.hide();
-               debugPrint("Validation Error");
+              debugPrint("Validation Error");
             }
           }, builder: (context, state) {
             return Column(
@@ -81,16 +82,16 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                 Text(
                   "Welcome to AMTS - BRTS",
                   style: satoshiRegular.copyWith(
-                      fontSize: 20,
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColors.darkGray),
                 ),
                 Text(
                   "We will send an OTP on this mobile number.",
                   style: satoshiRegular.copyWith(
-                      fontSize: 14, color: AppColors.gray555555),
+                      fontSize: 14.sp, color: AppColors.gray555555),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: Dimensions.dp20,
                 ),
                 Container(
@@ -114,8 +115,8 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                       LengthLimitingTextInputFormatter(10),
                     ],
                     keyboardType: TextInputType.none,
-                    style: const TextStyle(
-                      fontSize: 17.0,
+                    style: TextStyle(
+                      fontSize: 17.0.sp,
                       color: Colors.black,
                     ),
                     decoration: InputDecoration(
@@ -130,13 +131,13 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                           satoshiRegular.copyWith(color: AppColors.grayC4C$C$),
                       contentPadding: const EdgeInsets.only(
                           top: 8.0, bottom: 8.0, left: 10.0, right: 10.0),
-                      focusedBorder: OutlineInputBorder(
+                      focusedBorder: const OutlineInputBorder(
                         borderSide:
-                            const BorderSide(color: AppColors.primaryColor),
+                            BorderSide(color: AppColors.primaryColor),
                       ),
-                      enabledBorder: OutlineInputBorder(
+                      enabledBorder: const OutlineInputBorder(
                         borderSide:
-                            const BorderSide(color: AppColors.primaryColor),
+                            BorderSide(color: AppColors.primaryColor),
                       ),
                     ),
                     validator: (mobile) {
@@ -152,7 +153,7 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                     textInputAction: TextInputAction.next,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: Dimensions.dp30,
                 ),
                 NumericKeyboard(
@@ -164,7 +165,7 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                           .substring(0, _mobileController.text.length - 1);
                     });
                   },
-                  rightIcon: Icon(
+                  rightIcon: const Icon(
                     Icons.backspace,
                     color: AppColors.primaryColor,
                   ),
@@ -184,8 +185,8 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                   BlocProvider.of<MobileNumberLoginBloc>(context)
                       .add(PhoneNumberSubmitEvent(_mobileController.text));
                 },
-                style:
-                    poppinsMedium.copyWith(color: Colors.white, fontSize: 15),
+                style: poppinsMedium.copyWith(
+                    color: Colors.white, fontSize: 15.sp),
                 height: 53,
               ),
             ),

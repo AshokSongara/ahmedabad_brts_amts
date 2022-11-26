@@ -22,7 +22,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
       backgroundColor: AppColors.appBackground2,
       body: Column(
         children: [
-          SizedBox(height: Dimensions.dp25),
+          const SizedBox(height: Dimensions.dp25),
           CustomToolbar(
             title: "Payment Details",
             showOption: false,
@@ -31,7 +31,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(right: 43, left: 39),
                   ),
                   Container(
@@ -58,7 +58,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                     Text(
                                       "Adalaj Gam",
                                       style: satoshiRegular.copyWith(
-                                          fontSize: Dimensions.dp16,
+                                          fontSize: Dimensions.dp16.sp,
                                           fontWeight: FontWeight.w500,
                                           color: AppColors.darkGray),
                                     ),
@@ -66,7 +66,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                     Text(
                                       "Ahm Airport",
                                       style: satoshiRegular.copyWith(
-                                          fontSize: Dimensions.dp16,
+                                          fontSize: Dimensions.dp16.sp,
                                           fontWeight: FontWeight.w500,
                                           color: AppColors.darkGray),
                                     ),
@@ -79,14 +79,14 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                     Text(
                                       "Route Number",
                                       style: satoshiRegular.copyWith(
-                                          fontSize: Dimensions.dp12,
+                                          fontSize: Dimensions.dp12.sp,
                                           fontWeight: FontWeight.w500,
                                           color: AppColors.lightGray),
                                     ),
                                     Text(
                                       "Bus Service",
                                       style: satoshiRegular.copyWith(
-                                          fontSize: Dimensions.dp12,
+                                          fontSize: Dimensions.dp12.sp,
                                           fontWeight: FontWeight.w500,
                                           color: AppColors.lightGray),
                                     ),
@@ -107,17 +107,17 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                             width: 14.w,
                                             height: 16.h,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 5,
                                           ),
                                           Text(
                                             "4U",
                                             style: satoshiRegular.copyWith(
-                                                fontSize: Dimensions.dp14,
+                                                fontSize: Dimensions.dp14.sp,
                                                 fontWeight: FontWeight.w700,
                                                 color: AppColors.darkGray),
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 5,
                                           ),
                                           SvgPicture.asset(
@@ -126,7 +126,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                             width: 14.w,
                                             height: 14.h,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 5,
                                           ),
                                           SvgPicture.asset(
@@ -135,13 +135,13 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                             width: 14.w,
                                             height: 16.h,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 5,
                                           ),
                                           Text(
                                             "18S",
                                             style: satoshiRegular.copyWith(
-                                                fontSize: Dimensions.dp14,
+                                                fontSize: Dimensions.dp14.sp,
                                                 fontWeight: FontWeight.w700,
                                                 color: AppColors.darkGray),
                                           ),
@@ -150,7 +150,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                       Text(
                                         "AMTS",
                                         style: satoshiRegular.copyWith(
-                                            fontSize: Dimensions.dp14,
+                                            fontSize: Dimensions.dp14.sp,
                                             fontWeight: FontWeight.w700,
                                             color: AppColors.darkGray),
                                       ),
@@ -168,7 +168,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                     child: Text(
                                       "Boarding Point",
                                       style: satoshiRegular.copyWith(
-                                          fontSize: Dimensions.dp12,
+                                          fontSize: Dimensions.dp12.sp,
                                           fontWeight: FontWeight.w500,
                                           color: AppColors.lightGray),
                                     ),
@@ -184,14 +184,14 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                         Text(
                                           "Adalaj Gam",
                                           style: satoshiRegular.copyWith(
-                                              fontSize: Dimensions.dp14,
+                                              fontSize: Dimensions.dp14.sp,
                                               fontWeight: FontWeight.w500,
                                               color: AppColors.darkGray),
                                         ),
                                         Text(
                                           "15 Oct 2022, 09:34 PM",
                                           style: satoshiRegular.copyWith(
-                                              fontSize: Dimensions.dp14,
+                                              fontSize: Dimensions.dp14.sp,
                                               fontWeight: FontWeight.w500,
                                               color: AppColors.darkGray),
                                         ),
@@ -199,13 +199,13 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(top: 8),
+                                    padding: const EdgeInsets.only(top: 8),
                                     child: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
                                         "Dropping Point",
                                         style: satoshiRegular.copyWith(
-                                            fontSize: Dimensions.dp12,
+                                            fontSize: Dimensions.dp12.sp,
                                             fontWeight: FontWeight.w500,
                                             color: AppColors.lightGray),
                                       ),
@@ -222,14 +222,14 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                         Text(
                                           "Ahm Airport",
                                           style: satoshiRegular.copyWith(
-                                              fontSize: Dimensions.dp14,
+                                              fontSize: Dimensions.dp14.sp,
                                               fontWeight: FontWeight.w500,
                                               color: AppColors.darkGray),
                                         ),
                                         Text(
                                           "15 Oct 2022, 10:54 PM",
                                           style: satoshiRegular.copyWith(
-                                              fontSize: Dimensions.dp14,
+                                              fontSize: Dimensions.dp14.sp,
                                               fontWeight: FontWeight.w500,
                                               color: AppColors.darkGray),
                                         ),
@@ -248,7 +248,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                     child: Text(
                                       "Travellers",
                                       style: satoshiRegular.copyWith(
-                                          fontSize: Dimensions.dp12,
+                                          fontSize: Dimensions.dp12.sp,
                                           fontWeight: FontWeight.w500,
                                           color: AppColors.lightGray),
                                     ),
@@ -262,23 +262,23 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                           width: 24,
                                           height: 24,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 12,
                                         ),
                                         Text(
                                           "Amit Yogi",
                                           style: satoshiRegular.copyWith(
-                                              fontSize: Dimensions.dp16,
+                                              fontSize: Dimensions.dp16.sp,
                                               fontWeight: FontWeight.w400,
                                               color: AppColors.darkGray),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 28,
                                         ),
                                         Text(
                                           "28 yrs",
                                           style: satoshiRegular.copyWith(
-                                              fontSize: Dimensions.dp16,
+                                              fontSize: Dimensions.dp16.sp,
                                               fontWeight: FontWeight.w400,
                                               color: AppColors.darkGray),
                                         )
@@ -300,14 +300,14 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                       Text(
                                         "Total Fare (For 1 seat)",
                                         style: satoshiRegular.copyWith(
-                                            fontSize: Dimensions.dp14,
+                                            fontSize: Dimensions.dp14.sp,
                                             fontWeight: FontWeight.w500,
                                             color: AppColors.darkGray),
                                       ),
                                       Text(
                                         "₹50.00",
                                         style: satoshiRegular.copyWith(
-                                            fontSize: Dimensions.dp14,
+                                            fontSize: Dimensions.dp14.sp,
                                             fontWeight: FontWeight.w500,
                                             color: AppColors.darkGray),
                                       ),
@@ -321,14 +321,14 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                       Text(
                                         "GST Amount",
                                         style: satoshiRegular.copyWith(
-                                            fontSize: Dimensions.dp14,
+                                            fontSize: Dimensions.dp14.sp,
                                             fontWeight: FontWeight.w500,
                                             color: AppColors.darkGray),
                                       ),
                                       Text(
                                         "₹10.00",
                                         style: satoshiRegular.copyWith(
-                                            fontSize: Dimensions.dp14,
+                                            fontSize: Dimensions.dp14.sp,
                                             fontWeight: FontWeight.w500,
                                             color: AppColors.darkGray),
                                       ),
@@ -342,14 +342,14 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                       Text(
                                         "Free cancellation charge",
                                         style: satoshiRegular.copyWith(
-                                            fontSize: Dimensions.dp14,
+                                            fontSize: Dimensions.dp14.sp,
                                             fontWeight: FontWeight.w500,
                                             color: AppColors.darkGray),
                                       ),
                                       Text(
                                         "₹60.00",
                                         style: satoshiRegular.copyWith(
-                                            fontSize: Dimensions.dp14,
+                                            fontSize: Dimensions.dp14.sp,
                                             fontWeight: FontWeight.w500,
                                             color: AppColors.darkGray),
                                       ),
@@ -371,7 +371,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                       Text(
                                         "Net Payable",
                                         style: satoshiRegular.copyWith(
-                                            fontSize: Dimensions.dp14,
+                                            fontSize: Dimensions.dp14.sp,
                                             fontWeight: FontWeight.w700,
                                             color: AppColors.darkGray),
                                       ),
@@ -384,7 +384,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                       Text(
                                         "₹60.00",
                                         style: satoshiRegular.copyWith(
-                                            fontSize: Dimensions.dp14,
+                                            fontSize: Dimensions.dp14.sp,
                                             fontWeight: FontWeight.w700,
                                             color: AppColors.primaryColor),
                                       ),
@@ -398,7 +398,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                 ],

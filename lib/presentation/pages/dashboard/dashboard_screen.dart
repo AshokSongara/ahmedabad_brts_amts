@@ -6,6 +6,7 @@ import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DashboardScreen extends StatefulWidget {
   DashboardScreen({Key? key, required this.pageIndex}) : super(key: key);
@@ -49,18 +50,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
             return Future.value(true);
           },
           child: PageView(
-            children: [
-              HomeScreen(),
-              BookingScreen(),
-              NotificationScreen(),
-              ProfileScreen()
-            ],
             controller: _pageController,
             onPageChanged: (page) {
               setState(() {
                 _pageIndex = page;
               });
             },
+            children: const [
+              HomeScreen(),
+              BookingScreen(),
+              NotificationScreen(),
+              ProfileScreen()
+            ],
           ),
         ),
         bottomNavigationBar: Theme(
@@ -69,9 +70,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
               primaryColor: AppColors.primaryColor,
               textTheme: Theme.of(context)
                   .textTheme
-                  .copyWith(caption: TextStyle(color: Colors.white30))),
+                  .copyWith(caption: const TextStyle(color: Colors.white30))),
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.transparent,
               backgroundBlendMode: BlendMode.clear,
               borderRadius: BorderRadius.only(
@@ -92,57 +93,57 @@ class _DashboardScreenState extends State<DashboardScreen> {
               unselectedLabelStyle: satoshiRegular.copyWith(
                   fontWeight: FontWeight.w400,
                   color: AppColors.primaryColor,
-                  fontSize: 13
+                  fontSize: 13.sp
               ),
               selectedLabelStyle: satoshiRegular.copyWith(
                   fontWeight: FontWeight.w400,
                   color: AppColors.primaryColor,
-                  fontSize: 13),
+                  fontSize: 13.sp),
               items: [
                 BottomNavigationBarItem(
                   icon: _pageIndex == 0
-                      ? Padding(
-                        padding: const EdgeInsets.all(4.0),
+                      ? const Padding(
+                        padding: EdgeInsets.all(4.0),
                         child: ImageIcon(AssetImage(ImageConstant.iHome)),
                       )
-                      : Padding(
-                        padding: const EdgeInsets.all(4.0),
+                      : const Padding(
+                        padding: EdgeInsets.all(4.0),
                         child: ImageIcon(AssetImage(ImageConstant.iHome)),
                       ),
                   label: "Home",
                 ),
                 BottomNavigationBarItem(
                   icon: _pageIndex == 1
-                      ? Padding(
-                        padding: const EdgeInsets.all(4.0),
+                      ? const Padding(
+                        padding: EdgeInsets.all(4.0),
                         child: ImageIcon(AssetImage(ImageConstant.iBooking)),
                       )
-                      : Padding(
-                        padding: const EdgeInsets.all(4.0),
+                      : const Padding(
+                        padding: EdgeInsets.all(4.0),
                         child: ImageIcon(AssetImage(ImageConstant.iBooking)),
                       ),
                   label: "Booking",
                 ),
                 BottomNavigationBarItem(
                   icon: _pageIndex == 2
-                      ? Padding(
-                        padding: const EdgeInsets.all(4.0),
+                      ? const Padding(
+                        padding: EdgeInsets.all(4.0),
                         child: ImageIcon(AssetImage(ImageConstant.iNotification)),
                       )
-                      : Padding(
-                        padding: const EdgeInsets.all(4.0),
+                      : const Padding(
+                        padding: EdgeInsets.all(4.0),
                         child: ImageIcon(AssetImage(ImageConstant.iNotification)),
                       ),
                   label: "Notification",
                 ),
                 BottomNavigationBarItem(
                     icon: _pageIndex == 3
-                        ? Padding(
-                          padding: const EdgeInsets.all(4.0),
+                        ? const Padding(
+                          padding: EdgeInsets.all(4.0),
                           child: ImageIcon(AssetImage(ImageConstant.iProfile)),
                         )
-                        : Padding(
-                          padding: const EdgeInsets.all(4.0),
+                        : const Padding(
+                          padding: EdgeInsets.all(4.0),
                           child: ImageIcon(AssetImage(ImageConstant.iProfile)),
                         ),
                     label: "Profile")
@@ -159,7 +160,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     setState(() {
       _pageIndex = index;
       _pageController.animateToPage(index,
-          duration: Duration(milliseconds: 500), curve: Curves.ease);
+          duration: const Duration(milliseconds: 500), curve: Curves.ease);
     });
   }
 }

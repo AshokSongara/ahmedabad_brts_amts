@@ -4,6 +4,7 @@ import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class OrderTracker extends StatefulWidget {
@@ -179,7 +180,7 @@ class _OrderTrackerState extends State<OrderTracker>
           children: [
             Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 40,
                 ),
                 Container(
@@ -204,7 +205,7 @@ class _OrderTrackerState extends State<OrderTracker>
                   width: 40,
                   child: Row(children: [
                     SvgPicture.asset(ImageConstant.iRedBus),
-                    SizedBox(
+                    const SizedBox(
                       width: 3,
                     ),
                     Text(
@@ -250,7 +251,7 @@ class _OrderTrackerState extends State<OrderTracker>
                               widget.orderTitleAndDateList?[index].date ?? "",
                               style: satoshiSmall.copyWith(
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 13,
+                                  fontSize: 13.sp,
                                   color: AppColors.primaryColor),
                             )
                           ],
@@ -276,7 +277,7 @@ class _OrderTrackerState extends State<OrderTracker>
           children: [
             Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 40,
                 ),
                 Container(
@@ -301,7 +302,7 @@ class _OrderTrackerState extends State<OrderTracker>
                   width: 40,
                   child: Row(children: [
                     SvgPicture.asset(ImageConstant.iRedBus),
-                    SizedBox(
+                    const SizedBox(
                       width: 3,
                     ),
                     Text(
@@ -347,7 +348,7 @@ class _OrderTrackerState extends State<OrderTracker>
                               widget.orderTitleAndDateList?[index].date ?? "",
                               style: satoshiSmall.copyWith(
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 13,
+                                  fontSize: 13.sp,
                                   color: AppColors.primaryColor),
                             )
                           ],
@@ -373,7 +374,7 @@ class _OrderTrackerState extends State<OrderTracker>
           children: [
             Row(
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 38,
                 ),
                 SizedBox(

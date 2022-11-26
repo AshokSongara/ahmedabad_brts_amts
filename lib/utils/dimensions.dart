@@ -1,7 +1,4 @@
-import 'package:get/get.dart';
-
 class Dimensions {
-  static const double PADDING_SIZE_SMALL = 10.0;
   static const double RADIUS_SMALL = 5.0;
   static const double dp75 = 75.0;
   static const double dp16 = 16.0;

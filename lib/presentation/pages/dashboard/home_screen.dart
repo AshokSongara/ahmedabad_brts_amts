@@ -6,6 +6,7 @@ import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -21,7 +22,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int selectedValue = 0;
   List<QuickLinkInternalModel> quickLinkList = [];
-  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -45,8 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
         endDrawer: Drawer(
           backgroundColor: AppColors.primaryColor,
           child: Padding(
-            padding:
-                EdgeInsets.only(top: Dimensions.dp24, left: Dimensions.dp43,right: Dimensions.dp43),
+            padding: const EdgeInsets.only(
+                top: Dimensions.dp24,
+                left: Dimensions.dp43,
+                right: Dimensions.dp43),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                       "My Routes",
                       style: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp19,
+                          fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
@@ -167,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                       "Transit Map",
                       style: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp19,
+                          fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
@@ -185,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                       "Transaction History",
                       style: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp19,
+                          fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
@@ -203,12 +206,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                       "Feedback",
                       style: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp19,
+                          fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
                     onTap: () {
-                      Navigator.pop(context);
+                      Get.toNamed(RouteHelper.getFeedbackRoute());
                     },
                   ),
                   ListTile(
@@ -221,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                       "Invite Friends",
                       style: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp19,
+                          fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
@@ -239,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                       "Contact Us",
                       style: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp19,
+                          fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
@@ -257,7 +260,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: Text(
                       "Signout",
                       style: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp19,
+                          fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
@@ -265,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.pop(context);
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: Dimensions.dp50,
                   )
                 ],
@@ -276,7 +279,7 @@ class _HomeScreenState extends State<HomeScreen> {
         body: ListView(
           // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: Dimensions.dp10,
             ),
             Row(
@@ -288,7 +291,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       left: Dimensions.dp20, right: Dimensions.dp30),
                   decoration: BoxDecoration(
                       boxShadow: [
-                        BoxShadow(
+                        const BoxShadow(
                           color: AppColors.gray6E8EE7,
                           blurRadius: 5.0,
                         ),
@@ -309,13 +312,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: selectedValue == 0
                                   ? AppColors.primaryColor
                                   : Colors.white,
-                              borderRadius: BorderRadius.all(
+                              borderRadius: const BorderRadius.all(
                                   Radius.circular(Dimensions.dp50))),
                           child: Center(
                             child: Text(
                               "AMTS",
                               style: satoshiRegular.copyWith(
-                                  fontSize: 12,
+                                  fontSize: 12.sp,
                                   fontWeight: FontWeight.w700,
                                   color: selectedValue == 0
                                       ? Colors.white
@@ -329,13 +332,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               color: selectedValue == 1
                                   ? AppColors.primaryColor
                                   : Colors.white,
-                              borderRadius: BorderRadius.all(
+                              borderRadius: const BorderRadius.all(
                                   Radius.circular(Dimensions.dp50))),
                           child: Center(
                             child: Text(
                               "BRTS",
                               style: satoshiRegular.copyWith(
-                                  fontSize: 12,
+                                  fontSize: 12.sp,
                                   fontWeight: FontWeight.w700,
                                   color: selectedValue == 1
                                       ? Colors.white
@@ -345,9 +348,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ]),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 Container(
-                    margin: EdgeInsets.only(right: Dimensions.dp20),
+                    margin: const EdgeInsets.only(right: Dimensions.dp20),
                     child: InkWell(
                         onTap: () {
                           _scaffoldKey.currentState!.openEndDrawer();
@@ -355,7 +358,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: SvgPicture.asset(ImageConstant.iMenu)))
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: Dimensions.dp20,
             ),
             Container(
@@ -364,18 +367,18 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text(
                 "Plan Your Trip",
                 style: satoshiRegular.copyWith(
-                    fontSize: 20,
+                    fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
                     color: AppColors.darkGray),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: Dimensions.dp15,
             ),
             Container(
               margin: const EdgeInsets.only(
                   left: Dimensions.dp20, right: Dimensions.dp30),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
@@ -397,14 +400,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Stack(
                         fit: StackFit.loose,
                         children: [
-                          SourceDestinationWidget(
+                          const SourceDestinationWidget(
                               title: "From",
                               content: "Ahmedabad Municipal Transport Service",
                               contentTitle: "Adalaj Gam",
                               svgImageFile: ImageConstant.iFromBus),
 
                           // SizedBox(height: 22,),
-                          Align(
+                          const Align(
                             alignment: Alignment.bottomCenter,
                             child: SourceDestinationWidget(
                                 title: "To",
@@ -425,7 +428,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: SvgPicture.asset(
                                       ImageConstant.iArrowDownUp),
                                 ),
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     border: Border.fromBorderSide(BorderSide(
                                       color: AppColors.gray6E8EE7,
@@ -439,7 +442,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top: Dimensions.dp20),
+                      padding: const EdgeInsets.only(top: Dimensions.dp20),
                       child: Row(
                         children: [
                           Expanded(
@@ -450,7 +453,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(
                                           Dimensions.dp10), // if you need this
-                                      side: BorderSide(
+                                      side: const BorderSide(
                                         color: AppColors.gray6E8EE7,
                                         width: 1,
                                       ),
@@ -474,7 +477,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               children: [
                                                 SvgPicture.asset(
                                                     ImageConstant.iCalendar),
-                                                SizedBox(
+                                                const SizedBox(
                                                   width: Dimensions.dp14,
                                                 ),
                                                 Expanded(
@@ -482,8 +485,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     "15/07/2022",
                                                     style:
                                                         satoshiRegular.copyWith(
-                                                            fontSize:
-                                                                Dimensions.dp16,
+                                                            fontSize: 16.sp,
                                                             fontWeight:
                                                                 FontWeight.w700,
                                                             color: AppColors
@@ -502,14 +504,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                       top: -3,
                                       child: Container(
                                         color: Colors.white,
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             horizontal: Dimensions.dp10),
                                         child: Text(
                                           "Departure",
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.w400,
-                                              fontSize: Dimensions.dp14),
+                                              fontSize: 14.sp),
                                         ),
                                       )),
                                 ],
@@ -522,7 +524,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(
                                         Dimensions.dp10), // if you need this
-                                    side: BorderSide(
+                                    side: const BorderSide(
                                       color: AppColors.gray6E8EE7,
                                       width: Dimensions.dp1,
                                     ),
@@ -546,7 +548,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             children: [
                                               SvgPicture.asset(
                                                   ImageConstant.iTime),
-                                              SizedBox(
+                                              const SizedBox(
                                                 width: Dimensions.dp14,
                                               ),
                                               Expanded(
@@ -554,8 +556,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   "09:10 AM",
                                                   style:
                                                       satoshiRegular.copyWith(
-                                                          fontSize:
-                                                              Dimensions.dp16,
+                                                          fontSize: 16.sp,
                                                           fontWeight:
                                                               FontWeight.w700,
                                                           color: AppColors
@@ -574,14 +575,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     top: -3,
                                     child: Container(
                                       color: Colors.white,
-                                      padding: EdgeInsets.symmetric(
+                                      padding: const EdgeInsets.symmetric(
                                           horizontal: Dimensions.dp10),
                                       child: Text(
                                         "Time",
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontWeight: FontWeight.w400,
-                                            fontSize: Dimensions.dp14),
+                                            fontSize: 14.sp),
                                       ),
                                     )),
                               ],
@@ -602,7 +603,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Get.toNamed(RouteHelper.getSearchResultRoute());
                         },
                         style: satoshiRegular.copyWith(
-                            fontSize: Dimensions.dp20,
+                            fontSize: 20.sp,
                             fontWeight: FontWeight.w700,
                             color: Colors.white),
                         height: Dimensions.dp53,
@@ -612,7 +613,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: Dimensions.dp18,
             ),
             Container(
@@ -621,7 +622,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Text(
                 "Quick Links",
                 style: satoshiRegular.copyWith(
-                    fontSize: Dimensions.dp20,
+                    fontSize: 20.sp,
                     fontWeight: FontWeight.w700,
                     color: AppColors.darkGray),
               ),
@@ -631,7 +632,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   left: Dimensions.dp20,
                   right: Dimensions.dp30,
                   top: Dimensions.dp16),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
@@ -644,11 +645,11 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Container(
                 height: 200,
                 width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.all(Dimensions.dp20),
+                padding: const EdgeInsets.all(Dimensions.dp20),
                 child: GridView.builder(
-                  physics: new NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: quickLinkList.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
                       crossAxisSpacing: Dimensions.dp10,
                       mainAxisSpacing: 10),
@@ -658,7 +659,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: Dimensions.dp40,
             )
           ],
@@ -666,25 +667,36 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget getGridItemWidget(QuickLinkInternalModel model) {
-    return Column(
-      children: [
-        SvgPicture.asset(
-          model.imagePath,
-          height: Dimensions.dp35,
-          width: Dimensions.dp35,
-        ),
-        SizedBox(
-          height: Dimensions.dp4,
-        ),
-        Text(
-          model.title,
-          textAlign: TextAlign.center,
-          style: satoshiRegular.copyWith(
-              fontSize: Dimensions.dp14,
-              fontWeight: FontWeight.w500,
-              color: AppColors.darkGray),
-        )
-      ],
+    return GestureDetector(
+      onTap: () {
+        if (model.title == "Feedback") {
+          Get.toNamed(RouteHelper.getFeedbackRoute());
+        } else if (model.title == "My Routes") {
+          Get.toNamed(RouteHelper.getMyRouteScreen());
+        } else if (model.title == "Stops") {
+          Get.toNamed(RouteHelper.getNearByRoute());
+        }
+      },
+      child: Column(
+        children: [
+          SvgPicture.asset(
+            model.imagePath,
+            height: Dimensions.dp35,
+            width: Dimensions.dp35,
+          ),
+          const SizedBox(
+            height: Dimensions.dp4,
+          ),
+          Text(
+            model.title,
+            textAlign: TextAlign.center,
+            style: satoshiRegular.copyWith(
+                fontSize: Dimensions.dp14.sp,
+                fontWeight: FontWeight.w500,
+                color: AppColors.darkGray),
+          )
+        ],
+      ),
     );
   }
 }

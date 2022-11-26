@@ -2,6 +2,7 @@ import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../data/responseModels/feedback_status_list_item.dart';
@@ -37,12 +38,12 @@ class _FeedBackStatusListState extends State<FeedBackStatusList> {
                 setState(() {});
               },
               child: Container(
-                margin: EdgeInsets.only(right: 5),
+                margin: const EdgeInsets.only(right: 5),
                 width: 65,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(color: AppColors.borderGrey),
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(
                       Dimensions.dp4,
                     ),
@@ -65,7 +66,7 @@ class _FeedBackStatusListState extends State<FeedBackStatusList> {
                         textAlign: TextAlign.center,
                         maxLines: 2,
                         style: poppinsRegularConst.copyWith(
-                            fontSize: Dimensions.dp10,
+                            fontSize: Dimensions.dp10.sp,
                             fontWeight: FontWeight.w500,
                             color: selectedIndex == index
                                 ? AppColors.primaryColor

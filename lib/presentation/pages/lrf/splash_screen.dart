@@ -1,12 +1,14 @@
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/round_container_widget.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
+import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../utils/image_constant.dart';
 
@@ -18,6 +20,14 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  String token = "";
+
+  @override
+  void initState() {
+    super.initState();
+    getMemberID();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +44,7 @@ class _SplashScreenState extends State<SplashScreen> {
               const SizedBox(
                 height: Dimensions.dp30,
               ),
-              const Text(
+              Text(
                 "Welcome!",
                 style: globalStyle,
               ),
@@ -50,7 +60,7 @@ class _SplashScreenState extends State<SplashScreen> {
               const SizedBox(
                 height: Dimensions.dp20,
               ),
-              const Text(
+              Text(
                 "Get started by creating your account",
                 style: satoshiRegular,
               ),
@@ -157,5 +167,13 @@ class _SplashScreenState extends State<SplashScreen> {
             ],
           ),
         ));
+  }
+
+  getMemberID() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    token = prefs.getString(AppConstant.accessToken) ?? "";
+    if (token.isNotEmpty) {
+      Get.toNamed(RouteHelper.dashboard);
+    }
   }
 }

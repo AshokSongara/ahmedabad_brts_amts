@@ -7,6 +7,7 @@ import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../widgets/base/order_tracker.dart';
@@ -24,10 +25,10 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
     return Scaffold(
       backgroundColor: AppColors.appBackground,
       body: Column(children: [
-        SizedBox(height: 25),
+        const SizedBox(height: 25),
         CustomToolbar(title: "Route Details"),
         Container(
-          padding: EdgeInsets.only(top: 15, bottom: 15),
+          padding: const EdgeInsets.only(top: 15, bottom: 15),
           color: Colors.white,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -37,18 +38,18 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                   Text(
                     "Start Time",
                     style: screenTitle.copyWith(
-                        fontWeight: FontWeight.w700, fontSize: 16),
+                        fontWeight: FontWeight.w700, fontSize: 16.sp),
                   ),
                   Row(
                     children: [
                       SvgPicture.asset(ImageConstant.iRedTime),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
                       Text(
                         "11:38 AM",
                         style: screenTitle.copyWith(
-                            fontWeight: FontWeight.w500, fontSize: 15),
+                            fontWeight: FontWeight.w500, fontSize: 15.sp),
                       ),
                     ],
                   ),
@@ -59,7 +60,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                   Text(
                     "Interchange",
                     style: screenTitle.copyWith(
-                        fontWeight: FontWeight.w700, fontSize: 16),
+                        fontWeight: FontWeight.w700, fontSize: 16.sp),
                   ),
                   Row(
                     children: [
@@ -67,13 +68,13 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                           height: 20,
                           width: 20,
                           child: SvgPicture.asset(ImageConstant.iRoute)),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
                       Text(
                         "1",
                         style: screenTitle.copyWith(
-                            fontWeight: FontWeight.w500, fontSize: 15),
+                            fontWeight: FontWeight.w500, fontSize: 15.sp),
                       ),
                     ],
                   ),
@@ -84,7 +85,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                   Text(
                     "Fare",
                     style: screenTitle.copyWith(
-                        fontWeight: FontWeight.w700, fontSize: 16),
+                        fontWeight: FontWeight.w700, fontSize: 16.sp),
                   ),
                   Row(
                     children: [
@@ -92,13 +93,13 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                           height: 20,
                           width: 20,
                           child: SvgPicture.asset(ImageConstant.iTicket)),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
                       Text(
                         "₹50.00",
                         style: screenTitle.copyWith(
-                            fontWeight: FontWeight.w500, fontSize: 15),
+                            fontWeight: FontWeight.w500, fontSize: 15.sp),
                       ),
                     ],
                   ),
@@ -112,7 +113,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
-          margin: EdgeInsets.all(20),
+          margin: const EdgeInsets.all(20),
           color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -141,18 +142,18 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                       Text(
                         "ETA",
                         style: screenTitle.copyWith(
-                            fontWeight: FontWeight.w700, fontSize: 16),
+                            fontWeight: FontWeight.w700, fontSize: 16.sp),
                       ),
                       Row(
                         children: [
                           SvgPicture.asset(ImageConstant.iRedTime),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
                           Text(
                             "12 Mins",
                             style: screenTitle.copyWith(
-                                fontWeight: FontWeight.w500, fontSize: 15),
+                                fontWeight: FontWeight.w500, fontSize: 15.sp),
                           ),
                         ],
                       ),
@@ -168,7 +169,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                       },
                       color: AppColors.primaryColor,
                       style: poppinsMedium.copyWith(
-                          color: Colors.white, fontSize: 15),
+                          color: Colors.white, fontSize: 15.sp),
                       height: 53,
                     ),
                   ),

@@ -11,6 +11,7 @@ import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../widgets/base/custom_search_bar.dart';
@@ -61,11 +62,11 @@ class _NearByScreenState extends State<NearByScreen> {
                       height: MediaQuery.of(context).size.height / 3.4,
                       color: AppColors.primaryColor,
                       child: Column(children: [
-                        SizedBox(height: 25),
+                        const SizedBox(height: 25),
                         Container(
-                          margin: EdgeInsets.only(
+                          margin: const EdgeInsets.only(
                               left: Dimensions.dp15, right: Dimensions.dp20),
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                               top: Dimensions.dp10, bottom: Dimensions.dp10),
                           child: Row(
                             children: [
@@ -86,7 +87,7 @@ class _NearByScreenState extends State<NearByScreen> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(
+                          margin: const EdgeInsets.only(
                               left: Dimensions.dp30,
                               right: Dimensions.dp30,
                               top: Dimensions.dp20),
@@ -104,10 +105,10 @@ class _NearByScreenState extends State<NearByScreen> {
                                 "Nigam Nagar, Chandkheda, Ahmedabad, Gujara...",
                             fillColor: Colors.white,
                             hintStyle: satoshiSmall.copyWith(
-                                color: AppColors.lightGray, fontSize: 13),
+                                color: AppColors.lightGray, fontSize: 13.sp),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: Dimensions.dp20,
                         ),
                         Container(
@@ -133,7 +134,7 @@ class _NearByScreenState extends State<NearByScreen> {
                                   Text(
                                     "VIEW ON MAP",
                                     style: satoshiSmall.copyWith(
-                                        fontSize: 14, color: Colors.white),
+                                        fontSize: 14.sp, color: Colors.white),
                                   ),
                                 ]),
                           ),
@@ -144,7 +145,7 @@ class _NearByScreenState extends State<NearByScreen> {
                 ]),
                 Expanded(
                   child: Container(
-                    margin: EdgeInsets.all(Dimensions.dp20),
+                    margin: const EdgeInsets.all(Dimensions.dp20),
                     child: Card(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
@@ -152,16 +153,16 @@ class _NearByScreenState extends State<NearByScreen> {
                         color: Colors.white,
                         child: ListView.separated(
                             separatorBuilder: (context, index) => Container(
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                     left: Dimensions.dp20,
                                     right: Dimensions.dp20),
                                 child:
                                     CustomPaint(painter: DashedLinePainter())),
-                            padding: EdgeInsets.only(top: 10),
-                            itemCount: state.nearMeResponse.nearme?.length ?? 0,
+                            padding: const EdgeInsets.only(top: 10),
+                            itemCount: state.nearMeResponse.nearByMe?.length ?? 0,
                             itemBuilder: (BuildContext context, int index) {
                               return NearByItemWidget(
-                                  nearme: state.nearMeResponse.nearme![index]);
+                                  nearme: state.nearMeResponse.nearByMe![index]);
                             })),
                   ),
                 )

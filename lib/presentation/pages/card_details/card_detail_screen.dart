@@ -5,6 +5,7 @@ import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../widgets/base/custom_toolbar.dart';
 
@@ -32,18 +33,18 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
       backgroundColor: AppColors.appBackground,
       body: Column(
         children: [
-          SizedBox(height: Dimensions.dp25),
+          const SizedBox(height: Dimensions.dp25),
           CustomToolbar(
             title: "Card Details",
             showOption: false,
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 19, vertical: 24),
+            padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 24),
             margin: const EdgeInsets.only(
                 left: Dimensions.dp24,
                 right: Dimensions.dp24,
                 top: Dimensions.dp35),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.white,
               boxShadow: [
                 BoxShadow(
@@ -66,11 +67,11 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                     "Enter Smart Card Number",
                     textAlign: TextAlign.center,
                     style: satoshiRegular.copyWith(
-                        fontSize: Dimensions.dp15,
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w500,
                         color: AppColors.black),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 9,
                   ),
                   TextField(
@@ -80,7 +81,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                       CardNumberFormatter(),
                     ],
                     style: satoshiRegular.copyWith(
-                        fontSize: Dimensions.dp16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w300,
                         color: AppColors.darkGray),
                     textAlign: TextAlign.start,
@@ -103,23 +104,23 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                       // const EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
                       hintText: "EX. 25626 52665 25266",
                       hintStyle: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp16,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w300,
                           color: AppColors.lightGray),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Text(
                     "Enter Amount",
                     textAlign: TextAlign.center,
                     style: satoshiRegular.copyWith(
-                        fontSize: Dimensions.dp15,
+                        fontSize: 15.sp,
                         fontWeight: FontWeight.w500,
                         color: AppColors.black),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 9,
                   ),
                   TextField(
@@ -128,7 +129,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                       // FilteringTextInputFormatter.digitsOnly,
                     ],
                     style: satoshiRegular.copyWith(
-                        fontSize: Dimensions.dp16,
+                        fontSize: 16.sp,
                         fontWeight: FontWeight.w300,
                         color: AppColors.darkGray),
                     textAlign: TextAlign.start,
@@ -150,7 +151,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                       // const EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
                       hintText: "EX.500",
                       hintStyle: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp16,
+                          fontSize: 16.sp,
                           fontWeight: FontWeight.w300,
                           color: AppColors.lightGray),
                     ),
@@ -165,7 +166,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                       width: MediaQuery.of(context).size.width,
                       onPressed: () {},
                       style: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp18,
+                          fontSize: 18.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                       height: Dimensions.dp53,
@@ -181,7 +182,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
               "Its a safe and secure process. We ensure you that we will not share any of your details without your permission.",
               textAlign: TextAlign.center,
               style: satoshiRegular.copyWith(
-                  fontSize: Dimensions.dp12,
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.w400,
                   color: AppColors.black),
             ),
