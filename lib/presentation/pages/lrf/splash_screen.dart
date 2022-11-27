@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:location/location.dart';
 import '../../../utils/image_constant.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -25,6 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    _getLocationPermission();
     getMemberID();
   }
 
@@ -176,4 +177,38 @@ class _SplashScreenState extends State<SplashScreen> {
       Get.toNamed(RouteHelper.dashboard);
     }
   }
+}
+
+void _getLocationPermission() async{
+  Location location = Location();
+
+  bool _serviceEnabled;
+  PermissionStatus _permissionGranted;
+  LocationData _locationData;
+
+  _serviceEnabled = await location.serviceEnabled();
+  if (!_serviceEnabled) {
+    debugPrint("Location service is not enabled :(");
+    _serviceEnabled = await location.requestService();
+    if (!_serviceEnabled) {
+      return;
+    }
+  }
+
+  _permissionGranted = await location.hasPermission();
+  if (_permissionGranted == PermissionStatus.denied) {
+    debugPrint("Location Permission Denied :(");
+    _permissionGranted = await location.requestPermission();
+    if (_permissionGranted != PermissionStatus.granted) {
+      debugPrint("Location Permission Granted!!");
+      return;
+    }
+  }
+
+  _locationData = await location.getLocation();
+  debugPrint("_locationData latitude:- ${_locationData.latitude}");
+  debugPrint("_locationData longitude:- ${_locationData.longitude}");
+  debugPrint("_locationData altitude:- ${_locationData.altitude}");
+  debugPrint("_locationData provider:- ${_locationData.provider}");
+
 }

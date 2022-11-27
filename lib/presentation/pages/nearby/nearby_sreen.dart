@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:location/location.dart';
 
 import '../../widgets/base/custom_search_bar.dart';
 
@@ -30,15 +31,10 @@ class _NearByScreenState extends State<NearByScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      _getNearByRoutes();
+    });
 
-    var nearByRequest = NearMeRequest();
-    nearByRequest.latitude = 72.5067986;
-    nearByRequest.longitude = 23.025965;
-    nearByRequest.stopType = 2;
-
-    BlocProvider.of<NearMeBloc>(context).add(
-      GetNearMeRouteEvent(nearMeRequest: nearByRequest),
-    );
   }
 
   @override
@@ -176,5 +172,30 @@ class _NearByScreenState extends State<NearByScreen> {
         },
       ),
     );
+  }
+
+  void _getNearByRoutes() async{
+    Location location = Location();
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+    await location.requestService();
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      debugPrint("Location Permission Denied :(");
+      _permissionGranted = await location.requestPermission();
+    }
+    else {
+      _locationData = await location.getLocation();
+
+      var nearByRequest = NearMeRequest();
+      nearByRequest.latitude = _locationData.latitude;
+      nearByRequest.longitude = _locationData.longitude;
+      nearByRequest.stopType = 2;
+
+      BlocProvider.of<NearMeBloc>(context).add(
+        GetNearMeRouteEvent(nearMeRequest: nearByRequest),
+      );
+    }
   }
 }

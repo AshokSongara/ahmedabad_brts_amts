@@ -18,6 +18,7 @@ class AppConstant {
   static String userOtp = "User/otp/generate";
   static String verifyOtp = "User/sign-in/otp";
   static String nearMeInterface = "NearMe";
+  static String submitFeedback = "Feedback";
 
 
   //SharedPreferences Keys

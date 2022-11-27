@@ -5,6 +5,7 @@ import 'package:ahmedabad_brts_amts/api/api_client.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/mobile_number_otp_request_param.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/otp_request.dart';
 import 'package:ahmedabad_brts_amts/data/responseModels/signup_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/feedback_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/login_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/mobile_number_otp_response_entity.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/verify_otp_response.dart';
@@ -95,5 +96,29 @@ class UserRepositoryImpl implements UserRepository {
     try {} on Exception catch (exception) {
     } catch (error) {}
     return verifyOtpResponse;
+  }
+
+  @override
+  Future<FeedbackResponseModel> feedbackSubmit(body) async{
+    Map data = {
+      "routeId": body.routeId,
+      "waiting":body.waiting,
+      "comfort":body.comfort,
+      "crowding":body.crowding,
+      "serviceQuality":body.serviceQuality,
+      "journey":body.journey,
+      "userId":body.userId
+    };
+
+    var bodyData = json.encode(data);
+
+    Response response =
+        await apiClient.postData(AppConstant.submitFeedback, bodyData);
+    FeedbackResponseModel feedbackResponseModel =
+    FeedbackResponseModel.fromJson(response.body);
+
+    try {} on Exception catch (exception) {
+    } catch (error) {}
+    return feedbackResponseModel;
   }
 }
