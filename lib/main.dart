@@ -1,8 +1,10 @@
 import 'package:ahmedabad_brts_amts/injection_container.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/logic_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobile_number_login_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/dashboard_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,6 +48,9 @@ void main() async {
         BlocProvider<FeedbackBloc>(
           create: (context) => injector<FeedbackBloc>(),
         ),
+        BlocProvider<HomeScreenBloc>(
+          create: (context) => injector<HomeScreenBloc>(),
+        ),
       ],
       child: MyApp(),
     ),
@@ -63,7 +68,7 @@ class MyApp extends StatelessWidget {
           theme: darkThemeData,
           themeMode: ThemeMode.dark,
           darkTheme: darkThemeData,
-          home: const SplashScreen(),
+          home: DashboardScreen(pageIndex: 0,),
           initialRoute: RouteHelper.getInitialRoute(),
           getPages: RouteHelper.routes,
         );

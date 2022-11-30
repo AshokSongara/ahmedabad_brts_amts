@@ -7,8 +7,10 @@ import 'package:ahmedabad_brts_amts/domain/usecases/route/nearme_route_usecase.d
 import 'package:ahmedabad_brts_amts/domain/usecases/user/login_user_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/mobile_number_login_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/signup_user_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/user/home_screen_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/verify_otp_usecase.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/feedback/feedback_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/logic_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobile_number_login_bloc.dart';
@@ -50,6 +52,9 @@ Future<void> init() async {
   injector.registerFactory<FeedbackBloc>(
         () => FeedbackBloc(injector()),
   );
+  injector.registerFactory<HomeScreenBloc>(
+        () => HomeScreenBloc(injector()),
+  );
 
   injector.registerLazySingleton(() => SignupUserUseCase(injector()));
 
@@ -61,6 +66,7 @@ Future<void> init() async {
 
   injector.registerLazySingleton(() => VerifyOtpUseCase(injector()));
   injector.registerLazySingleton(() => FeedbackUseCase(injector()));
+  injector.registerLazySingleton(() => HomeScreenUseCase(injector()));
 
   injector.registerLazySingleton<UserRepository>(
     () => UserRepositoryImpl(

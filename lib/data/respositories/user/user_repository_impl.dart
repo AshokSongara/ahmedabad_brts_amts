@@ -8,6 +8,7 @@ import 'package:ahmedabad_brts_amts/data/responseModels/signup_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/feedback_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/login_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/mobile_number_otp_response_entity.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/stop_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/verify_otp_response.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
@@ -120,5 +121,24 @@ class UserRepositoryImpl implements UserRepository {
     try {} on Exception catch (exception) {
     } catch (error) {}
     return feedbackResponseModel;
+  }
+
+  @override
+  Future<StopResponseModel> getStop(body) async{
+    Map data = {
+      "stopType": body.stopType,
+    };
+
+    var bodyData = json.encode(data);
+
+    Response response =
+        await apiClient.postData(AppConstant.getStops, bodyData);
+    print("response.body ${response.body}");
+    StopResponseModel stopResponseModel =
+    StopResponseModel.fromJson(response.body);
+
+    try {} on Exception catch (exception) {
+    } catch (error) {}
+    return stopResponseModel;
   }
 }
