@@ -17,6 +17,21 @@ import 'package:get/get.dart';
 
 import '../../../data/responseModels/quick_link_internal_model.dart';
 
+class Country {
+  const Country({
+    required this.name,
+    required this.size,
+  });
+
+  final String name;
+  final int size;
+
+  @override
+  String toString() {
+    return '$name ($size)';
+  }
+}
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -28,6 +43,20 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isAmts = true;
   List<QuickLinkInternalModel> quickLinkList = [];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  List<Country> countryOptions = const <Country>[
+    Country(name: 'Africa', size: 30370000),
+    Country(name: 'Asia', size: 44579000),
+    Country(name: 'Australia', size: 8600000),
+    Country(name: 'Bulgaria', size: 110879),
+    Country(name: 'Canada', size: 9984670),
+    Country(name: 'Denmark', size: 42916),
+    Country(name: 'Europe', size: 10180000),
+    Country(name: 'India', size: 3287263),
+    Country(name: 'North America', size: 24709000),
+    Country(name: 'South America', size: 17840000),
+  ];
+  TextEditingController _fromController = TextEditingController(text: "India");
+  TextEditingController _toController = TextEditingController(text: "India");
 
   @override
   void initState() {
@@ -418,43 +447,214 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Stack(
                               fit: StackFit.loose,
                               children: [
-                                const SourceDestinationWidget(
+                                SourceDestinationWidget(
                                     title: "From",
                                     content:
                                         "Ahmedabad Municipal Transport Service",
-                                    contentTitle: "Adalaj Gam",
+                                    contentTitle: SizedBox(
+                                      height: 28,
+                                      child: Autocomplete<Country>(
+                                        optionsBuilder: (TextEditingValue
+                                            textEditingValue) {
+                                          return countryOptions
+                                              .where((Country county) => county
+                                                  .name
+                                                  .toLowerCase()
+                                                  .startsWith(textEditingValue
+                                                      .text
+                                                      .toLowerCase()))
+                                              .toList();
+                                        },
+                                        displayStringForOption:
+                                            (Country option) => option.name,
+                                        fieldViewBuilder: (BuildContext context,
+                                            TextEditingController
+                                                fieldTextEditingController,
+                                            FocusNode fieldFocusNode,
+                                            VoidCallback onFieldSubmitted) {
+                                          _fromController=fieldTextEditingController;
+                                          return TextField(
+                                            controller:
+                                            fieldTextEditingController,
+                                            focusNode: fieldFocusNode,
+                                            style: satoshiRegular.copyWith(
+                                                fontSize: Dimensions.dp18.sp,
+                                                fontWeight: FontWeight.w700,
+                                                color: AppColors.darkGray),
+                                          );
+                                        },
+                                        optionsViewBuilder:
+                                            (BuildContext context,
+                                                AutocompleteOnSelected<Country>
+                                                    onSelected,
+                                                Iterable<Country> options) {
+                                          return Material(
+                                            child: Container(
+                                              width: 300,
+                                              color: Colors.white,
+                                              child: ListView.builder(
+                                                padding: EdgeInsets.all(10.0),
+                                                itemCount: options.length,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        int index) {
+                                                  final Country option =
+                                                      options.elementAt(index);
+
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      onSelected(option);
+                                                    },
+                                                    child: ListTile(
+                                                      title: Text(option.name,
+                                                          style: satoshiRegular
+                                                              .copyWith(
+                                                                  fontSize:
+                                                                      Dimensions
+                                                                          .dp18
+                                                                          .sp,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700,
+                                                                  color: AppColors
+                                                                      .darkGray)),
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        onSelected: (Country selection) {
+                                          print('Selected: ${selection.name}');
+                                        },
+                                      ),
+                                    ),
+                                    // contentTitle:Text(
+                                    //   "Adalaj Gam",
+                                    //   style: satoshiRegular.copyWith(
+                                    //       fontSize: Dimensions.dp18.sp,
+                                    //       fontWeight: FontWeight.w700,
+                                    //       color: AppColors.darkGray),
+                                    // ),
                                     svgImageFile: ImageConstant.iFromBus),
 
                                 // SizedBox(height: 22,),
-                                const Align(
+                                Align(
                                   alignment: Alignment.bottomCenter,
                                   child: SourceDestinationWidget(
                                       title: "To",
                                       content:
                                           "Ahmedabad Municipal Transport Service",
-                                      contentTitle: "Ahmedabad Airport",
+                                      contentTitle:  SizedBox(
+                                        height: 28,
+                                        child: Autocomplete<Country>(
+                                          optionsBuilder: (TextEditingValue
+                                          textEditingValue) {
+                                            return countryOptions
+                                                .where((Country county) => county
+                                                .name
+                                                .toLowerCase()
+                                                .startsWith(textEditingValue
+                                                .text
+                                                .toLowerCase()))
+                                                .toList();
+                                          },
+                                          displayStringForOption:
+                                              (Country option) => option.name,
+                                          fieldViewBuilder: (BuildContext context,
+                                              TextEditingController
+                                              fieldTextEditingController,
+                                              FocusNode fieldFocusNode,
+                                              VoidCallback onFieldSubmitted) {
+                                            _toController=fieldTextEditingController;
+                                            return TextField(
+                                              controller:
+                                              fieldTextEditingController,
+                                              focusNode: fieldFocusNode,
+                                              style: satoshiRegular.copyWith(
+                                                  fontSize: Dimensions.dp18.sp,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: AppColors.darkGray),
+                                            );
+                                          },
+                                          optionsViewBuilder:
+                                              (BuildContext context,
+                                              AutocompleteOnSelected<Country>
+                                              onSelected,
+                                              Iterable<Country> options) {
+                                            return Material(
+                                              child: Container(
+                                                width: 300,
+                                                color: Colors.white,
+                                                child: ListView.builder(
+                                                  padding: EdgeInsets.all(10.0),
+                                                  itemCount: options.length,
+                                                  itemBuilder:
+                                                      (BuildContext context,
+                                                      int index) {
+                                                    final Country option =
+                                                    options.elementAt(index);
+
+                                                    return GestureDetector(
+                                                      onTap: () {
+                                                        onSelected(option);
+                                                      },
+                                                      child: ListTile(
+                                                        title: Text(option.name,
+                                                            style: satoshiRegular
+                                                                .copyWith(
+                                                                fontSize:
+                                                                Dimensions
+                                                                    .dp18
+                                                                    .sp,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .w700,
+                                                                color: AppColors
+                                                                    .darkGray)),
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          onSelected: (Country selection) {
+                                            print('Selected: ${selection.name}');
+                                          },
+                                        ),
+                                      ),
                                       svgImageFile: ImageConstant.iToBus),
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(right: 10),
                                   child: Align(
                                     alignment: Alignment.centerRight,
-                                    child: Container(
-                                      width: 48,
-                                      height: 48,
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: SvgPicture.asset(
-                                            ImageConstant.iArrowDownUp),
+                                    child: InkWell(
+                                      onTap: () {
+                                        String temp = _fromController.text;
+                                        _fromController.text =_toController.text;
+                                        _toController.text =temp;
+                                        setState(() {});
+                                      },
+                                      child: Container(
+                                        width: 48,
+                                        height: 48,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(10),
+                                          child: SvgPicture.asset(
+                                              ImageConstant.iArrowDownUp),
+                                        ),
+                                        decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            border: Border.fromBorderSide(
+                                                BorderSide(
+                                              color: AppColors.gray6E8EE7,
+                                              width: 1,
+                                            )),
+                                            color: Colors.white),
                                       ),
-                                      decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          border:
-                                              Border.fromBorderSide(BorderSide(
-                                            color: AppColors.gray6E8EE7,
-                                            width: 1,
-                                          )),
-                                          color: Colors.white),
                                     ),
                                   ),
                                 ),

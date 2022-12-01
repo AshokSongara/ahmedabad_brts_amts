@@ -9,7 +9,7 @@ import 'package:flutter_svg/svg.dart';
 class SourceDestinationWidget extends StatefulWidget {
   final String svgImageFile;
   final String title;
-  final String contentTitle;
+  final Widget contentTitle;
   final String content;
   const SourceDestinationWidget({Key? key,required this.svgImageFile,required this.contentTitle,required this.content,required this.title}) : super(key: key);
 
@@ -58,13 +58,7 @@ class _SourceDestinationWidgetState extends State<SourceDestinationWidget> {
                           mainAxisAlignment:
                           MainAxisAlignment.start,
                           children: [
-                            Text(
-                              widget.contentTitle,
-                              style: satoshiRegular.copyWith(
-                                  fontSize: Dimensions.dp18.sp,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.darkGray),
-                            ),
+                            widget.contentTitle,
                             Text(
                               widget.content,
                               overflow: TextOverflow.fade,
