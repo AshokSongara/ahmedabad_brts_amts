@@ -92,7 +92,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.toNamed(RouteHelper.getDashboardRoute());
+                  Get.offNamed(RouteHelper.getDashboardRoute());
                 },
                 child: const RoundContainerWidget(
                     imagePath: ImageConstant.iUser,
@@ -174,7 +174,7 @@ class _SplashScreenState extends State<SplashScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString(AppConstant.accessToken) ?? "";
     if (token.isNotEmpty) {
-      Get.toNamed(RouteHelper.dashboard);
+      Get.offNamed(RouteHelper.dashboard);
     }
   }
 }
