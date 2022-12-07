@@ -45,7 +45,7 @@ class UserRepositoryImpl implements UserRepository {
   Future<SignUpResponse> signupUser(body) async {
     Map data = {
       'firstName': body.name ?? "",
-      'lastName': "",
+      'lastName': body.lastname ?? "",
       'email': body.email ?? "",
       'password': body.password ?? "",
       'phoneNumber': body.phoneNumber ?? ""

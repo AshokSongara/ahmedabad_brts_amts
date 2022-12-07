@@ -17,10 +17,10 @@ class VerifyOtpBloc extends Bloc<VerifyOtpEvent, VerifyOtpState> {
       yield VerifyOtpLoadingState();
       VerifyOtpResponse verifyOtpResponse =
           await verifyOtpUseCase(Params(data: event.otpRequest));
-      if (verifyOtpResponse.jwt?.statusCode == 200) {
+      if (verifyOtpResponse.succeeded == true) {
         yield VerifyOtpSuccessState(verifyOtpResponse: verifyOtpResponse);
       } else {
-        yield VerifyOtpFailedState();
+        yield VerifyOtpFailedState(errorMessage: verifyOtpResponse.error?.title ?? "");
       }
     }
   }

@@ -67,7 +67,7 @@ class RouteHelper {
     GetPage(
         name: enterCode,
         page: () => OtpVerificationScreen(
-              mobileNumber: Get.parameters['mobileNumber'],
+              mobileNumber: Get.parameters['mobile'],
             )),
     GetPage(
         name: dashboard,

@@ -1,8 +1,7 @@
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/login_request.dart';
-import 'package:ahmedabad_brts_amts/data/requestmodels/signup_request.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
-import 'package:ahmedabad_brts_amts/presentation/blocs/login/logic_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
@@ -15,6 +14,7 @@ import 'package:ahmedabad_brts_amts/utils/app_util.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -49,11 +49,15 @@ class _LoginScreenState extends State<LoginScreen> {
               Loader.show(context);
             } else if (state is LoginSuccessState) {
               Loader.hide();
-              saveMemberID(state.loginResponse.accessToken,state.loginResponse.email);
+              saveMemberID(state.loginResponse.data?.accessToken ?? "",
+                  state.loginResponse.data?.email ?? "");
+            } else if (state is LoginFailedState) {
+              Loader.hide();
+              showCustomSnackBar(state.errorMessage, context, isError: true);
             } else {
               Loader.hide();
               showCustomSnackBar("Something Went Wrong Try again..!", context,
-                  isError: false);
+                  isError: true);
             }
           },
           builder: (context, state) {
@@ -200,7 +204,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       style: satoshiRegular.copyWith(
                                           color: AppColors.primaryColor,
                                           fontSize: 14.sp,
-                                          fontWeight: FontWeight.w700)),
+                                          fontWeight: FontWeight.w700),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () => {Get.toNamed(RouteHelper.signup)},),
                                 ],
                               ),
                             ),
@@ -225,7 +231,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                       style: satoshiRegular.copyWith(
                                           color: AppColors.primaryColor,
                                           fontSize: 14.sp,
-                                          fontWeight: FontWeight.w700)),
+                                          fontWeight: FontWeight.w700),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () => {Get.toNamed(RouteHelper.signup)},),
                                 ],
                               ),
                             ),
@@ -243,7 +251,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  saveMemberID(String? token,String? email) async {
+  saveMemberID(String? token, String? email) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(AppConstant.accessToken, token ?? "");
     prefs.setString(AppConstant.email, email ?? "");

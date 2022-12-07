@@ -76,8 +76,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             Loader.show(context);
           } else if (state is VerifyOtpSuccessState) {
             Loader.hide();
-            saveMemberID(state.verifyOtpResponse.jwt?.accessToken,
-                state.verifyOtpResponse.jwt?.email);
+            saveMemberID(state.verifyOtpResponse.data?.jwt?.accessToken,
+                state.verifyOtpResponse.data?.jwt?.email);
           } else {
             Loader.hide();
             showCustomSnackBar("Something Went Wrong Try again..!", context,
@@ -214,8 +214,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                           showCustomSnackBar("Please Enter OTP", context);
                         } else {
                           var request = OtpRequest();
-                          request.phoneNumber = "";
-                          request.otp = "1234";
+                          request.phoneNumber = widget.mobileNumber;
+                          request.otp = textEditingController.text;
                           BlocProvider.of<VerifyOtpBloc>(context).add(
                             PostVerifyOtpEvent(otpRequest: request),
                           );

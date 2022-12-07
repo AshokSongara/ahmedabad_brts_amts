@@ -18,10 +18,10 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
       yield SignupLoadingState();
       SignUpResponse signUpResponse =
           await signupUserUseCase(Params(data: event.data));
-      if (signUpResponse.statusCode == 200) {
+      if (signUpResponse.succeeded == true) {
         yield SignupSuccessState(signUpResponse: signUpResponse);
       } else {
-        yield SignupFailedState();
+        yield SignupFailedState(errorMessage: signUpResponse.error?.title ?? "");
       }
     }
   }

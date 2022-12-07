@@ -369,7 +369,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 const EdgeInsets.only(right: Dimensions.dp20),
                             child: InkWell(
                                 onTap: () {
-                                  _scaffoldKey.currentState!.openEndDrawer();
+                                 // _scaffoldKey.currentState!.openEndDrawer();
                                 },
                                 child: SvgPicture.asset(ImageConstant.iMenu)))
                       ],

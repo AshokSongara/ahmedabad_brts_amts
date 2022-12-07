@@ -21,4 +21,11 @@ class SignupSuccessState extends SignupState {
   List<Object> get props => [];
 }
 
-class SignupFailedState extends SignupState {}
+class SignupFailedState extends SignupState {
+  final String errorMessage;
+
+  SignupFailedState({required this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage];
+}

@@ -12,7 +12,7 @@ import '../data/responseModels/error_response.dart';
 class ApiClient extends GetxService {
   final String? appBaseUrl;
   static final String noInternetMessage = 'connection_to_api_server_failed'.tr;
-  final int timeoutInSeconds = 30;
+  final int timeoutInSeconds = 60;
 
   String? token;
   late Map<String, String> _mainHeaders;

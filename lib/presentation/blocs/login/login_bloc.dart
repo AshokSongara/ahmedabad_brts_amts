@@ -17,10 +17,10 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield LoginLoadingState();
       LoginResponse loginResponse =
           await loginUserUseCase(Params(data: event.loginRequest));
-      if (loginResponse.statusCode == 200) {
+      if (loginResponse.succeeded == true) {
         yield LoginSuccessState(loginResponse: loginResponse);
       } else {
-        yield LoginFailedState();
+        yield LoginFailedState(errorMessage: loginResponse.error?.title ?? "Something Went Wrong");
       }
     }
   }

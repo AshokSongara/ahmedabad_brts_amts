@@ -21,4 +21,11 @@ class VerifyOtpSuccessState extends VerifyOtpState {
   List<Object> get props => [verifyOtpResponse];
 }
 
-class VerifyOtpFailedState extends VerifyOtpState {}
+class VerifyOtpFailedState extends VerifyOtpState {
+  final String errorMessage;
+
+  VerifyOtpFailedState({required this.errorMessage});
+
+  @override
+  List<Object> get props => [errorMessage];
+}

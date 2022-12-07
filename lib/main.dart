@@ -1,6 +1,6 @@
 import 'package:ahmedabad_brts_amts/injection_container.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
-import 'package:ahmedabad_brts_amts/presentation/blocs/login/logic_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobile_number_login_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_bloc.dart';
@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
           theme: darkThemeData,
           themeMode: ThemeMode.dark,
           darkTheme: darkThemeData,
-          home: DashboardScreen(pageIndex: 0,),
+          home: const SplashScreen(),
           initialRoute: RouteHelper.getInitialRoute(),
           getPages: RouteHelper.routes,
         );

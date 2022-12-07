@@ -32,11 +32,13 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
+  final _lastNameController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _mobileNumberController = TextEditingController();
   final FocusNode _nameFocus = FocusNode();
   final FocusNode _emailFocus = FocusNode();
+  final FocusNode _lastNameFocus = FocusNode();
   final FocusNode _mobileFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
   final FocusNode _confirmPasswordFocus = FocusNode();
@@ -65,6 +67,9 @@ class _SignupScreenState extends State<SignupScreen> {
             showCustomSnackBar("Signup Successfull...!", context,
                 isError: false);
             Get.toNamed(RouteHelper.login);
+          } else if (state is SignupFailedState) {
+            Loader.hide();
+            showCustomSnackBar(state.errorMessage, context, isError: false);
           } else {
             Loader.hide();
             showCustomSnackBar("Something Went Wrong Try again..!", context,
@@ -122,13 +127,36 @@ class _SignupScreenState extends State<SignupScreen> {
                           satoshiRegular.copyWith(color: AppColors.darkGray),
                       controller: _nameController,
                       focusNode: _nameFocus,
-                      nextFocus: _emailFocus,
+                      nextFocus: _lastNameFocus,
                       inputType: TextInputType.name,
                       onChanged: () {},
                       onSubmit: () {},
                       capitalization: TextCapitalization.words,
                       divider: false,
-                      hintText: "John Deo",
+                      hintText: "Kapil",
+                    ),
+                    const SizedBox(
+                      height: Dimensions.dp20,
+                    ),
+                    Text(
+                      "LastName",
+                      style: satoshiRegular.copyWith(
+                          fontSize: 15.sp,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.darkGray),
+                    ),
+                    CustomTextField(
+                      textStyle:
+                          satoshiRegular.copyWith(color: AppColors.darkGray),
+                      controller: _lastNameController,
+                      focusNode: _lastNameFocus,
+                      nextFocus: _emailFocus,
+                      inputType: TextInputType.emailAddress,
+                      onChanged: () {},
+                      onSubmit: () {},
+                      capitalization: TextCapitalization.words,
+                      divider: false,
+                      hintText: "shah",
                     ),
                     const SizedBox(
                       height: Dimensions.dp20,
@@ -146,12 +174,12 @@ class _SignupScreenState extends State<SignupScreen> {
                       controller: _emailController,
                       focusNode: _emailFocus,
                       nextFocus: _mobileFocus,
-                      inputType: TextInputType.emailAddress,
+                      inputType: TextInputType.name,
                       onChanged: () {},
                       onSubmit: () {},
                       capitalization: TextCapitalization.words,
                       divider: false,
-                      hintText: "johndoe@gmail.com",
+                      hintText: "kapil@gmail.com",
                     ),
                     const SizedBox(
                       height: Dimensions.dp20,
@@ -287,10 +315,13 @@ class _SignupScreenState extends State<SignupScreen> {
                       // Get.toNamed(RouteHelper.getMobileNumberRoute());
                       if (_nameController.text.toString().isEmpty) {
                         showCustomSnackBar("Please Enter Name", context);
+                      } else if (_lastNameController.text.toString().isEmpty) {
+                        showCustomSnackBar("Please LastName", context);
                       } else if (_emailController.text.toString().isEmpty) {
                         showCustomSnackBar("Please Enter EmailID", context);
                       } else if (!_emailController.text.isValidEmail()) {
-                        showCustomSnackBar("Please Enter Valid EmailID", context);
+                        showCustomSnackBar(
+                            "Please Enter Valid EmailID", context);
                       } else if (_mobileNumberController.text
                           .toString()
                           .isEmpty) {
@@ -311,11 +342,12 @@ class _SignupScreenState extends State<SignupScreen> {
                       } else if (_passwordController.text.toString() !=
                           _confirmPasswordController.text.toString()) {
                         showCustomSnackBar(
-                            "Password and Confirm Password Not Matched", context);
+                            "Password and Confirm Password Not Matched",
+                            context);
                       } else {
                         var request = SignupRequest();
                         request.name = _nameController.text;
-                        request.lastname = "";
+                        request.lastname = _lastNameController.text;
                         request.email = _emailController.text;
                         request.password = _passwordController.text;
                         request.phoneNumber = _mobileNumberController.text;
@@ -332,9 +364,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               Padding(
                   padding: EdgeInsets.only(
-                      bottom: MediaQuery.of(context)
-                          .viewInsets
-                          .bottom)),
+                      bottom: MediaQuery.of(context).viewInsets.bottom)),
             ]),
           );
         },

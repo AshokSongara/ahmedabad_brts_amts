@@ -20,7 +20,7 @@ class MobileNumberLoginBloc
       } else {
         final response = await useCase
             .call(MobileNumberOtpRequestParam(phoneNumber: event.phoneNumber));
-        if (response.statusCode == 200 || response.statusCode == 201) {
+        if (response.statusCode == true) {
           yield MobileNumberLoginSuccessState();
         } else {
           yield MobileNumberLoginErrorState();
