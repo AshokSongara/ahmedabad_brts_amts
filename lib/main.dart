@@ -1,3 +1,5 @@
+import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/stop_response_model.dart';
 import 'package:ahmedabad_brts_amts/injection_container.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
@@ -6,11 +8,14 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobil
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/dashboard_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/splash_screen.dart';
+import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'core/theme/dark_theme_data.dart';
 import 'helper/route_helper.dart';
@@ -26,6 +31,14 @@ void main() async {
     statusBarColor: AppColors.primaryColor, // status bar color
   ));
   await di.init();
+  final document = await getApplicationDocumentsDirectory();
+
+  await Hive.initFlutter();
+  Hive.registerAdapter(BrtsStopResponseModelAdapter());
+  Hive.registerAdapter(DataAdapter());
+  await Hive.openBox<BrtsStopResponseModel>(AppConstant.BrtsStopListBox);
+  await Hive.openBox<BrtsStopResponseModel>(AppConstant.AmtsStopListBox);
+  // await Hive.openBox<BrtsStopResponseModel>('AmtsStopResponseModel');
 
   runApp(
     MultiBlocProvider(
@@ -68,7 +81,8 @@ class MyApp extends StatelessWidget {
           theme: darkThemeData,
           themeMode: ThemeMode.dark,
           darkTheme: darkThemeData,
-          home: const SplashScreen(),
+          home: DashboardScreen(pageIndex: 0,),
+          // home: SplashScreen(),
           initialRoute: RouteHelper.getInitialRoute(),
           getPages: RouteHelper.routes,
         );

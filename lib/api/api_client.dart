@@ -26,6 +26,7 @@ class ApiClient extends GetxService {
 
   Future<Response> postData(String endPoint, String body) async {
     try {
+      print(appBaseUrl! + endPoint);
       Http.Response response = await Http.post(
         Uri.parse(appBaseUrl! + endPoint),
         body: body,
@@ -121,6 +122,21 @@ class ApiClient extends GetxService {
       Http.Response _response = await Http.post(
         Uri.parse(appBaseUrl! + uri),
         body: jsonEncode(body),
+        headers: headers,
+      ).timeout(Duration(seconds: timeoutInSeconds));
+      return handleResponse(_response, uri);
+    } catch (e) {
+      return Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+  Future<Response> getData(
+      String uri, {Map<String, String>? headers}) async {
+    try {
+      if (Foundation.kDebugMode) {
+        // print('====> API Call: $uri\nHeader: $_mainHeaders');
+      }
+      Http.Response _response = await Http.get(
+        Uri.parse(appBaseUrl! + uri),
         headers: headers,
       ).timeout(Duration(seconds: timeoutInSeconds));
       return handleResponse(_response, uri);

@@ -8,6 +8,8 @@ class AppConstant {
   static String loginWithEmail = "Login with Email";
   static String loginWithMobile = "Login with Mobile Number";
   static String loginWithGuest = "Login as Guest";
+  static String BrtsStopListBox = "BrtsStopListBox";
+  static String AmtsStopListBox = "AmtsStopListBox";
 
   //APIs End Points
   static String registerInterface = "User";
@@ -19,7 +21,7 @@ class AppConstant {
   static String verifyOtp = "User/sign-in/otp";
   static String nearMeInterface = "NearMe";
   static String submitFeedback = "Feedback";
-  static String getStops = "api/Stop/GetStopName";
+  static String getStops = "Stop/list/";
 
 
   //SharedPreferences Keys

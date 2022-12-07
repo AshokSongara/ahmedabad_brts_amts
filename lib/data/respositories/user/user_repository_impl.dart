@@ -5,6 +5,7 @@ import 'package:ahmedabad_brts_amts/api/api_client.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/mobile_number_otp_request_param.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/otp_request.dart';
 import 'package:ahmedabad_brts_amts/data/responseModels/signup_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/feedback_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/login_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/mobile_number_otp_response_entity.dart';
@@ -13,6 +14,7 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/verify_otp_response.dart
 import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserRepositoryImpl implements UserRepository {
@@ -123,22 +125,58 @@ class UserRepositoryImpl implements UserRepository {
     return feedbackResponseModel;
   }
 
+  /// NOTE: FOR BRTS & AMTS
+  /// For now the logic is if there is no data in local we'll call the api but going forward
+  /// we need 1 flag from server in response that if the response is updated or not
   @override
-  Future<StopResponseModel> getStop(body) async{
-    Map data = {
-      "stopType": body.stopType,
-    };
-
-    var bodyData = json.encode(data);
-
+  Future<BrtsStopResponseModel> getStop(body) async{
+    Box brtsBox = getLocalBrtsRouteData();
+    Box amtsBox = getLocalAmtsRouteData();
     Response response =
-        await apiClient.postData(AppConstant.getStops, bodyData);
-    print("response.body ${response.body}");
-    StopResponseModel stopResponseModel =
-    StopResponseModel.fromJson(response.body);
+    await apiClient.getData(AppConstant.getStops+"${body.stopType}",);
+    if(body.stopType==1){
+      if(brtsBox.isEmpty){
+        print("response.body ${response.body}");
+        BrtsStopResponseModel stopResponseModel =
+        BrtsStopResponseModel.fromJson(response.body);
+        getLocalBrtsRouteData().put("key",stopResponseModel);
+        try {} on Exception catch (exception) {
+        } catch (error) {}
+        return brtsBox.get("key");
+      }else{
+        BrtsStopResponseModel stopResponseModel =
+        BrtsStopResponseModel.fromJson(response.body);
+        getLocalBrtsRouteData().put("key",stopResponseModel);
+        print("from Hive side");
+        return amtsBox.get("key");
+      }
+    }else{
+      if(amtsBox.isEmpty){
+        print("response.body ${response.body}");
+        BrtsStopResponseModel stopResponseModel =
+        BrtsStopResponseModel.fromJson(response.body);
+        getLocalAmtsRouteData().put("key",stopResponseModel);
+        try {} on Exception catch (exception) {
+        } catch (error) {}
+        return brtsBox.get("key");
+      }else{
+        BrtsStopResponseModel stopResponseModel =
+        BrtsStopResponseModel.fromJson(response.body);
+        getLocalAmtsRouteData().put("key",stopResponseModel);
+        print("from Hive side");
+        return amtsBox.get("key");
+      }
+    }
 
-    try {} on Exception catch (exception) {
-    } catch (error) {}
-    return stopResponseModel;
+
+  }
+
+  @override
+  Box<BrtsStopResponseModel> getLocalBrtsRouteData() {
+    return Hive.box<BrtsStopResponseModel>(AppConstant.BrtsStopListBox);
+  }
+  @override
+  Box<BrtsStopResponseModel> getLocalAmtsRouteData() {
+    return Hive.box<BrtsStopResponseModel>(AppConstant.AmtsStopListBox);
   }
 }

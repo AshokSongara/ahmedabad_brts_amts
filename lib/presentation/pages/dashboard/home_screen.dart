@@ -16,21 +16,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../data/responseModels/quick_link_internal_model.dart';
+import '../../../data/responsemodels/brts_stop_respons_model.dart';
 
-class Country {
-  const Country({
-    required this.name,
-    required this.size,
-  });
-
-  final String name;
-  final int size;
-
-  @override
-  String toString() {
-    return '$name ($size)';
-  }
-}
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -43,24 +30,15 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isAmts = true;
   List<QuickLinkInternalModel> quickLinkList = [];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  List<Country> countryOptions = const <Country>[
-    Country(name: 'Africa', size: 30370000),
-    Country(name: 'Asia', size: 44579000),
-    Country(name: 'Australia', size: 8600000),
-    Country(name: 'Bulgaria', size: 110879),
-    Country(name: 'Canada', size: 9984670),
-    Country(name: 'Denmark', size: 42916),
-    Country(name: 'Europe', size: 10180000),
-    Country(name: 'India', size: 3287263),
-    Country(name: 'North America', size: 24709000),
-    Country(name: 'South America', size: 17840000),
-  ];
   TextEditingController _fromController = TextEditingController(text: "India");
   TextEditingController _toController = TextEditingController(text: "India");
 
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<HomeScreenBloc>(context).add(
+        GetAvailableRoutesEvent(
+            StopRequestModel(stopType: 2)));
     quickLinkList
         .add(QuickLinkInternalModel("M Ticket", ImageConstant.iTicket));
     quickLinkList.add(
@@ -321,6 +299,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   InkWell(
                     onTap: () {
                       isAmts = !isAmts;
+                      _fromController.text = "";
+                      _toController.text="";
                       BlocProvider.of<HomeScreenBloc>(context).add(
                           GetAvailableRoutesEvent(
                               StopRequestModel(stopType: isAmts ? 2 : 1)));
@@ -421,6 +401,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: Dimensions.dp15,
                   ),
+                  if(state is RoutesResponseState)
                   Container(
                     margin: const EdgeInsets.only(
                         left: Dimensions.dp20, right: Dimensions.dp30),
@@ -453,20 +434,18 @@ class _HomeScreenState extends State<HomeScreen> {
                                         "Ahmedabad Municipal Transport Service",
                                     contentTitle: SizedBox(
                                       height: 28,
-                                      child: Autocomplete<Country>(
+                                      child: Autocomplete<Data>(
                                         optionsBuilder: (TextEditingValue
                                             textEditingValue) {
-                                          return countryOptions
-                                              .where((Country county) => county
-                                                  .name
-                                                  .toLowerCase()
+                                          return state.model.data!.where((Data data) => data
+                                                  .stopName!.toLowerCase()
                                                   .startsWith(textEditingValue
                                                       .text
                                                       .toLowerCase()))
                                               .toList();
                                         },
                                         displayStringForOption:
-                                            (Country option) => option.name,
+                                            (Data option) => option.stopName!,
                                         fieldViewBuilder: (BuildContext context,
                                             TextEditingController
                                                 fieldTextEditingController,
@@ -485,9 +464,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         },
                                         optionsViewBuilder:
                                             (BuildContext context,
-                                                AutocompleteOnSelected<Country>
+                                                AutocompleteOnSelected<Data>
                                                     onSelected,
-                                                Iterable<Country> options) {
+                                                Iterable<Data> options) {
                                           return Material(
                                             child: Container(
                                               width: 300,
@@ -498,7 +477,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 itemBuilder:
                                                     (BuildContext context,
                                                         int index) {
-                                                  final Country option =
+                                                  final Data option =
                                                       options.elementAt(index);
 
                                                   return GestureDetector(
@@ -506,7 +485,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       onSelected(option);
                                                     },
                                                     child: ListTile(
-                                                      title: Text(option.name,
+                                                      title: Text(option.stopName??"",
                                                           style: satoshiRegular
                                                               .copyWith(
                                                                   fontSize:
@@ -525,8 +504,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           );
                                         },
-                                        onSelected: (Country selection) {
-                                          print('Selected: ${selection.name}');
+                                        onSelected: (Data selection) {
+                                          print('Selected: ${selection.stopName}');
                                         },
                                       ),
                                     ),
@@ -548,12 +527,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           "Ahmedabad Municipal Transport Service",
                                       contentTitle:  SizedBox(
                                         height: 28,
-                                        child: Autocomplete<Country>(
+                                        child: Autocomplete<Data>(
                                           optionsBuilder: (TextEditingValue
                                           textEditingValue) {
-                                            return countryOptions
-                                                .where((Country county) => county
-                                                .name
+                                            return state.model.data!
+                                                .where((Data county) => county
+                                                .stopName!
                                                 .toLowerCase()
                                                 .startsWith(textEditingValue
                                                 .text
@@ -561,7 +540,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 .toList();
                                           },
                                           displayStringForOption:
-                                              (Country option) => option.name,
+                                              (Data option) => option.stopName!,
                                           fieldViewBuilder: (BuildContext context,
                                               TextEditingController
                                               fieldTextEditingController,
@@ -580,9 +559,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           },
                                           optionsViewBuilder:
                                               (BuildContext context,
-                                              AutocompleteOnSelected<Country>
+                                              AutocompleteOnSelected<Data>
                                               onSelected,
-                                              Iterable<Country> options) {
+                                              Iterable<Data> options) {
                                             return Material(
                                               child: Container(
                                                 width: 300,
@@ -593,7 +572,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   itemBuilder:
                                                       (BuildContext context,
                                                       int index) {
-                                                    final Country option =
+                                                    final Data option =
                                                     options.elementAt(index);
 
                                                     return GestureDetector(
@@ -601,7 +580,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         onSelected(option);
                                                       },
                                                       child: ListTile(
-                                                        title: Text(option.name,
+                                                        title: Text(option.stopName??"",
                                                             style: satoshiRegular
                                                                 .copyWith(
                                                                 fontSize:
@@ -620,8 +599,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                             );
                                           },
-                                          onSelected: (Country selection) {
-                                            print('Selected: ${selection.name}');
+                                          onSelected: (Data selection) {
+                                            print('Selected: ${selection.stopName}');
                                           },
                                         ),
                                       ),

@@ -1,4 +1,7 @@
+import 'package:ahmedabad_brts_amts/data/requestmodels/stop_request_model.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/round_container_widget.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
@@ -6,6 +9,7 @@ import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,6 +29,8 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
+    BlocProvider.of<HomeScreenBloc>(context).add(GetAvailableRoutesEvent(StopRequestModel(stopType: 1)));
+    BlocProvider.of<HomeScreenBloc>(context).add(GetAvailableRoutesEvent(StopRequestModel(stopType: 2)));
     _getLocationPermission();
     getMemberID();
   }
