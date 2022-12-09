@@ -155,10 +155,10 @@ class _NearByScreenState extends State<NearByScreen> {
                                 child:
                                     CustomPaint(painter: DashedLinePainter())),
                             padding: const EdgeInsets.only(top: 10),
-                            itemCount: state.nearMeResponse.nearByMe?.length ?? 0,
+                            itemCount: state.nearMeResponse.data?.length ?? 0,
                             itemBuilder: (BuildContext context, int index) {
                               return NearByItemWidget(
-                                  nearme: state.nearMeResponse.nearByMe![index]);
+                                  nearme: state.nearMeResponse.data![index]);
                             })),
                   ),
                 )

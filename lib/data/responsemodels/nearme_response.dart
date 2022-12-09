@@ -1,30 +1,30 @@
 class NearMeResponse {
-  int? statusCode;
-  List<NearByMe>? nearByMe;
+  List<Data>? data;
+  bool? succeeded;
 
-  NearMeResponse({this.statusCode, this.nearByMe});
+  NearMeResponse({this.data, this.succeeded});
 
   NearMeResponse.fromJson(Map<String, dynamic> json) {
-    statusCode = json['statusCode'];
-    if (json['nearByMe'] != null) {
-      nearByMe = <NearByMe>[];
-      json['nearByMe'].forEach((v) {
-        nearByMe!.add(new NearByMe.fromJson(v));
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
       });
     }
+    succeeded = json['succeeded'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['statusCode'] = this.statusCode;
-    if (this.nearByMe != null) {
-      data['nearByMe'] = this.nearByMe!.map((v) => v.toJson()).toList();
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
+    data['succeeded'] = this.succeeded;
     return data;
   }
 }
 
-class NearByMe {
+class Data {
   String? stationCode;
   String? stopCode;
   String? stopName;
@@ -34,7 +34,7 @@ class NearByMe {
   double? distance;
   int? statusCode;
 
-  NearByMe(
+  Data(
       {this.stationCode,
         this.stopCode,
         this.stopName,
@@ -44,7 +44,7 @@ class NearByMe {
         this.distance,
         this.statusCode});
 
-  NearByMe.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     stationCode = json['stationCode'];
     stopCode = json['stopCode'];
     stopName = json['stopName'];

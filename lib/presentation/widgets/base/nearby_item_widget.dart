@@ -10,7 +10,7 @@ import '../../../utils/styles.dart';
 class NearByItemWidget extends StatelessWidget {
   const NearByItemWidget({Key? key, required this.nearme}) : super(key: key);
 
-  final NearByMe nearme;
+  final Data nearme;
 
   @override
   Widget build(BuildContext context) {
