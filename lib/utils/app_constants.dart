@@ -22,6 +22,8 @@ class AppConstant {
   static String nearMeInterface = "NearMe";
   static String submitFeedback = "Feedback";
   static String getStops = "Stop/list/";
+  static String searchRouteList = "Route/plan/start/";
+
 
 
   //SharedPreferences Keys

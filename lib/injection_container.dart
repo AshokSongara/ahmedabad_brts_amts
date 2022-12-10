@@ -4,6 +4,7 @@ import 'package:ahmedabad_brts_amts/data/respositories/user/user_repository_impl
 import 'package:ahmedabad_brts_amts/domain/repositories/routes/routes_repository.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/nearme_route_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/route/search_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/login_user_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/mobile_number_login_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/signup_user_usecase.dart';
@@ -14,6 +15,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dar
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobile_number_login_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/verify_otp/verify_otp_bloc.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
@@ -50,10 +52,13 @@ Future<void> init() async {
     () => VerifyOtpBloc(verifyOtpUseCase: injector()),
   );
   injector.registerFactory<FeedbackBloc>(
-        () => FeedbackBloc(injector()),
+    () => FeedbackBloc(injector()),
   );
   injector.registerFactory<HomeScreenBloc>(
-        () => HomeScreenBloc(injector()),
+    () => HomeScreenBloc(injector()),
+  );
+  injector.registerFactory<SearchResultRouteBloc>(
+    () => SearchResultRouteBloc(searchResultRouteUseCase: injector()),
   );
 
   injector.registerLazySingleton(() => SignupUserUseCase(injector()));
@@ -67,6 +72,7 @@ Future<void> init() async {
   injector.registerLazySingleton(() => VerifyOtpUseCase(injector()));
   injector.registerLazySingleton(() => FeedbackUseCase(injector()));
   injector.registerLazySingleton(() => HomeScreenUseCase(injector()));
+  injector.registerLazySingleton(() => SearchResultRouteUseCase(injector()));
 
   injector.registerLazySingleton<UserRepository>(
     () => UserRepositoryImpl(

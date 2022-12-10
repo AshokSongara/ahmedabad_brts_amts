@@ -6,7 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class RouteTitleWidget extends StatelessWidget {
-  RouteTitleWidget({Key? key, required this.mainAxisAlignment})
+  final String startRouteName;
+  final String endRouteName;
+
+  RouteTitleWidget(
+      {Key? key,
+      required this.mainAxisAlignment,
+      required this.startRouteName,
+      required this.endRouteName})
       : super(key: key);
 
   final MainAxisAlignment mainAxisAlignment;
@@ -21,7 +28,7 @@ class RouteTitleWidget extends StatelessWidget {
         mainAxisAlignment: mainAxisAlignment,
         children: [
           Text(
-            "Adalaj Gam",
+            startRouteName,
             style: satoshiRegularSmall,
           ),
           Padding(
@@ -29,7 +36,7 @@ class RouteTitleWidget extends StatelessWidget {
             child: SvgPicture.asset(ImageConstant.iWhiteRightArrow),
           ),
           Text(
-            "Ahm Airport",
+            endRouteName,
             style: satoshiRegularSmall,
           )
         ],

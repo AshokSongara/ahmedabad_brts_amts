@@ -16,7 +16,9 @@ class CustomToolbar extends StatelessWidget {
       padding: const EdgeInsets.only(top: Dimensions.dp10, bottom: Dimensions.dp10),
       child: Row(
         children: [
-          SvgPicture.asset(ImageConstant.iLeftArrow),
+          GestureDetector(onTap: (){
+            Navigator.of(context).pop();
+          }, child: SvgPicture.asset(ImageConstant.iLeftArrow)),
           Expanded(
             child: Center(
               child: Text(

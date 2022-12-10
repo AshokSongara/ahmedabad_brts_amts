@@ -13,7 +13,12 @@ import 'package:get/get.dart';
 import '../../widgets/base/order_tracker.dart';
 
 class RouteDetailScreen extends StatefulWidget {
-  const RouteDetailScreen({Key? key}) : super(key: key);
+  final String? startRouteName;
+  final String? endRouteName;
+
+  const RouteDetailScreen(
+      {Key? key, required this.startRouteName, required this.endRouteName})
+      : super(key: key);
 
   @override
   State<RouteDetailScreen> createState() => _RouteDetailScreenState();
@@ -108,7 +113,11 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
             ],
           ),
         ),
-        RouteTitleWidget(mainAxisAlignment: MainAxisAlignment.start),
+        RouteTitleWidget(
+          mainAxisAlignment: MainAxisAlignment.start,
+          startRouteName: "",
+          endRouteName: "",
+        ),
         Card(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
@@ -132,7 +141,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
           child: Align(
             alignment: Alignment.bottomLeft,
             child: Padding(
-              padding: const EdgeInsets.only(top: 40,bottom: 40),
+              padding: const EdgeInsets.only(top: 40, bottom: 40),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [

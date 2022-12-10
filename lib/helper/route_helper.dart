@@ -44,9 +44,13 @@ class RouteHelper {
 
   static String getDashboardRoute() => '$dashboard';
 
-  static String getSearchResultRoute() => '$searchResult';
+  static String getSearchResultRoute(String startRoute, String endRoute,
+          String startRouteName, String endRouteName) =>
+      '$searchResult?startRoute=$startRoute&endRoute=$endRoute&startRouteName=$startRouteName&endRouteName=$endRouteName';
 
-  static String getRouteDetailsRoute() => '$routeDetails';
+  static String getRouteDetailsRoute(
+          String startRouteName, String endRouteName) =>
+      '$routeDetails?startRouteName=$startRouteName&endRouteName=$endRouteName';
 
   static String getPassengerDetailsRoute() => '$passengerDetails';
 
@@ -74,8 +78,20 @@ class RouteHelper {
         page: () => DashboardScreen(
               pageIndex: 0,
             )),
-    GetPage(name: searchResult, page: () => const SearchResultScreen()),
-    GetPage(name: routeDetails, page: () => const RouteDetailScreen()),
+    GetPage(
+        name: searchResult,
+        page: () => SearchResultScreen(
+              startRoute: Get.parameters['startRoute'],
+              endRoute: Get.parameters['endRoute'],
+              startRouteName: Get.parameters['startRouteName'],
+              endRouteName: Get.parameters['endRouteName'],
+            )),
+    GetPage(
+        name: routeDetails,
+        page: () => RouteDetailScreen(
+              startRouteName: Get.parameters['startRouteName'],
+              endRouteName: Get.parameters['endRouteName'],
+            )),
     GetPage(name: passengerDetails, page: () => const PassengerDetails()),
     GetPage(name: cardDetails, page: () => const CardDetailsScreen()),
     GetPage(name: nearBy, page: () => const NearByScreen()),

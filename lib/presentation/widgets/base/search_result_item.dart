@@ -1,4 +1,5 @@
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
+import 'package:ahmedabad_brts_amts/utils/app_util.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
@@ -6,8 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../data/responsemodels/search_route_response.dart';
+
 class SearchResultItem extends StatelessWidget {
-  const SearchResultItem({Key? key}) : super(key: key);
+  final Data routeResult;
+
+  const SearchResultItem({Key? key, required this.routeResult})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,13 +47,13 @@ class SearchResultItem extends StatelessWidget {
                     ),
                     Expanded(
                       child: Text(
-                        "21.40 Km",
+                        "${roundDouble(routeResult.totalDistance, 2)} Km",
                         style: satoshiRegularSmall.copyWith(
                             color: AppColors.darkGray),
                       ),
                     ),
                     Text(
-                      "1 hr 19 min",
+                      "${routeResult.totalTime} Min",
                       style: satoshiRegularSmall.copyWith(
                           color: AppColors.darkGray, fontSize: 14.sp),
                     ),
@@ -67,9 +73,9 @@ class SearchResultItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "11:38 AM",
-                          style:
-                              screenTitle.copyWith(fontSize: Dimensions.dp18.sp),
+                          routeResult.startTime ?? "",
+                          style: screenTitle.copyWith(
+                              fontSize: Dimensions.dp18.sp),
                         ),
                         Text(
                           "Depart",
@@ -126,9 +132,9 @@ class SearchResultItem extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "12:57 PM",
-                          style:
-                              screenTitle.copyWith(fontSize: Dimensions.dp18.sp),
+                          routeResult.endTime ?? "",
+                          style: screenTitle.copyWith(
+                              fontSize: Dimensions.dp18.sp),
                         ),
                         Align(
                           child: Text(
@@ -148,40 +154,40 @@ class SearchResultItem extends StatelessWidget {
                 height: 0.5,
                 color: AppColors.gray6E8EE7,
               ),
-              const SizedBox(
-                height: 8,
-              ),
               Container(
                 margin: const EdgeInsets.only(
                     left: Dimensions.dp20, right: Dimensions.dp20),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(ImageConstant.iRedBus),
-                    const SizedBox(
-                      width: 3,
-                    ),
-                    Text(
-                      "4U",
-                      style: satoshiSmall.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.primaryColor),
-                    ),
-                    SvgPicture.asset(ImageConstant.iRightGrayArrow),
-                    SvgPicture.asset(ImageConstant.iRedBus),
-                    const SizedBox(
-                      width: 3,
-                    ),
-                    Text(
-                      "15D",
-                      style: satoshiSmall.copyWith(
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.primaryColor),
-                    ),
-                  ],
+                height: 60.h,
+                width: double.infinity,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: routeResult.routes!.length,
+                  separatorBuilder: (BuildContext context, int index) =>
+                      Container(
+                          margin: const EdgeInsets.only(
+                              left: Dimensions.dp5, right: Dimensions.dp5),
+                          child:
+                              SvgPicture.asset(ImageConstant.iRightGrayArrow)),
+                  itemBuilder: (BuildContext context, int index) {
+                    return Expanded(
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(ImageConstant.iRedBus),
+                          const SizedBox(
+                            width: 3,
+                          ),
+                          Text(
+                            routeResult.routes![index],
+                            style: satoshiSmall.copyWith(
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.primaryColor),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
-              ),
-              const SizedBox(
-                height: 8,
               ),
               Container(
                 height: 0.5,
@@ -190,34 +196,37 @@ class SearchResultItem extends StatelessWidget {
               const SizedBox(
                 height: 5,
               ),
-              Container(
-                margin: const EdgeInsets.only(
-                    left: Dimensions.dp20, right: Dimensions.dp20),
-                child: Row(
-                  children: [
-                    SizedBox(
-                        height: 20,
-                        width: 20,
-                        child: SvgPicture.asset(ImageConstant.iRoute)),
-                    const SizedBox(
-                      width: 5,
-                    ),
-                    RichText(
-                      text: TextSpan(
-                        text: "Change at ",
-                        style: satoshiRegular.copyWith(
-                            fontSize: 12.sp, color: AppColors.darkGray),
-                        children: <TextSpan>[
-                          TextSpan(
-                              text: "Ranip Cross Road  ",
-                              style: satoshiRegularSmall.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 12.sp,
-                                  color: AppColors.darkGray)),
-                        ],
+              Visibility(
+                visible: routeResult.interChanges!.isNotEmpty,
+                child: Container(
+                  margin: const EdgeInsets.only(
+                      left: Dimensions.dp20, right: Dimensions.dp20),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                          height: 20,
+                          width: 20,
+                          child: SvgPicture.asset(ImageConstant.iRoute)),
+                      const SizedBox(
+                        width: 5,
                       ),
-                    )
-                  ],
+                      RichText(
+                        text: TextSpan(
+                          text: "Change at ",
+                          style: satoshiRegular.copyWith(
+                              fontSize: 12.sp, color: AppColors.darkGray),
+                          children: <TextSpan>[
+                            TextSpan(
+                                text: routeResult.interChanges![0],
+                                style: satoshiRegularSmall.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 12.sp,
+                                    color: AppColors.darkGray)),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(
@@ -257,7 +266,7 @@ class SearchResultItem extends StatelessWidget {
                             fontSize: 14.5.sp, color: AppColors.darkGray),
                         children: <TextSpan>[
                           TextSpan(
-                              text: "₹50.00",
+                              text: "₹ ${routeResult.fare}",
                               style: satoshiRegularSmall.copyWith(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 19.sp,
