@@ -66,7 +66,7 @@ class _SignupScreenState extends State<SignupScreen> {
             Loader.hide();
             showCustomSnackBar("Signup Successfull...!", context,
                 isError: false);
-            Get.toNamed(RouteHelper.login);
+            Get.offNamed(RouteHelper.login);
           } else if (state is SignupFailedState) {
             Loader.hide();
             showCustomSnackBar(state.errorMessage, context, isError: false);
