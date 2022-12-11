@@ -5,6 +5,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dar
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
+import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_search_bar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/source_destination_widget.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
@@ -35,6 +36,8 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _toController = TextEditingController();
   String startRouteCode = "";
   String endRouteCode = "";
+  final _serviceController = TextEditingController();
+  final FocusNode _serviceFocus = FocusNode();
 
   @override
   void initState() {
@@ -394,8 +397,29 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                   ),
+                  Container(
+                    margin: const EdgeInsets.only(
+                        left: Dimensions.dp24,
+                        right: Dimensions.dp24,
+                        top: Dimensions.dp26),
+                    child: CustomSearchBar(
+                      controller: _serviceController,
+                      focusNode: _serviceFocus,
+                      nextFocus: _serviceFocus,
+                      radius: 10,
+                      onChanged: (text) {},
+                      onSubmit: () {},
+                      prefixIcon: ImageConstant.iSearch,
+                      capitalization: TextCapitalization.words,
+                      divider: false,
+                      hintText: "Search bus route number",
+                      fillColor: Colors.white,
+                      hintStyle: satoshiSmall.copyWith(
+                          color: AppColors.lightGray, fontSize: 13.sp),
+                    ),
+                  ),
                   const SizedBox(
-                    height: Dimensions.dp20,
+                    height: Dimensions.dp25,
                   ),
                   Container(
                     margin: const EdgeInsets.only(
@@ -670,172 +694,172 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               ),
                             ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(top: Dimensions.dp20),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      flex: 1,
-                                      child: Stack(
-                                        children: [
-                                          Card(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                      Dimensions.dp10),
-                                              // if you need this
-                                              side: const BorderSide(
-                                                color: AppColors.gray6E8EE7,
-                                                width: 1,
-                                              ),
-                                            ),
-                                            color: Colors.transparent,
-                                            elevation: 0,
-                                            child: SizedBox(
-                                              height: Dimensions.dp55,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: Dimensions.dp18,
-                                                    top: Dimensions.dp13,
-                                                    bottom: Dimensions.dp13),
-                                                child: Column(
-                                                  children: [
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        SvgPicture.asset(
-                                                            ImageConstant
-                                                                .iCalendar),
-                                                        const SizedBox(
-                                                          width:
-                                                              Dimensions.dp14,
-                                                        ),
-                                                        Expanded(
-                                                          child: Text(
-                                                            "15/07/2022",
-                                                            style: satoshiRegular.copyWith(
-                                                                fontSize: 16.sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                                color: AppColors
-                                                                    .darkGray),
-                                                          ),
-                                                        )
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Positioned(
-                                              left: Dimensions.dp14,
-                                              top: -3,
-                                              child: Container(
-                                                color: Colors.white,
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal:
-                                                            Dimensions.dp10),
-                                                child: Text(
-                                                  "Departure",
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontWeight:
-                                                          FontWeight.w400,
-                                                      fontSize: 14.sp),
-                                                ),
-                                              )),
-                                        ],
-                                      )),
-                                  Expanded(
-                                    flex: 1,
-                                    child: Stack(
-                                      children: [
-                                        Card(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(
-                                                Dimensions.dp10),
-                                            // if you need this
-                                            side: const BorderSide(
-                                              color: AppColors.gray6E8EE7,
-                                              width: Dimensions.dp1,
-                                            ),
-                                          ),
-                                          color: Colors.transparent,
-                                          elevation: 0,
-                                          child: SizedBox(
-                                            height: Dimensions.dp55,
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: Dimensions.dp18,
-                                                  top: Dimensions.dp13,
-                                                  bottom: Dimensions.dp13),
-                                              child: Column(
-                                                children: [
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      SvgPicture.asset(
-                                                          ImageConstant.iTime),
-                                                      const SizedBox(
-                                                        width: Dimensions.dp14,
-                                                      ),
-                                                      Expanded(
-                                                        child: Text(
-                                                          "09:10 AM",
-                                                          style: satoshiRegular
-                                                              .copyWith(
-                                                                  fontSize:
-                                                                      16.sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                  color: AppColors
-                                                                      .darkGray),
-                                                        ),
-                                                      )
-                                                    ],
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned(
-                                            left: Dimensions.dp14,
-                                            top: -3,
-                                            child: Container(
-                                              color: Colors.white,
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal:
-                                                          Dimensions.dp10),
-                                              child: Text(
-                                                "Time",
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.w400,
-                                                    fontSize: 14.sp),
-                                              ),
-                                            )),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            // Padding(
+                            //   padding:
+                            //       const EdgeInsets.only(top: Dimensions.dp20),
+                            //   child: Row(
+                            //     children: [
+                            //       Expanded(
+                            //           flex: 1,
+                            //           child: Stack(
+                            //             children: [
+                            //               Card(
+                            //                 shape: RoundedRectangleBorder(
+                            //                   borderRadius:
+                            //                       BorderRadius.circular(
+                            //                           Dimensions.dp10),
+                            //                   // if you need this
+                            //                   side: const BorderSide(
+                            //                     color: AppColors.gray6E8EE7,
+                            //                     width: 1,
+                            //                   ),
+                            //                 ),
+                            //                 color: Colors.transparent,
+                            //                 elevation: 0,
+                            //                 child: SizedBox(
+                            //                   height: Dimensions.dp55,
+                            //                   child: Padding(
+                            //                     padding: const EdgeInsets.only(
+                            //                         left: Dimensions.dp18,
+                            //                         top: Dimensions.dp13,
+                            //                         bottom: Dimensions.dp13),
+                            //                     child: Column(
+                            //                       children: [
+                            //                         Row(
+                            //                           mainAxisAlignment:
+                            //                               MainAxisAlignment
+                            //                                   .start,
+                            //                           crossAxisAlignment:
+                            //                               CrossAxisAlignment
+                            //                                   .start,
+                            //                           children: [
+                            //                             SvgPicture.asset(
+                            //                                 ImageConstant
+                            //                                     .iCalendar),
+                            //                             const SizedBox(
+                            //                               width:
+                            //                                   Dimensions.dp14,
+                            //                             ),
+                            //                             Expanded(
+                            //                               child: Text(
+                            //                                 "15/07/2022",
+                            //                                 style: satoshiRegular.copyWith(
+                            //                                     fontSize: 16.sp,
+                            //                                     fontWeight:
+                            //                                         FontWeight
+                            //                                             .w700,
+                            //                                     color: AppColors
+                            //                                         .darkGray),
+                            //                               ),
+                            //                             )
+                            //                           ],
+                            //                         )
+                            //                       ],
+                            //                     ),
+                            //                   ),
+                            //                 ),
+                            //               ),
+                            //               Positioned(
+                            //                   left: Dimensions.dp14,
+                            //                   top: -3,
+                            //                   child: Container(
+                            //                     color: Colors.white,
+                            //                     padding:
+                            //                         const EdgeInsets.symmetric(
+                            //                             horizontal:
+                            //                                 Dimensions.dp10),
+                            //                     child: Text(
+                            //                       "Departure",
+                            //                       style: TextStyle(
+                            //                           color: Colors.black,
+                            //                           fontWeight:
+                            //                               FontWeight.w400,
+                            //                           fontSize: 14.sp),
+                            //                     ),
+                            //                   )),
+                            //             ],
+                            //           )),
+                            //       Expanded(
+                            //         flex: 1,
+                            //         child: Stack(
+                            //           children: [
+                            //             Card(
+                            //               shape: RoundedRectangleBorder(
+                            //                 borderRadius: BorderRadius.circular(
+                            //                     Dimensions.dp10),
+                            //                 // if you need this
+                            //                 side: const BorderSide(
+                            //                   color: AppColors.gray6E8EE7,
+                            //                   width: Dimensions.dp1,
+                            //                 ),
+                            //               ),
+                            //               color: Colors.transparent,
+                            //               elevation: 0,
+                            //               child: SizedBox(
+                            //                 height: Dimensions.dp55,
+                            //                 child: Padding(
+                            //                   padding: const EdgeInsets.only(
+                            //                       left: Dimensions.dp18,
+                            //                       top: Dimensions.dp13,
+                            //                       bottom: Dimensions.dp13),
+                            //                   child: Column(
+                            //                     children: [
+                            //                       Row(
+                            //                         mainAxisAlignment:
+                            //                             MainAxisAlignment.start,
+                            //                         crossAxisAlignment:
+                            //                             CrossAxisAlignment
+                            //                                 .start,
+                            //                         children: [
+                            //                           SvgPicture.asset(
+                            //                               ImageConstant.iTime),
+                            //                           const SizedBox(
+                            //                             width: Dimensions.dp14,
+                            //                           ),
+                            //                           Expanded(
+                            //                             child: Text(
+                            //                               "09:10 AM",
+                            //                               style: satoshiRegular
+                            //                                   .copyWith(
+                            //                                       fontSize:
+                            //                                           16.sp,
+                            //                                       fontWeight:
+                            //                                           FontWeight
+                            //                                               .w700,
+                            //                                       color: AppColors
+                            //                                           .darkGray),
+                            //                             ),
+                            //                           )
+                            //                         ],
+                            //                       )
+                            //                     ],
+                            //                   ),
+                            //                 ),
+                            //               ),
+                            //             ),
+                            //             Positioned(
+                            //                 left: Dimensions.dp14,
+                            //                 top: -3,
+                            //                 child: Container(
+                            //                   color: Colors.white,
+                            //                   padding:
+                            //                       const EdgeInsets.symmetric(
+                            //                           horizontal:
+                            //                               Dimensions.dp10),
+                            //                   child: Text(
+                            //                     "Time",
+                            //                     style: TextStyle(
+                            //                         color: Colors.black,
+                            //                         fontWeight: FontWeight.w400,
+                            //                         fontSize: 14.sp),
+                            //                   ),
+                            //                 )),
+                            //           ],
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                            // ),
                             Container(
                               margin: const EdgeInsets.only(
                                   left: Dimensions.dp10,
@@ -862,6 +886,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                             _fromController.text,
                                             _toController.text));
                                   }
+                                },
+                                style: satoshiRegular.copyWith(
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white),
+                                height: Dimensions.dp53,
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.only(
+                                  left: Dimensions.dp10,
+                                  right: Dimensions.dp10,
+                                  top: Dimensions.dp14),
+                              child: CustomButton(
+                                text: "One Day Pass",
+                                width: MediaQuery.of(context).size.width,
+                                onPressed: () {
+
                                 },
                                 style: satoshiRegular.copyWith(
                                     fontSize: 20.sp,
