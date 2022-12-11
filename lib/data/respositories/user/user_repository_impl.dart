@@ -148,7 +148,7 @@ class UserRepositoryImpl implements UserRepository {
         BrtsStopResponseModel.fromJson(response.body);
         getLocalBrtsRouteData().put("key",stopResponseModel);
         print("from Hive side");
-        return amtsBox.get("key");
+        return brtsBox.get("key");
       }
     }else{
       if(amtsBox.isEmpty){
@@ -158,7 +158,7 @@ class UserRepositoryImpl implements UserRepository {
         getLocalAmtsRouteData().put("key",stopResponseModel);
         try {} on Exception catch (exception) {
         } catch (error) {}
-        return brtsBox.get("key");
+        return amtsBox.get("key");
       }else{
         BrtsStopResponseModel stopResponseModel =
         BrtsStopResponseModel.fromJson(response.body);
