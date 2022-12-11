@@ -10,6 +10,7 @@ class HomeScreenBloc extends Bloc<HomeEvent,HomeState>{
   @override
   Stream<HomeState> mapEventToState(HomeEvent event) async*{
     if(event is GetAvailableRoutesEvent){
+      yield HomeLoadingState();
       var data = await homeScreenUseCase.call(Params(data: event.model));
       print("data.data?.length ${data.data?.length}");
       yield RoutesResponseState(data);

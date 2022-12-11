@@ -9,6 +9,7 @@ abstract class HomeState extends Equatable {
   List<Object> get props => [];
 }
 class SplashInitialState extends HomeState{}
+class HomeLoadingState extends HomeState{}
 class RoutesResponseState extends HomeState{
   BrtsStopResponseModel model;
   RoutesResponseState(this.model);

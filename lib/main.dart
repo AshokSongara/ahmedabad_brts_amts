@@ -85,10 +85,10 @@ class MyApp extends StatelessWidget {
           theme: darkThemeData,
           themeMode: ThemeMode.dark,
           darkTheme: darkThemeData,
-          home: DashboardScreen(
-            pageIndex: 0,
-          ),
-          // home: SplashScreen(),
+          // home: DashboardScreen(
+          //   pageIndex: 0,
+          // ),
+          home: SplashScreen(),
           initialRoute: RouteHelper.getInitialRoute(),
           getPages: RouteHelper.routes,
         );

@@ -1,3 +1,4 @@
+import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/stop_request_model.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
@@ -30,8 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isAmts = true;
   List<QuickLinkInternalModel> quickLinkList = [];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  TextEditingController _fromController = TextEditingController(text: "India");
-  TextEditingController _toController = TextEditingController(text: "India");
+  TextEditingController _fromController = TextEditingController();
+  TextEditingController _toController = TextEditingController();
   String startRouteCode = "";
   String endRouteCode = "";
 
@@ -290,7 +291,13 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         body: BlocConsumer<HomeScreenBloc, HomeState>(
-            listener: (context, state) {},
+            listener: (context, state) {
+              if(state is HomeLoadingState){
+                Loader.show(context);
+              }else{
+                Loader.hide();
+              }
+            },
             builder: (context, state) {
               return ListView(
                 children: [
