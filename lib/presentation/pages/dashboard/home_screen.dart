@@ -299,6 +299,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Loader.show(context);
               }else{
                 Loader.hide();
+                FocusScope.of(context).unfocus();
               }
             },
             builder: (context, state) {
@@ -524,6 +525,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         startRouteCode = option
                                                                 .stationCode ??
                                                             "";
+                                                        FocusScope.of(context).unfocus();
                                                       },
                                                       child: ListTile(
                                                         title: Text(
@@ -623,6 +625,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           endRouteCode = option
                                                                   .stationCode ??
                                                               "";
+                                                          FocusScope.of(context).unfocus();
                                                         },
                                                         child: ListTile(
                                                           title: Text(
@@ -668,7 +671,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                           startRouteCode = endRouteCode;
                                           endRouteCode = tempCode;
-
+                                          FocusScope.of(context).unfocus();
                                           setState(() {});
                                         },
                                         child: Container(
