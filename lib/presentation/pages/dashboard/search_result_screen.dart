@@ -35,9 +35,6 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
   @override
   void initState() {
     super.initState();
-    print("Result${widget.startRoute}");
-    print("Result${widget.endRoute}");
-
     var request = SearchRouteRequest(
         startCode: widget.startRoute ?? "", endCode: widget.endRoute ?? "");
 

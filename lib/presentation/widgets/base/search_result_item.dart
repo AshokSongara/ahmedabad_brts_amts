@@ -170,21 +170,19 @@ class SearchResultItem extends StatelessWidget {
                           child:
                               SvgPicture.asset(ImageConstant.iRightGrayArrow)),
                   itemBuilder: (BuildContext context, int index) {
-                    return Expanded(
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(ImageConstant.iRedBus),
-                          const SizedBox(
-                            width: 3,
-                          ),
-                          Text(
-                            routeResult.routes![index],
-                            style: satoshiSmall.copyWith(
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.primaryColor),
-                          ),
-                        ],
-                      ),
+                    return Row(
+                      children: [
+                        SvgPicture.asset(ImageConstant.iRedBus),
+                        const SizedBox(
+                          width: 3,
+                        ),
+                        Text(
+                          routeResult.routes![index],
+                          style: satoshiSmall.copyWith(
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.primaryColor),
+                        ),
+                      ],
                     );
                   },
                 ),

@@ -9,6 +9,7 @@ import 'package:ahmedabad_brts_amts/presentation/pages/lrf/signup_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/my_routes/my_routes_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/nearby/nearby_sreen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/passenger_details/passenger_details.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/search_route_number/search_route_number_screen.dart';
 import 'package:get/get.dart';
 import '../presentation/pages/dashboard/search_result_screen.dart';
 import '../presentation/pages/lrf/splash_screen.dart';
@@ -28,6 +29,7 @@ class RouteHelper {
   static const String nearBy = '/nearBy';
   static const String feedback = '/feedback';
   static const String myRoute = '/myRoute';
+  static const String searchRoute = '/searchRoute';
 
   static String getInitialRoute() => '$initial';
 
@@ -61,6 +63,8 @@ class RouteHelper {
   static String getFeedbackRoute() => '$feedback';
 
   static String getMyRouteScreen() => '$myRoute';
+
+  static String getSearchRoute() => '$searchRoute';
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => const SplashScreen()),
@@ -97,5 +101,6 @@ class RouteHelper {
     GetPage(name: nearBy, page: () => const NearByScreen()),
     GetPage(name: feedback, page: () => const FeedBackScreen()),
     GetPage(name: myRoute, page: () => const MyRoutesScreen()),
+    GetPage(name: searchRoute, page: () => const SearchRouteNumberScreen()),
   ];
 }

@@ -38,8 +38,6 @@ class UserRepositoryImpl implements UserRepository {
     MobileNumberOtpResponseEntity mobileNumberOtpResponseEntity =
         MobileNumberOtpResponseEntity.fromJson(response.body);
 
-    try {} on Exception catch (exception) {
-    } catch (error) {}
     return mobileNumberOtpResponseEntity;
   }
 
@@ -102,15 +100,15 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<FeedbackResponseModel> feedbackSubmit(body) async{
+  Future<FeedbackResponseModel> feedbackSubmit(body) async {
     Map data = {
       "routeId": body.routeId,
-      "waiting":body.waiting,
-      "comfort":body.comfort,
-      "crowding":body.crowding,
-      "serviceQuality":body.serviceQuality,
-      "journey":body.journey,
-      "userId":body.userId
+      "waiting": body.waiting,
+      "comfort": body.comfort,
+      "crowding": body.crowding,
+      "serviceQuality": body.serviceQuality,
+      "journey": body.journey,
+      "userId": body.userId
     };
 
     var bodyData = json.encode(data);
@@ -118,7 +116,7 @@ class UserRepositoryImpl implements UserRepository {
     Response response =
         await apiClient.postData(AppConstant.submitFeedback, bodyData);
     FeedbackResponseModel feedbackResponseModel =
-    FeedbackResponseModel.fromJson(response.body);
+        FeedbackResponseModel.fromJson(response.body);
 
     try {} on Exception catch (exception) {
     } catch (error) {}
@@ -129,52 +127,52 @@ class UserRepositoryImpl implements UserRepository {
   /// For now the logic is if there is no data in local we'll call the api but going forward
   /// we need 1 flag from server in response that if the response is updated or not
   @override
-  Future<BrtsStopResponseModel> getStop(body) async{
+  Future<BrtsStopResponseModel> getStop(body) async {
     Box brtsBox = getLocalBrtsRouteData();
     Box amtsBox = getLocalAmtsRouteData();
-    Response response =
-    await apiClient.getData(AppConstant.getStops+"${body.stopType}",);
-    if(body.stopType==1){
-      if(brtsBox.isEmpty){
+    Response response = await apiClient.getData(
+      AppConstant.getStops + "${body.stopType}",
+    );
+    if (body.stopType == 1) {
+      if (brtsBox.isEmpty) {
         print("response.body ${response.body}");
         BrtsStopResponseModel stopResponseModel =
-        BrtsStopResponseModel.fromJson(response.body);
-        getLocalBrtsRouteData().put("key",stopResponseModel);
+            BrtsStopResponseModel.fromJson(response.body);
+        getLocalBrtsRouteData().put("key", stopResponseModel);
         try {} on Exception catch (exception) {
         } catch (error) {}
         return brtsBox.get("key");
-      }else{
+      } else {
         BrtsStopResponseModel stopResponseModel =
-        BrtsStopResponseModel.fromJson(response.body);
-        getLocalBrtsRouteData().put("key",stopResponseModel);
+            BrtsStopResponseModel.fromJson(response.body);
+        getLocalBrtsRouteData().put("key", stopResponseModel);
         print("from Hive side");
         return brtsBox.get("key");
       }
-    }else{
-      if(amtsBox.isEmpty){
+    } else {
+      if (amtsBox.isEmpty) {
         print("response.body ${response.body}");
         BrtsStopResponseModel stopResponseModel =
-        BrtsStopResponseModel.fromJson(response.body);
-        getLocalAmtsRouteData().put("key",stopResponseModel);
+            BrtsStopResponseModel.fromJson(response.body);
+        getLocalAmtsRouteData().put("key", stopResponseModel);
         try {} on Exception catch (exception) {
         } catch (error) {}
         return amtsBox.get("key");
-      }else{
+      } else {
         BrtsStopResponseModel stopResponseModel =
-        BrtsStopResponseModel.fromJson(response.body);
-        getLocalAmtsRouteData().put("key",stopResponseModel);
+            BrtsStopResponseModel.fromJson(response.body);
+        getLocalAmtsRouteData().put("key", stopResponseModel);
         print("from Hive side");
         return amtsBox.get("key");
       }
     }
-
-
   }
 
   @override
   Box<BrtsStopResponseModel> getLocalBrtsRouteData() {
     return Hive.box<BrtsStopResponseModel>(AppConstant.BrtsStopListBox);
   }
+
   @override
   Box<BrtsStopResponseModel> getLocalAmtsRouteData() {
     return Hive.box<BrtsStopResponseModel>(AppConstant.AmtsStopListBox);
