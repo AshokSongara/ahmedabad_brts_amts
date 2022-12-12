@@ -194,39 +194,36 @@ class SearchResultItem extends StatelessWidget {
               const SizedBox(
                 height: 5,
               ),
-              Visibility(
-                visible: routeResult.interChanges!.isNotEmpty,
-                child: Container(
-                  margin: const EdgeInsets.only(
-                      left: Dimensions.dp20, right: Dimensions.dp20),
-                  child: Row(
-                    children: [
-                      SizedBox(
-                          height: 20,
-                          width: 20,
-                          child: SvgPicture.asset(ImageConstant.iRoute)),
-                      const SizedBox(
-                        width: 5,
+              routeResult.interChanges!.isNotEmpty ? Container(
+                margin: const EdgeInsets.only(
+                    left: Dimensions.dp20, right: Dimensions.dp20),
+                child: Row(
+                  children: [
+                    SizedBox(
+                        height: 20,
+                        width: 20,
+                        child: SvgPicture.asset(ImageConstant.iRoute)),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: "Change at ",
+                        style: satoshiRegular.copyWith(
+                            fontSize: 12.sp, color: AppColors.darkGray),
+                        children: <TextSpan>[
+                          TextSpan(
+                              text: routeResult.interChanges![0],
+                              style: satoshiRegularSmall.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 12.sp,
+                                  color: AppColors.darkGray)),
+                        ],
                       ),
-                      RichText(
-                        text: TextSpan(
-                          text: "Change at ",
-                          style: satoshiRegular.copyWith(
-                              fontSize: 12.sp, color: AppColors.darkGray),
-                          children: <TextSpan>[
-                            TextSpan(
-                                text: routeResult.interChanges![0],
-                                style: satoshiRegularSmall.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 12.sp,
-                                    color: AppColors.darkGray)),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
-              ),
+              ) : Container(),
               const SizedBox(
                 height: 10,
               ),

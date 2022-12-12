@@ -10,6 +10,7 @@ class ImageConstant {
   static const String iSelectedWoman = 'assets/images/ic_selected_woman.svg';
   static const String iHome = 'assets/images/ic_home.png';
   static const String iBooking = 'assets/images/ic_booking.png';
+  static const String iEmptyFavorite = 'assets/images/ic_empty_favourite.svg';
   static const String iNotification = 'assets/images/ic_notification.png';
   static const String iProfile = 'assets/images/ic_user_png.png';
   static const String iMenu = 'assets/images/ic_menu.svg';
