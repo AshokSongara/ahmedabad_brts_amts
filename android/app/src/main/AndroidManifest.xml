@@ -2,7 +2,8 @@
     package="com.ahmedabad_brts_amts.ahmedabad_brts_amts">
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
-   <application
+    <uses-permission android:name="android.permission.INTERNET" />
+    <application
         android:label="ahmedabad_brts_amts"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

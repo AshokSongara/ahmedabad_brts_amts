@@ -8,6 +8,7 @@ import 'package:ahmedabad_brts_amts/presentation/pages/lrf/mobile_number_screen.
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/signup_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/my_routes/my_routes_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/nearby/nearby_sreen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/one_day_pass/one_day_pass_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/passenger_details/passenger_details.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/search_route_number/search_route_number_screen.dart';
 import 'package:get/get.dart';
@@ -30,6 +31,7 @@ class RouteHelper {
   static const String feedback = '/feedback';
   static const String myRoute = '/myRoute';
   static const String searchRoute = '/searchRoute';
+  static const String oneDayPassRoute = '/oneDayPass';
 
   static String getInitialRoute() => '$initial';
 
@@ -65,6 +67,7 @@ class RouteHelper {
   static String getMyRouteScreen() => '$myRoute';
 
   static String getSearchRoute() => '$searchRoute';
+  static String getoneDayPassRoute() => '$oneDayPassRoute';
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => const SplashScreen()),
@@ -72,6 +75,7 @@ class RouteHelper {
     GetPage(name: login, page: () => const LoginScreen()),
     GetPage(name: signup, page: () => const SignupScreen()),
     GetPage(name: mobileNumber, page: () => const MobileNumberScreen()),
+    GetPage(name: oneDayPassRoute, page: () => const OneDayPassScreen()),
     GetPage(
         name: enterCode,
         page: () => OtpVerificationScreen(

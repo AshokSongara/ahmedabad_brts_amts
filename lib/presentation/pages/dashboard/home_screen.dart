@@ -906,7 +906,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 text: "One Day Pass",
                                 width: MediaQuery.of(context).size.width,
                                 onPressed: () {
-
+                                  Get.toNamed(
+                                      RouteHelper.getoneDayPassRoute());
                                 },
                                 style: satoshiRegular.copyWith(
                                     fontSize: 20.sp,

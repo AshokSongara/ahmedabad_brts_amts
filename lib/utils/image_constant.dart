@@ -48,6 +48,8 @@ class ImageConstant {
   static const String iSpeaker = 'assets/images/ic_speaker.svg';
   static const String iCall = 'assets/images/ic_call.svg';
   static const String iSignOut = 'assets/images/ic_sign_out.svg';
+  static const String iGreyTick = 'assets/images/ic_grey_tick.svg';
+  static const String iRedTick = 'assets/images/ic_red_tick.svg';
 
 
 
