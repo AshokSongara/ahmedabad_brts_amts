@@ -29,7 +29,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool isAmts = true;
+  bool isAmts = false;
   List<QuickLinkInternalModel> quickLinkList = [];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController _fromController = TextEditingController();
@@ -43,12 +43,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     BlocProvider.of<HomeScreenBloc>(context)
-        .add(GetAvailableRoutesEvent(StopRequestModel(stopType: 2)));
+        .add(GetAvailableRoutesEvent(StopRequestModel(stopType: 1)));
     quickLinkList
         .add(QuickLinkInternalModel("M Ticket", ImageConstant.iTicket));
     quickLinkList.add(
         QuickLinkInternalModel("Smart Recharge", ImageConstant.iMobileRed));
-    quickLinkList.add(QuickLinkInternalModel("Stops", ImageConstant.iRoute));
+    quickLinkList.add(QuickLinkInternalModel("Routes", ImageConstant.iRoute));
     quickLinkList.add(QuickLinkInternalModel("My Routes", ImageConstant.iRate));
     quickLinkList
         .add(QuickLinkInternalModel("Transit Map", ImageConstant.iMap));
@@ -308,21 +308,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: Dimensions.dp10,
                   ),
-                  InkWell(
-                    onTap: () {
-                      isAmts = !isAmts;
-                      _fromController.text = "";
-                      _toController.text = "";
-                      startRouteCode = "";
-                      endRouteCode = "";
-                      BlocProvider.of<HomeScreenBloc>(context).add(
-                          GetAvailableRoutesEvent(
-                              StopRequestModel(stopType: isAmts ? 2 : 1)));
-                      setState(() {});
-                    },
-                    child: Row(
-                      children: [
-                        Container(
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          isAmts = !isAmts;
+                          _fromController.text = "";
+                          _toController.text = "";
+                          startRouteCode = "";
+                          endRouteCode = "";
+                          BlocProvider.of<HomeScreenBloc>(context).add(
+                              GetAvailableRoutesEvent(
+                                  StopRequestModel(stopType: isAmts ? 2 : 1)));
+                          setState(() {});
+                        },
+                        child: Container(
                           height: Dimensions.dp40,
                           width: Dimensions.dp140,
                           margin: const EdgeInsets.only(
@@ -386,17 +386,17 @@ class _HomeScreenState extends State<HomeScreen> {
                             ]),
                           ),
                         ),
-                        const Spacer(),
-                        Container(
-                            margin:
-                                const EdgeInsets.only(right: Dimensions.dp20),
-                            child: InkWell(
-                                onTap: () {
-                                  // _scaffoldKey.currentState!.openEndDrawer();
-                                },
-                                child: SvgPicture.asset(ImageConstant.iMenu)))
-                      ],
-                    ),
+                      ),
+                      const Spacer(),
+                      Container(
+                          margin:
+                              const EdgeInsets.only(right: Dimensions.dp20),
+                          child: InkWell(
+                              onTap: () {
+                                _scaffoldKey.currentState!.openEndDrawer();
+                              },
+                              child: SvgPicture.asset(ImageConstant.iMenu)))
+                    ],
                   ),
                   Container(
                     margin: const EdgeInsets.only(
@@ -982,7 +982,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Get.toNamed(RouteHelper.getFeedbackRoute());
         } else if (model.title == "My Routes") {
           Get.toNamed(RouteHelper.getMyRouteScreen());
-        } else if (model.title == "Stops") {
+        } else if (model.title == "Routes") {
           Get.toNamed(RouteHelper.getNearByRoute());
         }
       },

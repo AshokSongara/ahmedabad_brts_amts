@@ -256,7 +256,7 @@ class SearchResultItem extends StatelessWidget {
                     const Spacer(),
                     RichText(
                       text: TextSpan(
-                        text: "From  ",
+                        text: "Fare  ",
                         style: satoshiRegular.copyWith(
                             fontSize: 14.5.sp, color: AppColors.darkGray),
                         children: <TextSpan>[
