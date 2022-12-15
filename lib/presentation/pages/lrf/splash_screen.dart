@@ -1,3 +1,4 @@
+import 'package:ahmedabad_brts_amts/data/requestmodels/routes_request_model.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/stop_request_model.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
@@ -29,8 +30,11 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<HomeScreenBloc>(context).add(GetAvailableRoutesEvent(StopRequestModel(stopType: 1)));
-    BlocProvider.of<HomeScreenBloc>(context).add(GetAvailableRoutesEvent(StopRequestModel(stopType: 2)));
+    BlocProvider.of<HomeScreenBloc>(context).add(GetAvailableStopsEvent(StopRequestModel(stopType: 1)));
+    BlocProvider.of<HomeScreenBloc>(context).add(GetAvailableStopsEvent(StopRequestModel(stopType: 2)));
+
+    BlocProvider.of<HomeScreenBloc>(context).add(GetAvailableRoutesEvent(RoutesRequestModel(stopType: 1)));
+    BlocProvider.of<HomeScreenBloc>(context).add(GetAvailableRoutesEvent(RoutesRequestModel(stopType: 2)));
     _getLocationPermission();
     getMemberID();
   }

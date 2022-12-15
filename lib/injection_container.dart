@@ -5,6 +5,7 @@ import 'package:ahmedabad_brts_amts/domain/repositories/routes/routes_repository
 import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/nearme_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/search_route_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/user/home_get_routes_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/login_user_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/mobile_number_login_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/signup_user_usecase.dart';
@@ -55,7 +56,7 @@ Future<void> init() async {
     () => FeedbackBloc(injector()),
   );
   injector.registerFactory<HomeScreenBloc>(
-    () => HomeScreenBloc(injector()),
+    () => HomeScreenBloc(injector(),injector()),
   );
   injector.registerFactory<SearchResultRouteBloc>(
     () => SearchResultRouteBloc(searchResultRouteUseCase: injector()),
@@ -72,6 +73,7 @@ Future<void> init() async {
   injector.registerLazySingleton(() => VerifyOtpUseCase(injector()));
   injector.registerLazySingleton(() => FeedbackUseCase(injector()));
   injector.registerLazySingleton(() => HomeScreenUseCase(injector()));
+  injector.registerLazySingleton(() => HomeGetRoutesUseCase(injector()));
   injector.registerLazySingleton(() => SearchResultRouteUseCase(injector()));
 
   injector.registerLazySingleton<UserRepository>(

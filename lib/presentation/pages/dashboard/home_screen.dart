@@ -1,6 +1,8 @@
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/core/theme/theme_service.dart';
+import 'package:ahmedabad_brts_amts/data/requestmodels/routes_request_model.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/stop_request_model.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.dart';
@@ -36,15 +38,17 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController _fromController = TextEditingController();
   TextEditingController _toController = TextEditingController();
   String startRouteCode = "";
+  String routeName = "";
   String endRouteCode = "";
-  final _serviceController = TextEditingController();
-  final FocusNode _serviceFocus = FocusNode();
-
+  TextEditingController _serviceController = TextEditingController();
+  BrtsRoutesResponseModel? brtsRoutesResponseModel;
   @override
   void initState() {
     super.initState();
     BlocProvider.of<HomeScreenBloc>(context)
-        .add(GetAvailableRoutesEvent(StopRequestModel(stopType: 1)));
+        .add(GetAvailableStopsEvent(StopRequestModel(stopType: 1)));
+    BlocProvider.of<HomeScreenBloc>(context)
+        .add(GetAvailableRoutesEvent(RoutesRequestModel(stopType: 1)));
     quickLinkList
         .add(QuickLinkInternalModel("M Ticket", ImageConstant.iTicket));
     quickLinkList.add(
@@ -314,13 +318,16 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body:
             BlocConsumer<HomeScreenBloc, HomeState>(listener: (context, state) {
+          if (state is RoutesResponseState) {
+            brtsRoutesResponseModel=state.model;
+          }
           if (state is HomeLoadingState) {
             Loader.show(context);
           } else {
             Loader.hide();
             FocusScope.of(context).unfocus();
-          }
-        }, builder: (context, state) {
+
+        }}, builder: (context, state) {
           return ListView(
             children: [
               const SizedBox(
@@ -336,8 +343,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       startRouteCode = "";
                       endRouteCode = "";
                       BlocProvider.of<HomeScreenBloc>(context).add(
-                          GetAvailableRoutesEvent(
+                          GetAvailableStopsEvent(
                               StopRequestModel(stopType: isAmts ? 2 : 1)));
+                      BlocProvider.of<HomeScreenBloc>(context).add(
+                          GetAvailableRoutesEvent(
+                              RoutesRequestModel(stopType: isAmts ? 2 : 1)));
+                      Future.delayed(Duration(milliseconds: 100),(){
+                        ThemeService().switchTheme(isAmts);
+                      });
                       setState(() {});
                     },
                     child: Container(
@@ -346,8 +359,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       margin: const EdgeInsets.only(
                           left: Dimensions.dp20, right: Dimensions.dp30),
                       decoration: BoxDecoration(
-                          boxShadow: [
-                            const BoxShadow(
+                          boxShadow: const [
+                            BoxShadow(
                               color: AppColors.gray6E8EE7,
                               blurRadius: 5.0,
                             ),
@@ -415,26 +428,138 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: SvgPicture.asset(ImageConstant.iMenu)))
                 ],
               ),
+              if(brtsRoutesResponseModel!=null)
               Container(
                 margin: const EdgeInsets.only(
                     left: Dimensions.dp24,
                     right: Dimensions.dp24,
                     top: Dimensions.dp26),
-                child: CustomSearchBar(
-                  controller: _serviceController,
-                  focusNode: _serviceFocus,
-                  nextFocus: _serviceFocus,
-                  radius: 10,
-                  onChanged: (text) {},
-                  onSubmit: () {},
-                  prefixIcon: ImageConstant.iSearch,
-                  capitalization: TextCapitalization.words,
-                  divider: false,
-                  hintText: "Search bus route number",
-                  fillColor: Colors.white,
-                  hintStyle: satoshiSmall.copyWith(
-                      color: AppColors.lightGray, fontSize: 13.sp),
+                child: Autocomplete<RouteData>(
+                  optionsBuilder:
+                      (TextEditingValue textEditingValue) {
+                    return brtsRoutesResponseModel!.data!
+                        .where((RouteData data) => data.routeCode!
+                        .toLowerCase()
+                        .startsWith(textEditingValue
+                        .text
+                        .toLowerCase()))
+                        .toList();
+                  },
+                  displayStringForOption: (RouteData option) =>
+                  option.routeCode!,
+                  fieldViewBuilder: (BuildContext context,
+                      TextEditingController
+                      fieldTextEditingController,
+                      FocusNode fieldFocusNode,
+                      VoidCallback onFieldSubmitted) {
+                    _serviceController =
+                        fieldTextEditingController;
+                    return TextField(
+                      controller:
+                      fieldTextEditingController,
+                      focusNode: fieldFocusNode,
+                      decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
+                        border: const OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          borderSide: BorderSide(
+                            width: 0,
+                            style: BorderStyle.none,
+                          ),
+                        ),
+                        isDense: false,
+                        hintText: "Search bus route number",
+                        fillColor: Colors.white,
+                        hintStyle: satoshiSmall.copyWith(
+                          color: AppColors.lightGray, fontSize: 13.sp),
+                        filled: true,
+                        prefixIcon:  Padding(
+                          padding:
+                          EdgeInsets.symmetric(horizontal: 14),
+                          child: SvgPicture.asset(ImageConstant.iSearch,
+                              height: 20, width: 20),
+                        ),
+                      ),
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp18.sp,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.darkGray),
+                    );
+                  },
+                  optionsViewBuilder: (BuildContext context,
+                      AutocompleteOnSelected<RouteData>
+                      onSelected,
+                      Iterable<RouteData> options) {
+                    return Material(
+                      child: Container(
+                        width: 300,
+                        color: Colors.white,
+                        child: ListView.builder(
+                          padding: EdgeInsets.all(10.0),
+                          itemCount: options.length,
+                          itemBuilder:
+                              (BuildContext context,
+                              int index) {
+                            final RouteData option =
+                            options.elementAt(index);
+
+                            return GestureDetector(
+                              onTap: () {
+                                onSelected(option);
+                                routeName =
+                                    option.routeName ??
+                                        "";
+                                FocusScope.of(context)
+                                    .unfocus();
+                              },
+                              child: ListTile(
+                                title: Text(
+                                    option.routeName ?? "",
+                                    style: satoshiRegular
+                                        .copyWith(
+                                        fontSize:
+                                        Dimensions
+                                            .dp18
+                                            .sp,
+                                        fontWeight:
+                                        FontWeight
+                                            .w700,
+                                        color: AppColors
+                                            .darkGray)),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                  onSelected: (RouteData selection) {
+                    FocusScope.of(context)
+                        .unfocus();
+                    List<String>? routes  = selection.routeName?.split("-");
+                    Get.toNamed(
+                        RouteHelper.getRouteDetailsRoute(routes![0].trim(), routes[1].trim()));
+                    print(
+                        'Selected: ${selection.routeCode}');
+                    print(
+                        'Selected: ${selection.routeName}');
+                  },
                 ),
+                // child: CustomSearchBar(
+                //   controller: _serviceController,
+                //   focusNode: _serviceFocus,
+                //   nextFocus: _serviceFocus,
+                //   radius: 10,
+                //   onChanged: (text) {},
+                //   onSubmit: () {},
+                //   prefixIcon: ImageConstant.iSearch,
+                //   capitalization: TextCapitalization.words,
+                //   divider: false,
+                //   hintText: "Search bus route number",
+                //   fillColor: Colors.white,
+                //   hintStyle: satoshiSmall.copyWith(
+                //       color: AppColors.lightGray, fontSize: 13.sp),
+                // ),
               ),
               const SizedBox(
                 height: Dimensions.dp25,
@@ -453,7 +578,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: Dimensions.dp15,
               ),
-              if (state is RoutesResponseState)
+              if (state is StopsResponseState)
                 Container(
                   margin: const EdgeInsets.only(
                       left: Dimensions.dp20, right: Dimensions.dp30),
@@ -505,8 +630,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           VoidCallback onFieldSubmitted) {
                                         _fromController =
                                             fieldTextEditingController;
-                                        return TextField(
-                                          cursorColor: Theme.of(context).primaryColor,
+                                        return TextField(cursorColor: Theme.of(context).primaryColor,
                                           controller:
                                               fieldTextEditingController,
                                           focusNode: fieldFocusNode,
@@ -514,9 +638,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               fontSize: Dimensions.dp18.sp,
                                               fontWeight: FontWeight.w700,
                                               color: AppColors.darkGray),
-                                          decoration: const InputDecoration(
-                                            border: InputBorder.none,
-                                          ),
+                                        decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      ),
                                         );
                                       },
                                       optionsViewBuilder: (BuildContext context,
@@ -604,16 +728,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                             VoidCallback onFieldSubmitted) {
                                           _toController =
                                               fieldTextEditingController;
-                                          return TextField(
-                                            cursorColor: Theme.of(context).primaryColor,
+                                          return TextField(cursorColor: Theme.of(context).primaryColor,
                                             controller:
                                                 fieldTextEditingController,
                                             focusNode: fieldFocusNode,
                                             style: satoshiRegular.copyWith(
                                                 fontSize: Dimensions.dp18.sp,
                                                 fontWeight: FontWeight.w700,
-                                                color: AppColors.darkGray),
-                                            decoration: const InputDecoration(
+                                                color: AppColors.darkGray),decoration: const InputDecoration(
                                               border: InputBorder.none,
                                             ),
                                           );
@@ -628,7 +750,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               width: 300,
                                               color: Colors.white,
                                               child: ListView.builder(
-                                                padding: const EdgeInsets.all(10.0),
+                                                padding:const EdgeInsets.all(10.0),
                                                 itemCount: options.length,
                                                 itemBuilder:
                                                     (BuildContext context,
@@ -714,14 +836,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                         ),
+
                         Container(
                           margin: const EdgeInsets.only(
                               left: Dimensions.dp10,
                               right: Dimensions.dp10,
                               top: Dimensions.dp15),
                           child: CustomButton(
-                            color: Theme.of(context).primaryColor,
-                            text: "Show Route & Fare",
+                            color: Theme.of(context).primaryColor,text: "Show Route & Fare",
                             width: MediaQuery.of(context).size.width,
                             onPressed: () {
                               if (_fromController.text.isEmpty) {
@@ -754,8 +876,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               right: Dimensions.dp10,
                               top: Dimensions.dp14),
                           child: CustomButton(
-                            color: Theme.of(context).primaryColor,
-                            text: "One Day Pass",
+                            color: Theme.of(context).primaryColor,text: "One Day Pass",
                             width: MediaQuery.of(context).size.width,
                             onPressed: () {
                               Get.toNamed(RouteHelper.getoneDayPassRoute());

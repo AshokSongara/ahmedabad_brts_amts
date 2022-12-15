@@ -5,6 +5,7 @@ import 'package:ahmedabad_brts_amts/api/api_client.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/mobile_number_otp_request_param.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/otp_request.dart';
 import 'package:ahmedabad_brts_amts/data/responseModels/signup_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/feedback_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/login_response.dart';
@@ -128,8 +129,8 @@ class UserRepositoryImpl implements UserRepository {
   /// we need 1 flag from server in response that if the response is updated or not
   @override
   Future<BrtsStopResponseModel> getStop(body) async {
-    Box brtsBox = getLocalBrtsRouteData();
-    Box amtsBox = getLocalAmtsRouteData();
+    Box brtsBox = getLocalBrtsStopData();
+    Box amtsBox = getLocalAmtsStopData();
     Response response = await apiClient.getData(
       AppConstant.getStops + "${body.stopType}",
     );
@@ -138,14 +139,14 @@ class UserRepositoryImpl implements UserRepository {
         print("response.body ${response.body}");
         BrtsStopResponseModel stopResponseModel =
             BrtsStopResponseModel.fromJson(response.body);
-        getLocalBrtsRouteData().put("key", stopResponseModel);
+        getLocalBrtsStopData().put("key", stopResponseModel);
         try {} on Exception catch (exception) {
         } catch (error) {}
         return brtsBox.get("key");
       } else {
         BrtsStopResponseModel stopResponseModel =
             BrtsStopResponseModel.fromJson(response.body);
-        getLocalBrtsRouteData().put("key", stopResponseModel);
+        getLocalBrtsStopData().put("key", stopResponseModel);
         print("from Hive side");
         return brtsBox.get("key");
       }
@@ -154,14 +155,14 @@ class UserRepositoryImpl implements UserRepository {
         print("response.body ${response.body}");
         BrtsStopResponseModel stopResponseModel =
             BrtsStopResponseModel.fromJson(response.body);
-        getLocalAmtsRouteData().put("key", stopResponseModel);
+        getLocalAmtsStopData().put("key", stopResponseModel);
         try {} on Exception catch (exception) {
         } catch (error) {}
         return amtsBox.get("key");
       } else {
         BrtsStopResponseModel stopResponseModel =
             BrtsStopResponseModel.fromJson(response.body);
-        getLocalAmtsRouteData().put("key", stopResponseModel);
+        getLocalAmtsStopData().put("key", stopResponseModel);
         print("from Hive side");
         return amtsBox.get("key");
       }
@@ -169,12 +170,61 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Box<BrtsStopResponseModel> getLocalBrtsRouteData() {
+  Future<BrtsRoutesResponseModel> getRoutes(body) async {
+    Box brtsBox = getLocalBrtsRoutesData();
+    Box amtsBox = getLocalAmtsRoutesData();
+    Response response = await apiClient.getData(
+      AppConstant.getRoutes + "${body.stopType}",
+    );
+    if (body.stopType == 1) {
+      if (brtsBox.isEmpty) {
+        print("getRoutes response.body ${response.body}");
+        BrtsRoutesResponseModel stopResponseModel =
+        BrtsRoutesResponseModel.fromJson(response.body);
+        getLocalBrtsRoutesData().put("key", stopResponseModel);
+        try {} on Exception catch (exception) {
+        } catch (error) {}
+        return brtsBox.get("key");
+      } else {
+        BrtsRoutesResponseModel stopResponseModel =
+        BrtsRoutesResponseModel.fromJson(response.body);
+        getLocalBrtsRoutesData().put("key", stopResponseModel);
+        print("getRoutes from Hive side");
+        return brtsBox.get("key");
+      }
+    } else {
+      if (amtsBox.isEmpty) {
+        print("getRoutes response.body ${response.body}");
+        BrtsRoutesResponseModel stopResponseModel =
+        BrtsRoutesResponseModel.fromJson(response.body);
+        getLocalAmtsRoutesData().put("key", stopResponseModel);
+        try {} on Exception catch (exception) {
+        } catch (error) {}
+        return amtsBox.get("key");
+      } else {
+        BrtsRoutesResponseModel stopResponseModel =
+        BrtsRoutesResponseModel.fromJson(response.body);
+        getLocalAmtsRoutesData().put("key", stopResponseModel);
+        print("from Hive side");
+        return amtsBox.get("key");
+      }
+    }
+  }
+  @override
+  Box<BrtsRoutesResponseModel> getLocalBrtsRoutesData() {
+    return Hive.box<BrtsRoutesResponseModel>(AppConstant.brtsRoutesListBox);
+  }
+  @override
+  Box<BrtsRoutesResponseModel> getLocalAmtsRoutesData() {
+    return Hive.box<BrtsRoutesResponseModel>(AppConstant.amtsRoutesListBox);
+  }
+  @override
+  Box<BrtsStopResponseModel> getLocalBrtsStopData() {
     return Hive.box<BrtsStopResponseModel>(AppConstant.BrtsStopListBox);
   }
 
   @override
-  Box<BrtsStopResponseModel> getLocalAmtsRouteData() {
+  Box<BrtsStopResponseModel> getLocalAmtsStopData() {
     return Hive.box<BrtsStopResponseModel>(AppConstant.AmtsStopListBox);
   }
 }

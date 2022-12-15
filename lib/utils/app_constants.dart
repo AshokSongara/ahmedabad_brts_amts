@@ -10,6 +10,8 @@ class AppConstant {
   static String loginWithGuest = "Login as Guest";
   static String BrtsStopListBox = "BrtsStopListBox";
   static String AmtsStopListBox = "AmtsStopListBox";
+  static String amtsRoutesListBox = "amtsRoutesListBox";
+  static String brtsRoutesListBox = "brtsRoutesListBox";
 
   //APIs End Points
   static String registerInterface = "User";
@@ -22,6 +24,7 @@ class AppConstant {
   static String nearMeInterface = "NearMe";
   static String submitFeedback = "Feedback";
   static String getStops = "Stop/list/";
+  static String getRoutes = "Route/list/";
   static String searchRouteList = "Route/plan/start/";
 
 

@@ -1,5 +1,6 @@
 import 'package:ahmedabad_brts_amts/core/theme/app_theme.dart';
 import 'package:ahmedabad_brts_amts/core/theme/theme_service.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
 import 'package:ahmedabad_brts_amts/injection_container.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
@@ -35,8 +36,12 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(BrtsStopResponseModelAdapter());
   Hive.registerAdapter(DataAdapter());
+  Hive.registerAdapter(BrtsRoutesResponseModelAdapter());
+  Hive.registerAdapter(RouteDataAdapter());
   await Hive.openBox<BrtsStopResponseModel>(AppConstant.BrtsStopListBox);
   await Hive.openBox<BrtsStopResponseModel>(AppConstant.AmtsStopListBox);
+  await Hive.openBox<BrtsRoutesResponseModel>(AppConstant.amtsRoutesListBox);
+  await Hive.openBox<BrtsRoutesResponseModel>(AppConstant.brtsRoutesListBox);
   // await Hive.openBox<BrtsStopResponseModel>('AmtsStopResponseModel');
 
   runApp(

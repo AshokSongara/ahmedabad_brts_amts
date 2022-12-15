@@ -33,7 +33,9 @@ class _ChangeThemeScreenState extends State<ChangeThemeScreen> {
                   textStyle:
                       const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
-                onPressed: ThemeService().switchTheme,
+                onPressed: (){
+                  // ThemeService().switchTheme
+                },
                 child: const Text('Click To Change Theme')),
           ),
         ],
