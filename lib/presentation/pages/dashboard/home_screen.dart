@@ -175,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     onTap: () {
-                      Navigator.pop(context);
+                      Get.toNamed(RouteHelper.getMyRouteScreen());
                     },
                   ),
                   ListTile(
@@ -211,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     onTap: () {
-                      Navigator.pop(context);
+                      Get.toNamed(RouteHelper.getBookingRoute());
                     },
                   ),
                   ListTile(
@@ -265,7 +265,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     onTap: () {
-                      Navigator.pop(context);
+                      Get.toNamed(RouteHelper.getContactUsRoute());
                     },
                   ),
                   ListTile(

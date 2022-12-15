@@ -1,8 +1,7 @@
-import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/booking_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/booking/booking_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/home_screen.dart';
-import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/notification_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/profile_screen.dart';
-import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/notification/notification_screen.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';

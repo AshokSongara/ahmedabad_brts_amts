@@ -36,6 +36,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         
         Expanded(
           child: ListView.builder(
+            padding: EdgeInsets.zero,
             itemCount: list.length,
             itemBuilder: (context,index) {
               return Container(

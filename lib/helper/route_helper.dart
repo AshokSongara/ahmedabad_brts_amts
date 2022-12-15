@@ -1,3 +1,4 @@
+import 'package:ahmedabad_brts_amts/presentation/pages/booking/booking_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/card_details/card_detail_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/contact_us/contact_us_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/dashboard_screen.dart';
@@ -38,6 +39,7 @@ class RouteHelper {
   static const String contactUs = '/contact_us';
   static const String payment = '/payment_details';
   static const String changeTheme = '/changeTheme';
+  static const String booking = '/booking';
 
   static String getInitialRoute() => '$initial';
 
@@ -77,6 +79,7 @@ class RouteHelper {
   static String getContactUsRoute() => '$contactUs';
   static String getPaymentDetailsRoute() => '$payment';
   static String getChangeThemeRoute() => '$changeTheme';
+  static String getBookingRoute() => '$booking';
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => const SplashScreen()),
@@ -119,5 +122,6 @@ class RouteHelper {
     GetPage(name: searchRoute, page: () => const SearchRouteNumberScreen()),
     GetPage(name: payment, page: () => const PaymentDetailsScreen()),
     GetPage(name: changeTheme, page: () => const ChangeThemeScreen()),
+    GetPage(name: booking, page: () => const BookingScreen()),
   ];
 }
