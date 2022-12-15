@@ -96,7 +96,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 child: AspectRatio(
                   aspectRatio: 1 / 0.35,
                   child: Container(
-                    color: AppColors.primaryColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
               ),
@@ -140,12 +140,12 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       borderRadius: BorderRadius.circular(10),
                       fieldHeight: Dimensions.dp50,
                       fieldWidth: Dimensions.dp50,
-                      activeColor: AppColors.primaryColor,
+                      activeColor: Theme.of(context).primaryColor,
                       inactiveColor: AppColors.lightGray,
                       activeFillColor: Colors.white,
                       inactiveFillColor: Colors.white,
                       selectedFillColor: Colors.white,
-                      selectedColor: AppColors.primaryColor),
+                      selectedColor: Theme.of(context).primaryColor),
                   cursorColor: Colors.white,
                   animationDuration: const Duration(milliseconds: 300),
                   enableActiveFill: true,
@@ -175,9 +175,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                         .substring(0, textEditingController.text.length - 1);
                   });
                 },
-                rightIcon: const Icon(
+                rightIcon: Icon(
                   Icons.backspace,
-                  color: AppColors.primaryColor,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
               const SizedBox(
@@ -196,7 +196,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     TextSpan(
                         text: "00:47",
                         style: satoshiRegular.copyWith(
-                            color: AppColors.primaryColor, fontSize: 12.sp)),
+                            color: Theme.of(context).primaryColor, fontSize: 12.sp)),
                   ],
                 ),
               ),
@@ -207,6 +207,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     margin: const EdgeInsets.only(
                         left: 30, right: 30, bottom: Dimensions.dp10),
                     child: CustomButton(
+                      color: Theme.of(context).primaryColor,
                       text: "NEXT",
                       width: MediaQuery.of(context).size.width,
                       onPressed: () {

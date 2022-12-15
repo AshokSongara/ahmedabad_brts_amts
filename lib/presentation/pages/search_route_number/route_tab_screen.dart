@@ -40,7 +40,7 @@ class _RouteTabScreenState extends State<RouteTabScreen>
             showFavourite: true,
           ),
           Container(
-            color: AppColors.primaryColor,
+            color: Theme.of(context).primaryColor,
             height: Dimensions.dp50.h,
             width: MediaQuery.of(context).size.width,
             padding: const EdgeInsets.only(
@@ -55,8 +55,8 @@ class _RouteTabScreenState extends State<RouteTabScreen>
           Container(
             decoration: const BoxDecoration(color: Colors.white),
             child: TabBar(
-              labelColor: AppColors.primaryColor,
-              indicatorColor: AppColors.primaryColor,
+              labelColor: Theme.of(context).primaryColor,
+              indicatorColor: Theme.of(context).primaryColor,
               indicatorWeight: 4.0,
               unselectedLabelColor: AppColors.lightGray,
               labelStyle: satoshiRegularSmallDark.copyWith(fontSize: 18),
@@ -85,8 +85,8 @@ class _RouteTabScreenState extends State<RouteTabScreen>
                     itemCount: 26,
                     itemBuilder: (context, index) {
                       return TimelineTile(
-                        indicatorStyle: const IndicatorStyle(
-                            color: AppColors.primaryColor, width: 10),
+                        indicatorStyle: IndicatorStyle(
+                            color: Theme.of(context).primaryColor, width: 10),
                         beforeLineStyle: const LineStyle(
                             thickness: 2, color: AppColors.darkGray),
                         axis: TimelineAxis.vertical,
@@ -151,6 +151,7 @@ class _RouteTabScreenState extends State<RouteTabScreen>
           Container(
             margin: EdgeInsets.all(20),
             child: CustomButton(
+              color: Theme.of(context).primaryColor,
               text: "Buy Ticket",
               width: MediaQuery.of(context).size.width,
               onPressed: () {

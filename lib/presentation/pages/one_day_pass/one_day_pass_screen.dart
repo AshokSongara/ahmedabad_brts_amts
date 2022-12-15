@@ -128,6 +128,7 @@ class _OneDayPassScreenState extends State<OneDayPassScreen> {
                       right: Dimensions.dp10,
                       top: Dimensions.dp14),
                   child: CustomButton(
+                    color: Theme.of(context).primaryColor,
                     text: "Procced To Payment",
                     width: MediaQuery.of(context).size.width,
                     onPressed: () {},

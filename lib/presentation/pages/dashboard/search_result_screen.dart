@@ -80,7 +80,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                     : Center(
                         child: Text(
                           "No Route Available",
-                          style: satoshiRegularSmall.copyWith(color: AppColors.primaryColor),
+                          style: satoshiRegularSmall.copyWith(color: Theme.of(context).primaryColor),
                         ),
                       ),
               ),

@@ -89,9 +89,9 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                           borderSide: BorderSide(color: AppColors.lightGray)),
                       enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: AppColors.lightGray)),
-                      errorBorder: const UnderlineInputBorder(
+                      errorBorder:  UnderlineInputBorder(
                           borderSide:
-                              BorderSide(color: AppColors.primaryColor)),
+                              BorderSide(color: Theme.of(context).primaryColor)),
                       disabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: AppColors.lightGray)),
                       // contentPadding:
@@ -143,6 +143,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                       top: Dimensions.dp76,
                       bottom: 43),
                   child: CustomButton(
+                    color: Theme.of(context).primaryColor,
                     text: "Submit",
                     width: MediaQuery.of(context).size.width,
                     onPressed: () {

@@ -56,7 +56,7 @@ class _NearByScreenState extends State<NearByScreen> {
                         bottomRight: Radius.circular(20)),
                     child: Container(
                       height: MediaQuery.of(context).size.height / 3.4,
-                      color: AppColors.primaryColor,
+                      color: Theme.of(context).primaryColor,
                       child: Column(children: [
                         const SizedBox(height: 25),
                         Container(

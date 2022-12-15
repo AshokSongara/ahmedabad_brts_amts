@@ -14,7 +14,7 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     Key? key,
     this.iconPath = "",
-    this.color = AppColors.primaryColor,
+    required this.color,
     required this.text,
     required this.onPressed,
     required this.width,
@@ -26,8 +26,8 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(
+      decoration: const BoxDecoration(
+          borderRadius: BorderRadius.all(
              Radius.circular(10)),
         ),
       width: width,

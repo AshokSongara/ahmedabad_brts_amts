@@ -94,7 +94,7 @@ class _SearchRouteNumberScreenState extends State<SearchRouteNumberScreen> {
                     width: 22.w,
                     child: SvgPicture.asset(
                       ImageConstant.iRedBus,
-                      color: AppColors.primaryColor,
+                      color: Theme.of(context).primaryColor,
                     )),
                 const SizedBox(
                   width: 19,

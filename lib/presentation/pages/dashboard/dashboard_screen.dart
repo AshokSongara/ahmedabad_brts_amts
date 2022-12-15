@@ -66,8 +66,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         bottomNavigationBar: Theme(
           data: Theme.of(context).copyWith(
-              canvasColor: AppColors.primaryColor,
-              primaryColor: AppColors.primaryColor,
+              canvasColor: Theme.of(context).primaryColor,
+              primaryColor: Theme.of(context).primaryColor,
               textTheme: Theme.of(context)
                   .textTheme
                   .copyWith(caption: const TextStyle(color: Colors.white30))),
@@ -92,12 +92,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
               type: BottomNavigationBarType.fixed,
               unselectedLabelStyle: satoshiRegular.copyWith(
                   fontWeight: FontWeight.w400,
-                  color: AppColors.primaryColor,
+                  color: Theme.of(context).primaryColor,
                   fontSize: 13.sp
               ),
               selectedLabelStyle: satoshiRegular.copyWith(
                   fontWeight: FontWeight.w400,
-                  color: AppColors.primaryColor,
+                  color: Theme.of(context).primaryColor,
                   fontSize: 13.sp),
               items: [
                 BottomNavigationBarItem(

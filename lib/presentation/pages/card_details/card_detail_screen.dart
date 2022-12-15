@@ -95,9 +95,9 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                           borderSide: BorderSide(color: AppColors.lightGray)),
                       enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: AppColors.lightGray)),
-                      errorBorder: const UnderlineInputBorder(
+                      errorBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(color: AppColors.primaryColor)),
+                              BorderSide(color: Theme.of(context).primaryColor)),
                       disabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: AppColors.lightGray)),
                       // contentPadding:
@@ -142,9 +142,9 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                           borderSide: BorderSide(color: AppColors.lightGray)),
                       enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: AppColors.lightGray)),
-                      errorBorder: const UnderlineInputBorder(
+                      errorBorder: UnderlineInputBorder(
                           borderSide:
-                              BorderSide(color: AppColors.primaryColor)),
+                              BorderSide(color: Theme.of(context).primaryColor)),
                       disabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: AppColors.lightGray)),
                       // contentPadding:
@@ -162,6 +162,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                         right: Dimensions.dp19,
                         top: Dimensions.dp37),
                     child: CustomButton(
+                      color: Theme.of(context).primaryColor,
                       text: "Procced To Payment",
                       width: MediaQuery.of(context).size.width,
                       onPressed: () {},

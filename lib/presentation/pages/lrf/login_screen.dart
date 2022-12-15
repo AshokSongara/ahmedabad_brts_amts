@@ -72,7 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: AspectRatio(
                     aspectRatio: 1 / 0.35,
                     child: Container(
-                      color: AppColors.primaryColor,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
                 ),
@@ -155,6 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Container(
                             height: 53,
                             child: CustomButton(
+                              color: Theme.of(context).primaryColor,
                               text: "Login",
                               width: MediaQuery.of(context).size.width,
                               onPressed: () {
@@ -202,7 +203,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   TextSpan(
                                       text: "Click Here",
                                       style: satoshiRegular.copyWith(
-                                          color: AppColors.primaryColor,
+                                          color: Theme.of(context).primaryColor,
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w700),
                                     recognizer: TapGestureRecognizer()
@@ -229,7 +230,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   TextSpan(
                                       text: "Sign Up",
                                       style: satoshiRegular.copyWith(
-                                          color: AppColors.primaryColor,
+                                          color: Theme.of(context).primaryColor,
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w700),
                                     recognizer: TapGestureRecognizer()

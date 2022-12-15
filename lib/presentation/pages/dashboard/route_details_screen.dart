@@ -128,7 +128,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
             padding: const EdgeInsets.all(20.0),
             child: OrderTracker(
               status: Status.delivered,
-              activeColor: AppColors.primaryColor,
+              activeColor: Theme.of(context).primaryColor,
               inActiveColor: Colors.grey[300],
               orderTitleAndDateList: AppConstant.orderList,
               shippedTitleAndDateList: AppConstant.shippedList,
@@ -171,12 +171,12 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: CustomButton(
+                      color: Theme.of(context).primaryColor,
                       text: "Book Tickets",
                       width: MediaQuery.of(context).size.width / 2,
                       onPressed: () {
                         Get.toNamed(RouteHelper.getPassengerDetailsRoute());
                       },
-                      color: AppColors.primaryColor,
                       style: poppinsMedium.copyWith(
                           color: Colors.white, fontSize: 15.sp),
                       height: 53,

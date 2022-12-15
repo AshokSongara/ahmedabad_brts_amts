@@ -51,7 +51,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   style: satoshiRegular.copyWith(
                       fontSize: Dimensions.dp15,
                       fontWeight: FontWeight.w500,
-                      color: AppColors.primaryColor),
+                      color: Theme.of(context).primaryColor),
                 ),
                 SizedBox(
                   height: Dimensions.dp25.h,
@@ -70,6 +70,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                 Container(
                   height: 53,
                   child: CustomButton(
+                    color: Theme.of(context).primaryColor,
                     text: "Email Us",
                     width: MediaQuery.of(context).size.width,
                     onPressed: () {},
@@ -97,6 +98,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                 Container(
                   height: 53,
                   child: CustomButton(
+                    color: Theme.of(context).primaryColor,
                     text: "Call Us",
                     width: MediaQuery.of(context).size.width,
                     onPressed: () {},

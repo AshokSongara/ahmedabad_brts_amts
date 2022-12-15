@@ -212,7 +212,7 @@ class _OrderTrackerState extends State<OrderTracker>
                       "15U",
                       style: satoshiSmall.copyWith(
                           fontWeight: FontWeight.w700,
-                          color: AppColors.primaryColor),
+                          color: Theme.of(context).primaryColor),
                     ),
                   ]),
                 ),
@@ -252,7 +252,7 @@ class _OrderTrackerState extends State<OrderTracker>
                               style: satoshiSmall.copyWith(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 13.sp,
-                                  color: AppColors.primaryColor),
+                                  color: Theme.of(context).primaryColor),
                             )
                           ],
                         );
@@ -309,7 +309,7 @@ class _OrderTrackerState extends State<OrderTracker>
                       "15U",
                       style: satoshiSmall.copyWith(
                           fontWeight: FontWeight.w700,
-                          color: AppColors.primaryColor),
+                          color: Theme.of(context).primaryColor),
                     ),
                   ]),
                 ),
@@ -349,7 +349,7 @@ class _OrderTrackerState extends State<OrderTracker>
                               style: satoshiSmall.copyWith(
                                   fontWeight: FontWeight.w500,
                                   fontSize: 13.sp,
-                                  color: AppColors.primaryColor),
+                                  color: Theme.of(context).primaryColor),
                             )
                           ],
                         );

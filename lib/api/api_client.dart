@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/material.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 
 import 'package:get/get.dart';
-import 'package:flutter/foundation.dart' as Foundation;
-import 'package:http/http.dart' as Http;
+import 'package:flutter/foundation.dart' as foundation;
+import 'package:http/http.dart' as http;
 
 import '../data/responseModels/error_response.dart';
 
@@ -27,7 +26,7 @@ class ApiClient extends GetxService {
   Future<Response> postData(String endPoint, String body) async {
     try {
       print(appBaseUrl! + endPoint);
-      Http.Response response = await Http.post(
+      http.Response response = await http.post(
         Uri.parse(appBaseUrl! + endPoint),
         body: body,
         headers: {"Content-Type": "application/json"},
@@ -44,7 +43,7 @@ class ApiClient extends GetxService {
       required Map<String, String?> body}) async {
     try {
       var request =
-          Http.MultipartRequest('POST', Uri.parse(appBaseUrl! + endPoint));
+          http.MultipartRequest('POST', Uri.parse(appBaseUrl! + endPoint));
 
       body.forEach((key, value) {
         request.fields[key] = value!;
@@ -52,7 +51,7 @@ class ApiClient extends GetxService {
 
       if (fileList.isNotEmpty) {
         for (var key in fileList.keys.toList()) {
-          var pic = await Http.MultipartFile.fromPath(key, fileList[key]!.path);
+          var pic = await http.MultipartFile.fromPath(key, fileList[key]!.path);
           request.files.add(pic);
         }
       }
@@ -81,7 +80,7 @@ class ApiClient extends GetxService {
       required Map<String, String?> body}) async {
     try {
       var request =
-          Http.MultipartRequest('POST', Uri.parse(appBaseUrl! + endPoint));
+          http.MultipartRequest('POST', Uri.parse(appBaseUrl! + endPoint));
 
       body.forEach((key, value) {
         request.fields[key] = value!;
@@ -89,7 +88,7 @@ class ApiClient extends GetxService {
 
       if (fileList.isNotEmpty) {
         for (var key in fileList.keys.toList()) {
-          var pic = await Http.MultipartFile.fromPath(key, fileList[key]!.path);
+          var pic = await http.MultipartFile.fromPath(key, fileList[key]!.path);
           request.files.add(pic);
         }
       }
@@ -115,37 +114,41 @@ class ApiClient extends GetxService {
   Future<Response> postDataWithHeader(
       String uri, dynamic body, Map<String, String> headers) async {
     try {
-      if (Foundation.kDebugMode) {
+      if (foundation.kDebugMode) {
         print('====> API Call: $uri\nHeader: $_mainHeaders');
         print('====> API Body: $body');
       }
-      Http.Response _response = await Http.post(
-        Uri.parse(appBaseUrl! + uri),
-        body: jsonEncode(body),
-        headers: headers,
-      ).timeout(Duration(seconds: timeoutInSeconds));
-      return handleResponse(_response, uri);
-    } catch (e) {
-      return Response(statusCode: 1, statusText: noInternetMessage);
-    }
-  }
-  Future<Response> getData(
-      String uri, {Map<String, String>? headers}) async {
-    try {
-      if (Foundation.kDebugMode) {
-        // print('====> API Call: $uri\nHeader: $_mainHeaders');
-      }
-      Http.Response _response = await Http.get(
-        Uri.parse(appBaseUrl! + uri),
-        headers: headers,
-      ).timeout(Duration(seconds: timeoutInSeconds));
+      http.Response _response = await http
+          .post(
+            Uri.parse(appBaseUrl! + uri),
+            body: jsonEncode(body),
+            headers: headers,
+          )
+          .timeout(Duration(seconds: timeoutInSeconds));
       return handleResponse(_response, uri);
     } catch (e) {
       return Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
 
-  Response handleResponse(Http.Response response, String uri) {
+  Future<Response> getData(String uri, {Map<String, String>? headers}) async {
+    try {
+      if (foundation.kDebugMode) {
+        // print('====> API Call: $uri\nHeader: $_mainHeaders');
+      }
+      http.Response _response = await http
+          .get(
+            Uri.parse(appBaseUrl! + uri),
+            headers: headers,
+          )
+          .timeout(Duration(seconds: timeoutInSeconds));
+      return handleResponse(_response, uri);
+    } catch (e) {
+      return Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
+  Response handleResponse(http.Response response, String uri) {
     dynamic _body;
     try {
       _body = jsonDecode(response.body);

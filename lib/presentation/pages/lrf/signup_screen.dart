@@ -86,7 +86,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 child: AspectRatio(
                   aspectRatio: 1 / 0.35,
                   child: Container(
-                    color: AppColors.primaryColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
               ),
@@ -277,7 +277,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 child: SvgPicture.asset(
                                   ImageConstant.iSelectedMan,
                                   color: snapshot.data == 0
-                                      ? AppColors.primaryColor
+                                      ? Theme.of(context).primaryColor
                                       : AppColors.lightGray,
                                 ),
                               ),
@@ -291,7 +291,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                 child: SvgPicture.asset(
                                     ImageConstant.iSelectedWoman,
                                     color: snapshot.data == 1
-                                        ? AppColors.primaryColor
+                                        ? Theme.of(context).primaryColor
                                         : AppColors.lightGray),
                               ),
                             ],
@@ -309,6 +309,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   margin: const EdgeInsets.only(
                       left: 30, right: 30, bottom: Dimensions.dp10),
                   child: CustomButton(
+                    color: Theme.of(context).primaryColor,
                     text: "Sign Up",
                     width: MediaQuery.of(context).size.width,
                     onPressed: () {

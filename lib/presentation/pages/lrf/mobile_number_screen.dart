@@ -53,7 +53,7 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
             child: AspectRatio(
               aspectRatio: 1 / 0.35,
               child: Container(
-                color: AppColors.primaryColor,
+                color: Theme.of(context).primaryColor,
               ),
             ),
           ),
@@ -95,9 +95,9 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                   height: Dimensions.dp20,
                 ),
                 Container(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                      color: AppColors.primaryColor),
+                      color: Theme.of(context).primaryColor),
                   width: MediaQuery.of(context).size.width,
                   alignment: Alignment.center,
                   margin: const EdgeInsets.only(left: 30, right: 30),
@@ -131,13 +131,13 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                           satoshiRegular.copyWith(color: AppColors.grayC4C$C$),
                       contentPadding: const EdgeInsets.only(
                           top: 8.0, bottom: 8.0, left: 10.0, right: 10.0),
-                      focusedBorder: const OutlineInputBorder(
+                      focusedBorder: OutlineInputBorder(
                         borderSide:
-                            BorderSide(color: AppColors.primaryColor),
+                            BorderSide(color: Theme.of(context).primaryColor),
                       ),
-                      enabledBorder: const OutlineInputBorder(
+                      enabledBorder: OutlineInputBorder(
                         borderSide:
-                            BorderSide(color: AppColors.primaryColor),
+                            BorderSide(color: Theme.of(context).primaryColor),
                       ),
                     ),
                     validator: (mobile) {
@@ -165,9 +165,9 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                           .substring(0, _mobileController.text.length - 1);
                     });
                   },
-                  rightIcon: const Icon(
+                  rightIcon: Icon(
                     Icons.backspace,
-                    color: AppColors.primaryColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
               ],
@@ -179,6 +179,7 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
               margin: const EdgeInsets.only(
                   left: 30, right: 30, bottom: Dimensions.dp10),
               child: CustomButton(
+                color: Theme.of(context).primaryColor,
                 text: "PEOCEED",
                 width: MediaQuery.of(context).size.width,
                 onPressed: () {

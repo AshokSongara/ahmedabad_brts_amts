@@ -31,7 +31,7 @@ class CustomToolbar extends StatelessWidget {
           ),
           if(showOption)
           SvgPicture.asset(ImageConstant.iThreeDots),
-          if (showFavourite) SvgPicture.asset(ImageConstant.iEmptyFavorite,color: AppColors.primaryColor,),
+          if (showFavourite) SvgPicture.asset(ImageConstant.iEmptyFavorite,color: Theme.of(context).primaryColor),
         ],
       ),
     );

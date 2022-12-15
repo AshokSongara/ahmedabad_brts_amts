@@ -25,7 +25,7 @@ class NearByItemWidget extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-            child: SvgPicture.asset(ImageConstant.iClock),
+            child: SvgPicture.asset(ImageConstant.iClock,color: Theme.of(context).primaryColor,),
           ),
           Expanded(
             child: Text(
@@ -34,7 +34,7 @@ class NearByItemWidget extends StatelessWidget {
             ),
           ),
           Text(
-            nearme.distance.toString() ?? "",
+            nearme.distance.toString(),
             style: satoshiRegularSmall.copyWith(
                 color: AppColors.gray777777, fontWeight: FontWeight.w400),
           )

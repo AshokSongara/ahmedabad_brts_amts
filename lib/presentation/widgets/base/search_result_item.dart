@@ -180,7 +180,7 @@ class SearchResultItem extends StatelessWidget {
                           routeResult.routes![index],
                           style: satoshiSmall.copyWith(
                               fontWeight: FontWeight.w700,
-                              color: AppColors.primaryColor),
+                              color: Theme.of(context).primaryColor),
                         ),
                       ],
                     );
@@ -250,7 +250,7 @@ class SearchResultItem extends StatelessWidget {
                                 style: satoshiRegularSmall.copyWith(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 10.sp,
-                                    color: AppColors.primaryColor)),
+                                    color: Theme.of(context).primaryColor)),
                           ],
                         )),
                     const Spacer(),

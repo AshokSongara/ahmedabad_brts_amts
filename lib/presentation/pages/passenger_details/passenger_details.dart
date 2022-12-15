@@ -103,12 +103,12 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                 ),
                               ),
                               border:
-                                  Border.all(color: AppColors.primaryColor)),
+                                  Border.all(color: Theme.of(context).primaryColor)),
                           child: Text("Add Passenger",
                               style: satoshiRegular.copyWith(
                                   fontSize: Dimensions.dp10.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: AppColors.primaryColor)),
+                                  color: Theme.of(context).primaryColor)),
                         ),
                       )
                     ],
@@ -251,7 +251,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                         style: satoshiRegular.copyWith(
                             fontSize: Dimensions.dp14.sp,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.primaryColor),
+                            color: Theme.of(context).primaryColor),
                       ),
                     ],
                   ),
@@ -310,7 +310,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                             child: Container(
                               height: 15,
                               width: 15,
-                              color: AppColors.primaryColor,
+                              color: Theme.of(context).primaryColor,
                               child: const Center(
                                 child: Icon(
                                   Icons.add,
@@ -377,7 +377,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                             child: Container(
                               height: 15,
                               width: 15,
-                              color: AppColors.primaryColor,
+                              color: Theme.of(context).primaryColor,
                               child: const Center(
                                 child: Icon(
                                   Icons.add,
@@ -395,6 +395,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                     margin:
                     const EdgeInsets.only(left: Dimensions.dp42, right: Dimensions.dp42, top: Dimensions.dp49),
                     child: CustomButton(
+                      color: Theme.of(context).primaryColor,
                       text: "Add",
                       width: MediaQuery.of(context).size.width,
                       onPressed: () {

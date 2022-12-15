@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
         key: _scaffoldKey,
         backgroundColor: AppColors.appBackground,
         endDrawer: Drawer(
-          backgroundColor: AppColors.primaryColor,
+          backgroundColor: Theme.of(context).primaryColor,
           child: Padding(
             padding: const EdgeInsets.only(
                 top: Dimensions.dp24,
@@ -269,6 +269,24 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   ListTile(
                     leading: SvgPicture.asset(
+                      ImageConstant.iRoute,
+                      color: Colors.white,
+                      height: Dimensions.dp28,
+                      width: Dimensions.dp28,
+                    ),
+                    title: Text(
+                      "Change Theme",
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp19,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
+                    onTap: () {
+                      Get.toNamed(RouteHelper.getChangeThemeRoute());
+                    },
+                  ),
+                  ListTile(
+                    leading: SvgPicture.asset(
                       ImageConstant.iSignOut,
                       color: Colors.white,
                       height: Dimensions.dp28,
@@ -287,251 +305,246 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   const SizedBox(
                     height: Dimensions.dp50,
-                  )
+                  ),
                 ],
               ),
             ),
           ),
         ),
-        body: BlocConsumer<HomeScreenBloc, HomeState>(
-            listener: (context, state) {
-              if(state is HomeLoadingState){
-                Loader.show(context);
-              }else{
-                Loader.hide();
-                FocusScope.of(context).unfocus();
-              }
-            },
-            builder: (context, state) {
-              return ListView(
+        body:
+            BlocConsumer<HomeScreenBloc, HomeState>(listener: (context, state) {
+          if (state is HomeLoadingState) {
+            Loader.show(context);
+          } else {
+            Loader.hide();
+            FocusScope.of(context).unfocus();
+          }
+        }, builder: (context, state) {
+          return ListView(
+            children: [
+              const SizedBox(
+                height: Dimensions.dp10,
+              ),
+              Row(
                 children: [
-                  const SizedBox(
-                    height: Dimensions.dp10,
-                  ),
-                  Row(
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          isAmts = !isAmts;
-                          _fromController.text = "";
-                          _toController.text = "";
-                          startRouteCode = "";
-                          endRouteCode = "";
-                          BlocProvider.of<HomeScreenBloc>(context).add(
-                              GetAvailableRoutesEvent(
-                                  StopRequestModel(stopType: isAmts ? 2 : 1)));
-                          setState(() {});
-                        },
-                        child: Container(
-                          height: Dimensions.dp40,
-                          width: Dimensions.dp140,
-                          margin: const EdgeInsets.only(
-                              left: Dimensions.dp20, right: Dimensions.dp30),
-                          decoration: BoxDecoration(
-                              boxShadow: [
-                                const BoxShadow(
-                                  color: AppColors.gray6E8EE7,
-                                  blurRadius: 5.0,
-                                ),
-                              ],
-                              border: Border.all(
-                                color: Colors.white,
-                              ),
-                              color: Colors.white,
-                              borderRadius: const BorderRadius.all(
-                                  Radius.circular(Dimensions.dp50))),
-                          child: Container(
-                            margin: const EdgeInsets.all(3.0),
-                            child: Row(children: [
-                              Container(
-                                  height: Dimensions.dp40,
-                                  width: Dimensions.dp65,
-                                  decoration: BoxDecoration(
-                                      color: isAmts
-                                          ? AppColors.primaryColor
-                                          : Colors.white,
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(Dimensions.dp50))),
-                                  child: Center(
-                                    child: Text(
-                                      "AMTS",
-                                      style: satoshiRegular.copyWith(
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w700,
-                                          color: isAmts
-                                              ? Colors.white
-                                              : AppColors.darkGray),
-                                    ),
-                                  )),
-                              Container(
-                                  height: Dimensions.dp40,
-                                  width: Dimensions.dp65,
-                                  decoration: BoxDecoration(
-                                      color: !isAmts
-                                          ? AppColors.primaryColor
-                                          : Colors.white,
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(Dimensions.dp50))),
-                                  child: Center(
-                                    child: Text(
-                                      "BRTS",
-                                      style: satoshiRegular.copyWith(
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w700,
-                                          color: !isAmts
-                                              ? Colors.white
-                                              : AppColors.darkGray),
-                                    ),
-                                  )),
-                            ]),
-                          ),
-                        ),
-                      ),
-                      const Spacer(),
-                      Container(
-                          margin:
-                              const EdgeInsets.only(right: Dimensions.dp20),
-                          child: InkWell(
-                              onTap: () {
-                                _scaffoldKey.currentState!.openEndDrawer();
-                              },
-                              child: SvgPicture.asset(ImageConstant.iMenu)))
-                    ],
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                        left: Dimensions.dp24,
-                        right: Dimensions.dp24,
-                        top: Dimensions.dp26),
-                    child: CustomSearchBar(
-                      controller: _serviceController,
-                      focusNode: _serviceFocus,
-                      nextFocus: _serviceFocus,
-                      radius: 10,
-                      onChanged: (text) {},
-                      onSubmit: () {},
-                      prefixIcon: ImageConstant.iSearch,
-                      capitalization: TextCapitalization.words,
-                      divider: false,
-                      hintText: "Search bus route number",
-                      fillColor: Colors.white,
-                      hintStyle: satoshiSmall.copyWith(
-                          color: AppColors.lightGray, fontSize: 13.sp),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: Dimensions.dp25,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                        left: Dimensions.dp20, right: Dimensions.dp30),
-                    child: Text(
-                      "Plan Your Trip",
-                      style: satoshiRegular.copyWith(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.darkGray),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: Dimensions.dp15,
-                  ),
-                  if (state is RoutesResponseState)
-                    Container(
+                  InkWell(
+                    onTap: () {
+                      isAmts = !isAmts;
+                      _fromController.text = "";
+                      _toController.text = "";
+                      startRouteCode = "";
+                      endRouteCode = "";
+                      BlocProvider.of<HomeScreenBloc>(context).add(
+                          GetAvailableRoutesEvent(
+                              StopRequestModel(stopType: isAmts ? 2 : 1)));
+                      setState(() {});
+                    },
+                    child: Container(
+                      height: Dimensions.dp40,
+                      width: Dimensions.dp140,
                       margin: const EdgeInsets.only(
                           left: Dimensions.dp20, right: Dimensions.dp30),
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.gray6E8EE7,
-                            blurRadius: 5.0,
+                      decoration: BoxDecoration(
+                          boxShadow: [
+                            const BoxShadow(
+                              color: AppColors.gray6E8EE7,
+                              blurRadius: 5.0,
+                            ),
+                          ],
+                          border: Border.all(
+                            color: Colors.white,
                           ),
-                        ],
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(Dimensions.dp16),
-                        ),
+                          color: Colors.white,
+                          borderRadius: const BorderRadius.all(
+                              Radius.circular(Dimensions.dp50))),
+                      child: Container(
+                        margin: const EdgeInsets.all(3.0),
+                        child: Row(children: [
+                          Container(
+                              height: Dimensions.dp40,
+                              width: Dimensions.dp65,
+                              decoration: BoxDecoration(
+                                  color: isAmts
+                                      ? Theme.of(context).primaryColor
+                                      : Colors.white,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(Dimensions.dp50))),
+                              child: Center(
+                                child: Text(
+                                  "AMTS",
+                                  style: satoshiRegular.copyWith(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: isAmts
+                                          ? Colors.white
+                                          : AppColors.darkGray),
+                                ),
+                              )),
+                          Container(
+                              height: Dimensions.dp40,
+                              width: Dimensions.dp65,
+                              decoration: BoxDecoration(
+                                  color: !isAmts
+                                      ? Theme.of(context).primaryColor
+                                      : Colors.white,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(Dimensions.dp50))),
+                              child: Center(
+                                child: Text(
+                                  "BRTS",
+                                  style: satoshiRegular.copyWith(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: !isAmts
+                                          ? Colors.white
+                                          : AppColors.darkGray),
+                                ),
+                              )),
+                        ]),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: Dimensions.dp10,
-                            vertical: Dimensions.dp19),
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 170,
-                              child: Stack(
-                                fit: StackFit.loose,
-                                children: [
-                                  SourceDestinationWidget(
-                                      title: "From",
-                                      content:
-                                          "Ahmedabad Municipal Transport Service",
-                                      contentTitle: SizedBox(
-                                        height: 28,
-                                        child: Autocomplete<Data>(
-                                          optionsBuilder: (TextEditingValue
-                                              textEditingValue) {
-                                            return state.model.data!
-                                                .where((Data data) => data
-                                                    .stopName!
-                                                    .toLowerCase()
-                                                    .startsWith(textEditingValue
-                                                        .text
-                                                        .toLowerCase()))
-                                                .toList();
-                                          },
-                                          displayStringForOption:
-                                              (Data option) => option.stopName!,
-                                          fieldViewBuilder: (BuildContext
-                                                  context,
-                                              TextEditingController
-                                                  fieldTextEditingController,
-                                              FocusNode fieldFocusNode,
-                                              VoidCallback onFieldSubmitted) {
-                                            _fromController =
-                                                fieldTextEditingController;
-                                            return TextField(
-                                              controller:
-                                                  fieldTextEditingController,
-                                              focusNode: fieldFocusNode,
-                                              style: satoshiRegular.copyWith(
-                                                  fontSize: Dimensions.dp18.sp,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: AppColors.darkGray),
-                                            );
-                                          },
-                                          optionsViewBuilder:
-                                              (BuildContext context,
-                                                  AutocompleteOnSelected<Data>
-                                                      onSelected,
-                                                  Iterable<Data> options) {
-                                            return Material(
-                                              child: Container(
-                                                width: 300,
-                                                color: Colors.white,
-                                                child: ListView.builder(
-                                                  padding: EdgeInsets.all(10.0),
-                                                  itemCount: options.length,
-                                                  itemBuilder:
-                                                      (BuildContext context,
-                                                          int index) {
-                                                    final Data option = options
-                                                        .elementAt(index);
+                    ),
+                  ),
+                  const Spacer(),
+                  Container(
+                      margin: const EdgeInsets.only(right: Dimensions.dp20),
+                      child: InkWell(
+                          onTap: () {
+                            _scaffoldKey.currentState!.openEndDrawer();
+                          },
+                          child: SvgPicture.asset(ImageConstant.iMenu)))
+                ],
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                    left: Dimensions.dp24,
+                    right: Dimensions.dp24,
+                    top: Dimensions.dp26),
+                child: CustomSearchBar(
+                  controller: _serviceController,
+                  focusNode: _serviceFocus,
+                  nextFocus: _serviceFocus,
+                  radius: 10,
+                  onChanged: (text) {},
+                  onSubmit: () {},
+                  prefixIcon: ImageConstant.iSearch,
+                  capitalization: TextCapitalization.words,
+                  divider: false,
+                  hintText: "Search bus route number",
+                  fillColor: Colors.white,
+                  hintStyle: satoshiSmall.copyWith(
+                      color: AppColors.lightGray, fontSize: 13.sp),
+                ),
+              ),
+              const SizedBox(
+                height: Dimensions.dp25,
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                    left: Dimensions.dp20, right: Dimensions.dp30),
+                child: Text(
+                  "Plan Your Trip",
+                  style: satoshiRegular.copyWith(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.darkGray),
+                ),
+              ),
+              const SizedBox(
+                height: Dimensions.dp15,
+              ),
+              if (state is RoutesResponseState)
+                Container(
+                  margin: const EdgeInsets.only(
+                      left: Dimensions.dp20, right: Dimensions.dp30),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.gray6E8EE7,
+                        blurRadius: 5.0,
+                      ),
+                    ],
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(Dimensions.dp16),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: Dimensions.dp10, vertical: Dimensions.dp19),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 170,
+                          child: Stack(
+                            fit: StackFit.loose,
+                            children: [
+                              SourceDestinationWidget(
+                                  title: "From",
+                                  content:
+                                      "Ahmedabad Municipal Transport Service",
+                                  contentTitle: SizedBox(
+                                    height: 28,
+                                    child: Autocomplete<Data>(
+                                      optionsBuilder:
+                                          (TextEditingValue textEditingValue) {
+                                        return state.model.data!
+                                            .where((Data data) => data.stopName!
+                                                .toLowerCase()
+                                                .startsWith(textEditingValue
+                                                    .text
+                                                    .toLowerCase()))
+                                            .toList();
+                                      },
+                                      displayStringForOption: (Data option) =>
+                                          option.stopName!,
+                                      fieldViewBuilder: (BuildContext context,
+                                          TextEditingController
+                                              fieldTextEditingController,
+                                          FocusNode fieldFocusNode,
+                                          VoidCallback onFieldSubmitted) {
+                                        _fromController =
+                                            fieldTextEditingController;
+                                        return TextField(
+                                          controller:
+                                              fieldTextEditingController,
+                                          focusNode: fieldFocusNode,
+                                          style: satoshiRegular.copyWith(
+                                              fontSize: Dimensions.dp18.sp,
+                                              fontWeight: FontWeight.w700,
+                                              color: AppColors.darkGray),
+                                        );
+                                      },
+                                      optionsViewBuilder: (BuildContext context,
+                                          AutocompleteOnSelected<Data>
+                                              onSelected,
+                                          Iterable<Data> options) {
+                                        return Material(
+                                          child: Container(
+                                            width: 300,
+                                            color: Colors.white,
+                                            child: ListView.builder(
+                                              padding: EdgeInsets.all(10.0),
+                                              itemCount: options.length,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index) {
+                                                final Data option =
+                                                    options.elementAt(index);
 
-                                                    return GestureDetector(
-                                                      onTap: () {
-                                                        onSelected(option);
-                                                        startRouteCode = option
-                                                                .stationCode ??
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    onSelected(option);
+                                                    startRouteCode =
+                                                        option.stationCode ??
                                                             "";
-                                                        FocusScope.of(context).unfocus();
-                                                      },
-                                                      child: ListTile(
-                                                        title: Text(
-                                                            option.stopName ??
-                                                                "",
-                                                            style: satoshiRegular.copyWith(
+                                                    FocusScope.of(context)
+                                                        .unfocus();
+                                                  },
+                                                  child: ListTile(
+                                                    title: Text(
+                                                        option.stopName ?? "",
+                                                        style: satoshiRegular
+                                                            .copyWith(
                                                                 fontSize:
                                                                     Dimensions
                                                                         .dp18
@@ -541,97 +554,93 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                         .w700,
                                                                 color: AppColors
                                                                     .darkGray)),
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          onSelected: (Data selection) {
-                                            print(
-                                                'Selected: ${selection.stopName}');
-                                            print(
-                                                'Selected: ${selection.stationCode}');
-                                          },
-                                        ),
-                                      ),
-                                      svgImageFile: ImageConstant.iFromBus),
-                                  Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: SourceDestinationWidget(
-                                        title: "To",
-                                        content:
-                                            "Ahmedabad Municipal Transport Service",
-                                        contentTitle: SizedBox(
-                                          height: 28,
-                                          child: Autocomplete<Data>(
-                                            optionsBuilder: (TextEditingValue
-                                                textEditingValue) {
-                                              return state.model.data!
-                                                  .where((Data county) => county
-                                                      .stopName!
-                                                      .toLowerCase()
-                                                      .startsWith(
-                                                          textEditingValue.text
-                                                              .toLowerCase()))
-                                                  .toList();
-                                            },
-                                            displayStringForOption:
-                                                (Data option) =>
-                                                    option.stopName!,
-                                            fieldViewBuilder: (BuildContext
-                                                    context,
-                                                TextEditingController
-                                                    fieldTextEditingController,
-                                                FocusNode fieldFocusNode,
-                                                VoidCallback onFieldSubmitted) {
-                                              _toController =
-                                                  fieldTextEditingController;
-                                              return TextField(
-                                                controller:
-                                                    fieldTextEditingController,
-                                                focusNode: fieldFocusNode,
-                                                style: satoshiRegular.copyWith(
-                                                    fontSize:
-                                                        Dimensions.dp18.sp,
-                                                    fontWeight: FontWeight.w700,
-                                                    color: AppColors.darkGray),
-                                              );
-                                            },
-                                            optionsViewBuilder:
-                                                (BuildContext context,
-                                                    AutocompleteOnSelected<Data>
-                                                        onSelected,
-                                                    Iterable<Data> options) {
-                                              return Material(
-                                                child: Container(
-                                                  width: 300,
-                                                  color: Colors.white,
-                                                  child: ListView.builder(
-                                                    padding:
-                                                        EdgeInsets.all(10.0),
-                                                    itemCount: options.length,
-                                                    itemBuilder:
-                                                        (BuildContext context,
-                                                            int index) {
-                                                      final Data option =
-                                                          options
-                                                              .elementAt(index);
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      onSelected: (Data selection) {
+                                        print(
+                                            'Selected: ${selection.stopName}');
+                                        print(
+                                            'Selected: ${selection.stationCode}');
+                                      },
+                                    ),
+                                  ),
+                                  svgImageFile: ImageConstant.iFromBus),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: SourceDestinationWidget(
+                                    title: "To",
+                                    content:
+                                        "Ahmedabad Municipal Transport Service",
+                                    contentTitle: SizedBox(
+                                      height: 28,
+                                      child: Autocomplete<Data>(
+                                        optionsBuilder: (TextEditingValue
+                                            textEditingValue) {
+                                          return state.model.data!
+                                              .where((Data county) => county
+                                                  .stopName!
+                                                  .toLowerCase()
+                                                  .startsWith(textEditingValue
+                                                      .text
+                                                      .toLowerCase()))
+                                              .toList();
+                                        },
+                                        displayStringForOption: (Data option) =>
+                                            option.stopName!,
+                                        fieldViewBuilder: (BuildContext context,
+                                            TextEditingController
+                                                fieldTextEditingController,
+                                            FocusNode fieldFocusNode,
+                                            VoidCallback onFieldSubmitted) {
+                                          _toController =
+                                              fieldTextEditingController;
+                                          return TextField(
+                                            controller:
+                                                fieldTextEditingController,
+                                            focusNode: fieldFocusNode,
+                                            style: satoshiRegular.copyWith(
+                                                fontSize: Dimensions.dp18.sp,
+                                                fontWeight: FontWeight.w700,
+                                                color: AppColors.darkGray),
+                                          );
+                                        },
+                                        optionsViewBuilder:
+                                            (BuildContext context,
+                                                AutocompleteOnSelected<Data>
+                                                    onSelected,
+                                                Iterable<Data> options) {
+                                          return Material(
+                                            child: Container(
+                                              width: 300,
+                                              color: Colors.white,
+                                              child: ListView.builder(
+                                                padding: EdgeInsets.all(10.0),
+                                                itemCount: options.length,
+                                                itemBuilder:
+                                                    (BuildContext context,
+                                                        int index) {
+                                                  final Data option =
+                                                      options.elementAt(index);
 
-                                                      return GestureDetector(
-                                                        onTap: () {
-                                                          onSelected(option);
-                                                          endRouteCode = option
-                                                                  .stationCode ??
+                                                  return GestureDetector(
+                                                    onTap: () {
+                                                      onSelected(option);
+                                                      endRouteCode =
+                                                          option.stationCode ??
                                                               "";
-                                                          FocusScope.of(context).unfocus();
-                                                        },
-                                                        child: ListTile(
-                                                          title: Text(
-                                                              option.stopName ??
-                                                                  "",
-                                                              style: satoshiRegular.copyWith(
+                                                      FocusScope.of(context)
+                                                          .unfocus();
+                                                    },
+                                                    child: ListTile(
+                                                      title: Text(
+                                                          option.stopName ?? "",
+                                                          style: satoshiRegular
+                                                              .copyWith(
                                                                   fontSize:
                                                                       Dimensions
                                                                           .dp18
@@ -641,338 +650,171 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                           .w700,
                                                                   color: AppColors
                                                                       .darkGray)),
-                                                        ),
-                                                      );
-                                                    },
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            onSelected: (Data selection) {
-                                              print(
-                                                  'Selected: ${selection.stopName}');
-                                            },
-                                          ),
-                                        ),
-                                        svgImageFile: ImageConstant.iToBus),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 10),
-                                    child: Align(
-                                      alignment: Alignment.centerRight,
-                                      child: InkWell(
-                                        onTap: () {
-                                          String temp = _fromController.text;
-                                          String tempCode = startRouteCode;
-
-                                          _fromController.text =
-                                              _toController.text;
-                                          _toController.text = temp;
-
-                                          startRouteCode = endRouteCode;
-                                          endRouteCode = tempCode;
-                                          FocusScope.of(context).unfocus();
-                                          setState(() {});
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          );
                                         },
-                                        child: Container(
-                                          width: 48,
-                                          height: 48,
-                                          decoration: const BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              border: Border.fromBorderSide(
-                                                  BorderSide(
-                                                color: AppColors.gray6E8EE7,
-                                                width: 1,
-                                              )),
-                                              color: Colors.white),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(10),
-                                            child: SvgPicture.asset(
-                                                ImageConstant.iArrowDownUp),
-                                          ),
-                                        ),
+                                        onSelected: (Data selection) {
+                                          print(
+                                              'Selected: ${selection.stopName}');
+                                        },
+                                      ),
+                                    ),
+                                    svgImageFile: ImageConstant.iToBus),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 10),
+                                child: Align(
+                                  alignment: Alignment.centerRight,
+                                  child: InkWell(
+                                    onTap: () {
+                                      String temp = _fromController.text;
+                                      String tempCode = startRouteCode;
+
+                                      _fromController.text = _toController.text;
+                                      _toController.text = temp;
+
+                                      startRouteCode = endRouteCode;
+                                      endRouteCode = tempCode;
+                                      FocusScope.of(context).unfocus();
+                                      setState(() {});
+                                    },
+                                    child: Container(
+                                      width: 48,
+                                      height: 48,
+                                      decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border:
+                                              Border.fromBorderSide(BorderSide(
+                                            color: AppColors.gray6E8EE7,
+                                            width: 1,
+                                          )),
+                                          color: Colors.white),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: SvgPicture.asset(
+                                            ImageConstant.iArrowDownUp),
                                       ),
                                     ),
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
-                            // Padding(
-                            //   padding:
-                            //       const EdgeInsets.only(top: Dimensions.dp20),
-                            //   child: Row(
-                            //     children: [
-                            //       Expanded(
-                            //           flex: 1,
-                            //           child: Stack(
-                            //             children: [
-                            //               Card(
-                            //                 shape: RoundedRectangleBorder(
-                            //                   borderRadius:
-                            //                       BorderRadius.circular(
-                            //                           Dimensions.dp10),
-                            //                   // if you need this
-                            //                   side: const BorderSide(
-                            //                     color: AppColors.gray6E8EE7,
-                            //                     width: 1,
-                            //                   ),
-                            //                 ),
-                            //                 color: Colors.transparent,
-                            //                 elevation: 0,
-                            //                 child: SizedBox(
-                            //                   height: Dimensions.dp55,
-                            //                   child: Padding(
-                            //                     padding: const EdgeInsets.only(
-                            //                         left: Dimensions.dp18,
-                            //                         top: Dimensions.dp13,
-                            //                         bottom: Dimensions.dp13),
-                            //                     child: Column(
-                            //                       children: [
-                            //                         Row(
-                            //                           mainAxisAlignment:
-                            //                               MainAxisAlignment
-                            //                                   .start,
-                            //                           crossAxisAlignment:
-                            //                               CrossAxisAlignment
-                            //                                   .start,
-                            //                           children: [
-                            //                             SvgPicture.asset(
-                            //                                 ImageConstant
-                            //                                     .iCalendar),
-                            //                             const SizedBox(
-                            //                               width:
-                            //                                   Dimensions.dp14,
-                            //                             ),
-                            //                             Expanded(
-                            //                               child: Text(
-                            //                                 "15/07/2022",
-                            //                                 style: satoshiRegular.copyWith(
-                            //                                     fontSize: 16.sp,
-                            //                                     fontWeight:
-                            //                                         FontWeight
-                            //                                             .w700,
-                            //                                     color: AppColors
-                            //                                         .darkGray),
-                            //                               ),
-                            //                             )
-                            //                           ],
-                            //                         )
-                            //                       ],
-                            //                     ),
-                            //                   ),
-                            //                 ),
-                            //               ),
-                            //               Positioned(
-                            //                   left: Dimensions.dp14,
-                            //                   top: -3,
-                            //                   child: Container(
-                            //                     color: Colors.white,
-                            //                     padding:
-                            //                         const EdgeInsets.symmetric(
-                            //                             horizontal:
-                            //                                 Dimensions.dp10),
-                            //                     child: Text(
-                            //                       "Departure",
-                            //                       style: TextStyle(
-                            //                           color: Colors.black,
-                            //                           fontWeight:
-                            //                               FontWeight.w400,
-                            //                           fontSize: 14.sp),
-                            //                     ),
-                            //                   )),
-                            //             ],
-                            //           )),
-                            //       Expanded(
-                            //         flex: 1,
-                            //         child: Stack(
-                            //           children: [
-                            //             Card(
-                            //               shape: RoundedRectangleBorder(
-                            //                 borderRadius: BorderRadius.circular(
-                            //                     Dimensions.dp10),
-                            //                 // if you need this
-                            //                 side: const BorderSide(
-                            //                   color: AppColors.gray6E8EE7,
-                            //                   width: Dimensions.dp1,
-                            //                 ),
-                            //               ),
-                            //               color: Colors.transparent,
-                            //               elevation: 0,
-                            //               child: SizedBox(
-                            //                 height: Dimensions.dp55,
-                            //                 child: Padding(
-                            //                   padding: const EdgeInsets.only(
-                            //                       left: Dimensions.dp18,
-                            //                       top: Dimensions.dp13,
-                            //                       bottom: Dimensions.dp13),
-                            //                   child: Column(
-                            //                     children: [
-                            //                       Row(
-                            //                         mainAxisAlignment:
-                            //                             MainAxisAlignment.start,
-                            //                         crossAxisAlignment:
-                            //                             CrossAxisAlignment
-                            //                                 .start,
-                            //                         children: [
-                            //                           SvgPicture.asset(
-                            //                               ImageConstant.iTime),
-                            //                           const SizedBox(
-                            //                             width: Dimensions.dp14,
-                            //                           ),
-                            //                           Expanded(
-                            //                             child: Text(
-                            //                               "09:10 AM",
-                            //                               style: satoshiRegular
-                            //                                   .copyWith(
-                            //                                       fontSize:
-                            //                                           16.sp,
-                            //                                       fontWeight:
-                            //                                           FontWeight
-                            //                                               .w700,
-                            //                                       color: AppColors
-                            //                                           .darkGray),
-                            //                             ),
-                            //                           )
-                            //                         ],
-                            //                       )
-                            //                     ],
-                            //                   ),
-                            //                 ),
-                            //               ),
-                            //             ),
-                            //             Positioned(
-                            //                 left: Dimensions.dp14,
-                            //                 top: -3,
-                            //                 child: Container(
-                            //                   color: Colors.white,
-                            //                   padding:
-                            //                       const EdgeInsets.symmetric(
-                            //                           horizontal:
-                            //                               Dimensions.dp10),
-                            //                   child: Text(
-                            //                     "Time",
-                            //                     style: TextStyle(
-                            //                         color: Colors.black,
-                            //                         fontWeight: FontWeight.w400,
-                            //                         fontSize: 14.sp),
-                            //                   ),
-                            //                 )),
-                            //           ],
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
-                            Container(
-                              margin: const EdgeInsets.only(
-                                  left: Dimensions.dp10,
-                                  right: Dimensions.dp10,
-                                  top: Dimensions.dp15),
-                              child: CustomButton(
-                                text: "Show Route & Fare",
-                                width: MediaQuery.of(context).size.width,
-                                onPressed: () {
-                                  if (_fromController.text.isEmpty) {
-                                    showCustomSnackBar(
-                                        "Please Select Source Station", context,
-                                        isError: true);
-                                  } else if (_toController.text.isEmpty) {
-                                    showCustomSnackBar(
-                                        "Please Select Destination Station",
-                                        context,
-                                        isError: true);
-                                  } else {
-                                    Get.toNamed(
-                                        RouteHelper.getSearchResultRoute(
-                                            startRouteCode,
-                                            endRouteCode,
-                                            _fromController.text,
-                                            _toController.text));
-                                  }
-                                },
-                                style: satoshiRegular.copyWith(
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white),
-                                height: Dimensions.dp53,
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(
-                                  left: Dimensions.dp10,
-                                  right: Dimensions.dp10,
-                                  top: Dimensions.dp14),
-                              child: CustomButton(
-                                text: "One Day Pass",
-                                width: MediaQuery.of(context).size.width,
-                                onPressed: () {
-                                  Get.toNamed(
-                                      RouteHelper.getoneDayPassRoute());
-                                },
-                                style: satoshiRegular.copyWith(
-                                    fontSize: 20.sp,
-                                    fontWeight: FontWeight.w700,
-                                    color: Colors.white),
-                                height: Dimensions.dp53,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  const SizedBox(
-                    height: Dimensions.dp18,
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                        left: Dimensions.dp20, right: Dimensions.dp30),
-                    child: Text(
-                      "Quick Links",
-                      style: satoshiRegular.copyWith(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.darkGray),
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                        left: Dimensions.dp20,
-                        right: Dimensions.dp30,
-                        top: Dimensions.dp16),
-                    decoration: const BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: AppColors.gray6E8EE7,
-                            blurRadius: Dimensions.dp5,
+                            ],
                           ),
-                        ],
-                        borderRadius:
-                            BorderRadius.all(Radius.circular(Dimensions.dp16))),
-                    child: Container(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.all(Dimensions.dp20),
-                      child: GridView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: quickLinkList.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                crossAxisSpacing: Dimensions.dp10,
-                                mainAxisSpacing: 10),
-                        itemBuilder: (BuildContext context, int index) {
-                          return getGridItemWidget(quickLinkList[index]);
-                        },
-                      ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(
+                              left: Dimensions.dp10,
+                              right: Dimensions.dp10,
+                              top: Dimensions.dp15),
+                          child: CustomButton(
+                            color: Theme.of(context).primaryColor,
+                            text: "Show Route & Fare",
+                            width: MediaQuery.of(context).size.width,
+                            onPressed: () {
+                              if (_fromController.text.isEmpty) {
+                                showCustomSnackBar(
+                                    "Please Select Source Station", context,
+                                    isError: true);
+                              } else if (_toController.text.isEmpty) {
+                                showCustomSnackBar(
+                                    "Please Select Destination Station",
+                                    context,
+                                    isError: true);
+                              } else {
+                                Get.toNamed(RouteHelper.getSearchResultRoute(
+                                    startRouteCode,
+                                    endRouteCode,
+                                    _fromController.text,
+                                    _toController.text));
+                              }
+                            },
+                            style: satoshiRegular.copyWith(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white),
+                            height: Dimensions.dp53,
+                          ),
+                        ),
+                        Container(
+                          margin: const EdgeInsets.only(
+                              left: Dimensions.dp10,
+                              right: Dimensions.dp10,
+                              top: Dimensions.dp14),
+                          child: CustomButton(
+                            color: Theme.of(context).primaryColor,
+                            text: "One Day Pass",
+                            width: MediaQuery.of(context).size.width,
+                            onPressed: () {
+                              Get.toNamed(RouteHelper.getoneDayPassRoute());
+                            },
+                            style: satoshiRegular.copyWith(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white),
+                            height: Dimensions.dp53,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(
-                    height: Dimensions.dp40,
-                  )
-                ],
-              );
-            }));
+                ),
+              const SizedBox(
+                height: Dimensions.dp18,
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                    left: Dimensions.dp20, right: Dimensions.dp30),
+                child: Text(
+                  "Quick Links",
+                  style: satoshiRegular.copyWith(
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.darkGray),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                    left: Dimensions.dp20,
+                    right: Dimensions.dp30,
+                    top: Dimensions.dp16),
+                decoration: const BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.gray6E8EE7,
+                        blurRadius: Dimensions.dp5,
+                      ),
+                    ],
+                    borderRadius:
+                        BorderRadius.all(Radius.circular(Dimensions.dp16))),
+                child: Container(
+                  height: 200,
+                  width: MediaQuery.of(context).size.width,
+                  padding: const EdgeInsets.all(Dimensions.dp20),
+                  child: GridView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: quickLinkList.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: Dimensions.dp10,
+                            mainAxisSpacing: 10),
+                    itemBuilder: (BuildContext context, int index) {
+                      return getGridItemWidget(quickLinkList[index]);
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: Dimensions.dp40,
+              )
+            ],
+          );
+        }));
   }
 
   Widget getGridItemWidget(QuickLinkInternalModel model) {
@@ -984,6 +826,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Get.toNamed(RouteHelper.getMyRouteScreen());
         } else if (model.title == "Routes") {
           Get.toNamed(RouteHelper.getNearByRoute());
+        } else if (model.title == "Smart Recharge") {
+          Get.toNamed(RouteHelper.getPaymentDetailsRoute());
         }
       },
       child: Column(
@@ -992,6 +836,7 @@ class _HomeScreenState extends State<HomeScreen> {
             model.imagePath,
             height: Dimensions.dp35,
             width: Dimensions.dp35,
+            color: Theme.of(context).primaryColor,
           ),
           const SizedBox(
             height: Dimensions.dp4,

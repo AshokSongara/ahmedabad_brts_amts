@@ -63,7 +63,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                 child: Row(children: [
                   SvgPicture.asset(
                     ImageConstant.iRedBus,
-                    color: AppColors.primaryColor,
+                    color: Theme.of(context).primaryColor,
                     width: 13,
                     height: 15,
                   ),

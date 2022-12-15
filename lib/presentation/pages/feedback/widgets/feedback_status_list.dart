@@ -56,7 +56,7 @@ class _FeedBackStatusListState extends State<FeedBackStatusList> {
                     SvgPicture.asset(
                       widget.list[index].imagePath,
                       color: selectedIndex == index
-                          ? AppColors.primaryColor
+                          ? Theme.of(context).primaryColor
                           : AppColors.darkGray,
                     ),
                     Padding(
@@ -69,7 +69,7 @@ class _FeedBackStatusListState extends State<FeedBackStatusList> {
                             fontSize: Dimensions.dp10.sp,
                             fontWeight: FontWeight.w500,
                             color: selectedIndex == index
-                                ? AppColors.primaryColor
+                                ? Theme.of(context).primaryColor
                                 : AppColors.darkGray),
                       ),
                     )
