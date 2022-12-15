@@ -274,24 +274,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   ListTile(
                     leading: SvgPicture.asset(
-                      ImageConstant.iRoute,
-                      color: Colors.white,
-                      height: Dimensions.dp28,
-                      width: Dimensions.dp28,
-                    ),
-                    title: Text(
-                      "Change Theme",
-                      style: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp19,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white),
-                    ),
-                    onTap: () {
-                      Get.toNamed(RouteHelper.getChangeThemeRoute());
-                    },
-                  ),
-                  ListTile(
-                    leading: SvgPicture.asset(
                       ImageConstant.iSignOut,
                       color: Colors.white,
                       height: Dimensions.dp28,

@@ -14,7 +14,6 @@ import 'package:ahmedabad_brts_amts/presentation/pages/one_day_pass/one_day_pass
 import 'package:ahmedabad_brts_amts/presentation/pages/passenger_details/passenger_details.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/payment_details/payment_details_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/search_route_number/search_route_number_screen.dart';
-import 'package:ahmedabad_brts_amts/presentation/pages/theme/change_theme_screen.dart';
 import 'package:get/get.dart';
 import '../presentation/pages/dashboard/search_result_screen.dart';
 import '../presentation/pages/lrf/splash_screen.dart';
@@ -38,7 +37,6 @@ class RouteHelper {
   static const String oneDayPassRoute = '/oneDayPass';
   static const String contactUs = '/contact_us';
   static const String payment = '/payment_details';
-  static const String changeTheme = '/changeTheme';
   static const String booking = '/booking';
 
   static String getInitialRoute() => '$initial';
@@ -78,7 +76,6 @@ class RouteHelper {
   static String getoneDayPassRoute() => '$oneDayPassRoute';
   static String getContactUsRoute() => '$contactUs';
   static String getPaymentDetailsRoute() => '$payment';
-  static String getChangeThemeRoute() => '$changeTheme';
   static String getBookingRoute() => '$booking';
 
   static List<GetPage> routes = [
@@ -121,7 +118,6 @@ class RouteHelper {
     GetPage(name: myRoute, page: () => const MyRoutesScreen()),
     GetPage(name: searchRoute, page: () => const SearchRouteNumberScreen()),
     GetPage(name: payment, page: () => const PaymentDetailsScreen()),
-    GetPage(name: changeTheme, page: () => const ChangeThemeScreen()),
     GetPage(name: booking, page: () => const BookingScreen()),
   ];
 }
