@@ -1,4 +1,5 @@
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
+import 'package:ahmedabad_brts_amts/core/theme/theme_service.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/stop_request_model.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
@@ -505,6 +506,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         _fromController =
                                             fieldTextEditingController;
                                         return TextField(
+                                          cursorColor: Theme.of(context).primaryColor,
                                           controller:
                                               fieldTextEditingController,
                                           focusNode: fieldFocusNode,
@@ -512,6 +514,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                               fontSize: Dimensions.dp18.sp,
                                               fontWeight: FontWeight.w700,
                                               color: AppColors.darkGray),
+                                          decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                          ),
                                         );
                                       },
                                       optionsViewBuilder: (BuildContext context,
@@ -523,7 +528,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             width: 300,
                                             color: Colors.white,
                                             child: ListView.builder(
-                                              padding: EdgeInsets.all(10.0),
+                                              padding: const EdgeInsets.all(10.0),
                                               itemCount: options.length,
                                               itemBuilder:
                                                   (BuildContext context,
@@ -600,6 +605,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           _toController =
                                               fieldTextEditingController;
                                           return TextField(
+                                            cursorColor: Theme.of(context).primaryColor,
                                             controller:
                                                 fieldTextEditingController,
                                             focusNode: fieldFocusNode,
@@ -607,6 +613,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 fontSize: Dimensions.dp18.sp,
                                                 fontWeight: FontWeight.w700,
                                                 color: AppColors.darkGray),
+                                            decoration: const InputDecoration(
+                                              border: InputBorder.none,
+                                            ),
                                           );
                                         },
                                         optionsViewBuilder:
@@ -619,7 +628,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               width: 300,
                                               color: Colors.white,
                                               child: ListView.builder(
-                                                padding: EdgeInsets.all(10.0),
+                                                padding: const EdgeInsets.all(10.0),
                                                 itemCount: options.length,
                                                 itemBuilder:
                                                     (BuildContext context,

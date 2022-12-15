@@ -43,6 +43,7 @@ class _LoadingAnimationState extends State<LoadingAnimation>
         ImageConstant.iLoader,
         width: 40,
         height: 40,
+        color: Theme.of(context).primaryColor,
       ),
     );
   }

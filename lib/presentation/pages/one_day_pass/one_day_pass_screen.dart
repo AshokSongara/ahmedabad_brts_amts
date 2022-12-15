@@ -1,3 +1,4 @@
+import 'package:ahmedabad_brts_amts/core/theme/theme_service.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
@@ -87,12 +88,15 @@ class _OneDayPassScreenState extends State<OneDayPassScreen> {
                             children: [
                               Row(
                                 children: [
-                                  SvgPicture.asset(
-                                    list[index].isChecked &&
-                                            list[index].isEnable
-                                        ? ImageConstant.iRedTick
-                                        : ImageConstant.iGreyTick,
-                                  ),
+                                  list[index].isChecked && list[index].isEnable
+                                      ? SvgPicture.asset(
+                                          ThemeService().theme == ThemeMode.light
+                                              ? ImageConstant.iRedTick
+                                              : ImageConstant.iBlueTick,
+                                        )
+                                      : SvgPicture.asset(
+                                          ImageConstant.iGreyTick,
+                                        ),
                                   const SizedBox(
                                     width: Dimensions.dp23,
                                   ),

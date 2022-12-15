@@ -12,10 +12,10 @@ class Loader {
 
   static bool _isShowing = false;
 
-  static double _blur = 7.0;
-  static double _opacity = 0.7;
-  static double _boxRadius = 10.0;
-  static double _boxPadding = 16.0;
+  static const double _blur = 7.0;
+  static const double _opacity = 0.7;
+  static const double _boxRadius = 10.0;
+  static const double _boxPadding = 16.0;
 
   static void show(BuildContext context, {bool backdropFilter = true}) {
     _isShowing = true;
@@ -23,7 +23,7 @@ class Loader {
     if (_currentLoader == null) {
       _currentLoader = OverlayEntry(builder: (context) {
         return Scaffold(
-          backgroundColor: Color(0xff140B21).withOpacity(_opacity),
+          backgroundColor: const Color(0xff140B21).withOpacity(_opacity),
           body: backdropFilter
               ? BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: _blur, sigmaY: _blur),
@@ -31,12 +31,12 @@ class Loader {
                     child: Container(
                       padding: EdgeInsets.all(_boxPadding),
                       decoration: BoxDecoration(
-                        color: Color(0xffffffff),
+                        color: const Color(0xffffffff),
                         borderRadius: BorderRadius.all(
                           Radius.circular(_boxRadius),
                         ),
                       ),
-                      child: LoadingAnimation(),
+                      child: const LoadingAnimation(),
                     ),
                   ),
                 )
@@ -44,12 +44,12 @@ class Loader {
                   child: Container(
                     padding: EdgeInsets.all(_boxPadding),
                     decoration: BoxDecoration(
-                      color: Color(0xffffffff),
+                      color: const Color(0xffffffff),
                       borderRadius: BorderRadius.all(
                         Radius.circular(_boxRadius),
                       ),
                     ),
-                    child: LoadingAnimation(),
+                    child: const LoadingAnimation(),
                   ),
                 ),
         );
