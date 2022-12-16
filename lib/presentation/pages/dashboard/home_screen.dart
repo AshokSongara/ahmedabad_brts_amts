@@ -889,6 +889,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Container(
+                height: 200,
                 margin: const EdgeInsets.only(
                     left: Dimensions.dp20,
                     right: Dimensions.dp30,
@@ -904,7 +905,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius:
                         BorderRadius.all(Radius.circular(Dimensions.dp16))),
                 child: Container(
-                  height: 200,
                   width: MediaQuery.of(context).size.width,
                   padding: const EdgeInsets.all(Dimensions.dp20),
                   child: GridView.builder(
@@ -914,6 +914,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
                             crossAxisSpacing: Dimensions.dp10,
+                            childAspectRatio: 1 / 0.8,
                             mainAxisSpacing: 10),
                     itemBuilder: (BuildContext context, int index) {
                       return getGridItemWidget(quickLinkList[index]);

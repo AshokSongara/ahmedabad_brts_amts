@@ -11,6 +11,7 @@ import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,11 +31,15 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<HomeScreenBloc>(context).add(GetAvailableStopsEvent(StopRequestModel(stopType: 1)));
-    BlocProvider.of<HomeScreenBloc>(context).add(GetAvailableStopsEvent(StopRequestModel(stopType: 2)));
+    BlocProvider.of<HomeScreenBloc>(context)
+        .add(GetAvailableStopsEvent(StopRequestModel(stopType: 1)));
+    BlocProvider.of<HomeScreenBloc>(context)
+        .add(GetAvailableStopsEvent(StopRequestModel(stopType: 2)));
 
-    BlocProvider.of<HomeScreenBloc>(context).add(GetAvailableRoutesEvent(RoutesRequestModel(stopType: 1)));
-    BlocProvider.of<HomeScreenBloc>(context).add(GetAvailableRoutesEvent(RoutesRequestModel(stopType: 2)));
+    BlocProvider.of<HomeScreenBloc>(context)
+        .add(GetAvailableRoutesEvent(RoutesRequestModel(stopType: 1)));
+    BlocProvider.of<HomeScreenBloc>(context)
+        .add(GetAvailableRoutesEvent(RoutesRequestModel(stopType: 2)));
     _getLocationPermission();
     getMemberID();
   }
@@ -132,8 +137,8 @@ class _SplashScreenState extends State<SplashScreen> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: Dimensions.dp25,
+              SizedBox(
+                height: Dimensions.dp20.h,
               ),
               Expanded(
                 child: Container(
@@ -147,32 +152,35 @@ class _SplashScreenState extends State<SplashScreen> {
                         topLeft: Radius.circular(Dimensions.dp50),
                         topRight: Radius.circular(Dimensions.dp50)),
                   ),
-                  child: Column(children: [
-                    Container(
-                        margin: const EdgeInsets.only(
-                            top: Dimensions.dp60,
-                            left: Dimensions.dp30,
-                            right: Dimensions.dp30),
-                        child: Image.asset(ImageConstant.iCombineLogo)),
-                    const SizedBox(
-                      height: Dimensions.dp40,
-                    ),
-                    Text(
-                      "By creating an account, I accept App’s ",
-                      style: satoshiRegular.copyWith(
-                          fontSize: 12,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.black),
-                    ),
-                    Text(
-                      "Terms of Service.",
-                      style: satoshiRegular.copyWith(
-                          fontSize: 12,
-                          decoration: TextDecoration.underline,
-                          fontWeight: FontWeight.w300,
-                          color: AppColors.lightBlue),
-                    ),
-                  ]),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Container(
+                            margin: const EdgeInsets.only(
+                                left: Dimensions.dp30, right: Dimensions.dp30),
+                            child: Image.asset(ImageConstant.iCombineLogo)),
+                         SizedBox(
+                          height: Dimensions.dp50.h,
+                        ),
+                        Text(
+                          "By creating an account, I accept App’s ",
+                          style: satoshiRegular.copyWith(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w300,
+                              color: Colors.black),
+                        ),
+                        Text(
+                          "Terms of Service.",
+                          style: satoshiRegular.copyWith(
+                              fontSize: 12,
+                              decoration: TextDecoration.underline,
+                              fontWeight: FontWeight.w300,
+                              color: AppColors.lightBlue),
+                        ),
+                        SizedBox(
+                          height: Dimensions.dp20.h,
+                        )
+                      ]),
                 ),
               )
             ],
@@ -189,7 +197,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }
 
-void _getLocationPermission() async{
+void _getLocationPermission() async {
   Location location = Location();
 
   bool _serviceEnabled;
@@ -220,5 +228,4 @@ void _getLocationPermission() async{
   debugPrint("_locationData longitude:- ${_locationData.longitude}");
   debugPrint("_locationData altitude:- ${_locationData.altitude}");
   debugPrint("_locationData provider:- ${_locationData.provider}");
-
 }

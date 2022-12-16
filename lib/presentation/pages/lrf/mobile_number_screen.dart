@@ -40,10 +40,13 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Theme.of(context).primaryColor,
+    ));
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      body: ListView(
+      body: Column(
         // mainAxisAlignment: MainAxisAlignment.start,
         children: [
           ClipRRect(

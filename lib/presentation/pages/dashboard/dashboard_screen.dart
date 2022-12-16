@@ -84,72 +84,81 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ],
             ),
             height: MediaQuery.of(context).size.height * 0.085,
-            child: BottomNavigationBar(
-              currentIndex: _pageIndex,
-              selectedItemColor: Colors.white,
-              unselectedItemColor: Colors.white,
-              type: BottomNavigationBarType.fixed,
-              unselectedLabelStyle: satoshiRegular.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: Theme.of(context).primaryColor,
-                  fontSize: 13.sp
-              ),
-              selectedLabelStyle: satoshiRegular.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: Theme.of(context).primaryColor,
-                  fontSize: 13.sp),
-              items: [
-                BottomNavigationBarItem(
-                  icon: _pageIndex == 0
-                      ? const Padding(
-                        padding: EdgeInsets.all(4.0),
-                        child: ImageIcon(AssetImage(ImageConstant.iHome)),
-                      )
-                      : const Padding(
-                        padding: EdgeInsets.all(4.0),
-                        child: ImageIcon(AssetImage(ImageConstant.iHome)),
-                      ),
-                  label: "Home",
+            child: Wrap(
+              children: [
+                BottomNavigationBar(
+                  currentIndex: _pageIndex,
+                  selectedItemColor: Colors.white,
+                  unselectedItemColor: Colors.white,
+                  type: BottomNavigationBarType.fixed,
+                  unselectedLabelStyle: satoshiRegular.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 13.sp),
+                  selectedLabelStyle: satoshiRegular.copyWith(
+                      fontWeight: FontWeight.w400,
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 13.sp),
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: _pageIndex == 0
+                          ? const Padding(
+                              padding: EdgeInsets.all(4.0),
+                              child: ImageIcon(AssetImage(ImageConstant.iHome)),
+                            )
+                          : const Padding(
+                              padding: EdgeInsets.all(4.0),
+                              child: ImageIcon(AssetImage(ImageConstant.iHome)),
+                            ),
+                      label: "Home",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: _pageIndex == 1
+                          ? const Padding(
+                              padding: EdgeInsets.all(4.0),
+                              child:
+                                  ImageIcon(AssetImage(ImageConstant.iBooking)),
+                            )
+                          : const Padding(
+                              padding: EdgeInsets.all(4.0),
+                              child:
+                                  ImageIcon(AssetImage(ImageConstant.iBooking)),
+                            ),
+                      label: "Booking",
+                    ),
+                    BottomNavigationBarItem(
+                      icon: _pageIndex == 2
+                          ? const Padding(
+                              padding: EdgeInsets.all(4.0),
+                              child: ImageIcon(
+                                  AssetImage(ImageConstant.iNotification)),
+                            )
+                          : const Padding(
+                              padding: EdgeInsets.all(4.0),
+                              child: ImageIcon(
+                                  AssetImage(ImageConstant.iNotification)),
+                            ),
+                      label: "Notification",
+                    ),
+                    BottomNavigationBarItem(
+                        icon: _pageIndex == 3
+                            ? const Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: ImageIcon(
+                                    AssetImage(ImageConstant.iProfile)),
+                              )
+                            : const Padding(
+                                padding: EdgeInsets.all(4.0),
+                                child: ImageIcon(
+                                    AssetImage(ImageConstant.iProfile)),
+                              ),
+                        label: "Profile")
+                  ],
+                  onTap: (index) {
+                    bottomTapped(index);
+                  },
                 ),
-                BottomNavigationBarItem(
-                  icon: _pageIndex == 1
-                      ? const Padding(
-                        padding: EdgeInsets.all(4.0),
-                        child: ImageIcon(AssetImage(ImageConstant.iBooking)),
-                      )
-                      : const Padding(
-                        padding: EdgeInsets.all(4.0),
-                        child: ImageIcon(AssetImage(ImageConstant.iBooking)),
-                      ),
-                  label: "Booking",
-                ),
-                BottomNavigationBarItem(
-                  icon: _pageIndex == 2
-                      ? const Padding(
-                        padding: EdgeInsets.all(4.0),
-                        child: ImageIcon(AssetImage(ImageConstant.iNotification)),
-                      )
-                      : const Padding(
-                        padding: EdgeInsets.all(4.0),
-                        child: ImageIcon(AssetImage(ImageConstant.iNotification)),
-                      ),
-                  label: "Notification",
-                ),
-                BottomNavigationBarItem(
-                    icon: _pageIndex == 3
-                        ? const Padding(
-                          padding: EdgeInsets.all(4.0),
-                          child: ImageIcon(AssetImage(ImageConstant.iProfile)),
-                        )
-                        : const Padding(
-                          padding: EdgeInsets.all(4.0),
-                          child: ImageIcon(AssetImage(ImageConstant.iProfile)),
-                        ),
-                    label: "Profile")
               ],
-              onTap: (index) {
-                bottomTapped(index);
-              },
             ),
           ),
         ));

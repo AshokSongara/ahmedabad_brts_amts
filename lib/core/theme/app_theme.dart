@@ -12,10 +12,11 @@ class Themes {
       textTheme: ButtonTextTheme.primary,
     ),
   );
+
   static final dark = ThemeData.dark().copyWith(
     primaryColor: const Color(0xff0162B4),
     backgroundColor: AppColors.appBackground,
-    buttonColor: const Color(0xff0162B4),
+    buttonColor: const Color(0xff0074B7),
     bottomAppBarColor: const Color(0xff0162B4),
     buttonTheme: const ButtonThemeData(
       buttonColor: Color(0xff0162B4),
