@@ -57,8 +57,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
             },
             children: const [
               HomeScreen(),
-              BookingScreen(),
-              NotificationScreen(),
+              BookingScreen(from: "menu"),
+              NotificationScreen(from: "menu"),
               ProfileScreen()
             ],
           ),

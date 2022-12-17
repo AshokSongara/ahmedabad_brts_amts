@@ -4,9 +4,11 @@ import 'package:ahmedabad_brts_amts/presentation/pages/contact_us/contact_us_scr
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/dashboard_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/route_details_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/feedback/feedback_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/lrf/forget_password_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/otp_verification_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/login_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/mobile_number_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/lrf/reset_password_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/signup_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/my_routes/my_routes_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/nearby/nearby_sreen.dart';
@@ -38,6 +40,8 @@ class RouteHelper {
   static const String contactUs = '/contact_us';
   static const String payment = '/payment_details';
   static const String booking = '/booking';
+  static const String forgetPassword = '/forgetPassword';
+  static const String resetPassword = '/resetPassword';
 
   static String getInitialRoute() => '$initial';
 
@@ -73,10 +77,18 @@ class RouteHelper {
   static String getMyRouteScreen() => '$myRoute';
 
   static String getSearchRoute() => '$searchRoute';
+
   static String getoneDayPassRoute() => '$oneDayPassRoute';
+
   static String getContactUsRoute() => '$contactUs';
+
   static String getPaymentDetailsRoute() => '$payment';
-  static String getBookingRoute() => '$booking';
+
+  static String getBookingRoute(String from) => '$booking?from=$from';
+
+  static String getForgetPasswordRoute() => '$forgetPassword';
+
+  static String getResetPasswordRoute() => '$resetPassword';
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => const SplashScreen()),
@@ -86,7 +98,6 @@ class RouteHelper {
     GetPage(name: mobileNumber, page: () => const MobileNumberScreen()),
     GetPage(name: oneDayPassRoute, page: () => const OneDayPassScreen()),
     GetPage(name: contactUs, page: () => const ContactUsScreen()),
-
     GetPage(
         name: enterCode,
         page: () => OtpVerificationScreen(
@@ -118,6 +129,12 @@ class RouteHelper {
     GetPage(name: myRoute, page: () => const MyRoutesScreen()),
     GetPage(name: searchRoute, page: () => const SearchRouteNumberScreen()),
     GetPage(name: payment, page: () => const PaymentDetailsScreen()),
-    GetPage(name: booking, page: () => const BookingScreen()),
+    GetPage(
+        name: booking,
+        page: () => BookingScreen(
+              from: Get.parameters['from'],
+            )),
+    GetPage(name: forgetPassword, page: () => const ForgetPasswordScreen()),
+    GetPage(name: resetPassword, page: () => const ResetPasswordScreen()),
   ];
 }

@@ -6,6 +6,7 @@ import 'package:ahmedabad_brts_amts/data/responseModels/signup_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/feedback_response_model.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/forget_password_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/login_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/mobile_number_otp_response_entity.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/stop_response_model.dart';
@@ -23,6 +24,7 @@ abstract class UserRepository {
   Future<VerifyOtpResponse> verifyOtp(OtpRequest body);
   Future<FeedbackResponseModel> feedbackSubmit(dynamic body);
   Future<BrtsStopResponseModel> getStop(dynamic body);
+  Future<ForgetPasswordResponse> forgetPassword(dynamic body);
   Box<BrtsStopResponseModel> getLocalBrtsStopData();
   Box<BrtsStopResponseModel> getLocalAmtsStopData();
   Future<BrtsRoutesResponseModel> getRoutes(body);

@@ -8,7 +8,6 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dar
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
-import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_search_bar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/source_destination_widget.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
@@ -20,6 +19,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../data/responseModels/quick_link_internal_model.dart';
 import '../../../data/responsemodels/brts_stop_respons_model.dart';
@@ -45,6 +45,9 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    Future.delayed(const Duration(milliseconds: 100),(){
+      ThemeService().switchTheme(isAmts);
+    });
     BlocProvider.of<HomeScreenBloc>(context)
         .add(GetAvailableStopsEvent(StopRequestModel(stopType: 1)));
     BlocProvider.of<HomeScreenBloc>(context)
@@ -154,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      "Stops",
+                      "Routes",
                       style: satoshiRegular.copyWith(
                           fontSize: Dimensions.dp19,
                           fontWeight: FontWeight.w500,
@@ -215,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     onTap: () {
-                      Get.toNamed(RouteHelper.getBookingRoute());
+                      Get.toNamed(RouteHelper.getBookingRoute("homes"));
                     },
                   ),
                   ListTile(
@@ -286,8 +289,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
-                    onTap: () {
-                      Navigator.pop(context);
+                    onTap: () async {
+                      SharedPreferences preferences = await SharedPreferences.getInstance();
+                      await preferences.clear();
+                      Get.off(RouteHelper.splash);
                     },
                   ),
                   const SizedBox(
@@ -330,7 +335,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       BlocProvider.of<HomeScreenBloc>(context).add(
                           GetAvailableRoutesEvent(
                               RoutesRequestModel(stopType: isAmts ? 2 : 1)));
-                      Future.delayed(Duration(milliseconds: 100),(){
+                      Future.delayed(const Duration(milliseconds: 100),(){
                         ThemeService().switchTheme(isAmts);
                       });
                       setState(() {});
@@ -457,7 +462,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         filled: true,
                         prefixIcon:  Padding(
                           padding:
-                          EdgeInsets.symmetric(horizontal: 14),
+                          const EdgeInsets.symmetric(horizontal: 14),
                           child: SvgPicture.asset(ImageConstant.iSearch,
                               height: 20, width: 20),
                         ),
@@ -477,7 +482,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 300,
                         color: Colors.white,
                         child: ListView.builder(
-                          padding: EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(10.0),
                           itemCount: options.length,
                           itemBuilder:
                               (BuildContext context,
@@ -589,7 +594,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               SourceDestinationWidget(
                                   title: "From",
                                   content:
-                                      "Ahmedabad Municipal Transport Service",
+                                      isAmts ? "Ahmedabad Municipal Transport Service" :
+                                      "Bus Rapid Transit System (BRTS)",
                                   contentTitle: SizedBox(
                                     height: 28,
                                     child: Autocomplete<Data>(
@@ -686,7 +692,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: SourceDestinationWidget(
                                     title: "To",
                                     content:
-                                        "Ahmedabad Municipal Transport Service",
+                                    isAmts ? "Ahmedabad Municipal Transport Service" :
+                                    "Bus Rapid Transit System (BRTS)",
                                     contentTitle: SizedBox(
                                       height: 28,
                                       child: Autocomplete<Data>(
@@ -835,6 +842,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               } else if (_toController.text.isEmpty) {
                                 showCustomSnackBar(
                                     "Please Select Destination Station",
+                                    context,
+                                    isError: true);
+                              } else if (startRouteCode.isEmpty) {
+                                showCustomSnackBar(
+                                    "Please Enter Proper Source Station",
+                                    context,
+                                    isError: true);
+                              }else if (endRouteCode.isEmpty) {
+                                showCustomSnackBar(
+                                    "Please Enter Proper Destination Station",
                                     context,
                                     isError: true);
                               } else {

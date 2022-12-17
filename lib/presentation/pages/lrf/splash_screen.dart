@@ -33,13 +33,16 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     BlocProvider.of<HomeScreenBloc>(context)
         .add(GetAvailableStopsEvent(StopRequestModel(stopType: 1)));
+
     BlocProvider.of<HomeScreenBloc>(context)
         .add(GetAvailableStopsEvent(StopRequestModel(stopType: 2)));
 
     BlocProvider.of<HomeScreenBloc>(context)
         .add(GetAvailableRoutesEvent(RoutesRequestModel(stopType: 1)));
+
     BlocProvider.of<HomeScreenBloc>(context)
         .add(GetAvailableRoutesEvent(RoutesRequestModel(stopType: 2)));
+
     _getLocationPermission();
     getMemberID();
   }

@@ -8,6 +8,7 @@ import 'package:ahmedabad_brts_amts/data/responseModels/signup_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/feedback_response_model.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/forget_password_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/login_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/mobile_number_otp_response_entity.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/stop_response_model.dart';
@@ -180,14 +181,14 @@ class UserRepositoryImpl implements UserRepository {
       if (brtsBox.isEmpty) {
         print("getRoutes response.body ${response.body}");
         BrtsRoutesResponseModel stopResponseModel =
-        BrtsRoutesResponseModel.fromJson(response.body);
+            BrtsRoutesResponseModel.fromJson(response.body);
         getLocalBrtsRoutesData().put("key", stopResponseModel);
         try {} on Exception catch (exception) {
         } catch (error) {}
         return brtsBox.get("key");
       } else {
         BrtsRoutesResponseModel stopResponseModel =
-        BrtsRoutesResponseModel.fromJson(response.body);
+            BrtsRoutesResponseModel.fromJson(response.body);
         getLocalBrtsRoutesData().put("key", stopResponseModel);
         print("getRoutes from Hive side");
         return brtsBox.get("key");
@@ -196,28 +197,31 @@ class UserRepositoryImpl implements UserRepository {
       if (amtsBox.isEmpty) {
         print("getRoutes response.body ${response.body}");
         BrtsRoutesResponseModel stopResponseModel =
-        BrtsRoutesResponseModel.fromJson(response.body);
+            BrtsRoutesResponseModel.fromJson(response.body);
         getLocalAmtsRoutesData().put("key", stopResponseModel);
         try {} on Exception catch (exception) {
         } catch (error) {}
         return amtsBox.get("key");
       } else {
         BrtsRoutesResponseModel stopResponseModel =
-        BrtsRoutesResponseModel.fromJson(response.body);
+            BrtsRoutesResponseModel.fromJson(response.body);
         getLocalAmtsRoutesData().put("key", stopResponseModel);
         print("from Hive side");
         return amtsBox.get("key");
       }
     }
   }
+
   @override
   Box<BrtsRoutesResponseModel> getLocalBrtsRoutesData() {
     return Hive.box<BrtsRoutesResponseModel>(AppConstant.brtsRoutesListBox);
   }
+
   @override
   Box<BrtsRoutesResponseModel> getLocalAmtsRoutesData() {
     return Hive.box<BrtsRoutesResponseModel>(AppConstant.amtsRoutesListBox);
   }
+
   @override
   Box<BrtsStopResponseModel> getLocalBrtsStopData() {
     return Hive.box<BrtsStopResponseModel>(AppConstant.BrtsStopListBox);
@@ -226,5 +230,23 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Box<BrtsStopResponseModel> getLocalAmtsStopData() {
     return Hive.box<BrtsStopResponseModel>(AppConstant.AmtsStopListBox);
+  }
+
+  @override
+  Future<ForgetPasswordResponse> forgetPassword(body) async {
+    Map data = {
+      'email': body.email ?? "",
+    };
+
+    var bodyData = json.encode(data);
+
+    Response response =
+        await apiClient.postData(AppConstant.forgetPassword, bodyData);
+    ForgetPasswordResponse forgetPasswordResponse =
+        ForgetPasswordResponse.fromJson(response.body);
+
+    try {} on Exception catch (exception) {
+    } catch (error) {}
+    return forgetPasswordResponse;
   }
 }

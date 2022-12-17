@@ -1,7 +1,6 @@
 import '../presentation/widgets/base/order_tracker.dart';
 
 class AppConstant {
-
   static String apiUrl = "http://103.69.196.78:8082/";
   static String mapKey = "AIzaSyB-f76UEQUmRrsajG14qz2cobJCiVLTz3A";
 
@@ -26,8 +25,7 @@ class AppConstant {
   static String getStops = "Stop/list/";
   static String getRoutes = "Route/list/";
   static String searchRouteList = "Route/plan/start/";
-
-
+  static String forgetPassword = "User/forgot-password";
 
   //SharedPreferences Keys
   static String accessToken = "accessToken";
@@ -49,5 +47,4 @@ class AppConstant {
   static List<TextDto> deliveredList = [
     TextDto("Your order has been delivered", "+ 11 Stops"),
   ];
-
 }

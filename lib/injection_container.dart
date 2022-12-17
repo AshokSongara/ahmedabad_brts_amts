@@ -5,6 +5,7 @@ import 'package:ahmedabad_brts_amts/domain/repositories/routes/routes_repository
 import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/nearme_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/search_route_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/user/forget_password_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/home_get_routes_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/login_user_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/mobile_number_login_usecase.dart';
@@ -24,6 +25,7 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'domain/usecases/user/feddback_usecase.dart';
+import 'presentation/blocs/forgetpassword/forget_password_bloc.dart';
 
 final injector = GetIt.instance;
 
@@ -56,10 +58,13 @@ Future<void> init() async {
     () => FeedbackBloc(injector()),
   );
   injector.registerFactory<HomeScreenBloc>(
-    () => HomeScreenBloc(injector(),injector()),
+    () => HomeScreenBloc(injector(), injector()),
   );
   injector.registerFactory<SearchResultRouteBloc>(
     () => SearchResultRouteBloc(searchResultRouteUseCase: injector()),
+  );
+  injector.registerFactory<ForgetPasswordBloc>(
+    () => ForgetPasswordBloc(forgetPasswordUseCase: injector()),
   );
 
   injector.registerLazySingleton(() => SignupUserUseCase(injector()));
@@ -75,6 +80,7 @@ Future<void> init() async {
   injector.registerLazySingleton(() => HomeScreenUseCase(injector()));
   injector.registerLazySingleton(() => HomeGetRoutesUseCase(injector()));
   injector.registerLazySingleton(() => SearchResultRouteUseCase(injector()));
+  injector.registerLazySingleton(() => ForgetPasswordUseCase(injector()));
 
   injector.registerLazySingleton<UserRepository>(
     () => UserRepositoryImpl(

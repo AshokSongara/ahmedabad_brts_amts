@@ -3,6 +3,7 @@ import 'package:ahmedabad_brts_amts/core/theme/theme_service.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
 import 'package:ahmedabad_brts_amts/injection_container.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/forgetpassword/forget_password_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
@@ -71,6 +72,9 @@ void main() async {
         BlocProvider<SearchResultRouteBloc>(
           create: (context) => injector<SearchResultRouteBloc>(),
         ),
+        BlocProvider<ForgetPasswordBloc>(
+          create: (context) => injector<ForgetPasswordBloc>(),
+        ),
       ],
       child: MyApp(),
     ),
@@ -87,7 +91,6 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           themeMode: ThemeService().theme,
           theme: Themes.light,
-          darkTheme: Themes.dark,
           home: const SplashScreen(),
           initialRoute: RouteHelper.getInitialRoute(),
           getPages: RouteHelper.routes,

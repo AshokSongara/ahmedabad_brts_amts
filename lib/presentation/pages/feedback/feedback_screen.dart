@@ -72,15 +72,12 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                   padding: const EdgeInsets.only(top: 18),
                   child: TextField(
                     // controller: enterAmountController,
-                    inputFormatters: [
-                      // FilteringTextInputFormatter.digitsOnly,
-                    ],
                     style: satoshiRegular.copyWith(
                         fontSize: Dimensions.dp16.sp,
                         fontWeight: FontWeight.w300,
                         color: AppColors.darkGray),
                     textAlign: TextAlign.start,
-                    keyboardType: TextInputType.number,
+                    keyboardType: TextInputType.text,
                     onChanged: (value) {},
                     decoration: InputDecoration(
                       border: const UnderlineInputBorder(
