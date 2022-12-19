@@ -40,18 +40,21 @@ class _HomeScreenState extends State<HomeScreen> {
   String startRouteCode = "";
   String routeName = "";
   String endRouteCode = "";
+  double fontSize=Dimensions.dp18.sp;
   TextEditingController _serviceController = TextEditingController();
   BrtsRoutesResponseModel? brtsRoutesResponseModel;
+  BrtsStopResponseModel? operationBrtsStopResponseModel;
+  // BrtsStopResponseModel? operationBrtsStopResponseModel;
+  Data? newFromSelectedStation,oldFromSelectedStation;
+  Data? newToSelectedStation,oldToSelectedStation;
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 100),(){
-      ThemeService().switchTheme(isAmts);
-    });
     BlocProvider.of<HomeScreenBloc>(context)
-        .add(GetAvailableStopsEvent(StopRequestModel(stopType: 1)));
+        .add(GetAvailableStopsEvent(StopRequestModel(stopType: isAmts ? 2 : 1)));
     BlocProvider.of<HomeScreenBloc>(context)
-        .add(GetAvailableRoutesEvent(RoutesRequestModel(stopType: 1)));
+        .add(GetAvailableRoutesEvent(RoutesRequestModel(stopType: isAmts ? 2 : 1)));
+    Loader.show(context);
     quickLinkList
         .add(QuickLinkInternalModel("M Ticket", ImageConstant.iTicket));
     quickLinkList.add(
@@ -305,13 +308,15 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         body:
             BlocConsumer<HomeScreenBloc, HomeState>(listener: (context, state) {
+          if (state is StopsResponseState) {
+            operationBrtsStopResponseModel = state.model;
+          }
           if (state is RoutesResponseState) {
             brtsRoutesResponseModel=state.model;
+            Loader.hide();
           }
           if (state is HomeLoadingState) {
-            Loader.show(context);
           } else {
-            Loader.hide();
             FocusScope.of(context).unfocus();
 
         }}, builder: (context, state) {
@@ -329,12 +334,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       _toController.text = "";
                       startRouteCode = "";
                       endRouteCode = "";
+                      newFromSelectedStation=null;
+                      oldFromSelectedStation=null;
+                      newToSelectedStation=null;
+                      oldToSelectedStation=null;
                       BlocProvider.of<HomeScreenBloc>(context).add(
                           GetAvailableStopsEvent(
                               StopRequestModel(stopType: isAmts ? 2 : 1)));
                       BlocProvider.of<HomeScreenBloc>(context).add(
                           GetAvailableRoutesEvent(
                               RoutesRequestModel(stopType: isAmts ? 2 : 1)));
+                      Loader.show(context);
                       Future.delayed(const Duration(milliseconds: 100),(){
                         ThemeService().switchTheme(isAmts);
                       });
@@ -565,7 +575,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: Dimensions.dp15,
               ),
-              if (state is StopsResponseState)
+              if (operationBrtsStopResponseModel!=null)
                 Container(
                   margin: const EdgeInsets.only(
                       left: Dimensions.dp20, right: Dimensions.dp30),
@@ -601,13 +611,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: Autocomplete<Data>(
                                       optionsBuilder:
                                           (TextEditingValue textEditingValue) {
-                                        return state.model.data!
-                                            .where((Data data) => data.stopName!
+                                        return operationBrtsStopResponseModel?.data != null?
+                                        operationBrtsStopResponseModel!.data!.where((Data data) => data.stopName!
                                                 .toLowerCase()
                                                 .startsWith(textEditingValue
                                                     .text
                                                     .toLowerCase()))
-                                            .toList();
+                                            .toList():[];
                                       },
                                       displayStringForOption: (Data option) =>
                                           option.stopName!,
@@ -621,9 +631,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                         return TextField(cursorColor: Theme.of(context).primaryColor,
                                           controller:
                                               fieldTextEditingController,
+                                          maxLines: 1,
+                                          onChanged: (value){
+                                          if(value.isEmpty && newFromSelectedStation!=null){
+                                            operationBrtsStopResponseModel!.data?.insert(0,newFromSelectedStation!);
+                                            newFromSelectedStation=null;
+                                            setState(() {});
+                                          }
+                                          },
+                                          onTap: (){
+
+                                          },
                                           focusNode: fieldFocusNode,
                                           style: satoshiRegular.copyWith(
-                                              fontSize: Dimensions.dp18.sp,
+                                              fontSize: fontSize,
                                               fontWeight: FontWeight.w700,
                                               color: AppColors.darkGray),
                                         decoration: const InputDecoration(
@@ -651,11 +672,19 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 return GestureDetector(
                                                   onTap: () {
                                                     onSelected(option);
+                                                    oldFromSelectedStation = newFromSelectedStation;
+                                                    newFromSelectedStation = option;
+                                                    operationBrtsStopResponseModel!.data?.remove(option);
+                                                    if(oldFromSelectedStation!=null){
+                                                      operationBrtsStopResponseModel!.data?.add(oldFromSelectedStation!);
+                                                    }
                                                     startRouteCode =
                                                         option.stationCode ??
                                                             "";
                                                     FocusScope.of(context)
                                                         .unfocus();
+                                                    // setState(() {
+                                                    // });
                                                   },
                                                   child: ListTile(
                                                     title: Text(
@@ -679,6 +708,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                         );
                                       },
                                       onSelected: (Data selection) {
+                                        if((selection.stopName?.length??0) >= 20){
+                                          fontSize=Dimensions.dp16.sp;
+                                        }else{
+                                          fontSize=Dimensions.dp18.sp;
+                                        }
+                                        setState(() {});
                                         print(
                                             'Selected: ${selection.stopName}');
                                         print(
@@ -699,7 +734,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: Autocomplete<Data>(
                                         optionsBuilder: (TextEditingValue
                                             textEditingValue) {
-                                          return state.model.data!
+                                          return operationBrtsStopResponseModel!.data!
                                               .where((Data county) => county
                                                   .stopName!
                                                   .toLowerCase()
@@ -720,6 +755,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                           return TextField(cursorColor: Theme.of(context).primaryColor,
                                             controller:
                                                 fieldTextEditingController,
+                                            maxLines: 1,
+                                            onChanged: (value){
+                                              if(value.isEmpty && newToSelectedStation!=null){
+                                                operationBrtsStopResponseModel!.data?.insert(0,newToSelectedStation!);
+                                                newToSelectedStation=null;
+                                                setState(() {});
+                                              }
+                                            },
                                             focusNode: fieldFocusNode,
                                             style: satoshiRegular.copyWith(
                                                 fontSize: Dimensions.dp18.sp,
@@ -750,6 +793,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   return GestureDetector(
                                                     onTap: () {
                                                       onSelected(option);
+                                                      oldToSelectedStation = newToSelectedStation;
+                                                      newToSelectedStation = option;
+                                                      operationBrtsStopResponseModel!.data?.remove(option);
+                                                      if(oldToSelectedStation!=null){
+                                                        operationBrtsStopResponseModel!.data?.add(oldToSelectedStation!);
+                                                      }
                                                       endRouteCode =
                                                           option.stationCode ??
                                                               "";
@@ -778,6 +827,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                           );
                                         },
                                         onSelected: (Data selection) {
+                                          if((selection.stopName?.length??0) >= 20){
+                                            fontSize=Dimensions.dp16.sp;
+                                          }else{
+                                            fontSize=Dimensions.dp18.sp;
+                                          }
                                           print(
                                               'Selected: ${selection.stopName}');
                                         },
