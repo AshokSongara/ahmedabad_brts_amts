@@ -50,6 +50,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    Future.delayed(const Duration(milliseconds: 100),(){
+      ThemeService().switchTheme(isAmts);
+    });
+
     BlocProvider.of<HomeScreenBloc>(context)
         .add(GetAvailableStopsEvent(StopRequestModel(stopType: isAmts ? 2 : 1)));
     BlocProvider.of<HomeScreenBloc>(context)
@@ -709,7 +713,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       },
                                       onSelected: (Data selection) {
                                         if((selection.stopName?.length??0) >= 20){
-                                          fontSize=Dimensions.dp16.sp;
+                                          fontSize=Dimensions.dp14.sp;
                                         }else{
                                           fontSize=Dimensions.dp18.sp;
                                         }
