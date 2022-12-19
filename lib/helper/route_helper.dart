@@ -16,6 +16,7 @@ import 'package:ahmedabad_brts_amts/presentation/pages/one_day_pass/one_day_pass
 import 'package:ahmedabad_brts_amts/presentation/pages/passenger_details/passenger_details.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/payment_details/payment_details_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/search_route_number/search_route_number_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/search_stop/search_stop_screen.dart';
 import 'package:get/get.dart';
 import '../presentation/pages/dashboard/search_result_screen.dart';
 import '../presentation/pages/lrf/splash_screen.dart';
@@ -42,6 +43,7 @@ class RouteHelper {
   static const String booking = '/booking';
   static const String forgetPassword = '/forgetPassword';
   static const String resetPassword = '/resetPassword';
+  static const String searchStopScreen = '/searchStopScreen';
 
   static String getInitialRoute() => '$initial';
 
@@ -89,6 +91,7 @@ class RouteHelper {
   static String getForgetPasswordRoute() => '$forgetPassword';
 
   static String getResetPasswordRoute() => '$resetPassword';
+  static String getSearchStopScreenRoute() => '$searchStopScreen';
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => const SplashScreen()),
@@ -98,6 +101,7 @@ class RouteHelper {
     GetPage(name: mobileNumber, page: () => const MobileNumberScreen()),
     GetPage(name: oneDayPassRoute, page: () => const OneDayPassScreen()),
     GetPage(name: contactUs, page: () => const ContactUsScreen()),
+    GetPage(name: searchStopScreen, page: () => const SearchStopScreen()),
     GetPage(
         name: enterCode,
         page: () => OtpVerificationScreen(
@@ -136,5 +140,8 @@ class RouteHelper {
             )),
     GetPage(name: forgetPassword, page: () => const ForgetPasswordScreen()),
     GetPage(name: resetPassword, page: () => const ResetPasswordScreen()),
+    GetPage(
+        name: searchStopScreen,
+        page: () => const SearchStopScreen())
   ];
 }

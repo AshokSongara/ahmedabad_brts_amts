@@ -546,21 +546,6 @@ class _HomeScreenState extends State<HomeScreen> {
                         'Selected: ${selection.routeName}');
                   },
                 ),
-                // child: CustomSearchBar(
-                //   controller: _serviceController,
-                //   focusNode: _serviceFocus,
-                //   nextFocus: _serviceFocus,
-                //   radius: 10,
-                //   onChanged: (text) {},
-                //   onSubmit: () {},
-                //   prefixIcon: ImageConstant.iSearch,
-                //   capitalization: TextCapitalization.words,
-                //   divider: false,
-                //   hintText: "Search bus route number",
-                //   fillColor: Colors.white,
-                //   hintStyle: satoshiSmall.copyWith(
-                //       color: AppColors.lightGray, fontSize: 13.sp),
-                // ),
               ),
               const SizedBox(
                 height: Dimensions.dp25,
@@ -612,118 +597,128 @@ class _HomeScreenState extends State<HomeScreen> {
                                       "Bus Rapid Transit System (BRTS)",
                                   contentTitle: SizedBox(
                                     height: 28,
-                                    child: Autocomplete<Data>(
-                                      optionsBuilder:
-                                          (TextEditingValue textEditingValue) {
-                                        return operationBrtsStopResponseModel?.data != null?
-                                        operationBrtsStopResponseModel!.data!.where((Data data) => data.stopName!
-                                                .toLowerCase()
-                                                .startsWith(textEditingValue
-                                                    .text
-                                                    .toLowerCase()))
-                                            .toList():[];
-                                      },
-                                      displayStringForOption: (Data option) =>
-                                          option.stopName!,
-                                      fieldViewBuilder: (BuildContext context,
-                                          TextEditingController
-                                              fieldTextEditingController,
-                                          FocusNode fieldFocusNode,
-                                          VoidCallback onFieldSubmitted) {
-                                        _fromController =
-                                            fieldTextEditingController;
-                                        return TextField(cursorColor: Theme.of(context).primaryColor,
-                                          controller:
-                                              fieldTextEditingController,
-                                          maxLines: 1,
-                                          onChanged: (value){
-                                          if(value.isEmpty && newFromSelectedStation!=null){
-                                            operationBrtsStopResponseModel!.data?.insert(0,newFromSelectedStation!);
-                                            newFromSelectedStation=null;
-                                            setState(() {});
-                                          }
-                                          },
-                                          onTap: (){
-
-                                          },
-                                          focusNode: fieldFocusNode,
-                                          style: satoshiRegular.copyWith(
-                                              fontSize: fontSize,
-                                              fontWeight: FontWeight.w700,
-                                              color: AppColors.darkGray),
-                                        decoration: const InputDecoration(
-                                      border: InputBorder.none,
-                                      ),
-                                        );
-                                      },
-                                      optionsViewBuilder: (BuildContext context,
-                                          AutocompleteOnSelected<Data>
-                                              onSelected,
-                                          Iterable<Data> options) {
-                                        return Material(
-                                          child: Container(
-                                            width: 300,
-                                            color: Colors.white,
-                                            child: ListView.builder(
-                                              padding: const EdgeInsets.all(10.0),
-                                              itemCount: options.length,
-                                              itemBuilder:
-                                                  (BuildContext context,
-                                                      int index) {
-                                                final Data option =
-                                                    options.elementAt(index);
-
-                                                return GestureDetector(
-                                                  onTap: () {
-                                                    onSelected(option);
-                                                    oldFromSelectedStation = newFromSelectedStation;
-                                                    newFromSelectedStation = option;
-                                                    operationBrtsStopResponseModel!.data?.remove(option);
-                                                    if(oldFromSelectedStation!=null){
-                                                      operationBrtsStopResponseModel!.data?.add(oldFromSelectedStation!);
-                                                    }
-                                                    startRouteCode =
-                                                        option.stationCode ??
-                                                            "";
-                                                    FocusScope.of(context)
-                                                        .unfocus();
-                                                    // setState(() {
-                                                    // });
-                                                  },
-                                                  child: ListTile(
-                                                    title: Text(
-                                                        option.stopName ?? "",
-                                                        style: satoshiRegular
-                                                            .copyWith(
-                                                                fontSize:
-                                                                    Dimensions
-                                                                        .dp18
-                                                                        .sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                                color: AppColors
-                                                                    .darkGray)),
-                                                  ),
-                                                );
-                                              },
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      onSelected: (Data selection) {
-                                        if((selection.stopName?.length??0) >= 20){
-                                          fontSize=Dimensions.dp14.sp;
-                                        }else{
-                                          fontSize=Dimensions.dp18.sp;
-                                        }
+                                    child: GestureDetector(
+                                      onTap: ()async{
+                                        newFromSelectedStation = await Get.toNamed(RouteHelper.getSearchStopScreenRoute(),arguments: operationBrtsStopResponseModel) as Data;
                                         setState(() {});
-                                        print(
-                                            'Selected: ${selection.stopName}');
-                                        print(
-                                            'Selected: ${selection.stationCode}');
-                                      },
+                                        },
+                                      child: Text(newFromSelectedStation?.stopName??"Select Source",style: satoshiRegular.copyWith(
+                                          fontSize: fontSize,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColors.darkGray)),
                                     ),
+                                    // child: Autocomplete<Data>(
+                                    //   optionsBuilder:
+                                    //       (TextEditingValue textEditingValue) {
+                                    //     return operationBrtsStopResponseModel?.data != null?
+                                    //     operationBrtsStopResponseModel!.data!.where((Data data) => data.stopName!
+                                    //             .toLowerCase()
+                                    //             .startsWith(textEditingValue
+                                    //                 .text
+                                    //                 .toLowerCase()))
+                                    //         .toList():[];
+                                    //   },
+                                    //   displayStringForOption: (Data option) =>
+                                    //       option.stopName!,
+                                    //   fieldViewBuilder: (BuildContext context,
+                                    //       TextEditingController
+                                    //           fieldTextEditingController,
+                                    //       FocusNode fieldFocusNode,
+                                    //       VoidCallback onFieldSubmitted) {
+                                    //     _fromController =
+                                    //         fieldTextEditingController;
+                                    //     return TextField(cursorColor: Theme.of(context).primaryColor,
+                                    //       controller:
+                                    //           fieldTextEditingController,
+                                    //       maxLines: 1,
+                                    //       onChanged: (value){
+                                    //       if(value.isEmpty && newFromSelectedStation!=null){
+                                    //         operationBrtsStopResponseModel!.data?.insert(0,newFromSelectedStation!);
+                                    //         newFromSelectedStation=null;
+                                    //         setState(() {});
+                                    //       }
+                                    //       },
+                                    //       onTap: (){
+                                    //
+                                    //       },
+                                    //       focusNode: fieldFocusNode,
+                                    //       style: satoshiRegular.copyWith(
+                                    //           fontSize: fontSize,
+                                    //           fontWeight: FontWeight.w700,
+                                    //           color: AppColors.darkGray),
+                                    //     decoration: const InputDecoration(
+                                    //   border: InputBorder.none,
+                                    //   ),
+                                    //     );
+                                    //   },
+                                    //   optionsViewBuilder: (BuildContext context,
+                                    //       AutocompleteOnSelected<Data>
+                                    //           onSelected,
+                                    //       Iterable<Data> options) {
+                                    //     return Material(
+                                    //       child: Container(
+                                    //         width: 300,
+                                    //         color: Colors.white,
+                                    //         child: ListView.builder(
+                                    //           padding: const EdgeInsets.all(10.0),
+                                    //           itemCount: options.length,
+                                    //           itemBuilder:
+                                    //               (BuildContext context,
+                                    //                   int index) {
+                                    //             final Data option =
+                                    //                 options.elementAt(index);
+                                    //
+                                    //             return GestureDetector(
+                                    //               onTap: () {
+                                    //                 onSelected(option);
+                                    //                 oldFromSelectedStation = newFromSelectedStation;
+                                    //                 newFromSelectedStation = option;
+                                    //                 operationBrtsStopResponseModel!.data?.remove(option);
+                                    //                 if(oldFromSelectedStation!=null){
+                                    //                   operationBrtsStopResponseModel!.data?.add(oldFromSelectedStation!);
+                                    //                 }
+                                    //                 startRouteCode =
+                                    //                     option.stationCode ??
+                                    //                         "";
+                                    //                 FocusScope.of(context)
+                                    //                     .unfocus();
+                                    //                 // setState(() {
+                                    //                 // });
+                                    //               },
+                                    //               child: ListTile(
+                                    //                 title: Text(
+                                    //                     option.stopName ?? "",
+                                    //                     style: satoshiRegular
+                                    //                         .copyWith(
+                                    //                             fontSize:
+                                    //                                 Dimensions
+                                    //                                     .dp18
+                                    //                                     .sp,
+                                    //                             fontWeight:
+                                    //                                 FontWeight
+                                    //                                     .w700,
+                                    //                             color: AppColors
+                                    //                                 .darkGray)),
+                                    //               ),
+                                    //             );
+                                    //           },
+                                    //         ),
+                                    //       ),
+                                    //     );
+                                    //   },
+                                    //   onSelected: (Data selection) {
+                                    //     if((selection.stopName?.length??0) >= 20){
+                                    //       fontSize=Dimensions.dp14.sp;
+                                    //     }else{
+                                    //       fontSize=Dimensions.dp18.sp;
+                                    //     }
+                                    //     setState(() {});
+                                    //     print(
+                                    //         'Selected: ${selection.stopName}');
+                                    //     print(
+                                    //         'Selected: ${selection.stationCode}');
+                                    //   },
+                                    // ),
                                   ),
                                   svgImageFile: ImageConstant.iFromBus),
                               Align(
@@ -735,111 +730,121 @@ class _HomeScreenState extends State<HomeScreen> {
                                     "Bus Rapid Transit System (BRTS)",
                                     contentTitle: SizedBox(
                                       height: 28,
-                                      child: Autocomplete<Data>(
-                                        optionsBuilder: (TextEditingValue
-                                            textEditingValue) {
-                                          return operationBrtsStopResponseModel!.data!
-                                              .where((Data county) => county
-                                                  .stopName!
-                                                  .toLowerCase()
-                                                  .startsWith(textEditingValue
-                                                      .text
-                                                      .toLowerCase()))
-                                              .toList();
+                                      child: GestureDetector(
+                                        onTap: ()async{
+                                          newToSelectedStation = await Get.toNamed(RouteHelper.getSearchStopScreenRoute(),arguments: operationBrtsStopResponseModel) as Data;
+                                          setState(() {});
                                         },
-                                        displayStringForOption: (Data option) =>
-                                            option.stopName!,
-                                        fieldViewBuilder: (BuildContext context,
-                                            TextEditingController
-                                                fieldTextEditingController,
-                                            FocusNode fieldFocusNode,
-                                            VoidCallback onFieldSubmitted) {
-                                          _toController =
-                                              fieldTextEditingController;
-                                          return TextField(cursorColor: Theme.of(context).primaryColor,
-                                            controller:
-                                                fieldTextEditingController,
-                                            maxLines: 1,
-                                            onChanged: (value){
-                                              if(value.isEmpty && newToSelectedStation!=null){
-                                                operationBrtsStopResponseModel!.data?.insert(0,newToSelectedStation!);
-                                                newToSelectedStation=null;
-                                                setState(() {});
-                                              }
-                                            },
-                                            focusNode: fieldFocusNode,
-                                            style: satoshiRegular.copyWith(
-                                                fontSize: Dimensions.dp18.sp,
-                                                fontWeight: FontWeight.w700,
-                                                color: AppColors.darkGray),decoration: const InputDecoration(
-                                              border: InputBorder.none,
-                                            ),
-                                          );
-                                        },
-                                        optionsViewBuilder:
-                                            (BuildContext context,
-                                                AutocompleteOnSelected<Data>
-                                                    onSelected,
-                                                Iterable<Data> options) {
-                                          return Material(
-                                            child: Container(
-                                              width: 300,
-                                              color: Colors.white,
-                                              child: ListView.builder(
-                                                padding:const EdgeInsets.all(10.0),
-                                                itemCount: options.length,
-                                                itemBuilder:
-                                                    (BuildContext context,
-                                                        int index) {
-                                                  final Data option =
-                                                      options.elementAt(index);
-
-                                                  return GestureDetector(
-                                                    onTap: () {
-                                                      onSelected(option);
-                                                      oldToSelectedStation = newToSelectedStation;
-                                                      newToSelectedStation = option;
-                                                      operationBrtsStopResponseModel!.data?.remove(option);
-                                                      if(oldToSelectedStation!=null){
-                                                        operationBrtsStopResponseModel!.data?.add(oldToSelectedStation!);
-                                                      }
-                                                      endRouteCode =
-                                                          option.stationCode ??
-                                                              "";
-                                                      FocusScope.of(context)
-                                                          .unfocus();
-                                                    },
-                                                    child: ListTile(
-                                                      title: Text(
-                                                          option.stopName ?? "",
-                                                          style: satoshiRegular
-                                                              .copyWith(
-                                                                  fontSize:
-                                                                      Dimensions
-                                                                          .dp18
-                                                                          .sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w700,
-                                                                  color: AppColors
-                                                                      .darkGray)),
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        onSelected: (Data selection) {
-                                          if((selection.stopName?.length??0) >= 20){
-                                            fontSize=Dimensions.dp16.sp;
-                                          }else{
-                                            fontSize=Dimensions.dp18.sp;
-                                          }
-                                          print(
-                                              'Selected: ${selection.stopName}');
-                                        },
+                                        child: Text(newToSelectedStation?.stopName??"Select Destination",style: satoshiRegular.copyWith(
+                                            fontSize: fontSize,
+                                            fontWeight: FontWeight.w700,
+                                            color: AppColors.darkGray)),
                                       ),
+                                      // child: Autocomplete<Data>(
+                                      //   optionsBuilder: (TextEditingValue
+                                      //       textEditingValue) {
+                                      //     return operationBrtsStopResponseModel!.data!
+                                      //         .where((Data county) => county
+                                      //             .stopName!
+                                      //             .toLowerCase()
+                                      //             .startsWith(textEditingValue
+                                      //                 .text
+                                      //                 .toLowerCase()))
+                                      //         .toList();
+                                      //   },
+                                      //   displayStringForOption: (Data option) =>
+                                      //       option.stopName!,
+                                      //   fieldViewBuilder: (BuildContext context,
+                                      //       TextEditingController
+                                      //           fieldTextEditingController,
+                                      //       FocusNode fieldFocusNode,
+                                      //       VoidCallback onFieldSubmitted) {
+                                      //     _toController =
+                                      //         fieldTextEditingController;
+                                      //     return TextField(cursorColor: Theme.of(context).primaryColor,
+                                      //       controller:
+                                      //           fieldTextEditingController,
+                                      //       maxLines: 1,
+                                      //       onChanged: (value){
+                                      //         if(value.isEmpty && newToSelectedStation!=null){
+                                      //           operationBrtsStopResponseModel!.data?.insert(0,newToSelectedStation!);
+                                      //           newToSelectedStation=null;
+                                      //           setState(() {});
+                                      //         }
+                                      //       },
+                                      //       focusNode: fieldFocusNode,
+                                      //       style: satoshiRegular.copyWith(
+                                      //           fontSize: Dimensions.dp18.sp,
+                                      //           fontWeight: FontWeight.w700,
+                                      //           color: AppColors.darkGray),decoration: const InputDecoration(
+                                      //         border: InputBorder.none,
+                                      //       ),
+                                      //     );
+                                      //   },
+                                      //   optionsViewBuilder:
+                                      //       (BuildContext context,
+                                      //           AutocompleteOnSelected<Data>
+                                      //               onSelected,
+                                      //           Iterable<Data> options) {
+                                      //     return Material(
+                                      //       child: Container(
+                                      //         width: 300,
+                                      //         color: Colors.white,
+                                      //         child: ListView.builder(
+                                      //           padding:const EdgeInsets.all(10.0),
+                                      //           itemCount: options.length,
+                                      //           itemBuilder:
+                                      //               (BuildContext context,
+                                      //                   int index) {
+                                      //             final Data option =
+                                      //                 options.elementAt(index);
+                                      //
+                                      //             return GestureDetector(
+                                      //               onTap: () {
+                                      //                 onSelected(option);
+                                      //                 oldToSelectedStation = newToSelectedStation;
+                                      //                 newToSelectedStation = option;
+                                      //                 operationBrtsStopResponseModel!.data?.remove(option);
+                                      //                 if(oldToSelectedStation!=null){
+                                      //                   operationBrtsStopResponseModel!.data?.add(oldToSelectedStation!);
+                                      //                 }
+                                      //                 endRouteCode =
+                                      //                     option.stationCode ??
+                                      //                         "";
+                                      //                 FocusScope.of(context)
+                                      //                     .unfocus();
+                                      //               },
+                                      //               child: ListTile(
+                                      //                 title: Text(
+                                      //                     option.stopName ?? "",
+                                      //                     style: satoshiRegular
+                                      //                         .copyWith(
+                                      //                             fontSize:
+                                      //                                 Dimensions
+                                      //                                     .dp18
+                                      //                                     .sp,
+                                      //                             fontWeight:
+                                      //                                 FontWeight
+                                      //                                     .w700,
+                                      //                             color: AppColors
+                                      //                                 .darkGray)),
+                                      //               ),
+                                      //             );
+                                      //           },
+                                      //         ),
+                                      //       ),
+                                      //     );
+                                      //   },
+                                      //   onSelected: (Data selection) {
+                                      //     if((selection.stopName?.length??0) >= 20){
+                                      //       fontSize=Dimensions.dp16.sp;
+                                      //     }else{
+                                      //       fontSize=Dimensions.dp18.sp;
+                                      //     }
+                                      //     print(
+                                      //         'Selected: ${selection.stopName}');
+                                      //   },
+                                      // ),
                                     ),
                                     svgImageFile: ImageConstant.iToBus),
                               ),
@@ -893,32 +898,36 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Theme.of(context).primaryColor,text: "Show Route & Fare",
                             width: MediaQuery.of(context).size.width,
                             onPressed: () {
-                              if (_fromController.text.isEmpty) {
-                                showCustomSnackBar(
-                                    "Please Select Source Station", context,
-                                    isError: true);
-                              } else if (_toController.text.isEmpty) {
-                                showCustomSnackBar(
-                                    "Please Select Destination Station",
-                                    context,
-                                    isError: true);
-                              } else if (startRouteCode.isEmpty) {
-                                showCustomSnackBar(
-                                    "Please Enter Proper Source Station",
-                                    context,
-                                    isError: true);
-                              }else if (endRouteCode.isEmpty) {
-                                showCustomSnackBar(
-                                    "Please Enter Proper Destination Station",
-                                    context,
-                                    isError: true);
-                              } else {
+                              if (newFromSelectedStation!=null && newToSelectedStation!=null) {
                                 Get.toNamed(RouteHelper.getSearchResultRoute(
-                                    startRouteCode,
-                                    endRouteCode,
-                                    _fromController.text,
-                                    _toController.text));
+                                    newFromSelectedStation?.stationCode.toString()??"",
+                                    newToSelectedStation?.stationCode.toString()??"",
+                                    newFromSelectedStation?.stopName??"",
+                                    newToSelectedStation?.stopName??""));
+
+                              }else{
+                                showCustomSnackBar(
+                                    "Please Select Source & Destination Station", context,
+                                    isError: true);
                               }
+                              // else if (_toController.text.isEmpty) {
+                              //   showCustomSnackBar(
+                              //       "Please Select Destination Station",
+                              //       context,
+                              //       isError: true);
+                              // } else if (startRouteCode.isEmpty) {
+                              //   showCustomSnackBar(
+                              //       "Please Enter Proper Source Station",
+                              //       context,
+                              //       isError: true);
+                              // }else if (endRouteCode.isEmpty) {
+                              //   showCustomSnackBar(
+                              //       "Please Enter Proper Destination Station",
+                              //       context,
+                              //       isError: true);
+                              // } else {
+
+                              // }
                             },
                             style: satoshiRegular.copyWith(
                                 fontSize: 20.sp,

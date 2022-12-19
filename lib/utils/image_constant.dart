@@ -52,6 +52,7 @@ class ImageConstant {
   static const String iGreyTick = 'assets/images/ic_grey_tick.svg';
   static const String iRedTick = 'assets/images/ic_red_tick.svg';
   static const String iBlueTick = 'assets/images/ic_blue_tick.svg';
+  static const String iCancel = 'assets/images/ic_cancel.svg';
 
 
 
