@@ -35,23 +35,25 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isAmts = false;
   List<QuickLinkInternalModel> quickLinkList = [];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  double fontSize=Dimensions.dp18.sp;
+  double fontSize = Dimensions.dp18.sp;
   TextEditingController _serviceController = TextEditingController();
   BrtsRoutesResponseModel? brtsRoutesResponseModel;
   BrtsStopResponseModel? operationBrtsStopResponseModel;
-  Data? newFromSelectedStation,oldFromSelectedStation;
-  Data? newToSelectedStation,oldToSelectedStation;
+  RouteData? routeData;
+  Data? newFromSelectedStation, oldFromSelectedStation;
+  Data? newToSelectedStation, oldToSelectedStation;
+
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 100),(){
+    Future.delayed(const Duration(milliseconds: 100), () {
       ThemeService().switchTheme(isAmts);
     });
 
-    BlocProvider.of<HomeScreenBloc>(context)
-        .add(GetAvailableStopsEvent(StopRequestModel(stopType: isAmts ? 2 : 1)));
-    BlocProvider.of<HomeScreenBloc>(context)
-        .add(GetAvailableRoutesEvent(RoutesRequestModel(stopType: isAmts ? 2 : 1)));
+    BlocProvider.of<HomeScreenBloc>(context).add(
+        GetAvailableStopsEvent(StopRequestModel(stopType: isAmts ? 2 : 1)));
+    BlocProvider.of<HomeScreenBloc>(context).add(
+        GetAvailableRoutesEvent(RoutesRequestModel(stopType: isAmts ? 2 : 1)));
     Loader.show(context);
     quickLinkList
         .add(QuickLinkInternalModel("M Ticket", ImageConstant.iTicket));
@@ -309,7 +311,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     onTap: () async {
-                      SharedPreferences preferences = await SharedPreferences.getInstance();
+                      SharedPreferences preferences =
+                          await SharedPreferences.getInstance();
                       await preferences.clear();
                       Get.off(RouteHelper.splash);
                     },
@@ -328,14 +331,14 @@ class _HomeScreenState extends State<HomeScreen> {
             operationBrtsStopResponseModel = state.model;
           }
           if (state is RoutesResponseState) {
-            brtsRoutesResponseModel=state.model;
+            brtsRoutesResponseModel = state.model;
             Loader.hide();
           }
           if (state is HomeLoadingState) {
           } else {
             FocusScope.of(context).unfocus();
-
-        }}, builder: (context, state) {
+          }
+        }, builder: (context, state) {
           return ListView(
             children: [
               const SizedBox(
@@ -346,10 +349,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   InkWell(
                     onTap: () {
                       isAmts = !isAmts;
-                      newFromSelectedStation=null;
-                      oldFromSelectedStation=null;
-                      newToSelectedStation=null;
-                      oldToSelectedStation=null;
+                      routeData = null;
+                      newFromSelectedStation = null;
+                      oldFromSelectedStation = null;
+                      newToSelectedStation = null;
+                      oldToSelectedStation = null;
                       BlocProvider.of<HomeScreenBloc>(context).add(
                           GetAvailableStopsEvent(
                               StopRequestModel(stopType: isAmts ? 2 : 1)));
@@ -357,7 +361,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           GetAvailableRoutesEvent(
                               RoutesRequestModel(stopType: isAmts ? 2 : 1)));
                       Loader.show(context);
-                      Future.delayed(const Duration(milliseconds: 100),(){
+                      Future.delayed(const Duration(milliseconds: 100), () {
                         ThemeService().switchTheme(isAmts);
                       });
                       setState(() {});
@@ -437,122 +441,44 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: SvgPicture.asset(ImageConstant.iMenu)))
                 ],
               ),
-              if(brtsRoutesResponseModel!=null)
-              Container(
-                margin: const EdgeInsets.only(
-                    left: Dimensions.dp24,
-                    right: Dimensions.dp24,
-                    top: Dimensions.dp26),
-                child: Autocomplete<RouteData>(
-                  optionsBuilder:
-                      (TextEditingValue textEditingValue) {
-                    return brtsRoutesResponseModel!.data!
-                        .where((RouteData data) => data.routeCode!
-                        .toLowerCase()
-                        .startsWith(textEditingValue
-                        .text
-                        .toLowerCase()))
-                        .toList();
-                  },
-                  displayStringForOption: (RouteData option) =>
-                  option.routeCode!,
-                  fieldViewBuilder: (BuildContext context,
-                      TextEditingController
-                      fieldTextEditingController,
-                      FocusNode fieldFocusNode,
-                      VoidCallback onFieldSubmitted) {
-                    _serviceController =
-                        fieldTextEditingController;
-                    return TextField(
-                      controller:
-                      fieldTextEditingController,
-                      focusNode: fieldFocusNode,
-                      decoration: InputDecoration(
-                        contentPadding: const EdgeInsets.symmetric(vertical: 10.0),
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          borderSide: BorderSide(
-                            width: 0,
-                            style: BorderStyle.none,
-                          ),
+              if (brtsRoutesResponseModel != null)
+                Container(
+                  margin: const EdgeInsets.only(
+                      left: Dimensions.dp24,
+                      right: Dimensions.dp24,
+                      top: Dimensions.dp26),
+                  padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 14),
+                  decoration: const BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(Dimensions.dp10),
+                    ),
+                  ),
+                  child: GestureDetector(
+                    onTap: () async {
+                      routeData = await Get.toNamed(
+                          RouteHelper.getSearchRouteScreenRoute(),
+                          arguments: brtsRoutesResponseModel) as RouteData;
+                      setState(() {});
+                    },
+                    child: Row(
+                      children: [
+                        SvgPicture.asset(ImageConstant.iSearch,
+                            height: 20, width: 20),
+                        SizedBox(
+                          width: 14,
                         ),
-                        isDense: false,
-                        hintText: "Search bus route number",
-                        fillColor: Colors.white,
-                        hintStyle: satoshiSmall.copyWith(
-                          color: AppColors.lightGray, fontSize: 13.sp),
-                        filled: true,
-                        prefixIcon:  Padding(
-                          padding:
-                          const EdgeInsets.symmetric(horizontal: 14),
-                          child: SvgPicture.asset(ImageConstant.iSearch,
-                              height: 20, width: 20),
-                        ),
-                      ),
-                      style: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp18.sp,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.darkGray),
-                    );
-                  },
-                  optionsViewBuilder: (BuildContext context,
-                      AutocompleteOnSelected<RouteData>
-                      onSelected,
-                      Iterable<RouteData> options) {
-                    return Material(
-                      child: Container(
-                        width: 300,
-                        color: Colors.white,
-                        child: ListView.builder(
-                          padding: const EdgeInsets.all(10.0),
-                          itemCount: options.length,
-                          itemBuilder:
-                              (BuildContext context,
-                              int index) {
-                            final RouteData option =
-                            options.elementAt(index);
-
-                            return GestureDetector(
-                              onTap: () {
-                                onSelected(option);
-
-                                FocusScope.of(context)
-                                    .unfocus();
-                              },
-                              child: ListTile(
-                                title: Text(
-                                    option.routeName ?? "",
-                                    style: satoshiRegular
-                                        .copyWith(
-                                        fontSize:
-                                        Dimensions
-                                            .dp18
-                                            .sp,
-                                        fontWeight:
-                                        FontWeight
-                                            .w700,
-                                        color: AppColors
-                                            .darkGray)),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    );
-                  },
-                  onSelected: (RouteData selection) {
-                    FocusScope.of(context)
-                        .unfocus();
-                    List<String>? routes  = selection.routeName?.split("-");
-                    Get.toNamed(
-                        RouteHelper.getRouteDetailsRoute(routes![0].trim(), routes[1].trim()));
-                    print(
-                        'Selected: ${selection.routeCode}');
-                    print(
-                        'Selected: ${selection.routeName}');
-                  },
+                        Text(
+                          "Search bus route number",
+                          style: satoshiRegular.copyWith(
+                              fontSize: Dimensions.dp13.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.lightGray),
+                        )
+                      ],
+                    ),
+                  ),
                 ),
-              ),
               const SizedBox(
                 height: Dimensions.dp25,
               ),
@@ -570,7 +496,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: Dimensions.dp15,
               ),
-              if (operationBrtsStopResponseModel!=null)
+              if (operationBrtsStopResponseModel != null)
                 Container(
                   margin: const EdgeInsets.only(
                       left: Dimensions.dp20, right: Dimensions.dp30),
@@ -598,21 +524,39 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               SourceDestinationWidget(
                                   title: "From",
-                                  content:
-                                      isAmts ? "Ahmedabad Municipal Transport Service" :
-                                      "Bus Rapid Transit System (BRTS)",
+                                  content: isAmts
+                                      ? "Ahmedabad Municipal Transport Service"
+                                      : "Bus Rapid Transit System (BRTS)",
                                   contentTitle: SizedBox(
                                     height: 28,
                                     child: GestureDetector(
-                                      onTap: ()async{
-                                        oldFromSelectedStation=newFromSelectedStation;
-                                        newFromSelectedStation = await Get.toNamed(RouteHelper.getSearchStopScreenRoute(),arguments: getSortedData(oldToSelectedStation,newToSelectedStation)) as Data;
+                                      onTap: () async {
+                                        setState(() {
+                                          routeData = null;
+                                        });
+
+                                        oldFromSelectedStation =
+                                            newFromSelectedStation;
+                                        newFromSelectedStation = await Get.toNamed(
+                                            RouteHelper
+                                                .getSearchStopScreenRoute(),
+                                            arguments: getSortedData(
+                                                oldToSelectedStation,
+                                                newToSelectedStation)) as Data;
                                         setState(() {});
-                                        },
-                                      child: Text(newFromSelectedStation?.stopName??"Select Source",style: satoshiRegular.copyWith(
-                                          fontSize: fontSize,
-                                          fontWeight: FontWeight.w700,
-                                          color: AppColors.darkGray)),
+                                      },
+                                      child: Text(
+                                          routeData != null
+                                              ? routeData?.routeName
+                                                      ?.split("-")[0] ??
+                                                  "Select Source"
+                                              : newFromSelectedStation
+                                                      ?.stopName ??
+                                                  "Select Source",
+                                          style: satoshiRegular.copyWith(
+                                              fontSize: fontSize,
+                                              fontWeight: FontWeight.w700,
+                                              color: AppColors.darkGray)),
                                     ),
                                   ),
                                   svgImageFile: ImageConstant.iFromBus),
@@ -620,21 +564,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                 alignment: Alignment.bottomCenter,
                                 child: SourceDestinationWidget(
                                     title: "To",
-                                    content:
-                                    isAmts ? "Ahmedabad Municipal Transport Service" :
-                                    "Bus Rapid Transit System (BRTS)",
+                                    content: isAmts
+                                        ? "Ahmedabad Municipal Transport Service"
+                                        : "Bus Rapid Transit System (BRTS)",
                                     contentTitle: SizedBox(
                                       height: 28,
                                       child: GestureDetector(
-                                        onTap: ()async{
-                                          oldToSelectedStation=newToSelectedStation;
-                                          newToSelectedStation = await Get.toNamed(RouteHelper.getSearchStopScreenRoute(),arguments: getSortedData(oldFromSelectedStation,newFromSelectedStation)) as Data;
+                                        onTap: () async {
+                                          setState(() {
+                                            routeData = null;
+                                          });
+                                          oldToSelectedStation =
+                                              newToSelectedStation;
+                                          newToSelectedStation = await Get.toNamed(
+                                                  RouteHelper
+                                                      .getSearchStopScreenRoute(),
+                                                  arguments: getSortedData(
+                                                      oldFromSelectedStation,
+                                                      newFromSelectedStation))
+                                              as Data;
                                           setState(() {});
                                         },
-                                        child: Text(newToSelectedStation?.stopName??"Select Destination",style: satoshiRegular.copyWith(
-                                            fontSize: fontSize,
-                                            fontWeight: FontWeight.w700,
-                                            color: AppColors.darkGray)),
+                                        child: Text(
+                                            routeData != null
+                                                ? routeData?.routeName
+                                                        ?.split("-")[1] ??
+                                                    "Select Destination"
+                                                : newToSelectedStation
+                                                        ?.stopName ??
+                                                    "Select Destination",
+                                            style: satoshiRegular.copyWith(
+                                                fontSize: fontSize,
+                                                fontWeight: FontWeight.w700,
+                                                color: AppColors.darkGray)),
                                       ),
                                     ),
                                     svgImageFile: ImageConstant.iToBus),
@@ -645,11 +607,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                   alignment: Alignment.centerRight,
                                   child: InkWell(
                                     onTap: () {
-                                      Data? temp = newFromSelectedStation;
-                                      newFromSelectedStation = newToSelectedStation;
-                                      newToSelectedStation=temp;
-                                      FocusScope.of(context).unfocus();
-                                      setState(() {});
+                                      if(routeData==null){
+                                        Data? temp = newFromSelectedStation;
+                                        newFromSelectedStation =
+                                            newToSelectedStation;
+                                        newToSelectedStation = temp;
+                                        FocusScope.of(context).unfocus();
+                                        setState(() {});
+                                      }
+
                                     },
                                     child: Container(
                                       width: 48,
@@ -674,26 +640,41 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                         ),
-
                         Container(
                           margin: const EdgeInsets.only(
                               left: Dimensions.dp10,
                               right: Dimensions.dp10,
                               top: Dimensions.dp15),
                           child: CustomButton(
-                            color: Theme.of(context).primaryColor,text: "Show Route & Fare",
+                            color: Theme.of(context).primaryColor,
+                            text: "Show Route & Fare",
                             width: MediaQuery.of(context).size.width,
                             onPressed: () {
-                              if (newFromSelectedStation!=null && newToSelectedStation!=null) {
+                              if (routeData != null) {
+                                Get.toNamed(RouteHelper.getRouteDetailsRoute(
+                                    routeData?.routeName
+                                            ?.split("-")[0]
+                                            .trim() ??
+                                        "",
+                                    routeData?.routeName
+                                            ?.split("-")[1]
+                                            .trim() ??
+                                        ""));
+                              } else if (newFromSelectedStation != null &&
+                                  newToSelectedStation != null) {
                                 Get.toNamed(RouteHelper.getSearchResultRoute(
-                                    newFromSelectedStation?.stationCode.toString()??"",
-                                    newToSelectedStation?.stationCode.toString()??"",
-                                    newFromSelectedStation?.stopName??"",
-                                    newToSelectedStation?.stopName??""));
-
-                              }else{
+                                    newFromSelectedStation?.stationCode
+                                            .toString() ??
+                                        "",
+                                    newToSelectedStation?.stationCode
+                                            .toString() ??
+                                        "",
+                                    newFromSelectedStation?.stopName ?? "",
+                                    newToSelectedStation?.stopName ?? ""));
+                              } else {
                                 showCustomSnackBar(
-                                    "Please Select Source & Destination Station", context,
+                                    "Please Select Source & Destination Station",
+                                    context,
                                     isError: true);
                               }
                             },
@@ -710,7 +691,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               right: Dimensions.dp10,
                               top: Dimensions.dp14),
                           child: CustomButton(
-                            color: Theme.of(context).primaryColor,text: "One Day Pass",
+                            color: Theme.of(context).primaryColor,
+                            text: "One Day Pass",
                             width: MediaQuery.of(context).size.width,
                             onPressed: () {
                               Get.toNamed(RouteHelper.getoneDayPassRoute());
@@ -782,17 +764,18 @@ class _HomeScreenState extends State<HomeScreen> {
         }));
   }
 
-  BrtsStopResponseModel? getSortedData(Data? dataAdd,Data? dataRemove){
-    if(dataRemove!=null){
+  BrtsStopResponseModel? getSortedData(Data? dataAdd, Data? dataRemove) {
+    if (dataRemove != null) {
       operationBrtsStopResponseModel?.data?.remove(dataRemove);
     }
-    if(dataAdd!=null){
-      if(!operationBrtsStopResponseModel!.data!.contains(dataAdd)){
+    if (dataAdd != null) {
+      if (!operationBrtsStopResponseModel!.data!.contains(dataAdd)) {
         operationBrtsStopResponseModel?.data?.add(dataAdd);
       }
     }
     return operationBrtsStopResponseModel;
   }
+
   Widget getGridItemWidget(QuickLinkInternalModel model) {
     return GestureDetector(
       onTap: () {
