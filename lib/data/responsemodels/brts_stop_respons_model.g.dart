@@ -16,9 +16,9 @@ class BrtsStopResponseModelAdapter extends TypeAdapter<BrtsStopResponseModel> {
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return BrtsStopResponseModel()
-      .._data = (fields[0] as List?)?.cast<Data>()
-      .._succeeded = fields[1] as bool?;
+    return BrtsStopResponseModel(
+      data: (fields[0] as List?)?.cast<Data>(),
+    ).._succeeded = fields[1] as bool?;
   }
 
   @override
@@ -26,7 +26,7 @@ class BrtsStopResponseModelAdapter extends TypeAdapter<BrtsStopResponseModel> {
     writer
       ..writeByte(2)
       ..writeByte(0)
-      ..write(obj._data)
+      ..write(obj.data)
       ..writeByte(1)
       ..write(obj._succeeded);
   }

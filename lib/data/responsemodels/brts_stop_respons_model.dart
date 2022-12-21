@@ -6,35 +6,35 @@ class BrtsStopResponseModel extends HiveObject {
   BrtsStopResponseModel({
       List<Data>? data, 
       bool? succeeded,}){
-    _data = data;
+    data = data;
     _succeeded = succeeded;
 }
 
   BrtsStopResponseModel.fromJson(dynamic json) {
     if (json['data'] != null) {
-      _data = [];
+      data = [];
       json['data'].forEach((v) {
-        _data?.add(Data.fromJson(v));
+        data?.add(Data.fromJson(v));
       });
     }
     _succeeded = json['succeeded'];
   }
   @HiveField(0)
-  List<Data>? _data;
+  List<Data>? data;
   @HiveField(1)
   bool? _succeeded;
 BrtsStopResponseModel copyWith({  List<Data>? data,
   bool? succeeded,
-}) => BrtsStopResponseModel(  data: data ?? _data,
+}) => BrtsStopResponseModel(  data: data ?? this.data,
   succeeded: succeeded ?? _succeeded,
 );
-  List<Data>? get data => _data;
+  // List<Data>? get data => _data;
   bool? get succeeded => _succeeded;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    if (_data != null) {
-      map['data'] = _data?.map((v) => v.toJson()).toList();
+    if (data != null) {
+      map['data'] = data?.map((v) => v.toJson()).toList();
     }
     map['succeeded'] = _succeeded;
     return map;
