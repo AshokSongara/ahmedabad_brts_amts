@@ -284,6 +284,24 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   ListTile(
                     leading: SvgPicture.asset(
+                      ImageConstant.iCall,
+                      color: Colors.white,
+                      height: Dimensions.dp28,
+                      width: Dimensions.dp28,
+                    ),
+                    title: Text(
+                      "Change Langauge",
+                      style: satoshiRegular.copyWith(
+                          fontSize: 19.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
+                    onTap: () {
+                      Get.toNamed(RouteHelper.getChangeLangaugeScreenRoute());
+                    },
+                  ),
+                  ListTile(
+                    leading: SvgPicture.asset(
                       ImageConstant.iSignOut,
                       color: Colors.white,
                       height: Dimensions.dp28,
@@ -600,6 +618,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     child: GestureDetector(
                                       onTap: ()async{
                                         newFromSelectedStation = await Get.toNamed(RouteHelper.getSearchStopScreenRoute(),arguments: operationBrtsStopResponseModel) as Data;
+                                        startRouteCode = newFromSelectedStation?.stationCode ?? "";
                                         setState(() {});
                                         },
                                       child: Text(newFromSelectedStation?.stopName??"Select Source",style: satoshiRegular.copyWith(
@@ -733,6 +752,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       child: GestureDetector(
                                         onTap: ()async{
                                           newToSelectedStation = await Get.toNamed(RouteHelper.getSearchStopScreenRoute(),arguments: operationBrtsStopResponseModel) as Data;
+                                          endRouteCode = newToSelectedStation?.stationCode ?? "";
                                           setState(() {});
                                         },
                                         child: Text(newToSelectedStation?.stopName??"Select Destination",style: satoshiRegular.copyWith(

@@ -1,3 +1,4 @@
+import 'package:ahmedabad_brts_amts/localization/app_localizations.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
@@ -37,7 +38,7 @@ class CustomToolbar extends StatelessWidget {
           Expanded(
             child: Center(
               child: Text(
-                title,
+                AppLocalizations.of(context)?.translate(title) ?? "",
                 style: screenTitle,
               ),
             ),

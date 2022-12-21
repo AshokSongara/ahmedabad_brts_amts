@@ -21,6 +21,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/searc
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/verify_otp/verify_otp_bloc.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,7 +36,8 @@ Future<void> init() async {
 
   injector.registerSingleton(sharedPreferences);
 
-  injector.registerFactory(() => ApiClient(appBaseUrl: AppConstant.apiUrl));
+  injector.registerLazySingleton(() =>
+      ApiClient(appBaseUrl: AppConstant.apiUrl, sharedPreferences: injector()));
 
   injector.registerFactory<SignupBloc>(
     () => SignupBloc(signupUserUseCase: injector()),

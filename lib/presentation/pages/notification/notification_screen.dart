@@ -41,7 +41,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         children: [
           SizedBox(height: Dimensions.dp25),
           CustomToolbar(
-            title: "Notification",
+            title: "notification",
             showOption: false,
             back: widget.from == "home" ? true : false,
           ),

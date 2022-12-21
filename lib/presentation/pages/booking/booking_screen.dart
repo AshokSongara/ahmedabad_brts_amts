@@ -1,3 +1,4 @@
+import 'package:ahmedabad_brts_amts/localization/app_localizations.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
@@ -86,7 +87,7 @@ class _BookingScreenState extends State<BookingScreen> {
                           height: 14.h,
                         ),
                         Text(
-                          "Amount:",
+                          AppLocalizations.of(context)?.translate('amount') ?? "",
                           textAlign: TextAlign.center,
                           style: satoshiRegular.copyWith(
                               fontSize: Dimensions.dp15,
@@ -105,7 +106,7 @@ class _BookingScreenState extends State<BookingScreen> {
                           height: 12.h,
                         ),
                         Text(
-                          "Order ID:",
+                          AppLocalizations.of(context)?.translate('orderid') ?? "",
                           textAlign: TextAlign.center,
                           style: satoshiRegular.copyWith(
                               fontSize: Dimensions.dp15,
@@ -181,7 +182,7 @@ class _BookingScreenState extends State<BookingScreen> {
                             ),
                             RichText(
                               text: TextSpan(
-                                text: "Change at",
+                                text: AppLocalizations.of(context)?.translate('changeat') ?? "",
                                 style: satoshiRegular.copyWith(
                                     fontSize: Dimensions.dp14,
                                     fontWeight: FontWeight.w400,
@@ -216,7 +217,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         ),
                         RichText(
                           text: TextSpan(
-                            text: "Ticket Status: ",
+                            text: AppLocalizations.of(context)?.translate("ticketStatus") ?? "",
                             style: satoshiRegular.copyWith(
                                 fontSize: Dimensions.dp14,
                                 fontWeight: FontWeight.w700,
@@ -233,7 +234,7 @@ class _BookingScreenState extends State<BookingScreen> {
                         ),
                         RichText(
                           text: TextSpan(
-                            text: "Refund Status: ",
+                            text: AppLocalizations.of(context)?.translate("refundStatus") ?? "",
                             style: satoshiRegular.copyWith(
                                 fontSize: Dimensions.dp14,
                                 fontWeight: FontWeight.w700,

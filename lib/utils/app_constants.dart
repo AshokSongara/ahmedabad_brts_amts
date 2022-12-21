@@ -47,4 +47,19 @@ class AppConstant {
   static List<TextDto> deliveredList = [
     TextDto("Your order has been delivered", "+ 11 Stops"),
   ];
+
+  static LanguageList getLocaleType(String locale) {
+    if (locale == "hi") {
+      return LanguageList.hindi;
+    } else if (locale == "en") {
+      return LanguageList.english;
+    } else if (locale == "gu") {
+      return LanguageList.gujarati;
+    } else {
+      return LanguageList.gujarati;
+    }
+  }
+
 }
+
+enum LanguageList { gujarati, hindi, english }

@@ -1,26 +1,35 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
 
 import 'package:get/get.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../data/responseModels/error_response.dart';
 
 class ApiClient extends GetxService {
   final String? appBaseUrl;
+  final SharedPreferences sharedPreferences;
   static final String noInternetMessage = 'connection_to_api_server_failed'.tr;
   final int timeoutInSeconds = 60;
 
   String? token;
   late Map<String, String> _mainHeaders;
 
-  ApiClient({required this.appBaseUrl}) {
-    // updateHeader(
-    //   token, _addressModel == null ? null : _addressModel.zoneIds,
-    //   sharedPreferences.getString(AppConstants.LANGUAGE_CODE), _moduleID,
-    // );
+  ApiClient({required this.appBaseUrl,required this.sharedPreferences}) {
+    token = sharedPreferences.getString(AppConstant.accessToken);
+    updateHeader(token ?? "");
+  }
+
+  void updateHeader(String token) {
+    Map<String, String> _header = {
+      'Content-Type': 'application/json',
+      'Authorization': "Bearer "+token
+    };
+    _mainHeaders = _header;
   }
 
   Future<Response> postData(String endPoint, String body) async {
@@ -30,6 +39,20 @@ class ApiClient extends GetxService {
         Uri.parse(appBaseUrl! + endPoint),
         body: body,
         headers: {"Content-Type": "application/json"},
+      ).timeout(Duration(seconds: timeoutInSeconds));
+      return handleResponse(response, endPoint);
+    } catch (e) {
+      return Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
+  Future<Response> postDataWithHeader(String endPoint, String body) async {
+    try {
+      print(appBaseUrl! + endPoint);
+      http.Response response = await http.post(
+        Uri.parse(appBaseUrl! + endPoint),
+        body: body,
+        headers: _mainHeaders,
       ).timeout(Duration(seconds: timeoutInSeconds));
       return handleResponse(response, endPoint);
     } catch (e) {
@@ -111,26 +134,6 @@ class ApiClient extends GetxService {
     }
   }
 
-  Future<Response> postDataWithHeader(
-      String uri, dynamic body, Map<String, String> headers) async {
-    try {
-      if (foundation.kDebugMode) {
-        print('====> API Call: $uri\nHeader: $_mainHeaders');
-        print('====> API Body: $body');
-      }
-      http.Response _response = await http
-          .post(
-            Uri.parse(appBaseUrl! + uri),
-            body: jsonEncode(body),
-            headers: headers,
-          )
-          .timeout(Duration(seconds: timeoutInSeconds));
-      return handleResponse(_response, uri);
-    } catch (e) {
-      return Response(statusCode: 1, statusText: noInternetMessage);
-    }
-  }
-
   Future<Response> getData(String uri, {Map<String, String>? headers}) async {
     try {
       if (foundation.kDebugMode) {
@@ -139,7 +142,7 @@ class ApiClient extends GetxService {
       http.Response _response = await http
           .get(
             Uri.parse(appBaseUrl! + uri),
-            headers: headers,
+            headers: _mainHeaders,
           )
           .timeout(Duration(seconds: timeoutInSeconds));
       return handleResponse(_response, uri);

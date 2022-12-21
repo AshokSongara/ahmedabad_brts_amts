@@ -15,6 +15,7 @@ import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -23,7 +24,9 @@ import 'package:path_provider/path_provider.dart';
 
 import 'helper/route_helper.dart';
 import 'injection_container.dart' as di;
+import 'localization/app_localizations.dart';
 import 'presentation/blocs/feedback/feedback_bloc.dart';
+import 'presentation/blocs/language/language_cubit.dart';
 import 'presentation/blocs/verify_otp/verify_otp_bloc.dart';
 import 'utils/app_colors.dart';
 
@@ -84,19 +87,37 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(428, 926),
-      builder: (BuildContext context, Widget? child) {
-        return GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          themeMode: ThemeService().theme,
-          theme: Themes.light,
-          darkTheme: Themes.dark,
-          home: const SplashScreen(),
-          initialRoute: RouteHelper.getInitialRoute(),
-          getPages: RouteHelper.routes,
-        );
-      },
+    return BlocProvider(
+      create: (context) => LanguageCubit(),
+      child: BlocBuilder<LanguageCubit, Locale?>(
+        builder: (context, lang) {
+          return ScreenUtilInit(
+            designSize: const Size(428, 926),
+            builder: (BuildContext context, Widget? child) {
+              return GetMaterialApp(
+                locale: lang,
+                localizationsDelegates: const [
+                  AppLocalizations.delegate,
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalCupertinoLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                ],
+                supportedLocales: const [
+                  Locale('en', ''), // English, no country code
+                  Locale('gu', ''),
+                ],
+                debugShowCheckedModeBanner: false,
+                themeMode: ThemeService().theme,
+                theme: Themes.light,
+                darkTheme: Themes.dark,
+                home: const SplashScreen(),
+                initialRoute: RouteHelper.getInitialRoute(),
+                getPages: RouteHelper.routes,
+              );
+            },
+          );
+        },
+      ),
     );
   }
 }
