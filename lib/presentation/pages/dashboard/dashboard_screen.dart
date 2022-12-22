@@ -61,7 +61,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               HomeScreen(),
               BookingScreen(from: "menu"),
               NotificationScreen(from: "menu"),
-              ProfileScreen()
+              ProfileScreen(from: "menu")
             ],
           ),
         ),

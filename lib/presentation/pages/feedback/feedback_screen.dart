@@ -5,6 +5,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/feedback/feedback_event.d
 import 'package:ahmedabad_brts_amts/presentation/blocs/feedback/feedback_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/feedback/widgets/feedback_status_list.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
+import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
@@ -27,6 +28,10 @@ class FeedBackScreen extends StatefulWidget {
 class _FeedBackScreenState extends State<FeedBackScreen> {
   int selectedIndex = 0;
   final List<FeedBackStatusListItem> list = [];
+  final _routeController = TextEditingController();
+  int feedbackOne = 0;
+  int feedbackTwo = 0;
+  int feedbackThree = 0;
 
   @override
   void initState() {
@@ -51,6 +56,8 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
           Loader.show(context);
         } else if (state is FeedbackResponseState) {
           Loader.hide();
+          showCustomSnackBar("Feedback Submitted..!", context, isError: false);
+          Navigator.of(context).pop();
         } else {
           Loader.hide();
         }
@@ -71,7 +78,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                 Padding(
                   padding: const EdgeInsets.only(top: 18),
                   child: TextField(
-                    // controller: enterAmountController,
+                    controller: _routeController,
                     style: satoshiRegular.copyWith(
                         fontSize: Dimensions.dp16.sp,
                         fontWeight: FontWeight.w300,
@@ -86,13 +93,11 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                           borderSide: BorderSide(color: AppColors.lightGray)),
                       enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: AppColors.lightGray)),
-                      errorBorder:  UnderlineInputBorder(
-                          borderSide:
-                              BorderSide(color: Theme.of(context).primaryColor)),
+                      errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: Theme.of(context).primaryColor)),
                       disabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(color: AppColors.lightGray)),
-                      // contentPadding:
-                      // const EdgeInsets.only(left: 15, bottom: 11, top: 11, right: 15),
                       hintText: "Route number",
                       hintStyle: satoshiRegular.copyWith(
                           fontSize: Dimensions.dp16.sp,
@@ -110,7 +115,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                   child: FeedBackStatusList(
                     list: list,
                     selectedIndex: (index) {
-                      print("index of feedback Item selection $index");
+                      feedbackOne = index + 1;
                     },
                   ),
                 ),
@@ -120,7 +125,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                   child: FeedBackStatusList(
                     list: list,
                     selectedIndex: (index) {
-                      print("index of feedback Item selection $index");
+                      feedbackTwo = index + 1;
                     },
                   ),
                 ),
@@ -130,7 +135,9 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                   padding: EdgeInsets.only(top: 22),
                   child: FeedBackStatusList(
                     list: list,
-                    selectedIndex: (index) {},
+                    selectedIndex: (index) {
+                      feedbackThree = index + 1;
+                    },
                   ),
                 ),
                 Container(
@@ -147,13 +154,13 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                       BlocProvider.of<FeedbackBloc>(context).add(
                         FeedbackSubmitEvent(
                           FeedbackRequestModel(
-                              routeId: "4D",
-                              waiting: 1,
-                              comfort: 2,
-                              crowding: 1,
-                              serviceQuality: 2,
-                              journey: "AtoB",
-                              userId: 6),
+                            routeId: _routeController.text,
+                            waiting: 1,
+                            comfort: 2,
+                            crowding: 1,
+                            serviceQuality: 2,
+                            journey: "AtoB",
+                          ),
                         ),
                       );
                     },

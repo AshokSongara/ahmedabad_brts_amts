@@ -28,7 +28,7 @@ class RouteRepositoryImpl implements RouteRepository {
     var bodyData = json.encode(data);
 
     Response response =
-        await apiClient.postDataWithHeader(AppConstant.nearMeInterface, bodyData);
+        await apiClient.postData(AppConstant.nearMeInterface, bodyData);
     NearMeResponse nearMeResponse = NearMeResponse.fromJson(response.body);
 
     try {} on Exception catch (exception) {

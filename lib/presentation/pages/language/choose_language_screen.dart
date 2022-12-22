@@ -111,7 +111,7 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                     _languageList = LanguageList.english;
                     context.read<LanguageCubit>().changeLang(context, 'en');
                   }
-                  //Get.toNamed(RouteHelper.getLogInRoute());
+                  Navigator.of(context).pop();
                 },
                 style: poppinsMedium.copyWith(
                     color: Colors.white, fontSize: 15.sp),

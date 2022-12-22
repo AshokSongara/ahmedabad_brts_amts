@@ -19,7 +19,7 @@ class ApiClient extends GetxService {
   String? token;
   late Map<String, String> _mainHeaders;
 
-  ApiClient({required this.appBaseUrl,required this.sharedPreferences}) {
+  ApiClient({required this.appBaseUrl, required this.sharedPreferences}) {
     token = sharedPreferences.getString(AppConstant.accessToken);
     updateHeader(token ?? "");
   }
@@ -27,7 +27,7 @@ class ApiClient extends GetxService {
   void updateHeader(String token) {
     Map<String, String> _header = {
       'Content-Type': 'application/json',
-      'Authorization': "Bearer "+token
+      'Authorization': "Bearer " + token
     };
     _mainHeaders = _header;
   }
@@ -49,11 +49,13 @@ class ApiClient extends GetxService {
   Future<Response> postDataWithHeader(String endPoint, String body) async {
     try {
       print(appBaseUrl! + endPoint);
-      http.Response response = await http.post(
-        Uri.parse(appBaseUrl! + endPoint),
-        body: body,
-        headers: _mainHeaders,
-      ).timeout(Duration(seconds: timeoutInSeconds));
+      http.Response response = await http
+          .post(
+            Uri.parse(appBaseUrl! + endPoint),
+            body: body,
+            headers: _mainHeaders,
+          )
+          .timeout(Duration(seconds: timeoutInSeconds));
       return handleResponse(response, endPoint);
     } catch (e) {
       return Response(statusCode: 1, statusText: noInternetMessage);
@@ -135,6 +137,22 @@ class ApiClient extends GetxService {
   }
 
   Future<Response> getData(String uri, {Map<String, String>? headers}) async {
+    try {
+      if (foundation.kDebugMode) {}
+      http.Response _response = await http.get(
+        Uri.parse(appBaseUrl! + uri),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      ).timeout(Duration(seconds: timeoutInSeconds));
+      return handleResponse(_response, uri);
+    } catch (e) {
+      return Response(statusCode: 1, statusText: noInternetMessage);
+    }
+  }
+
+  Future<Response> getDataWihHeader(String uri,
+      {Map<String, String>? headers}) async {
     try {
       if (foundation.kDebugMode) {
         // print('====> API Call: $uri\nHeader: $_mainHeaders');

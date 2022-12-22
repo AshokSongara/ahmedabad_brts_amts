@@ -12,6 +12,7 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/forget_password_response
 import 'package:ahmedabad_brts_amts/data/responsemodels/login_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/mobile_number_otp_response_entity.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/stop_response_model.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/user_profile_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/verify_otp_response.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
@@ -110,13 +111,12 @@ class UserRepositoryImpl implements UserRepository {
       "crowding": body.crowding,
       "serviceQuality": body.serviceQuality,
       "journey": body.journey,
-      "userId": body.userId
     };
 
     var bodyData = json.encode(data);
 
-    Response response =
-        await apiClient.postData(AppConstant.submitFeedback, bodyData);
+    Response response = await apiClient.postDataWithHeader(
+        AppConstant.submitFeedback, bodyData);
     FeedbackResponseModel feedbackResponseModel =
         FeedbackResponseModel.fromJson(response.body);
 
@@ -248,5 +248,17 @@ class UserRepositoryImpl implements UserRepository {
     try {} on Exception catch (exception) {
     } catch (error) {}
     return forgetPasswordResponse;
+  }
+
+  @override
+  Future<UserProfileResponse> getProfileData() async {
+    Response response =
+        await apiClient.getDataWihHeader(AppConstant.userProfile);
+    UserProfileResponse userProfileResponse =
+        UserProfileResponse.fromJson(response.body);
+
+    try {} on Exception catch (exception) {
+    } catch (error) {}
+    return userProfileResponse;
   }
 }

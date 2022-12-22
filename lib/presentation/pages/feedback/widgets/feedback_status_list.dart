@@ -10,7 +10,10 @@ import '../../../../data/responseModels/feedback_status_list_item.dart';
 class FeedBackStatusList extends StatefulWidget {
   final Function(int) selectedIndex;
   final List<FeedBackStatusListItem> list;
-  const FeedBackStatusList({Key? key,required this.selectedIndex,required this.list}) : super(key: key);
+
+  const FeedBackStatusList(
+      {Key? key, required this.selectedIndex, required this.list})
+      : super(key: key);
 
   @override
   _FeedBackStatusListState createState() => _FeedBackStatusListState();
@@ -18,11 +21,13 @@ class FeedBackStatusList extends StatefulWidget {
 
 class _FeedBackStatusListState extends State<FeedBackStatusList> {
   int selectedIndex = 0;
+
   @override
   void initState() {
     super.initState();
     widget.selectedIndex(selectedIndex);
   }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -33,7 +38,7 @@ class _FeedBackStatusListState extends State<FeedBackStatusList> {
           itemBuilder: (context, index) {
             return InkWell(
               onTap: () {
-                selectedIndex=index;
+                selectedIndex = index;
                 widget.selectedIndex(selectedIndex);
                 setState(() {});
               },
@@ -60,7 +65,9 @@ class _FeedBackStatusListState extends State<FeedBackStatusList> {
                           : AppColors.darkGray,
                     ),
                     Padding(
-                      padding: EdgeInsets.only(top:(widget.list[index].title.contains(' '))?2:7),
+                      padding: EdgeInsets.only(
+                          top:
+                              (widget.list[index].title.contains(' ')) ? 2 : 7),
                       child: Text(
                         widget.list[index].title,
                         textAlign: TextAlign.center,

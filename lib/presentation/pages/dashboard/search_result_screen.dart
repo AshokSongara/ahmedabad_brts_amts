@@ -55,7 +55,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
             Loader.hide();
             return Column(children: [
               const SizedBox(height: 25),
-              CustomToolbar(title: "Search Result"),
+              CustomToolbar(title: "search_result"),
               RouteTitleWidget(
                 mainAxisAlignment: MainAxisAlignment.center,
                 startRouteName: widget.startRouteName ?? "",
