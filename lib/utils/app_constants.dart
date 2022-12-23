@@ -27,6 +27,9 @@ class AppConstant {
   static String searchRouteList = "Route/plan/start/";
   static String forgetPassword = "User/forgot-password";
   static String userProfile = "User/user-profile";
+  static String notifications = "Notification/List";
+  static String favouriteRouteList = "Favourite/List";
+  static String deleteFavouriteRoute = "Favourite/Delete/";
 
   //SharedPreferences Keys
   static String accessToken = "accessToken";

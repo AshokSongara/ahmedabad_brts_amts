@@ -63,7 +63,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
         children: [
           const SizedBox(height: Dimensions.dp25),
           CustomToolbar(
-            title: "Payment Details",
+            title: "payment_details",
             showOption: false,
           ),
           Expanded(
@@ -463,42 +463,42 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
 //                            child: CircularProgressIndicator()),
 //                      )
 //                    : Container(),
-                  ElevatedButton(
-                    onPressed: () {
-                      generateTxnToken(amount,"101");
-                    },
-                    child: Text(
-                      "Pay using Wallet",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      _startTransaction();
-                    },
-                    child: Text(
-                      "Pay using Net Banking",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      _startTransaction();
-                    },
-                    child: Text(
-                      "Pay using UPI",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      _startTransaction();
-                    },
-                    child: Text(
-                      "Pay using Credit Card",
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
+//                   ElevatedButton(
+//                     onPressed: () {
+//                       generateTxnToken(amount,"101");
+//                     },
+//                     child: Text(
+//                       "Pay using Wallet",
+//                       style: TextStyle(color: Colors.white),
+//                     ),
+//                   ),
+//                   ElevatedButton(
+//                     onPressed: () {
+//                       _startTransaction();
+//                     },
+//                     child: Text(
+//                       "Pay using Net Banking",
+//                       style: TextStyle(color: Colors.white),
+//                     ),
+//                   ),
+//                   ElevatedButton(
+//                     onPressed: () {
+//                       _startTransaction();
+//                     },
+//                     child: Text(
+//                       "Pay using UPI",
+//                       style: TextStyle(color: Colors.white),
+//                     ),
+//                   ),
+//                   ElevatedButton(
+//                     onPressed: () {
+//                       _startTransaction();
+//                     },
+//                     child: Text(
+//                       "Pay using Credit Card",
+//                       style: TextStyle(color: Colors.white),
+//                     ),
+//                   ),
                 ],
               ),
             ),

@@ -27,12 +27,13 @@ class _BookingScreenState extends State<BookingScreen> {
         children: [
           const SizedBox(height: Dimensions.dp25),
           CustomToolbar(
-            title: "Booking",
+            title: "booking",
             showOption: false,
             back: widget.from == "home" ? true : false,
           ),
           Expanded(
             child: ListView.builder(
+              padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 itemCount: 5,
                 itemBuilder: (context, index) {

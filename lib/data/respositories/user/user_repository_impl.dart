@@ -7,10 +7,12 @@ import 'package:ahmedabad_brts_amts/data/requestmodels/otp_request.dart';
 import 'package:ahmedabad_brts_amts/data/responseModels/signup_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/favourite_route_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/feedback_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/forget_password_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/login_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/mobile_number_otp_response_entity.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/notification_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/stop_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/user_profile_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/verify_otp_response.dart';
@@ -60,8 +62,6 @@ class UserRepositoryImpl implements UserRepository {
         await apiClient.postData(AppConstant.registerInterface, bodyData);
     SignUpResponse signUpResponse = SignUpResponse.fromJson(response.body);
 
-    try {} on Exception catch (exception) {
-    } catch (error) {}
     return signUpResponse;
   }
 
@@ -78,8 +78,6 @@ class UserRepositoryImpl implements UserRepository {
         await apiClient.postData(AppConstant.loginInterface, bodyData);
     LoginResponse loginResponse = LoginResponse.fromJson(response.body);
 
-    try {} on Exception catch (exception) {
-    } catch (error) {}
     return loginResponse;
   }
 
@@ -97,8 +95,6 @@ class UserRepositoryImpl implements UserRepository {
     VerifyOtpResponse verifyOtpResponse =
         VerifyOtpResponse.fromJson(response.body);
 
-    try {} on Exception catch (exception) {
-    } catch (error) {}
     return verifyOtpResponse;
   }
 
@@ -120,8 +116,6 @@ class UserRepositoryImpl implements UserRepository {
     FeedbackResponseModel feedbackResponseModel =
         FeedbackResponseModel.fromJson(response.body);
 
-    try {} on Exception catch (exception) {
-    } catch (error) {}
     return feedbackResponseModel;
   }
 
@@ -141,8 +135,7 @@ class UserRepositoryImpl implements UserRepository {
         BrtsStopResponseModel stopResponseModel =
             BrtsStopResponseModel.fromJson(response.body);
         getLocalBrtsStopData().put("key", stopResponseModel);
-        try {} on Exception catch (exception) {
-        } catch (error) {}
+
         return brtsBox.get("key");
       } else {
         BrtsStopResponseModel stopResponseModel =
@@ -157,8 +150,7 @@ class UserRepositoryImpl implements UserRepository {
         BrtsStopResponseModel stopResponseModel =
             BrtsStopResponseModel.fromJson(response.body);
         getLocalAmtsStopData().put("key", stopResponseModel);
-        try {} on Exception catch (exception) {
-        } catch (error) {}
+
         return amtsBox.get("key");
       } else {
         BrtsStopResponseModel stopResponseModel =
@@ -183,8 +175,7 @@ class UserRepositoryImpl implements UserRepository {
         BrtsRoutesResponseModel stopResponseModel =
             BrtsRoutesResponseModel.fromJson(response.body);
         getLocalBrtsRoutesData().put("key", stopResponseModel);
-        try {} on Exception catch (exception) {
-        } catch (error) {}
+
         return brtsBox.get("key");
       } else {
         BrtsRoutesResponseModel stopResponseModel =
@@ -199,8 +190,7 @@ class UserRepositoryImpl implements UserRepository {
         BrtsRoutesResponseModel stopResponseModel =
             BrtsRoutesResponseModel.fromJson(response.body);
         getLocalAmtsRoutesData().put("key", stopResponseModel);
-        try {} on Exception catch (exception) {
-        } catch (error) {}
+
         return amtsBox.get("key");
       } else {
         BrtsRoutesResponseModel stopResponseModel =
@@ -244,9 +234,6 @@ class UserRepositoryImpl implements UserRepository {
         await apiClient.postData(AppConstant.forgetPassword, bodyData);
     ForgetPasswordResponse forgetPasswordResponse =
         ForgetPasswordResponse.fromJson(response.body);
-
-    try {} on Exception catch (exception) {
-    } catch (error) {}
     return forgetPasswordResponse;
   }
 
@@ -256,9 +243,23 @@ class UserRepositoryImpl implements UserRepository {
         await apiClient.getDataWihHeader(AppConstant.userProfile);
     UserProfileResponse userProfileResponse =
         UserProfileResponse.fromJson(response.body);
-
-    try {} on Exception catch (exception) {
-    } catch (error) {}
     return userProfileResponse;
+  }
+
+  @override
+  Future<NotificationResponse> getNotificationsData() async {
+    Response response = await apiClient.getData(AppConstant.notifications);
+    NotificationResponse notificationResponse =
+        NotificationResponse.fromJson(response.body);
+    return notificationResponse;
+  }
+
+  @override
+  Future<FavouriteRouteResponse> getFavouriteRouteListData() async {
+    Response response = await apiClient.getDataWihHeader(AppConstant.favouriteRouteList);
+    FavouriteRouteResponse favouriteRouteResponse =
+        FavouriteRouteResponse.fromJson(response.body);
+
+    return favouriteRouteResponse;
   }
 }

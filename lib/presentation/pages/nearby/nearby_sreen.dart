@@ -2,6 +2,7 @@ import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/nearme_request.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/nearme_response.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
+import 'package:ahmedabad_brts_amts/localization/app_localizations.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_state.dart';
@@ -32,6 +33,7 @@ class _NearByScreenState extends State<NearByScreen> {
   final FocusNode _serviceFocus = FocusNode();
   NearMeResponse? nearMeResponse;
   Data? data;
+
   @override
   void initState() {
     super.initState();
@@ -74,14 +76,21 @@ class _NearByScreenState extends State<NearByScreen> {
                               top: Dimensions.dp10, bottom: Dimensions.dp10),
                           child: Row(
                             children: [
-                              SvgPicture.asset(
-                                ImageConstant.iLeftArrow,
-                                color: Colors.white,
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: SvgPicture.asset(
+                                  ImageConstant.iLeftArrow,
+                                  color: Colors.white,
+                                ),
                               ),
                               Expanded(
                                 child: Center(
                                   child: Text(
-                                    "Near you",
+                                    AppLocalizations.of(context)
+                                            ?.translate("near_you") ??
+                                        "",
                                     style: screenTitle.copyWith(
                                         color: Colors.white),
                                   ),
@@ -108,7 +117,7 @@ class _NearByScreenState extends State<NearByScreen> {
                               data = await Get.toNamed(
                                   RouteHelper.getNearBySearchStopScreenRoute(),
                                   arguments: nearMeResponse) as Data;
-                              print(data?.stopName??"");
+                              print(data?.stopName ?? "");
                             },
                             child: Row(
                               children: [

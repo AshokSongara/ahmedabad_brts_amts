@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:intl/intl.dart';
+
 extension EmailValidator on String {
   bool isValidEmail() {
     return RegExp(
@@ -8,7 +10,13 @@ extension EmailValidator on String {
   }
 }
 
-double roundDouble(double? value, int places){
+double roundDouble(double? value, int places) {
   num mod = pow(10.0, places);
   return ((value! * mod).round().toDouble() / mod);
+}
+
+String getDateTime(String dateTimeData) {
+  var dateTime = DateFormat("yyyy-MM-dd HH:mm").parse(dateTimeData, true);
+  var dateLocal = dateTime.toLocal();
+  return dateLocal.toString();
 }

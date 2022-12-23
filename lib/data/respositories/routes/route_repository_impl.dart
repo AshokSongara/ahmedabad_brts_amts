@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:ahmedabad_brts_amts/api/api_client.dart';
+import 'package:ahmedabad_brts_amts/data/requestmodels/delete_route_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/nearme_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/search_route_request.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/delete_favourite_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/nearme_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/search_route_response.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/routes/routes_repository.dart';
@@ -38,12 +40,23 @@ class RouteRepositoryImpl implements RouteRepository {
 
   @override
   Future<SearchRouteResponse> searchResultRoute(SearchRouteRequest body) async {
-    Response response = await apiClient.getData("${AppConstant.searchRouteList}${body.startCode}/end/${body.endCode}");
+    Response response = await apiClient.getData(
+        "${AppConstant.searchRouteList}${body.startCode}/end/${body.endCode}");
     SearchRouteResponse searchRouteResponse =
         SearchRouteResponse.fromJson(response.body);
-
-    try {} on Exception catch (exception) {
-    } catch (error) {}
     return searchRouteResponse;
+  }
+
+  @override
+  Future<DeleteFavouriteResponse> deleteRoute(DeleteRouteRequest body) async {
+    Map data = {};
+
+    var bodyData = json.encode(data);
+
+    Response response = await apiClient.postDataWithHeader(
+        "${AppConstant.deleteFavouriteRoute}${body.routeId}", bodyData);
+    DeleteFavouriteResponse deleteFavouriteResponse =
+        DeleteFavouriteResponse.fromJson(response.body);
+    return deleteFavouriteResponse;
   }
 }

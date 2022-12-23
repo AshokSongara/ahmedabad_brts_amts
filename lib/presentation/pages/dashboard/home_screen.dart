@@ -4,6 +4,7 @@ import 'package:ahmedabad_brts_amts/data/requestmodels/routes_request_model.dart
 import 'package:ahmedabad_brts_amts/data/requestmodels/stop_request_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
+import 'package:ahmedabad_brts_amts/localization/app_localizations.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_state.dart';
@@ -469,7 +470,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 14,
                         ),
                         Text(
-                          "Search bus route number",
+                          AppLocalizations.of(context)?.translate("searchbusroutenumber") ?? "",
                           style: satoshiRegular.copyWith(
                               fontSize: Dimensions.dp13.sp,
                               fontWeight: FontWeight.w700,

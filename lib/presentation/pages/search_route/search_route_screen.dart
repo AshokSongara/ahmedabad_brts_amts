@@ -108,7 +108,7 @@ class _SearchRouteScreenState extends State<SearchRouteScreen> {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 34),
-              itemCount: localBrtsStopList.length ?? 0,
+              itemCount: localBrtsStopList.length,
               itemBuilder: (context, index) {
                 return Column(
                   children: [

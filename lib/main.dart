@@ -3,11 +3,13 @@ import 'package:ahmedabad_brts_amts/core/theme/theme_service.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
 import 'package:ahmedabad_brts_amts/injection_container.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_route_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/forgetpassword/forget_password_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobile_number_login_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/notification/notification_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/user_profile/user_profile_bloc.dart';
@@ -81,6 +83,12 @@ void main() async {
         ),
         BlocProvider<UserProfileBloc>(
           create: (context) => injector<UserProfileBloc>(),
+        ),
+        BlocProvider<NotificationBloc>(
+          create: (context) => injector<NotificationBloc>(),
+        ),
+        BlocProvider<FavouriteRouteListBloc>(
+          create: (context) => injector<FavouriteRouteListBloc>(),
         ),
       ],
       child: MyApp(),

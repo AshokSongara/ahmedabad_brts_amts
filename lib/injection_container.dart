@@ -3,16 +3,20 @@ import 'package:ahmedabad_brts_amts/data/respositories/routes/route_repository_i
 import 'package:ahmedabad_brts_amts/data/respositories/user/user_repository_impl.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/routes/routes_repository.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/route/delete_route_list_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/nearme_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/search_route_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/route/favourite_route_list_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/forget_password_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/home_get_routes_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/login_user_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/mobile_number_login_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/user/notification_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/signup_user_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/home_screen_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/user_profile_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/verify_otp_usecase.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_route_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/feedback/feedback_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
@@ -28,6 +32,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'domain/usecases/user/feddback_usecase.dart';
 import 'presentation/blocs/forgetpassword/forget_password_bloc.dart';
+import 'presentation/blocs/notification/notification_bloc.dart';
 
 final injector = GetIt.instance;
 
@@ -80,6 +85,16 @@ Future<void> init() async {
     () => UserProfileBloc(userProfileUseCase: injector()),
   );
 
+  injector.registerFactory<NotificationBloc>(
+    () => NotificationBloc(notificationUseCase: injector()),
+  );
+
+  injector.registerFactory<FavouriteRouteListBloc>(
+    () => FavouriteRouteListBloc(
+        favouriteRouteListUseCase: injector(),
+        deleteRouteListUseCase: injector()),
+  );
+
   injector.registerLazySingleton(() => SignupUserUseCase(injector()));
 
   injector.registerLazySingleton(() => LoginUserUseCase(injector()));
@@ -101,6 +116,12 @@ Future<void> init() async {
   injector.registerLazySingleton(() => ForgetPasswordUseCase(injector()));
 
   injector.registerLazySingleton(() => UserProfileUseCase(injector()));
+
+  injector.registerLazySingleton(() => NotificationUseCase(injector()));
+
+  injector.registerLazySingleton(() => FavouriteRouteListUseCase(injector()));
+
+  injector.registerLazySingleton(() => DeleteRouteListUseCase(injector()));
 
   injector.registerLazySingleton<UserRepository>(
     () => UserRepositoryImpl(

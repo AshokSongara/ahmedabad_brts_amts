@@ -25,5 +25,8 @@
   "myroutes": "My Routes",
   "transitmap": "Transit Map",
   "feedback": "Feedback",
-  "search_result": "Search Result"
+  "search_result": "Search Result",
+  "near_you": "Near you",
+  "payment_details": "Payment Details",
+  "booking": "Booking"
 }
