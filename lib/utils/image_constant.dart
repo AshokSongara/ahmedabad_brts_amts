@@ -53,6 +53,8 @@ class ImageConstant {
   static const String iRedTick = 'assets/images/ic_red_tick.svg';
   static const String iBlueTick = 'assets/images/ic_blue_tick.svg';
   static const String iCancel = 'assets/images/ic_cancel.svg';
+  static const String iMarker = 'assets/images/ic_marker.svg';
+  static const String iMarkerBlue = 'assets/images/ic_marker_blue.svg';
 
   //Temp Images
   static const String iAvatar = 'assets/images/img_avatar.png';

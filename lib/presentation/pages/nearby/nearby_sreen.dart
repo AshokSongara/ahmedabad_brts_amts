@@ -1,5 +1,7 @@
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/nearme_request.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/nearme_response.dart';
+import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_state.dart';
@@ -13,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
 import 'package:location/location.dart';
 
 import '../../widgets/base/custom_search_bar.dart';
@@ -27,25 +30,30 @@ class NearByScreen extends StatefulWidget {
 class _NearByScreenState extends State<NearByScreen> {
   final _serviceController = TextEditingController();
   final FocusNode _serviceFocus = FocusNode();
-
+  NearMeResponse? nearMeResponse;
+  Data? data;
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _getNearByRoutes();
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.appBackground,
-      body: BlocBuilder<NearMeBloc, NearmeState>(
+      body: BlocConsumer<NearMeBloc, NearmeState>(
+        listener: (context, state) {
+          if (state is NearMeSuccessState) {
+            nearMeResponse = state.nearMeResponse;
+          }
+        },
         builder: (context, state) {
           if (state is NearMeLoadingState) {
             Loader.show(context);
-          } else if (state is NearMeSuccessState) {
+          } else if (nearMeResponse != null) {
             Loader.hide();
             return Column(
               children: [
@@ -87,21 +95,40 @@ class _NearByScreenState extends State<NearByScreen> {
                               left: Dimensions.dp30,
                               right: Dimensions.dp30,
                               top: Dimensions.dp20),
-                          child: CustomSearchBar(
-                            controller: _serviceController,
-                            focusNode: _serviceFocus,
-                            nextFocus: _serviceFocus,
-                            radius: 10,
-                            onChanged: (text) {},
-                            onSubmit: () {},
-                            prefixIcon: ImageConstant.iSearch,
-                            capitalization: TextCapitalization.words,
-                            divider: false,
-                            hintText:
-                                "Nigam Nagar, Chandkheda, Ahmedabad, Gujara...",
-                            fillColor: Colors.white,
-                            hintStyle: satoshiSmall.copyWith(
-                                color: AppColors.lightGray, fontSize: 13.sp),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 14),
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(Dimensions.dp10),
+                            ),
+                          ),
+                          child: GestureDetector(
+                            onTap: () async {
+                              data = await Get.toNamed(
+                                  RouteHelper.getNearBySearchStopScreenRoute(),
+                                  arguments: nearMeResponse) as Data;
+                              print(data?.stopName??"");
+                            },
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(ImageConstant.iSearch,
+                                    height: 20, width: 20),
+                                SizedBox(
+                                  width: 14,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    "Nigam Nagar, Chandkheda, Ahmedabad, Gujara...",
+                                    overflow: TextOverflow.fade,
+                                    style: satoshiRegular.copyWith(
+                                        fontSize: Dimensions.dp13.sp,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppColors.lightGray),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         ),
                         const SizedBox(
@@ -155,10 +182,10 @@ class _NearByScreenState extends State<NearByScreen> {
                                 child:
                                     CustomPaint(painter: DashedLinePainter())),
                             padding: const EdgeInsets.only(top: 10),
-                            itemCount: state.nearMeResponse.data?.length ?? 0,
+                            itemCount: nearMeResponse?.data?.length ?? 0,
                             itemBuilder: (BuildContext context, int index) {
                               return NearByItemWidget(
-                                  nearme: state.nearMeResponse.data![index]);
+                                  nearme: nearMeResponse!.data![index]);
                             })),
                   ),
                 )
@@ -174,7 +201,7 @@ class _NearByScreenState extends State<NearByScreen> {
     );
   }
 
-  void _getNearByRoutes() async{
+  void _getNearByRoutes() async {
     Location location = Location();
     PermissionStatus _permissionGranted;
     LocationData _locationData;
@@ -184,8 +211,7 @@ class _NearByScreenState extends State<NearByScreen> {
     if (_permissionGranted == PermissionStatus.denied) {
       debugPrint("Location Permission Denied :(");
       _permissionGranted = await location.requestPermission();
-    }
-    else {
+    } else {
       _locationData = await location.getLocation();
 
       var nearByRequest = NearMeRequest();

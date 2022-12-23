@@ -12,6 +12,7 @@ import 'package:ahmedabad_brts_amts/presentation/pages/lrf/mobile_number_screen.
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/reset_password_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/signup_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/my_routes/my_routes_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/near_by_search/search_stop_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/nearby/nearby_sreen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/one_day_pass/one_day_pass_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/passenger_details/passenger_details.dart';
@@ -46,6 +47,7 @@ class RouteHelper {
   static const String forgetPassword = '/forgetPassword';
   static const String resetPassword = '/resetPassword';
   static const String searchStopScreen = '/searchStopScreen';
+  static const String nearBySearchStopScreen = '/nearBySearchStopScreen';
   static const String searchRouteScreen = '/searchRouteScreen';
   static const String changeLanguage = '/changeLanguage';
 
@@ -97,6 +99,7 @@ class RouteHelper {
   static String getResetPasswordRoute() => '$resetPassword';
   static String getSearchStopScreenRoute() => '$searchStopScreen';
   static String getSearchRouteScreenRoute() => '$searchRouteScreen';
+  static String getNearBySearchStopScreenRoute() => '$nearBySearchStopScreen';
   static String getChangeLangaugeScreenRoute() => '$changeLanguage';
 
   static List<GetPage> routes = [
@@ -108,6 +111,7 @@ class RouteHelper {
     GetPage(name: oneDayPassRoute, page: () => const OneDayPassScreen()),
     GetPage(name: contactUs, page: () => const ContactUsScreen()),
     GetPage(name: searchStopScreen, page: () => const SearchStopScreen()),
+    GetPage(name: nearBySearchStopScreen, page: () => const NearBySearchStopScreen()),
     GetPage(name: searchRouteScreen, page: () => const SearchRouteScreen()),
     GetPage(
         name: enterCode,

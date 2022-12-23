@@ -44,6 +44,7 @@ class Dimensions {
   static const double dp43=43.0;
   static const double dp23=23.0;
   static const double dp11=11.0;
+  static const double dp7=7.0;
 
   static const double WEB_MAX_WIDTH = 1170;
   static const int MESSAGE_INPUT_LENGTH = 250;
