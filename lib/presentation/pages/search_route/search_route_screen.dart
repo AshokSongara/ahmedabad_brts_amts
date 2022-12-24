@@ -1,17 +1,21 @@
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/language/language_cubit.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class SearchRouteScreen extends StatefulWidget {
-  const SearchRouteScreen({Key? key}) : super(key: key);
+  const SearchRouteScreen({Key? key, required this.selectedLanguage})
+      : super(key: key);
+  final String? selectedLanguage;
 
   @override
   _SearchRouteScreenState createState() => _SearchRouteScreenState();
@@ -134,16 +138,13 @@ class _SearchRouteScreenState extends State<SearchRouteScreen> {
                                   SizedBox(
                                     width: 5.w,
                                   ),
-                                  Text(
-                                    localBrtsStopList[index].routeCode ?? "",
+                                  Text(localBrtsStopList[index].routeCode ?? "",
                                     style: satoshiRegularSmallDark.copyWith(
                                         fontSize: 22.sp),
                                   ),
                                   Spacer(),
                                   InkWell(
-                                    onTap: () {
-
-                                    },
+                                    onTap: () {},
                                     child: SvgPicture.asset(
                                       ImageConstant.iUnselected,
                                       color: Theme.of(context).primaryColor,
@@ -152,7 +153,11 @@ class _SearchRouteScreenState extends State<SearchRouteScreen> {
                                 ],
                               ),
                               Text(
-                                localBrtsStopList[index].routeName ?? "",
+                                widget.selectedLanguage == "gu"
+                                    ? localBrtsStopList[index]
+                                            .routeNameGujarati ??
+                                        ""
+                                    : localBrtsStopList[index].routeName ?? "",
                                 style: satoshiRegular.copyWith(
                                     fontSize: Dimensions.dp18.sp,
                                     fontWeight: FontWeight.w400,

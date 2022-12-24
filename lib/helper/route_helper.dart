@@ -97,8 +97,8 @@ class RouteHelper {
   static String getForgetPasswordRoute() => '$forgetPassword';
 
   static String getResetPasswordRoute() => '$resetPassword';
-  static String getSearchStopScreenRoute() => '$searchStopScreen';
-  static String getSearchRouteScreenRoute() => '$searchRouteScreen';
+  static String getSearchStopScreenRoute(String selectedLanguage) => '$searchStopScreen?selectedLanguage=$selectedLanguage';
+  static String getSearchRouteScreenRoute(String selectedLanguage) => '$searchRouteScreen?selectedLanguage=$selectedLanguage';
   static String getNearBySearchStopScreenRoute() => '$nearBySearchStopScreen';
   static String getChangeLangaugeScreenRoute() => '$changeLanguage';
 
@@ -110,9 +110,9 @@ class RouteHelper {
     GetPage(name: mobileNumber, page: () => const MobileNumberScreen()),
     GetPage(name: oneDayPassRoute, page: () => const OneDayPassScreen()),
     GetPage(name: contactUs, page: () => const ContactUsScreen()),
-    GetPage(name: searchStopScreen, page: () => const SearchStopScreen()),
+    GetPage(name: searchStopScreen, page: () => SearchStopScreen(selectedLanguage: Get.parameters['selectedLanguage']??"")),
     GetPage(name: nearBySearchStopScreen, page: () => const NearBySearchStopScreen()),
-    GetPage(name: searchRouteScreen, page: () => const SearchRouteScreen()),
+    GetPage(name: searchRouteScreen, page: () => SearchRouteScreen(selectedLanguage: Get.parameters['selectedLanguage'],)),
     GetPage(
         name: enterCode,
         page: () => OtpVerificationScreen(
@@ -152,8 +152,5 @@ class RouteHelper {
     GetPage(name: forgetPassword, page: () => const ForgetPasswordScreen()),
     GetPage(name: resetPassword, page: () => const ResetPasswordScreen()),
     GetPage(name: changeLanguage, page: () => const ChooseLanguage()),
-    GetPage(
-        name: searchStopScreen,
-        page: () => const SearchStopScreen())
   ];
 }
