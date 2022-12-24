@@ -28,5 +28,7 @@
   "search_result": "Search Result",
   "near_you": "Near you",
   "payment_details": "Payment Details",
-  "booking": "Booking"
+  "booking": "Booking",
+  "search_stop": "Search Stop",
+  "search_route_number": "Search route number"
 }

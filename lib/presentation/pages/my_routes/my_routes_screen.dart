@@ -38,12 +38,16 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.appBackground,
-      body: BlocBuilder<FavouriteRouteListBloc, FavouriteRouteListState>(
-        builder: (context, state) {
+      body: BlocConsumer<FavouriteRouteListBloc, FavouriteRouteListState>(
+        listener: (context, state) {
           if (state is FavouriteRouteLoadingState) {
             Loader.show(context);
           } else if (state is FavouriteRouteSuccessState) {
             Loader.hide();
+          }
+        },
+        builder: (context, state) {
+          if (state is FavouriteRouteSuccessState) {
             return Column(
               children: [
                 const SizedBox(height: Dimensions.dp25),
@@ -53,7 +57,7 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                    padding: EdgeInsets.zero,
+                      padding: EdgeInsets.zero,
                       itemCount: state.favouriteRouteResponse.data?.length,
                       itemBuilder: (context, index) {
                         return getMyRoutesWidget(
@@ -109,7 +113,16 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
                   ),
                 ],
               ),
-              SvgPicture.asset(ImageConstant.iFavorite),
+              InkWell(
+                  onTap: () {
+                    BlocProvider.of<FavouriteRouteListBloc>(context).add(
+                        DeleteFavouriteRouteEvent(
+                            routeId: model.id.toString()));
+                  },
+                  child: SvgPicture.asset(
+                    ImageConstant.iFavorite,
+                    color: Theme.of(context).primaryColor,
+                  )),
             ],
           ),
           Text(DateTime.now().toString(),

@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:ahmedabad_brts_amts/api/api_client.dart';
+import 'package:ahmedabad_brts_amts/data/requestmodels/add_route_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/delete_route_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/nearme_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/search_route_request.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/add_route_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/delete_favourite_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/nearme_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/search_route_response.dart';
@@ -58,5 +60,18 @@ class RouteRepositoryImpl implements RouteRepository {
     DeleteFavouriteResponse deleteFavouriteResponse =
         DeleteFavouriteResponse.fromJson(response.body);
     return deleteFavouriteResponse;
+  }
+
+  @override
+  Future<AddRouteResponse> addRoute(AddRouteRequest body) async {
+    Map data = {};
+
+    var bodyData = json.encode(data);
+
+    Response response = await apiClient.postDataWithHeader(
+        "${AppConstant.addFavouriteRoute}${body.routeID}", bodyData);
+    AddRouteResponse addRouteResponse =
+        AddRouteResponse.fromJson(response.body);
+    return addRouteResponse;
   }
 }

@@ -56,15 +56,13 @@ class _HomeScreenState extends State<HomeScreen> {
     BlocProvider.of<HomeScreenBloc>(context).add(
         GetAvailableRoutesEvent(RoutesRequestModel(stopType: isAmts ? 2 : 1)));
     Loader.show(context);
+    quickLinkList.add(QuickLinkInternalModel("mticket", ImageConstant.iTicket));
     quickLinkList
-        .add(QuickLinkInternalModel("M Ticket", ImageConstant.iTicket));
-    quickLinkList.add(
-        QuickLinkInternalModel("Smart Recharge", ImageConstant.iMobileRed));
-    quickLinkList.add(QuickLinkInternalModel("Routes", ImageConstant.iRoute));
-    quickLinkList.add(QuickLinkInternalModel("My Routes", ImageConstant.iRate));
-    quickLinkList
-        .add(QuickLinkInternalModel("Transit Map", ImageConstant.iMap));
-    quickLinkList.add(QuickLinkInternalModel("Feedback", ImageConstant.iChat));
+        .add(QuickLinkInternalModel("smartrecharge", ImageConstant.iMobileRed));
+    quickLinkList.add(QuickLinkInternalModel("routes", ImageConstant.iRoute));
+    quickLinkList.add(QuickLinkInternalModel("myroutes", ImageConstant.iRate));
+    quickLinkList.add(QuickLinkInternalModel("transitmap", ImageConstant.iMap));
+    quickLinkList.add(QuickLinkInternalModel("feedback", ImageConstant.iChat));
   }
 
   @override
@@ -470,7 +468,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 14,
                         ),
                         Text(
-                          AppLocalizations.of(context)?.translate("searchbusroutenumber") ?? "",
+                          AppLocalizations.of(context)
+                                  ?.translate("searchbusroutenumber") ??
+                              "",
                           style: satoshiRegular.copyWith(
                               fontSize: Dimensions.dp13.sp,
                               fontWeight: FontWeight.w700,
@@ -487,7 +487,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 margin: const EdgeInsets.only(
                     left: Dimensions.dp20, right: Dimensions.dp30),
                 child: Text(
-                  "Plan Your Trip",
+                  AppLocalizations.of(context)?.translate("planyourtrip") ?? "",
                   style: satoshiRegular.copyWith(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
@@ -550,10 +550,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                           routeData != null
                                               ? routeData?.routeName
                                                       ?.split("-")[0] ??
-                                                  "Select Source"
+                                                  AppLocalizations.of(context)
+                                                      ?.translate(
+                                                          "selectsource") ??
+                                                  ""
                                               : newFromSelectedStation
                                                       ?.stopName ??
-                                                  "Select Source",
+                                                  AppLocalizations.of(context)
+                                                      ?.translate(
+                                                          "selectsource") ??
+                                                  "",
                                           style: satoshiRegular.copyWith(
                                               fontSize: fontSize,
                                               fontWeight: FontWeight.w700,
@@ -590,10 +596,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                             routeData != null
                                                 ? routeData?.routeName
                                                         ?.split("-")[1] ??
-                                                    "Select Destination"
+                                                    AppLocalizations.of(context)
+                                                        ?.translate(
+                                                            "selectdestination") ??
+                                                    ""
                                                 : newToSelectedStation
                                                         ?.stopName ??
-                                                    "Select Destination",
+                                                    AppLocalizations.of(context)
+                                                        ?.translate(
+                                                            "selectdestination") ??
+                                                    "",
                                             style: satoshiRegular.copyWith(
                                                 fontSize: fontSize,
                                                 fontWeight: FontWeight.w700,
@@ -608,7 +620,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   alignment: Alignment.centerRight,
                                   child: InkWell(
                                     onTap: () {
-                                      if(routeData==null){
+                                      if (routeData == null) {
                                         Data? temp = newFromSelectedStation;
                                         newFromSelectedStation =
                                             newToSelectedStation;
@@ -616,7 +628,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         FocusScope.of(context).unfocus();
                                         setState(() {});
                                       }
-
                                     },
                                     child: Container(
                                       width: 48,
@@ -648,7 +659,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               top: Dimensions.dp15),
                           child: CustomButton(
                             color: Theme.of(context).primaryColor,
-                            text: "Show Route & Fare",
+                            text: AppLocalizations.of(context)
+                                    ?.translate("showroutefare") ??
+                                "",
                             width: MediaQuery.of(context).size.width,
                             onPressed: () {
                               if (routeData != null) {
@@ -693,7 +706,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               top: Dimensions.dp14),
                           child: CustomButton(
                             color: Theme.of(context).primaryColor,
-                            text: "One Day Pass",
+                            text: AppLocalizations.of(context)
+                                    ?.translate("onedaypass") ??
+                                "",
                             width: MediaQuery.of(context).size.width,
                             onPressed: () {
                               Get.toNamed(RouteHelper.getoneDayPassRoute());
@@ -716,7 +731,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 margin: const EdgeInsets.only(
                     left: Dimensions.dp20, right: Dimensions.dp30),
                 child: Text(
-                  "Quick Links",
+                  AppLocalizations.of(context)?.translate("quicklinks") ?? "",
                   style: satoshiRegular.copyWith(
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
@@ -802,7 +817,7 @@ class _HomeScreenState extends State<HomeScreen> {
             height: Dimensions.dp4,
           ),
           Text(
-            model.title,
+            AppLocalizations.of(context)?.translate(model.title) ?? "",
             textAlign: TextAlign.center,
             style: satoshiRegular.copyWith(
                 fontSize: Dimensions.dp14.sp,

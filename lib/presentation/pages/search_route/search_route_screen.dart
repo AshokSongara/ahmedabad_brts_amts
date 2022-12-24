@@ -34,12 +34,12 @@ class _SearchRouteScreenState extends State<SearchRouteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.profileBackgroundGrey,
+      backgroundColor: AppColors.appBackground,
       body: Column(
         children: [
           SizedBox(height: Dimensions.dp25),
           CustomToolbar(
-            title: "Search Stop",
+            title: "search_route_number",
             showOption: false,
           ),
           Container(
@@ -99,38 +99,80 @@ class _SearchRouteScreenState extends State<SearchRouteScreen> {
             ),
           ),
           const SizedBox(
-            height: 20,
-          ),
-          const Divider(
-            height: 1,
-            color: AppColors.lightGray,
+            height: 10,
           ),
           Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.symmetric(horizontal: 34),
-              itemCount: localBrtsStopList.length,
-              itemBuilder: (context, index) {
-                return Column(
-                  children: [
-                    ListTile(
-                      title: Text(
-                        localBrtsStopList[index].routeName ?? "",
-                        style: satoshiRegular.copyWith(
-                            fontSize: Dimensions.dp18.sp,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.darkGray),
-                      ),
-                      onTap: () {
-                        Get.back(result: localBrtsStopList[index]);
-                      },
+            child: Card(
+              color: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+                //set border radius more than 50% of height and width to make circle
+              ),
+              margin: EdgeInsets.all(20),
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                itemCount: localBrtsStopList.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: EdgeInsets.only(top: 10),
+                    child: Column(
+                      children: [
+                        ListTile(
+                          title: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  SizedBox(
+                                    height: 24.h,
+                                    width: 24.h,
+                                    child: SvgPicture.asset(
+                                      ImageConstant.iBus,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5.w,
+                                  ),
+                                  Text(
+                                    localBrtsStopList[index].routeCode ?? "",
+                                    style: satoshiRegularSmallDark.copyWith(
+                                        fontSize: 22.sp),
+                                  ),
+                                  Spacer(),
+                                  InkWell(
+                                    onTap: () {
+
+                                    },
+                                    child: SvgPicture.asset(
+                                      ImageConstant.iUnselected,
+                                      color: Theme.of(context).primaryColor,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                localBrtsStopList[index].routeName ?? "",
+                                style: satoshiRegular.copyWith(
+                                    fontSize: Dimensions.dp18.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.darkGray),
+                              ),
+                            ],
+                          ),
+                          onTap: () {
+                            Get.back(result: localBrtsStopList[index]);
+                          },
+                        ),
+                        const Divider(
+                          height: 1,
+                          color: AppColors.lightGray,
+                        )
+                      ],
                     ),
-                    const Divider(
-                      height: 1,
-                      color: AppColors.lightGray,
-                    )
-                  ],
-                );
-              },
+                  );
+                },
+              ),
             ),
           )
         ],

@@ -3,6 +3,7 @@ import 'package:ahmedabad_brts_amts/data/requestmodels/stop_request_model.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/language/language_cubit.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/round_container_widget.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
@@ -49,6 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<LanguageCubit>().changeStartLang();
     return Scaffold(
         backgroundColor: Theme.of(context).primaryColor,
         body: Center(

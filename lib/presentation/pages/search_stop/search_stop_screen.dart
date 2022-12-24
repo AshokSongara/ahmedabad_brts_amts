@@ -40,7 +40,7 @@ class _SearchStopScreenState extends State<SearchStopScreen> {
         children: [
           SizedBox(height: Dimensions.dp25),
           CustomToolbar(
-            title: "Search Stop",
+            title: "search_stop",
             showOption: false,
           ),
           Container(
