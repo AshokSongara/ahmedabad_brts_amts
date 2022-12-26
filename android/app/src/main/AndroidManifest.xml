@@ -8,7 +8,8 @@
     <application
         android:label="ahmedabad_brts_amts"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
+        android:usesCleartextTraffic="true"
+        android:icon="@mipmap/ic_logo">
         <activity
             android:name=".MainActivity"
             android:exported="true"

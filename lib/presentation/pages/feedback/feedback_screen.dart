@@ -151,18 +151,22 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                     text: "Submit",
                     width: MediaQuery.of(context).size.width,
                     onPressed: () {
-                      BlocProvider.of<FeedbackBloc>(context).add(
-                        FeedbackSubmitEvent(
-                          FeedbackRequestModel(
-                            routeId: _routeController.text,
-                            waiting: 1,
-                            comfort: 2,
-                            crowding: 1,
-                            serviceQuality: 2,
-                            journey: "AtoB",
+                      if (_routeController.text.isEmpty) {
+                        showCustomSnackBar("Please Enter Route Code", context);
+                      } else {
+                        BlocProvider.of<FeedbackBloc>(context).add(
+                          FeedbackSubmitEvent(
+                            FeedbackRequestModel(
+                              routeId: _routeController.text,
+                              waiting: feedbackOne,
+                              comfort: feedbackTwo,
+                              crowding: feedbackThree,
+                              serviceQuality: feedbackThree,
+                              journey: "AtoB",
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      }
                     },
                     style: satoshiRegular.copyWith(
                         fontSize: Dimensions.dp18.sp,

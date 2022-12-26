@@ -154,9 +154,6 @@ class ApiClient extends GetxService {
   Future<Response> getDataWihHeader(String uri,
       {Map<String, String>? headers}) async {
     try {
-      if (foundation.kDebugMode) {
-        // print('====> API Call: $uri\nHeader: $_mainHeaders');
-      }
       http.Response _response = await http
           .get(
             Uri.parse(appBaseUrl! + uri),
@@ -204,6 +201,8 @@ class ApiClient extends GetxService {
       }
     } else if (_response.statusCode != 200 && _response.body == null) {
       _response = Response(statusCode: 0, statusText: noInternetMessage);
+    } else if (_response.statusCode == 401 && _response.body == null) {
+      _response = Response(statusCode: 401, statusText: "Please Login Again");
     }
     return _response;
   }

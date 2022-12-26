@@ -11,6 +11,7 @@ import 'package:ahmedabad_brts_amts/presentation/pages/lrf/login_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/mobile_number_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/reset_password_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/signup_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/maps/nearby_maps_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/my_routes/my_routes_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/near_by_search/search_stop_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/nearby/nearby_sreen.dart';
@@ -50,6 +51,7 @@ class RouteHelper {
   static const String nearBySearchStopScreen = '/nearBySearchStopScreen';
   static const String searchRouteScreen = '/searchRouteScreen';
   static const String changeLanguage = '/changeLanguage';
+  static const String nearbyMap = '/nearbyMap';
 
   static String getInitialRoute() => '$initial';
 
@@ -67,16 +69,16 @@ class RouteHelper {
   static String getDashboardRoute() => '$dashboard';
 
   static String getSearchResultRoute(String startRoute, String endRoute,
-          String startRouteName, String endRouteName) =>
+      String startRouteName, String endRouteName) =>
       '$searchResult?startRoute=$startRoute&endRoute=$endRoute&startRouteName=$startRouteName&endRouteName=$endRouteName';
 
-  static String getRouteDetailsRoute(
-          String startRouteName, String endRouteName) =>
+  static String getRouteDetailsRoute(String startRouteName,
+      String endRouteName) =>
       '$routeDetails?startRouteName=$startRouteName&endRouteName=$endRouteName';
 
   static String getPassengerDetailsRoute() => '$passengerDetails';
 
-  static String getCardDetailsRoute() => '$passengerDetails';
+  static String getCardDetailsRoute() => '$cardDetails';
 
   static String getNearByRoute() => '$nearBy';
 
@@ -97,10 +99,16 @@ class RouteHelper {
   static String getForgetPasswordRoute() => '$forgetPassword';
 
   static String getResetPasswordRoute() => '$resetPassword';
+
   static String getSearchStopScreenRoute() => '$searchStopScreen';
+
   static String getSearchRouteScreenRoute() => '$searchRouteScreen';
+
   static String getNearBySearchStopScreenRoute() => '$nearBySearchStopScreen';
+
   static String getChangeLangaugeScreenRoute() => '$changeLanguage';
+
+  static String getNearByMapScreenRoute() => '$nearbyMap';
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => const SplashScreen()),
@@ -111,21 +119,26 @@ class RouteHelper {
     GetPage(name: oneDayPassRoute, page: () => const OneDayPassScreen()),
     GetPage(name: contactUs, page: () => const ContactUsScreen()),
     GetPage(name: searchStopScreen, page: () => const SearchStopScreen()),
-    GetPage(name: nearBySearchStopScreen, page: () => const NearBySearchStopScreen()),
+    GetPage(
+        name: nearBySearchStopScreen,
+        page: () => const NearBySearchStopScreen()),
     GetPage(name: searchRouteScreen, page: () => const SearchRouteScreen()),
     GetPage(
         name: enterCode,
-        page: () => OtpVerificationScreen(
+        page: () =>
+            OtpVerificationScreen(
               mobileNumber: Get.parameters['mobile'],
             )),
     GetPage(
         name: dashboard,
-        page: () => DashboardScreen(
+        page: () =>
+            DashboardScreen(
               pageIndex: 0,
             )),
     GetPage(
         name: searchResult,
-        page: () => SearchResultScreen(
+        page: () =>
+            SearchResultScreen(
               startRoute: Get.parameters['startRoute'],
               endRoute: Get.parameters['endRoute'],
               startRouteName: Get.parameters['startRouteName'],
@@ -133,7 +146,8 @@ class RouteHelper {
             )),
     GetPage(
         name: routeDetails,
-        page: () => RouteDetailScreen(
+        page: () =>
+            RouteDetailScreen(
               startRouteName: Get.parameters['startRouteName'],
               endRouteName: Get.parameters['endRouteName'],
             )),
@@ -146,14 +160,14 @@ class RouteHelper {
     GetPage(name: payment, page: () => const PaymentDetailsScreen()),
     GetPage(
         name: booking,
-        page: () => BookingScreen(
+        page: () =>
+            BookingScreen(
               from: Get.parameters['from'],
             )),
     GetPage(name: forgetPassword, page: () => const ForgetPasswordScreen()),
     GetPage(name: resetPassword, page: () => const ResetPasswordScreen()),
     GetPage(name: changeLanguage, page: () => const ChooseLanguage()),
-    GetPage(
-        name: searchStopScreen,
-        page: () => const SearchStopScreen())
+    GetPage(name: searchStopScreen, page: () => const SearchStopScreen()),
+    GetPage(name: nearbyMap, page: () => const NearByMapsScreen())
   ];
 }

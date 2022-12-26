@@ -55,6 +55,8 @@ dependencies:
   paytm_allinonesdk: ^1.2.0
   get_storage: ^2.0.3
   intl: ^0.17.0
+  flutter_osm_plugin: ^0.42.0
+
 flutter_icons:
   android: true
   ios: true

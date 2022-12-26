@@ -30,5 +30,14 @@
   "payment_details": "ચુકવણીની વિગતો",
   "booking": "બુકિંગ",
   "search_stop": "શોધ સ્ટોપ",
-  "search_route_number": "રૂટ નંબર શોધો"
+  "search_route_number": "રૂટ નંબર શોધો",
+  "go_to_login": "લોગિન પર જાઓ",
+  "card_details": "કાર્ડ વિગતો",
+  "passenger_details": "પેસેન્જર વિગતો",
+  "smart_card_recharge": "સ્માર્ટ કાર્ડ રિચાર્જ",
+  "transaction_history": "વ્યવહાર ઇતિહાસ",
+  "invite_friends": "મિત્રોને આમંત્રિત કરો",
+  "contact_us": "અમારો સંપર્ક કરો",
+  "change_langauge": "ભાષા બદલો",
+  "signout": "સાઇનઆઉટ"
 }

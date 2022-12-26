@@ -26,7 +26,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
         children: [
           const SizedBox(height: Dimensions.dp25),
           CustomToolbar(
-            title: "Passenger Details",
+            title: "passenger_details",
             showOption: false,
           ),
           Container(

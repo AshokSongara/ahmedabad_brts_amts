@@ -14,6 +14,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/searc
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/splash_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/payment_details/payment_details_screen.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -122,7 +123,7 @@ class MyApp extends StatelessWidget {
                 themeMode: ThemeService().theme,
                 theme: Themes.light,
                 darkTheme: Themes.dark,
-                home: const SplashScreen(),
+                home: const PaymentDetailsScreen(),
                 initialRoute: RouteHelper.getInitialRoute(),
                 getPages: RouteHelper.routes,
               );

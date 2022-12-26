@@ -30,5 +30,15 @@
   "payment_details": "Payment Details",
   "booking": "Booking",
   "search_stop": "Search Stop",
-  "search_route_number": "Search route number"
+  "search_route_number": "Search route number",
+  "go_to_login": "Go To Login",
+  "card_details": "Card Details",
+  "passenger_details": "Passenger Details",
+  "smart_card_recharge": "Smart Card Recharge",
+  "transaction_history": "Transaction History",
+  "invite_friends": "Invite Friends",
+  "contact_us": "Contact Us",
+  "change_langauge": "Change Langauge",
+  "signout": "Signout"
+
 }

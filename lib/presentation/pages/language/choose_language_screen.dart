@@ -39,7 +39,7 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             SizedBox(height: Dimensions.dp25),
             CustomToolbar(
-              title: "Search Stop",
+              title: "choose_language",
               showOption: false,
             ),
             const SizedBox(

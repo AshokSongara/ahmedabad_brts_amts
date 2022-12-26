@@ -28,7 +28,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
   // String PAYTM_MERCHANT_KEY = "ssD7Oesu2CNmw6Xh";
   // String website = "WEBSTAGING";
   bool testing = true;
-  double amount = 50;
+  double amount = 500;
   bool loading = false;
 
   String orderId = "", txnToken = "";
@@ -46,8 +46,11 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
       'https://flutter-paytm-backend.herokuapp.com/generateTxnToken';
 
   String get mid => _mid;
+
   String get mKey => _mKey;
+
   String get website => _website;
+
   String get url => _url;
 
   @override
@@ -437,7 +440,8 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                         style: satoshiRegular.copyWith(
                                             fontSize: Dimensions.dp14.sp,
                                             fontWeight: FontWeight.w700,
-                                            color: Theme.of(context).primaryColor),
+                                            color:
+                                                Theme.of(context).primaryColor),
                                       ),
                                     ],
                                   ),
@@ -455,50 +459,50 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                   payment_response != null
                       ? Text('Response: $payment_response\n')
                       : Container(),
-//                loading
-//                    ? Center(
-//                        child: Container(
-//                            width: 50,
-//                            height: 50,
-//                            child: CircularProgressIndicator()),
-//                      )
-//                    : Container(),
-//                   ElevatedButton(
-//                     onPressed: () {
-//                       generateTxnToken(amount,"101");
-//                     },
-//                     child: Text(
-//                       "Pay using Wallet",
-//                       style: TextStyle(color: Colors.white),
-//                     ),
-//                   ),
-//                   ElevatedButton(
-//                     onPressed: () {
-//                       _startTransaction();
-//                     },
-//                     child: Text(
-//                       "Pay using Net Banking",
-//                       style: TextStyle(color: Colors.white),
-//                     ),
-//                   ),
-//                   ElevatedButton(
-//                     onPressed: () {
-//                       _startTransaction();
-//                     },
-//                     child: Text(
-//                       "Pay using UPI",
-//                       style: TextStyle(color: Colors.white),
-//                     ),
-//                   ),
-//                   ElevatedButton(
-//                     onPressed: () {
-//                       _startTransaction();
-//                     },
-//                     child: Text(
-//                       "Pay using Credit Card",
-//                       style: TextStyle(color: Colors.white),
-//                     ),
-//                   ),
+               loading
+                   ? Center(
+                       child: Container(
+                           width: 50,
+                           height: 50,
+                           child: CircularProgressIndicator()),
+                     )
+                   : Container(),
+                  ElevatedButton(
+                    onPressed: () {
+                      generateTxnToken(amount,"101");
+                    },
+                    child: Text(
+                      "Pay using Wallet",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      generateTxnToken(amount,"101");
+                    },
+                    child: Text(
+                      "Pay using Net Banking",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      generateTxnToken(amount,"101");
+                    },
+                    child: Text(
+                      "Pay using UPI",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      generateTxnToken(amount,"101");
+                    },
+                    child: Text(
+                      "Pay using Credit Card",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -507,6 +511,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
       ),
     );
   }
+
   Future<void> _startTransaction() async {
     if (txnToken.isEmpty) {
       return;
@@ -523,8 +528,15 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
     };
     print(sendMap);
     try {
-      var response = AllInOneSdk.startTransaction(mid, orderId, amount.toString(),
-          txnToken, callbackUrl, isStaging, restrictAppInvoke, enableAssist);
+      var response = AllInOneSdk.startTransaction(
+          mid,
+          orderId,
+          amount.toString(),
+          txnToken,
+          callbackUrl,
+          isStaging,
+          restrictAppInvoke,
+          enableAssist);
       response.then((value) {
         print(value);
         setState(() {
@@ -562,7 +574,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
 
   Future<void> generateTxnToken(double amount, String orderId) async {
     final callBackUrl =
-        'https://securegw.paytm.in/theia/paytmCallback?ORDER_ID=$orderId';
+        'https://securegw-stage.paytm.in/theia/paytmCallback?ORDER_ID=$orderId';
     final body = getMap(amount, callBackUrl, orderId);
 
     try {
@@ -590,7 +602,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
         txnToken,
         callBackUrl,
         true,
-        true,
+        false,
       );
       response.then((value) {
         // Transaction successfull
@@ -610,5 +622,4 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
       print(result);
     }
   }
-
 }

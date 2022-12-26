@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "John Doe",
+                              "Kapil Shah",
                               style: satoshiRegular.copyWith(
                                   fontSize: Dimensions.dp19,
                                   fontWeight: FontWeight.w500,
@@ -141,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      "M Ticket",
+                      AppLocalizations.of(context)?.translate("mticket") ?? "",
                       style: satoshiRegular.copyWith(
                           fontSize: Dimensions.dp19,
                           fontWeight: FontWeight.w500,
@@ -159,7 +159,25 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      "Routes",
+                      AppLocalizations.of(context)?.translate("smart_card_recharge") ?? "",
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp19,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
+                    onTap: () {
+                      Get.toNamed(RouteHelper.getCardDetailsRoute());
+                    },
+                  ),
+                  ListTile(
+                    leading: SvgPicture.asset(
+                      ImageConstant.iRoute,
+                      color: Colors.white,
+                      height: Dimensions.dp28,
+                      width: Dimensions.dp28,
+                    ),
+                    title: Text(
+                      AppLocalizations.of(context)?.translate("routes") ?? "",
                       style: satoshiRegular.copyWith(
                           fontSize: Dimensions.dp19,
                           fontWeight: FontWeight.w500,
@@ -177,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      "My Routes",
+                      AppLocalizations.of(context)?.translate("myroutes") ?? "",
                       style: satoshiRegular.copyWith(
                           fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
@@ -195,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      "Transit Map",
+                      AppLocalizations.of(context)?.translate("transitmap") ?? "",
                       style: satoshiRegular.copyWith(
                           fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
@@ -213,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      "Transaction History",
+                      AppLocalizations.of(context)?.translate("transaction_history") ?? "",
                       style: satoshiRegular.copyWith(
                           fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
@@ -231,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      "Feedback",
+                      AppLocalizations.of(context)?.translate("feedback") ?? "",
                       style: satoshiRegular.copyWith(
                           fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
@@ -249,7 +267,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      "Invite Friends",
+                      AppLocalizations.of(context)?.translate("invite_friends") ?? "",
                       style: satoshiRegular.copyWith(
                           fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
@@ -267,7 +285,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      "Contact Us",
+                      AppLocalizations.of(context)?.translate("contact_us") ?? "",
                       style: satoshiRegular.copyWith(
                           fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
@@ -279,13 +297,13 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   ListTile(
                     leading: SvgPicture.asset(
-                      ImageConstant.iCall,
+                      ImageConstant.iLangauge,
                       color: Colors.white,
                       height: Dimensions.dp28,
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      "Change Langauge",
+                      AppLocalizations.of(context)?.translate("change_langauge") ?? "",
                       style: satoshiRegular.copyWith(
                           fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
@@ -303,7 +321,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      "Signout",
+                      AppLocalizations.of(context)?.translate("signout") ?? "",
                       style: satoshiRegular.copyWith(
                           fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
@@ -313,7 +331,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       SharedPreferences preferences =
                           await SharedPreferences.getInstance();
                       await preferences.clear();
-                      Get.off(RouteHelper.splash);
+                      Get.offAllNamed(RouteHelper.login);
                     },
                   ),
                   const SizedBox(
@@ -795,13 +813,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget getGridItemWidget(QuickLinkInternalModel model) {
     return GestureDetector(
       onTap: () {
-        if (model.title == "Feedback") {
+        if (model.title == "feedback") {
           Get.toNamed(RouteHelper.getFeedbackRoute());
-        } else if (model.title == "My Routes") {
+        } else if (model.title == "myroutes") {
           Get.toNamed(RouteHelper.getMyRouteScreen());
-        } else if (model.title == "Routes") {
+        } else if (model.title == "routes") {
           Get.toNamed(RouteHelper.getNearByRoute());
-        } else if (model.title == "Smart Recharge") {
+        } else if (model.title == "smartrecharge") {
           Get.toNamed(RouteHelper.getPaymentDetailsRoute());
         }
       },

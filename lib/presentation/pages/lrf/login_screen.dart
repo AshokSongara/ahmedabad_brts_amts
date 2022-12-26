@@ -126,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             onSubmit: () {},
                             capitalization: TextCapitalization.words,
                             divider: false,
-                            hintText: "johndoe@gmail.com",
+                            hintText: "kapil@gmail.com",
                           ),
                           const SizedBox(
                             height: Dimensions.dp20,

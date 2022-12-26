@@ -154,7 +154,10 @@ class _NearByScreenState extends State<NearByScreen> {
                               color: Colors.transparent,
                               borderRadius: const BorderRadius.all(
                                   Radius.circular(Dimensions.dp50))),
-                          child: Container(
+                          child: GestureDetector(
+                            onTap: () {
+                              Get.toNamed(RouteHelper.nearbyMap);
+                            },
                             child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [

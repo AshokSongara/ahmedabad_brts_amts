@@ -23,10 +23,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance!.addPostFrameCallback((_){
       _pageIndex = widget.pageIndex;
       _pageController = PageController(initialPage: _pageIndex);
     // });
+
   }
 
   var ctime;

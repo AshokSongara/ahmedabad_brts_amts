@@ -35,7 +35,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
         children: [
           const SizedBox(height: Dimensions.dp25),
           CustomToolbar(
-            title: "Card Details",
+            title: "card_details",
             showOption: false,
           ),
           Container(

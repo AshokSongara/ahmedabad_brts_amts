@@ -31,6 +31,7 @@ class AppConstant {
   static String favouriteRouteList = "Favourite/List";
   static String deleteFavouriteRoute = "Favourite/Delete/";
   static String addFavouriteRoute = "Favourite/";
+  static String refreshToken = "User/refresh-token";
 
   //SharedPreferences Keys
   static String accessToken = "accessToken";
