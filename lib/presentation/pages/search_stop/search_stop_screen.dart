@@ -10,7 +10,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class SearchStopScreen extends StatefulWidget {
-  const SearchStopScreen({Key? key}) : super(key: key);
+  final String selectedLanguage;
+  const SearchStopScreen({Key? key,required this.selectedLanguage}) : super(key: key);
 
   @override
   _SearchStopScreenState createState() => _SearchStopScreenState();
@@ -114,7 +115,8 @@ class _SearchStopScreenState extends State<SearchStopScreen> {
                 return Column(
                   children: [
                     ListTile(
-                      title: Text(
+                      title: Text(widget.selectedLanguage == "gu"
+                          ?localBrtsStopList[index].stopNameGujarati??"":
                         localBrtsStopList[index].stopName ?? "",
                         style: satoshiRegular.copyWith(
                             fontSize: Dimensions.dp18.sp,

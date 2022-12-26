@@ -8,6 +8,7 @@ import 'package:ahmedabad_brts_amts/localization/app_localizations.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_state.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/language/language_cubit.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/source_destination_widget.dart';
@@ -43,12 +44,16 @@ class _HomeScreenState extends State<HomeScreen> {
   RouteData? routeData;
   Data? newFromSelectedStation, oldFromSelectedStation;
   Data? newToSelectedStation, oldToSelectedStation;
+  String? selectedLanguage;
 
   @override
   void initState() {
     super.initState();
     Future.delayed(const Duration(milliseconds: 100), () {
       ThemeService().switchTheme(isAmts);
+    });
+    context.read<LanguageCubit>().getCurrentSelectedLanguage().then((value) {
+      selectedLanguage=value;
     });
 
     BlocProvider.of<HomeScreenBloc>(context).add(
@@ -309,8 +314,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
-                    onTap: () {
-                      Get.toNamed(RouteHelper.getChangeLangaugeScreenRoute());
+                    onTap: () async{
+                      selectedLanguage= await Get.toNamed(RouteHelper.getChangeLangaugeScreenRoute()) as String;
                     },
                   ),
                   ListTile(
@@ -474,7 +479,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: GestureDetector(
                     onTap: () async {
                       routeData = await Get.toNamed(
-                          RouteHelper.getSearchRouteScreenRoute(),
+                          RouteHelper.getSearchRouteScreenRoute(selectedLanguage??""),
                           arguments: brtsRoutesResponseModel) as RouteData;
                       setState(() {});
                     },
@@ -558,7 +563,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             newFromSelectedStation;
                                         newFromSelectedStation = await Get.toNamed(
                                             RouteHelper
-                                                .getSearchStopScreenRoute(),
+                                                .getSearchStopScreenRoute(selectedLanguage??""),
                                             arguments: getSortedData(
                                                 oldToSelectedStation,
                                                 newToSelectedStation)) as Data;
@@ -603,7 +608,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               newToSelectedStation;
                                           newToSelectedStation = await Get.toNamed(
                                                   RouteHelper
-                                                      .getSearchStopScreenRoute(),
+                                                      .getSearchStopScreenRoute(selectedLanguage??""),
                                                   arguments: getSortedData(
                                                       oldFromSelectedStation,
                                                       newFromSelectedStation))

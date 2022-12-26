@@ -62,13 +62,14 @@ class RouteDataAdapter extends TypeAdapter<RouteData> {
       .._routeDestination = fields[5] as String?
       .._routeDestinationGujarati = fields[6] as String?
       .._routeVariant = fields[7] as String?
-      .._routeVariantGujarati = fields[8] as String?;
+      .._routeVariantGujarati = fields[8] as String?
+      ..isFav = fields[9] as bool?;
   }
 
   @override
   void write(BinaryWriter writer, RouteData obj) {
     writer
-      ..writeByte(9)
+      ..writeByte(10)
       ..writeByte(0)
       ..write(obj._routeCode)
       ..writeByte(1)
@@ -86,7 +87,9 @@ class RouteDataAdapter extends TypeAdapter<RouteData> {
       ..writeByte(7)
       ..write(obj._routeVariant)
       ..writeByte(8)
-      ..write(obj._routeVariantGujarati);
+      ..write(obj._routeVariantGujarati)
+      ..writeByte(9)
+      ..write(obj.isFav);
   }
 
   @override

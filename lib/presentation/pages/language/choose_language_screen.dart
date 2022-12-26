@@ -7,6 +7,7 @@ import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import '../../../utils/styles.dart';
 import '../../widgets/base/custom_button.dart';
 
@@ -106,12 +107,13 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
                 text: AppLocalizations.of(context)?.translate('save') ??
                     "",
                 width: MediaQuery.of(context).size.width,
-                onPressed: () {
+                onPressed: ()async {
                   if (!languageSelected) {
                     _languageList = LanguageList.english;
                     context.read<LanguageCubit>().changeLang(context, 'en');
                   }
-                  Navigator.of(context).pop();
+                  String? selectedLanguage =await context.read<LanguageCubit>().getCurrentSelectedLanguage();
+                  Get.back(result: selectedLanguage);
                 },
                 style: poppinsMedium.copyWith(
                     color: Colors.white, fontSize: 15.sp),

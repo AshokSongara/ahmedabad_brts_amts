@@ -19,4 +19,8 @@ class LanguageCubit extends Cubit<Locale?> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('lang', data);
   }
+  Future<String?> getCurrentSelectedLanguage() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString("lang");
+  }
 }
