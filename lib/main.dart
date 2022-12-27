@@ -123,7 +123,7 @@ class MyApp extends StatelessWidget {
                 themeMode: ThemeService().theme,
                 theme: Themes.light,
                 darkTheme: Themes.dark,
-                home: const PaymentDetailsScreen(),
+                home: const SplashScreen(),
                 initialRoute: RouteHelper.getInitialRoute(),
                 getPages: RouteHelper.routes,
               );

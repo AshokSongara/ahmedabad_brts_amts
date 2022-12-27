@@ -69,11 +69,11 @@ class RouteHelper {
   static String getDashboardRoute() => '$dashboard';
 
   static String getSearchResultRoute(String startRoute, String endRoute,
-      String startRouteName, String endRouteName) =>
+          String startRouteName, String endRouteName) =>
       '$searchResult?startRoute=$startRoute&endRoute=$endRoute&startRouteName=$startRouteName&endRouteName=$endRouteName';
 
-  static String getRouteDetailsRoute(String startRouteName,
-      String endRouteName) =>
+  static String getRouteDetailsRoute(
+          String startRouteName, String endRouteName) =>
       '$routeDetails?startRouteName=$startRouteName&endRouteName=$endRouteName';
 
   static String getPassengerDetailsRoute() => '$passengerDetails';
@@ -100,9 +100,12 @@ class RouteHelper {
 
   static String getResetPasswordRoute() => '$resetPassword';
 
-  static String getSearchStopScreenRoute(String selectedLanguage) => '$searchStopScreen?selectedLanguage=$selectedLanguage';
+  static String getSearchStopScreenRoute(String selectedLanguage) =>
+      '$searchStopScreen?selectedLanguage=$selectedLanguage';
 
-  static String getSearchRouteScreenRoute(String selectedLanguage) => '$searchRouteScreen?selectedLanguage=$selectedLanguage';
+  static String getSearchRouteScreenRoute(String selectedLanguage) =>
+      '$searchRouteScreen?selectedLanguage=$selectedLanguage';
+
   static String getNearBySearchStopScreenRoute() => '$nearBySearchStopScreen';
 
   static String getChangeLangaugeScreenRoute() => '$changeLanguage';
@@ -117,27 +120,31 @@ class RouteHelper {
     GetPage(name: mobileNumber, page: () => const MobileNumberScreen()),
     GetPage(name: oneDayPassRoute, page: () => const OneDayPassScreen()),
     GetPage(name: contactUs, page: () => const ContactUsScreen()),
-    GetPage(name: searchStopScreen, page: () => SearchStopScreen(selectedLanguage: Get.parameters['selectedLanguage']??"")),
+    GetPage(
+        name: searchStopScreen,
+        page: () => SearchStopScreen(
+            selectedLanguage: Get.parameters['selectedLanguage'] ?? "")),
     GetPage(
         name: nearBySearchStopScreen,
         page: () => const NearBySearchStopScreen()),
-    GetPage(name: searchRouteScreen, page: () => SearchRouteScreen(selectedLanguage: Get.parameters['selectedLanguage'],)),
+    GetPage(
+        name: searchRouteScreen,
+        page: () => SearchRouteScreen(
+              selectedLanguage: Get.parameters['selectedLanguage'],
+            )),
     GetPage(
         name: enterCode,
-        page: () =>
-            OtpVerificationScreen(
+        page: () => OtpVerificationScreen(
               mobileNumber: Get.parameters['mobile'],
             )),
     GetPage(
         name: dashboard,
-        page: () =>
-            DashboardScreen(
+        page: () => DashboardScreen(
               pageIndex: 0,
             )),
     GetPage(
         name: searchResult,
-        page: () =>
-            SearchResultScreen(
+        page: () => SearchResultScreen(
               startRoute: Get.parameters['startRoute'],
               endRoute: Get.parameters['endRoute'],
               startRouteName: Get.parameters['startRouteName'],
@@ -145,8 +152,7 @@ class RouteHelper {
             )),
     GetPage(
         name: routeDetails,
-        page: () =>
-            RouteDetailScreen(
+        page: () => RouteDetailScreen(
               startRouteName: Get.parameters['startRouteName'],
               endRouteName: Get.parameters['endRouteName'],
             )),
@@ -159,14 +165,12 @@ class RouteHelper {
     GetPage(name: payment, page: () => const PaymentDetailsScreen()),
     GetPage(
         name: booking,
-        page: () =>
-            BookingScreen(
+        page: () => BookingScreen(
               from: Get.parameters['from'],
             )),
     GetPage(name: forgetPassword, page: () => const ForgetPasswordScreen()),
     GetPage(name: resetPassword, page: () => const ResetPasswordScreen()),
     GetPage(name: changeLanguage, page: () => const ChooseLanguage()),
-    GetPage(name: searchStopScreen, page: () => const SearchStopScreen()),
     GetPage(name: nearbyMap, page: () => const NearByMapsScreen())
   ];
 }

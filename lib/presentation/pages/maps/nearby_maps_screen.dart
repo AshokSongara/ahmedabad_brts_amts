@@ -11,13 +11,7 @@ class NearByMapsScreen extends StatefulWidget {
 class _NearByMapsScreenState extends State<NearByMapsScreen> {
   MapController controller = MapController(
     initMapWithUserPosition: false,
-    initPosition: GeoPoint(latitude: 47.4358055, longitude: 8.4737324),
-    areaLimit: BoundingBox(
-      east: 10.4922941,
-      north: 47.8084648,
-      south: 45.817995,
-      west: 5.9559113,
-    ),
+    initPosition: GeoPoint(latitude: 23.194638, longitude: 72.42798),
   );
 
   @override
@@ -34,7 +28,7 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
   Widget build(BuildContext context) {
     return OSMFlutter(
       controller: controller,
-      trackMyPosition: false,
+      trackMyPosition: true,
       initZoom: 12,
       minZoomLevel: 8,
       maxZoomLevel: 14,
@@ -42,9 +36,9 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
       userLocationMarker: UserLocationMaker(
         personMarker: const MarkerIcon(
           icon: Icon(
-            Icons.location_history_rounded,
+            Icons.account_circle,
             color: Colors.red,
-            size: 48,
+            size: 76,
           ),
         ),
         directionArrowMarker: const MarkerIcon(

@@ -140,20 +140,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   ListTile(
                     leading: SvgPicture.asset(
-                      ImageConstant.iTicket,
+                      ImageConstant.iTransactionHistory,
                       color: Colors.white,
                       height: Dimensions.dp28,
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      AppLocalizations.of(context)?.translate("mticket") ?? "",
+                      AppLocalizations.of(context)?.translate("transaction_history") ?? "",
                       style: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp19,
+                          fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
                     onTap: () {
-                      Navigator.pop(context);
+                      Get.toNamed(RouteHelper.getBookingRoute("homes"));
                     },
                   ),
                   ListTile(
@@ -228,24 +228,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.pop(context);
                     },
                   ),
-                  ListTile(
-                    leading: SvgPicture.asset(
-                      ImageConstant.iTransactionHistory,
-                      color: Colors.white,
-                      height: Dimensions.dp28,
-                      width: Dimensions.dp28,
-                    ),
-                    title: Text(
-                      AppLocalizations.of(context)?.translate("transaction_history") ?? "",
-                      style: satoshiRegular.copyWith(
-                          fontSize: 19.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white),
-                    ),
-                    onTap: () {
-                      Get.toNamed(RouteHelper.getBookingRoute("homes"));
-                    },
-                  ),
+
                   ListTile(
                     leading: SvgPicture.asset(
                       ImageConstant.iChat,

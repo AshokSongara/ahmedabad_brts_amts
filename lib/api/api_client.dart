@@ -188,11 +188,11 @@ class ApiClient extends GetxService {
         _response.body != null &&
         _response.body is! String) {
       if (_response.body.toString().startsWith('{errors: [{code:')) {
-        ErrorResponse _errorResponse = ErrorResponse.fromJson(_response.body);
+        ErrorResponse errorResponse = ErrorResponse.fromJson(_response.body);
         _response = Response(
             statusCode: _response.statusCode,
             body: _response.body,
-            statusText: _errorResponse.errors![0].message);
+            statusText: errorResponse.errors![0].message);
       } else if (_response.body.toString().startsWith('{message')) {
         _response = Response(
             statusCode: _response.statusCode,

@@ -52,7 +52,6 @@ dependencies:
   location: ^4.4.0
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  paytm_allinonesdk: ^1.2.0
   get_storage: ^2.0.3
   intl: ^0.17.0
   flutter_osm_plugin: ^0.42.0
