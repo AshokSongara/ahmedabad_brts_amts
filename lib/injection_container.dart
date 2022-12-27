@@ -3,6 +3,7 @@ import 'package:ahmedabad_brts_amts/data/respositories/routes/route_repository_i
 import 'package:ahmedabad_brts_amts/data/respositories/user/user_repository_impl.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/routes/routes_repository.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/route/add_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/delete_route_list_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/nearme_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/search_route_usecase.dart';
@@ -33,6 +34,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'domain/usecases/user/feddback_usecase.dart';
 import 'presentation/blocs/forgetpassword/forget_password_bloc.dart';
 import 'presentation/blocs/notification/notification_bloc.dart';
+import 'presentation/blocs/search_route/search_route_bloc.dart';
 
 final injector = GetIt.instance;
 
@@ -88,6 +90,9 @@ Future<void> init() async {
   injector.registerFactory<NotificationBloc>(
     () => NotificationBloc(notificationUseCase: injector()),
   );
+  injector.registerFactory<SearchRouteBloc>(
+        () => SearchRouteBloc(injector()),
+  );
 
   injector.registerFactory<FavouriteRouteListBloc>(
     () => FavouriteRouteListBloc(
@@ -122,6 +127,7 @@ Future<void> init() async {
   injector.registerLazySingleton(() => FavouriteRouteListUseCase(injector()));
 
   injector.registerLazySingleton(() => DeleteRouteListUseCase(injector()));
+  injector.registerLazySingleton(() => AddRouteUseCase(injector()));
 
   injector.registerLazySingleton<UserRepository>(
     () => UserRepositoryImpl(

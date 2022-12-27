@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:ahmedabad_brts_amts/core/models/params.dart';
+import 'package:ahmedabad_brts_amts/data/requestmodels/delete_route_request.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/delete_favourite_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/favourite_route_response.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/delete_route_list_usecase.dart';
@@ -36,14 +37,13 @@ class FavouriteRouteListBloc
     } else if (event is DeleteFavouriteRouteEvent) {
       yield FavouriteRouteLoadingState();
       DeleteFavouriteResponse deleteFavouriteResponse =
-          await deleteRouteListUseCase(Params(data: event.routeId));
-
-      // if (deleteFavouriteResponse.succeeded == true) {
-      //   yield FavouriteRouteSuccessState(
-      //       favouriteRouteResponse: favouriteRouteResponse);
-      // } else {
-      //   yield FavouriteRouteFailedState(errorMessage: "Something Went Wrong");
-      // }
+          await deleteRouteListUseCase(Params(data: DeleteRouteRequest(routeId: event.routeId)));
+      if (deleteFavouriteResponse.succeeded == true) {
+        yield FavouriteDeleteRouteSuccessState(
+            favouriteRouteResponse: deleteFavouriteResponse);
+      } else {
+        yield FavouriteRouteFailedState(errorMessage: "Something Went Wrong");
+      }
     }
   }
 }

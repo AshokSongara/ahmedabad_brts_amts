@@ -396,26 +396,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: Dimensions.dp40,
                               width: Dimensions.dp65,
                               decoration: BoxDecoration(
-                                  color: isAmts
-                                      ? Theme.of(context).primaryColor
-                                      : Colors.white,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(Dimensions.dp50))),
-                              child: Center(
-                                child: Text(
-                                  "AMTS",
-                                  style: satoshiRegular.copyWith(
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: isAmts
-                                          ? Colors.white
-                                          : AppColors.darkGray),
-                                ),
-                              )),
-                          Container(
-                              height: Dimensions.dp40,
-                              width: Dimensions.dp65,
-                              decoration: BoxDecoration(
                                   color: !isAmts
                                       ? Theme.of(context).primaryColor
                                       : Colors.white,
@@ -428,6 +408,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w700,
                                       color: !isAmts
+                                          ? Colors.white
+                                          : AppColors.darkGray),
+                                ),
+                              )),
+                          Container(
+                              height: Dimensions.dp40,
+                              width: Dimensions.dp65,
+                              decoration: BoxDecoration(
+                                  color: isAmts
+                                      ? Theme.of(context).primaryColor
+                                      : Colors.white,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(Dimensions.dp50))),
+                              child: Center(
+                                child: Text(
+                                  "AMTS",
+                                  style: satoshiRegular.copyWith(
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: isAmts
                                           ? Colors.white
                                           : AppColors.darkGray),
                                 ),
@@ -463,7 +463,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () async {
                       routeData = await Get.toNamed(
                           RouteHelper.getSearchRouteScreenRoute(selectedLanguage??""),
-                          arguments: brtsRoutesResponseModel) as RouteData;
+                          arguments: [brtsRoutesResponseModel,isAmts]) as RouteData;
                       setState(() {});
                     },
                     child: Row(
@@ -705,6 +705,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: Dimensions.dp53,
                           ),
                         ),
+                        if(isAmts)
                         Container(
                           margin: const EdgeInsets.only(
                               left: Dimensions.dp10,

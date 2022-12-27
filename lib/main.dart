@@ -31,6 +31,7 @@ import 'injection_container.dart' as di;
 import 'localization/app_localizations.dart';
 import 'presentation/blocs/feedback/feedback_bloc.dart';
 import 'presentation/blocs/language/language_cubit.dart';
+import 'presentation/blocs/search_route/search_route_bloc.dart';
 import 'presentation/blocs/verify_otp/verify_otp_bloc.dart';
 import 'utils/app_colors.dart';
 
@@ -90,6 +91,9 @@ void main() async {
         ),
         BlocProvider<FavouriteRouteListBloc>(
           create: (context) => injector<FavouriteRouteListBloc>(),
+        ),
+        BlocProvider<SearchRouteBloc>(
+          create: (context) => injector<SearchRouteBloc>(),
         ),
       ],
       child: MyApp(),

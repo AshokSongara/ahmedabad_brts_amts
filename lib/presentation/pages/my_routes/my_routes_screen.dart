@@ -56,9 +56,13 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
       backgroundColor: AppColors.appBackground,
       body: BlocConsumer<FavouriteRouteListBloc, FavouriteRouteListState>(
         listener: (context, state) {
-          if (state is FavouriteRouteLoadingState) {
+          if (state is FavouriteDeleteRouteSuccessState) {
+            Loader.hide();
+            getData();
+          }
+          else if (state is FavouriteRouteLoadingState) {
             Loader.show(context);
-          } else if (state is FavouriteRouteSuccessState) {
+          } else {
             Loader.hide();
           }
         },

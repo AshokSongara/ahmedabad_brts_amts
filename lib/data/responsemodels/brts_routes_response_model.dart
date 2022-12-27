@@ -95,8 +95,8 @@ class RouteData extends HiveObject{
   @HiveField(8)
   String? _routeVariantGujarati;
   @HiveField(9)
-  bool? isFav = false;
-  setFav(bool? isFav){
+  bool isFav = false;
+  setFav(bool isFav){
     this.isFav =isFav;
   }
 RouteData copyWith({  String? routeCode,

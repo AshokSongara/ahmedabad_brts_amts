@@ -138,10 +138,10 @@ class UserRepositoryImpl implements UserRepository {
 
         return brtsBox.get("key");
       } else {
-        BrtsStopResponseModel stopResponseModel =
-            BrtsStopResponseModel.fromJson(response.body);
-        getLocalBrtsStopData().put("key", stopResponseModel);
-        print("from Hive side");
+        // BrtsStopResponseModel stopResponseModel =
+        //     BrtsStopResponseModel.fromJson(response.body);
+        // getLocalBrtsStopData().put("key", stopResponseModel);
+        // print("from Hive side");
         return brtsBox.get("key");
       }
     } else {
@@ -153,10 +153,10 @@ class UserRepositoryImpl implements UserRepository {
 
         return amtsBox.get("key");
       } else {
-        BrtsStopResponseModel stopResponseModel =
-            BrtsStopResponseModel.fromJson(response.body);
-        getLocalAmtsStopData().put("key", stopResponseModel);
-        print("from Hive side");
+        // BrtsStopResponseModel stopResponseModel =
+        //     BrtsStopResponseModel.fromJson(response.body);
+        // getLocalAmtsStopData().put("key", stopResponseModel);
+        // print("from Hive side");
         return amtsBox.get("key");
       }
     }
@@ -178,9 +178,9 @@ class UserRepositoryImpl implements UserRepository {
 
         return brtsBox.get("key");
       } else {
-        BrtsRoutesResponseModel stopResponseModel =
-            BrtsRoutesResponseModel.fromJson(response.body);
-        getLocalBrtsRoutesData().put("key", stopResponseModel);
+        // BrtsRoutesResponseModel stopResponseModel =
+        //     BrtsRoutesResponseModel.fromJson(response.body);
+        // getLocalBrtsRoutesData().put("key", stopResponseModel);
         print("getRoutes from Hive side");
         return brtsBox.get("key");
       }
@@ -193,9 +193,9 @@ class UserRepositoryImpl implements UserRepository {
 
         return amtsBox.get("key");
       } else {
-        BrtsRoutesResponseModel stopResponseModel =
-            BrtsRoutesResponseModel.fromJson(response.body);
-        getLocalAmtsRoutesData().put("key", stopResponseModel);
+        // BrtsRoutesResponseModel stopResponseModel =
+        //     BrtsRoutesResponseModel.fromJson(response.body);
+        // getLocalAmtsRoutesData().put("key", stopResponseModel);
         print("from Hive side");
         return amtsBox.get("key");
       }

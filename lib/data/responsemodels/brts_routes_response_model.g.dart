@@ -63,7 +63,7 @@ class RouteDataAdapter extends TypeAdapter<RouteData> {
       .._routeDestinationGujarati = fields[6] as String?
       .._routeVariant = fields[7] as String?
       .._routeVariantGujarati = fields[8] as String?
-      ..isFav = fields[9] as bool?;
+      ..isFav = fields[9] as bool;
   }
 
   @override

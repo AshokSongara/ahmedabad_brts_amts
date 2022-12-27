@@ -6,12 +6,14 @@ import 'package:ahmedabad_brts_amts/data/requestmodels/delete_route_request.dart
 import 'package:ahmedabad_brts_amts/data/requestmodels/nearme_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/search_route_request.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/add_route_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/delete_favourite_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/nearme_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/search_route_response.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/routes/routes_repository.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RouteRepositoryImpl implements RouteRepository {
@@ -65,13 +67,30 @@ class RouteRepositoryImpl implements RouteRepository {
   @override
   Future<AddRouteResponse> addRoute(AddRouteRequest body) async {
     Map data = {};
-
+    // BrtsRoutesResponseModel? model = isAmts
+    //     ? getLocalAmtsRoutesData().get("key")
+    //     : getLocalBrtsRoutesData().get("key");
     var bodyData = json.encode(data);
 
     Response response = await apiClient.postDataWithHeader(
         "${AppConstant.addFavouriteRoute}${body.routeID}", bodyData);
     AddRouteResponse addRouteResponse =
         AddRouteResponse.fromJson(response.body);
+    if(!response.hasError){
+      body.isAmts
+          ? getLocalAmtsRoutesData().putAt(0, body.model)
+          : getLocalBrtsRoutesData().putAt(0, body.model);
+    }
     return addRouteResponse;
+  }
+
+  @override
+  Box<BrtsRoutesResponseModel> getLocalBrtsRoutesData() {
+    return Hive.box<BrtsRoutesResponseModel>(AppConstant.brtsRoutesListBox);
+  }
+
+  @override
+  Box<BrtsRoutesResponseModel> getLocalAmtsRoutesData() {
+    return Hive.box<BrtsRoutesResponseModel>(AppConstant.amtsRoutesListBox);
   }
 }
