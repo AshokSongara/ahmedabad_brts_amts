@@ -21,6 +21,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_
 import 'package:ahmedabad_brts_amts/presentation/blocs/feedback/feedback_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/near_by_map/near_by_map_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobile_number_login_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_bloc.dart';
@@ -93,7 +94,9 @@ Future<void> init() async {
   injector.registerFactory<SearchRouteBloc>(
         () => SearchRouteBloc(injector()),
   );
-
+  injector.registerFactory<NearByMapBloc>(
+        () => NearByMapBloc( nearmeRouteUseCase: injector()),
+  );
   injector.registerFactory<FavouriteRouteListBloc>(
     () => FavouriteRouteListBloc(
         favouriteRouteListUseCase: injector(),

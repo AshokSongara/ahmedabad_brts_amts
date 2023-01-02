@@ -225,7 +225,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     onTap: () {
-                      Navigator.pop(context);
+                      Get.toNamed(RouteHelper.getNearByMapScreenRoute());
+                      // Navigator.pop(context);
                     },
                   ),
 
