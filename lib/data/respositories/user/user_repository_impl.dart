@@ -78,6 +78,8 @@ class UserRepositoryImpl implements UserRepository {
         await apiClient.postData(AppConstant.loginInterface, bodyData);
     LoginResponse loginResponse = LoginResponse.fromJson(response.body);
 
+    apiClient.updateHeader(loginResponse.data?.accessToken ?? "");
+
     return loginResponse;
   }
 
@@ -243,6 +245,21 @@ class UserRepositoryImpl implements UserRepository {
         await apiClient.getDataWihHeader(AppConstant.userProfile);
     UserProfileResponse userProfileResponse =
         UserProfileResponse.fromJson(response.body);
+    return userProfileResponse;
+  }
+
+  @override
+  Future<UserProfileResponse> updateProfile(body) async {
+    Map data = {
+      'firstName': body.firstName ?? "",
+      'lastName': body.lastName ?? "",
+    };
+    var bodyData = json.encode(data);
+
+    Response response =
+    await apiClient.postDataWithHeader(AppConstant.updateProfile,bodyData);
+    UserProfileResponse userProfileResponse =
+    UserProfileResponse.fromJson(response.body);
     return userProfileResponse;
   }
 

@@ -19,8 +19,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 
-import '../../widgets/base/custom_search_bar.dart';
-
 class NearByScreen extends StatefulWidget {
   const NearByScreen({Key? key}) : super(key: key);
 

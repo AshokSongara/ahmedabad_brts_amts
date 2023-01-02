@@ -13,6 +13,7 @@ import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/source_destination_widget.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
+import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
@@ -45,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Data? newFromSelectedStation, oldFromSelectedStation;
   Data? newToSelectedStation, oldToSelectedStation;
   String? selectedLanguage;
+  String userName = "Guest User";
 
   @override
   void initState() {
@@ -53,8 +55,10 @@ class _HomeScreenState extends State<HomeScreen> {
       ThemeService().switchTheme(isAmts);
     });
     context.read<LanguageCubit>().getCurrentSelectedLanguage().then((value) {
-      selectedLanguage=value;
+      selectedLanguage = value;
     });
+
+    getMemberID();
 
     BlocProvider.of<HomeScreenBloc>(context).add(
         GetAvailableStopsEvent(StopRequestModel(stopType: isAmts ? 2 : 1)));
@@ -68,6 +72,20 @@ class _HomeScreenState extends State<HomeScreen> {
     quickLinkList.add(QuickLinkInternalModel("myroutes", ImageConstant.iRate));
     quickLinkList.add(QuickLinkInternalModel("transitmap", ImageConstant.iMap));
     quickLinkList.add(QuickLinkInternalModel("feedback", ImageConstant.iChat));
+  }
+
+  getMemberID() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    AppConstant.IsLoggedIn = prefs.getString(AppConstant.accessToken) ?? "";
+    AppConstant.nameData = prefs.getString(AppConstant.name) ?? "";
+    AppConstant.emailData = prefs.getString(AppConstant.email) ?? "";
+    AppConstant.lastNameData = prefs.getString(AppConstant.lastName) ?? "";
+
+    if (AppConstant.IsLoggedIn.isNotEmpty) {
+      userName = prefs.getString(AppConstant.name) ?? "Guest User";
+    }else {
+      userName = "Guest User";
+    }
   }
 
   @override
@@ -113,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Kapil Shah",
+                              userName,
                               style: satoshiRegular.copyWith(
                                   fontSize: Dimensions.dp19,
                                   fontWeight: FontWeight.w500,
@@ -146,7 +164,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      AppLocalizations.of(context)?.translate("transaction_history") ?? "",
+                      AppLocalizations.of(context)
+                              ?.translate("transaction_history") ??
+                          "",
                       style: satoshiRegular.copyWith(
                           fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
@@ -164,7 +184,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      AppLocalizations.of(context)?.translate("smart_card_recharge") ?? "",
+                      AppLocalizations.of(context)
+                              ?.translate("smart_card_recharge") ??
+                          "",
                       style: satoshiRegular.copyWith(
                           fontSize: Dimensions.dp19,
                           fontWeight: FontWeight.w500,
@@ -189,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     onTap: () {
-                      Get.toNamed(RouteHelper.getNearByRoute());
+                      Get.toNamed(RouteHelper.getMyRouteScreen());
                     },
                   ),
                   ListTile(
@@ -218,7 +240,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      AppLocalizations.of(context)?.translate("transitmap") ?? "",
+                      AppLocalizations.of(context)?.translate("transitmap") ??
+                          "",
                       style: satoshiRegular.copyWith(
                           fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
@@ -229,7 +252,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       // Navigator.pop(context);
                     },
                   ),
-
                   ListTile(
                     leading: SvgPicture.asset(
                       ImageConstant.iChat,
@@ -256,7 +278,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      AppLocalizations.of(context)?.translate("invite_friends") ?? "",
+                      AppLocalizations.of(context)
+                              ?.translate("invite_friends") ??
+                          "",
                       style: satoshiRegular.copyWith(
                           fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
@@ -274,7 +298,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      AppLocalizations.of(context)?.translate("contact_us") ?? "",
+                      AppLocalizations.of(context)?.translate("contact_us") ??
+                          "",
                       style: satoshiRegular.copyWith(
                           fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
@@ -292,14 +317,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      AppLocalizations.of(context)?.translate("change_langauge") ?? "",
+                      AppLocalizations.of(context)
+                              ?.translate("change_langauge") ??
+                          "",
                       style: satoshiRegular.copyWith(
                           fontSize: 19.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
-                    onTap: () async{
-                      selectedLanguage= await Get.toNamed(RouteHelper.getChangeLangaugeScreenRoute()) as String;
+                    onTap: () async {
+                      selectedLanguage = await Get.toNamed(
+                          RouteHelper.getChangeLangaugeScreenRoute()) as String;
                     },
                   ),
                   ListTile(
@@ -463,8 +491,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: GestureDetector(
                     onTap: () async {
                       routeData = await Get.toNamed(
-                          RouteHelper.getSearchRouteScreenRoute(selectedLanguage??""),
-                          arguments: [brtsRoutesResponseModel,isAmts]) as RouteData;
+                              RouteHelper.getSearchRouteScreenRoute(
+                                  selectedLanguage ?? ""),
+                              arguments: [brtsRoutesResponseModel, isAmts])
+                          as RouteData;
                       setState(() {});
                     },
                     child: Row(
@@ -547,7 +577,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             newFromSelectedStation;
                                         newFromSelectedStation = await Get.toNamed(
                                             RouteHelper
-                                                .getSearchStopScreenRoute(selectedLanguage??""),
+                                                .getSearchStopScreenRoute(
+                                                    selectedLanguage ?? ""),
                                             arguments: getSortedData(
                                                 oldToSelectedStation,
                                                 newToSelectedStation)) as Data;
@@ -592,7 +623,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                               newToSelectedStation;
                                           newToSelectedStation = await Get.toNamed(
                                                   RouteHelper
-                                                      .getSearchStopScreenRoute(selectedLanguage??""),
+                                                      .getSearchStopScreenRoute(
+                                                          selectedLanguage ?? ""),
                                                   arguments: getSortedData(
                                                       oldFromSelectedStation,
                                                       newFromSelectedStation))
@@ -706,28 +738,28 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: Dimensions.dp53,
                           ),
                         ),
-                        if(isAmts)
-                        Container(
-                          margin: const EdgeInsets.only(
-                              left: Dimensions.dp10,
-                              right: Dimensions.dp10,
-                              top: Dimensions.dp14),
-                          child: CustomButton(
-                            color: Theme.of(context).primaryColor,
-                            text: AppLocalizations.of(context)
-                                    ?.translate("onedaypass") ??
-                                "",
-                            width: MediaQuery.of(context).size.width,
-                            onPressed: () {
-                              Get.toNamed(RouteHelper.getoneDayPassRoute());
-                            },
-                            style: satoshiRegular.copyWith(
-                                fontSize: 20.sp,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.white),
-                            height: Dimensions.dp53,
+                        if (isAmts)
+                          Container(
+                            margin: const EdgeInsets.only(
+                                left: Dimensions.dp10,
+                                right: Dimensions.dp10,
+                                top: Dimensions.dp14),
+                            child: CustomButton(
+                              color: Theme.of(context).primaryColor,
+                              text: AppLocalizations.of(context)
+                                      ?.translate("onedaypass") ??
+                                  "",
+                              width: MediaQuery.of(context).size.width,
+                              onPressed: () {
+                                Get.toNamed(RouteHelper.getoneDayPassRoute());
+                              },
+                              style: satoshiRegular.copyWith(
+                                  fontSize: 20.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: Colors.white),
+                              height: Dimensions.dp53,
+                            ),
                           ),
-                        ),
                       ],
                     ),
                   ),
@@ -810,7 +842,7 @@ class _HomeScreenState extends State<HomeScreen> {
         } else if (model.title == "routes") {
           Get.toNamed(RouteHelper.getNearByRoute());
         } else if (model.title == "smartrecharge") {
-          Get.toNamed(RouteHelper.getPaymentDetailsRoute());
+          Get.toNamed(RouteHelper.getCardDetailsRoute());
         }
       },
       child: Column(

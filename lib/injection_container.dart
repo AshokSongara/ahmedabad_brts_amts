@@ -53,7 +53,8 @@ Future<void> init() async {
   );
 
   injector.registerFactory<LoginBloc>(
-    () => LoginBloc(loginUserUseCase: injector()),
+    () =>
+        LoginBloc(loginUserUseCase: injector(), userProfileUseCase: injector()),
   );
 
   injector.registerFactory<MobileNumberLoginBloc>(

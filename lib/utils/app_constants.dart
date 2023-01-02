@@ -27,6 +27,7 @@ class AppConstant {
   static String searchRouteList = "Route/plan/start/";
   static String forgetPassword = "User/forgot-password";
   static String userProfile = "User/user-profile";
+  static String updateProfile = "User/user-profile/update";
   static String notifications = "Notification/List";
   static String favouriteRouteList = "Favourite/List";
   static String deleteFavouriteRoute = "Favourite/Delete/";
@@ -36,6 +37,13 @@ class AppConstant {
   //SharedPreferences Keys
   static String accessToken = "accessToken";
   static String email = "email";
+  static String name = "name";
+  static String lastName = "lastname";
+
+  static String IsLoggedIn = "";
+  static String emailData = "";
+  static String nameData = "";
+  static String lastNameData = "";
 
   static List<TextDto> orderList = [
     TextDto("Your order has been placed", "+ 11 Stops"),

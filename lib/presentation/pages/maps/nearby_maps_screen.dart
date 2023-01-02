@@ -5,7 +5,9 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/near_by_map/near_by_map_b
 import 'package:ahmedabad_brts_amts/presentation/blocs/near_by_map/near_by_map_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/near_by_map/near_by_map_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
+import 'package:ahmedabad_brts_amts/presentation/widgets/base/dashedLine_painter.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
+import 'package:ahmedabad_brts_amts/utils/app_util.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
@@ -59,7 +61,7 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
           children: [
             const SizedBox(height: Dimensions.dp25),
             CustomToolbar(
-              title: "Near You",
+              title: "near_you",
               showOption: false,
             ),
             Expanded(
@@ -126,37 +128,45 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
                 ],
               ),
             ),
-              Expanded(
-                flex: 2,
-                child:nearMeResponse != null? ListView.builder(
-                    itemCount: nearMeResponse?.data?.length ?? 0,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        title: Text(
-                          (nearMeResponse?.data?[index].stopName ?? "")
-                              .toUpperCase(),
-                          style: satoshiRegular.copyWith(
-                              fontSize: 19.sp,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.darkGray),
-                        ),
-                        trailing: Text(
-                            "${nearMeResponse?.data?[index].distance} Mtr",
+            Expanded(
+              flex: 2,
+              child: nearMeResponse != null
+                  ? ListView.separated(
+                      padding: EdgeInsets.zero,
+                      itemCount: nearMeResponse?.data?.length ?? 0,
+                      separatorBuilder: (context, index) => Container(
+                          margin: const EdgeInsets.only(
+                              left: Dimensions.dp20, right: Dimensions.dp20),
+                          child: CustomPaint(painter: DashedLinePainter())),
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(
+                            (nearMeResponse?.data?[index].stopName ?? "")
+                                .toUpperCase(),
                             style: satoshiRegular.copyWith(
                                 fontSize: 19.sp,
                                 fontWeight: FontWeight.w500,
-                                color: AppColors.gray555555)),
-                        onTap: () {
-                          controller.changeLocation(GeoPoint(
-                              latitude:
-                                  nearMeResponse?.data?[index].latitude ?? 0,
-                              longitude:
-                                  nearMeResponse?.data?[index].longitude ?? 0));
-                          setState(() {});
-                        },
-                      );
-                    }):Container(),
-              ),
+                                color: AppColors.darkGray),
+                          ),
+                          trailing: Text(
+                              "${getDistanceInMeters(nearMeResponse?.data?[index].distance.toString() ?? "")} Mtr",
+                              style: satoshiRegular.copyWith(
+                                  fontSize: 19.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.gray555555)),
+                          onTap: () {
+                            controller.changeLocation(GeoPoint(
+                                latitude:
+                                    nearMeResponse?.data?[index].latitude ?? 0,
+                                longitude:
+                                    nearMeResponse?.data?[index].longitude ??
+                                        0));
+                            setState(() {});
+                          },
+                        );
+                      })
+                  : Container(),
+            ),
           ],
         );
       }),

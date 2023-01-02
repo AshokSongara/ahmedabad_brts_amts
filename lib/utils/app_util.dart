@@ -20,3 +20,8 @@ String getDateTime(String dateTimeData) {
   var dateLocal = dateTime.toLocal();
   return dateLocal.toString();
 }
+
+String getDistanceInMeters(String distance){
+  double convertedDistance = double.parse((double.parse(distance)).toStringAsFixed(2));
+  return "${convertedDistance} Mtrs";
+}

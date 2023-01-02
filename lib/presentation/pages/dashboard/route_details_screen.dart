@@ -31,7 +31,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
       backgroundColor: AppColors.appBackground,
       body: Column(children: [
         const SizedBox(height: 25),
-        CustomToolbar(title: "Route Details"),
+        CustomToolbar(title: "રૂટ વિગતો"),
         Container(
           padding: const EdgeInsets.only(top: 15, bottom: 15),
           color: Colors.white,

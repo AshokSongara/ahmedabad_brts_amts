@@ -35,6 +35,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
 
+
+  @override
+  void initState() {
+    super.initState();
+    clearData();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -260,5 +267,10 @@ class _LoginScreenState extends State<LoginScreen> {
     prefs.setString(AppConstant.accessToken, token ?? "");
     prefs.setString(AppConstant.email, email ?? "");
     Get.toNamed(RouteHelper.dashboard);
+  }
+
+  clearData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
   }
 }

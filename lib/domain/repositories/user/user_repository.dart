@@ -1,6 +1,7 @@
 import 'package:ahmedabad_brts_amts/core/models/params.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/mobile_number_otp_request_param.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/otp_request.dart';
+import 'package:ahmedabad_brts_amts/data/requestmodels/profile_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/signup_request.dart';
 import 'package:ahmedabad_brts_amts/data/responseModels/signup_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
@@ -36,4 +37,5 @@ abstract class UserRepository {
   Future<UserProfileResponse> getProfileData();
   Future<NotificationResponse> getNotificationsData();
   Future<FavouriteRouteResponse> getFavouriteRouteListData();
+  Future<UserProfileResponse> updateProfile(ProfileRequest body);
 }

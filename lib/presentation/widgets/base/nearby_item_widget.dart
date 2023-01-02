@@ -1,4 +1,5 @@
 import 'package:ahmedabad_brts_amts/data/responsemodels/nearme_response.dart';
+import 'package:ahmedabad_brts_amts/utils/app_util.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -34,7 +35,7 @@ class NearByItemWidget extends StatelessWidget {
             ),
           ),
           Text(
-            nearme.distance.toString(),
+            getDistanceInMeters(nearme.distance.toString()),
             style: satoshiRegularSmall.copyWith(
                 color: AppColors.gray777777, fontWeight: FontWeight.w400),
           )

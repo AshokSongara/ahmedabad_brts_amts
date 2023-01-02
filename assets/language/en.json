@@ -21,8 +21,8 @@
   "quicklinks": "Quick Links",
   "mticket": "M Ticket",
   "smartrecharge": "Smart Recharge",
-  "routes": "Favourites",
-  "myroutes": "My Routes",
+  "routes": "Routes",
+  "myroutes": "Favourites",
   "transitmap": "Transit Map",
   "feedback": "Feedback",
   "search_result": "Search Result",
@@ -39,6 +39,7 @@
   "invite_friends": "Invite Friends",
   "contact_us": "Contact Us",
   "change_langauge": "Change Langauge",
-  "signout": "Signout"
+  "signout": "Signout",
+  "route_detail": "Route Details"
 
 }
