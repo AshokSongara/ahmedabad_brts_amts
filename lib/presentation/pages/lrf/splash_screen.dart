@@ -11,6 +11,7 @@ import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -89,8 +90,13 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: Dimensions.dp25,
               ),
               GestureDetector(
-                onTap: () {
-                  Get.toNamed(RouteHelper.getLoginRoute());
+                onTap: () async{
+                  const platformMethodChannel = MethodChannel('nativeChannel');
+                  await platformMethodChannel.invokeMethod('setToast', {
+                    'myText':'This text will show in toast by native channel',
+                  });
+
+                  // Get.toNamed(RouteHelper.getLoginRoute());
                 },
                 child: const RoundContainerWidget(
                     imagePath: ImageConstant.iMail,
