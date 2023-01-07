@@ -29,9 +29,9 @@ class Loader {
                   filter: ImageFilter.blur(sigmaX: _blur, sigmaY: _blur),
                   child: Center(
                     child: Container(
-                      padding: EdgeInsets.all(_boxPadding),
-                      decoration: BoxDecoration(
-                        color: const Color(0xffffffff),
+                      padding: const EdgeInsets.all(_boxPadding),
+                      decoration: const BoxDecoration(
+                        color: Color(0xffffffff),
                         borderRadius: BorderRadius.all(
                           Radius.circular(_boxRadius),
                         ),
@@ -42,9 +42,9 @@ class Loader {
                 )
               : Center(
                   child: Container(
-                    padding: EdgeInsets.all(_boxPadding),
-                    decoration: BoxDecoration(
-                      color: const Color(0xffffffff),
+                    padding: const EdgeInsets.all(_boxPadding),
+                    decoration: const BoxDecoration(
+                      color: Color(0xffffffff),
                       borderRadius: BorderRadius.all(
                         Radius.circular(_boxRadius),
                       ),

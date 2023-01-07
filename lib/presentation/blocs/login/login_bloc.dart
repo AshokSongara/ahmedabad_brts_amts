@@ -8,7 +8,6 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_state.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:bloc/bloc.dart';
-import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
@@ -25,9 +24,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       LoginResponse loginResponse =
           await loginUserUseCase(Params(data: event.loginRequest));
 
-      UserProfileResponse userProfileResponse =
-          await userProfileUseCase(Params(data: ""));
-      saveMemberID(userProfileResponse);
+      if (loginResponse.succeeded == true) {
+        UserProfileResponse userProfileResponse =
+            await userProfileUseCase(Params(data: ""));
+        saveMemberID(userProfileResponse);
+      }
 
       if (loginResponse.succeeded == true) {
         yield LoginSuccessState(loginResponse: loginResponse);
@@ -41,11 +42,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   saveMemberID(UserProfileResponse userProfileResponse) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(
-        AppConstant.name,
-        userProfileResponse.data?.firstName ?? "");
+        AppConstant.name, userProfileResponse.data?.firstName ?? "");
     prefs.setString(
-        AppConstant.lastName,
-        userProfileResponse.data?.lastName ?? "");
+        AppConstant.lastName, userProfileResponse.data?.lastName ?? "");
   }
 
   saveToken(LoginResponse loginResponse) async {

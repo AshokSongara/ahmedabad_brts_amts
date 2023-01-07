@@ -5,10 +5,10 @@ import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dar
 
 import '../../../core/usecases/usecase.dart';
 
-class UserProfileUseCase implements UseCase<UserProfileResponse, Params> {
+class UserUpdateProfileUseCase implements UseCase<UserProfileResponse, Params> {
   final UserRepository userRepository;
 
-  UserProfileUseCase(this.userRepository);
+  UserUpdateProfileUseCase(this.userRepository);
 
   @override
   Future<UserProfileResponse> call(Params params) {

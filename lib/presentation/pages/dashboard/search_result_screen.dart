@@ -70,7 +70,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                           return GestureDetector(
                               onTap: () {
                                 Get.toNamed(
-                                    RouteHelper.getRouteDetailsRoute("", ""));
+                                    RouteHelper.getRouteDetailsRoute("", "","","",""));
                               },
                               child: SearchResultItem(
                                 routeResult:

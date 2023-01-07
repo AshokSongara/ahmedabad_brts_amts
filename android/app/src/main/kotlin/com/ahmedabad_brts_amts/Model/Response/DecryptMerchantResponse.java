@@ -1,4 +1,4 @@
-package com.ahmedabad_brts_amts.ahmedabad_brts_amts.Model.Response;
+package com.ahmedabad_brts_amts.Model.Response;
 
 public class DecryptMerchantResponse {
     public String fpTransactionId;

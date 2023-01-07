@@ -29,6 +29,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   String token = "";
+  static const platform = MethodChannel('nativeChannel');
 
   @override
   void initState() {
@@ -47,6 +48,15 @@ class _SplashScreenState extends State<SplashScreen> {
 
     _getLocationPermission();
     getMemberID();
+  }
+
+  Future<void> _initiatePayment() async {
+    dynamic data;
+    try {
+      data = await platform.invokeMethod('setToast');
+    } on PlatformException catch (e) {
+      data = 0;
+    }
   }
 
   @override
@@ -90,13 +100,9 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: Dimensions.dp25,
               ),
               GestureDetector(
-                onTap: () async{
-                  const platformMethodChannel = MethodChannel('nativeChannel');
-                  await platformMethodChannel.invokeMethod('setToast', {
-                    'myText':'This text will show in toast by native channel',
-                  });
-
-                  // Get.toNamed(RouteHelper.getLoginRoute());
+                onTap: () {
+                 // _initiatePayment();
+                  Get.toNamed(RouteHelper.getLoginRoute());
                 },
                 child: const RoundContainerWidget(
                     imagePath: ImageConstant.iMail,
@@ -170,7 +176,7 @@ class _SplashScreenState extends State<SplashScreen> {
                             margin: const EdgeInsets.only(
                                 left: Dimensions.dp30, right: Dimensions.dp30),
                             child: Image.asset(ImageConstant.iCombineLogo)),
-                         SizedBox(
+                        SizedBox(
                           height: Dimensions.dp50.h,
                         ),
                         Text(

@@ -11,10 +11,10 @@ class ForgetPasswordResponse {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.error != null) {
-      data['error'] = this.error!.toJson();
+    if (error != null) {
+      data['error'] = error!.toJson();
     }
-    data['succeeded'] = this.succeeded;
+    data['succeeded'] = succeeded;
     return data;
   }
 }
@@ -33,9 +33,9 @@ class Error {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = this.title;
-    if (this.errors != null) {
-      data['errors'] = this.errors!.toJson();
+    data['title'] = title;
+    if (errors != null) {
+      data['errors'] = errors!.toJson();
     }
     return data;
   }
@@ -52,7 +52,7 @@ class Errors {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['Email'] = this.email;
+    data['Email'] = email;
     return data;
   }
 }

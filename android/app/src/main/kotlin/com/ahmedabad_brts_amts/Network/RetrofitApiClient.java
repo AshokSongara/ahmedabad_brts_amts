@@ -1,10 +1,8 @@
-package com.ahmedabad_brts_amts.ahmedabad_brts_amts.Network;
+package com.ahmedabad_brts_amts.Network;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-
 
 public class RetrofitApiClient {
    // public static final String BASE_URL = "https://www.test.fdconnect.com/FDConnectL3Services/";

@@ -7,6 +7,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_
 import 'package:ahmedabad_brts_amts/presentation/blocs/forgetpassword/forget_password_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/route_details/route_details_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/near_by_map/near_by_map_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobile_number_login_bloc.dart';
@@ -98,6 +99,9 @@ void main() async {
         ),
         BlocProvider<NearByMapBloc>(
           create: (context) => injector<NearByMapBloc>(),
+        ),
+        BlocProvider<RouteDetailsBloc>(
+          create: (context) => injector<RouteDetailsBloc>(),
         ),
       ],
       child: MyApp(),

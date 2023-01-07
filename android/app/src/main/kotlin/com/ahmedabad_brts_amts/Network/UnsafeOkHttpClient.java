@@ -1,5 +1,4 @@
-package com.ahmedabad_brts_amts.ahmedabad_brts_amts.Network;
-
+package com.ahmedabad_brts_amts.Network;
 
 import com.ahmedabad_brts_amts.ahmedabad_brts_amts.BuildConfig;
 

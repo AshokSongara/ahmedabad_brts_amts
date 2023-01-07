@@ -6,6 +6,7 @@ import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dar
 import 'package:ahmedabad_brts_amts/domain/usecases/route/add_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/delete_route_list_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/nearme_route_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/route/route_details_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/search_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/favourite_route_list_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/forget_password_usecase.dart';
@@ -16,11 +17,13 @@ import 'package:ahmedabad_brts_amts/domain/usecases/user/notification_usecase.da
 import 'package:ahmedabad_brts_amts/domain/usecases/user/signup_user_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/home_screen_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/user_profile_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/user/user_update_profile_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/verify_otp_usecase.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_route_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/feedback/feedback_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/route_details/route_details_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/near_by_map/near_by_map_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobile_number_login_bloc.dart';
@@ -53,8 +56,7 @@ Future<void> init() async {
   );
 
   injector.registerFactory<LoginBloc>(
-    () =>
-        LoginBloc(loginUserUseCase: injector(), userProfileUseCase: injector()),
+    () => LoginBloc(userProfileUseCase: injector(),loginUserUseCase: injector()),
   );
 
   injector.registerFactory<MobileNumberLoginBloc>(
@@ -86,17 +88,20 @@ Future<void> init() async {
   );
 
   injector.registerFactory<UserProfileBloc>(
-    () => UserProfileBloc(userProfileUseCase: injector()),
+    () => UserProfileBloc(userUpdateProfileUseCase: injector()),
   );
 
   injector.registerFactory<NotificationBloc>(
     () => NotificationBloc(notificationUseCase: injector()),
   );
   injector.registerFactory<SearchRouteBloc>(
-        () => SearchRouteBloc(injector()),
+    () => SearchRouteBloc(injector()),
   );
   injector.registerFactory<NearByMapBloc>(
-        () => NearByMapBloc( nearmeRouteUseCase: injector()),
+    () => NearByMapBloc(nearmeRouteUseCase: injector()),
+  );
+  injector.registerFactory<RouteDetailsBloc>(
+    () => RouteDetailsBloc(routeDetailsUseCase: injector()),
   );
   injector.registerFactory<FavouriteRouteListBloc>(
     () => FavouriteRouteListBloc(
@@ -125,6 +130,7 @@ Future<void> init() async {
   injector.registerLazySingleton(() => ForgetPasswordUseCase(injector()));
 
   injector.registerLazySingleton(() => UserProfileUseCase(injector()));
+  injector.registerLazySingleton(() => UserUpdateProfileUseCase(injector()));
 
   injector.registerLazySingleton(() => NotificationUseCase(injector()));
 
@@ -132,6 +138,7 @@ Future<void> init() async {
 
   injector.registerLazySingleton(() => DeleteRouteListUseCase(injector()));
   injector.registerLazySingleton(() => AddRouteUseCase(injector()));
+  injector.registerLazySingleton(() => RouteDetailsUseCase(injector()));
 
   injector.registerLazySingleton<UserRepository>(
     () => UserRepositoryImpl(

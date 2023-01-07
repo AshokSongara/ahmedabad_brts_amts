@@ -6,13 +6,13 @@ class LoginResponse {
   LoginResponse({this.data, this.error, this.succeeded});
 
   LoginResponse.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-    error = json['error'] != null ? new Error.fromJson(json['error']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    error = json['error'] != null ? Error.fromJson(json['error']) : null;
     succeeded = json['succeeded'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
@@ -40,7 +40,7 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['accessToken'] = this.accessToken;
     data['expiry'] = this.expiry;
     data['email'] = this.email;
@@ -59,7 +59,7 @@ class Error {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['title'] = this.title;
     return data;
   }

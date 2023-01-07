@@ -25,7 +25,7 @@ class RouteTitleWidget extends StatelessWidget {
       padding: const EdgeInsets.all(Dimensions.dp15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: mainAxisAlignment,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             startRouteName,

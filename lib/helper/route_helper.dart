@@ -2,7 +2,7 @@ import 'package:ahmedabad_brts_amts/presentation/pages/booking/booking_screen.da
 import 'package:ahmedabad_brts_amts/presentation/pages/card_details/card_detail_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/contact_us/contact_us_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/dashboard_screen.dart';
-import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/route_details_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/route_details/route_details_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/feedback/feedback_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/language/choose_language_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/forget_password_screen.dart';
@@ -21,6 +21,7 @@ import 'package:ahmedabad_brts_amts/presentation/pages/payment_details/payment_d
 import 'package:ahmedabad_brts_amts/presentation/pages/search_route/search_route_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/search_route_number/search_route_number_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/search_stop/search_stop_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/transitmap/transitmap_screen.dart';
 import 'package:get/get.dart';
 import '../presentation/pages/dashboard/search_result_screen.dart';
 import '../presentation/pages/lrf/splash_screen.dart';
@@ -52,6 +53,7 @@ class RouteHelper {
   static const String searchRouteScreen = '/searchRouteScreen';
   static const String changeLanguage = '/changeLanguage';
   static const String nearbyMap = '/nearbyMap';
+  static const String transitMap = '/transitMap';
 
   static String getInitialRoute() => '$initial';
 
@@ -73,8 +75,12 @@ class RouteHelper {
       '$searchResult?startRoute=$startRoute&endRoute=$endRoute&startRouteName=$startRouteName&endRouteName=$endRouteName';
 
   static String getRouteDetailsRoute(
-          String startRouteName, String endRouteName) =>
-      '$routeDetails?startRouteName=$startRouteName&endRouteName=$endRouteName';
+          String startRouteName,
+          String startRouteCode,
+          String endRouteName,
+          String endRouteCode,
+          String routeCode) =>
+      '$routeDetails?startRouteName=$startRouteName&startRouteCode=$startRouteCode&endRouteName=$endRouteName&endRouteCode=$endRouteCode&routeCode=$routeCode';
 
   static String getPassengerDetailsRoute() => '$passengerDetails';
 
@@ -111,6 +117,8 @@ class RouteHelper {
   static String getChangeLangaugeScreenRoute() => '$changeLanguage';
 
   static String getNearByMapScreenRoute() => '$nearbyMap';
+
+  static String getTransitMapScreenRoute() => '$transitMap';
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => const SplashScreen()),
@@ -154,7 +162,10 @@ class RouteHelper {
         name: routeDetails,
         page: () => RouteDetailScreen(
               startRouteName: Get.parameters['startRouteName'],
+              startRouteCode: Get.parameters['startRouteCode'],
               endRouteName: Get.parameters['endRouteName'],
+              endRouteCode: Get.parameters['endRouteCode'],
+              routeCode: Get.parameters['routeCode'],
             )),
     GetPage(name: passengerDetails, page: () => const PassengerDetails()),
     GetPage(name: cardDetails, page: () => const CardDetailsScreen()),
@@ -171,6 +182,7 @@ class RouteHelper {
     GetPage(name: forgetPassword, page: () => const ForgetPasswordScreen()),
     GetPage(name: resetPassword, page: () => const ResetPasswordScreen()),
     GetPage(name: changeLanguage, page: () => const ChooseLanguage()),
-    GetPage(name: nearbyMap, page: () => const NearByMapsScreen())
+    GetPage(name: nearbyMap, page: () => const NearByMapsScreen()),
+    GetPage(name: transitMap, page: () => const TransitMapScreen())
   ];
 }

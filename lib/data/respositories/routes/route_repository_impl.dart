@@ -4,11 +4,13 @@ import 'package:ahmedabad_brts_amts/api/api_client.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/add_route_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/delete_route_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/nearme_request.dart';
+import 'package:ahmedabad_brts_amts/data/requestmodels/route_details_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/search_route_request.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/add_route_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/delete_favourite_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/nearme_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/route_details_repsonse.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/search_route_response.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/routes/routes_repository.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
@@ -76,7 +78,7 @@ class RouteRepositoryImpl implements RouteRepository {
         "${AppConstant.addFavouriteRoute}${body.routeID}", bodyData);
     AddRouteResponse addRouteResponse =
         AddRouteResponse.fromJson(response.body);
-    if(!response.hasError){
+    if (!response.hasError) {
       body.isAmts
           ? getLocalAmtsRoutesData().putAt(0, body.model)
           : getLocalBrtsRoutesData().putAt(0, body.model);
@@ -92,5 +94,15 @@ class RouteRepositoryImpl implements RouteRepository {
   @override
   Box<BrtsRoutesResponseModel> getLocalAmtsRoutesData() {
     return Hive.box<BrtsRoutesResponseModel>(AppConstant.amtsRoutesListBox);
+  }
+
+  @override
+  Future<RouteDetailsRepsonse> getRouteDetails(
+      RouteDetailsRequest routeDetailsRequest) async {
+    Response response = await apiClient
+        .getData(AppConstant.routeDetails);
+    RouteDetailsRepsonse routeDetailsRepsonse =
+        RouteDetailsRepsonse.fromJson(response.body);
+    return routeDetailsRepsonse;
   }
 }

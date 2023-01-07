@@ -35,7 +35,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final FocusNode _emailFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
 
-
   @override
   void initState() {
     super.initState();
@@ -93,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       margin: const EdgeInsets.only(left: Dimensions.dp25),
                       child: Row(children: [
                         GestureDetector(
-                            onTap: (){
+                            onTap: () {
                               Navigator.of(context).pop();
                             },
                             child: SvgPicture.asset(ImageConstant.iLeftArrow)),
@@ -211,13 +210,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w700)),
                                   TextSpan(
-                                      text: "Click Here",
-                                      style: satoshiRegular.copyWith(
-                                          color: Theme.of(context).primaryColor,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w700),
+                                    text: "Click Here",
+                                    style: satoshiRegular.copyWith(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w700),
                                     recognizer: TapGestureRecognizer()
-                                      ..onTap = () => {Get.toNamed(RouteHelper.forgetPassword)},),
+                                      ..onTap = () => {
+                                            Get.toNamed(
+                                                RouteHelper.forgetPassword)
+                                          },
+                                  ),
                                 ],
                               ),
                             ),
@@ -238,13 +241,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                           fontSize: 14.sp,
                                           fontWeight: FontWeight.w700)),
                                   TextSpan(
-                                      text: "Sign Up",
-                                      style: satoshiRegular.copyWith(
-                                          color: Theme.of(context).primaryColor,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w700),
+                                    text: "Sign Up",
+                                    style: satoshiRegular.copyWith(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w700),
                                     recognizer: TapGestureRecognizer()
-                                      ..onTap = () => {Get.toNamed(RouteHelper.signup)},),
+                                      ..onTap = () =>
+                                          {Get.toNamed(RouteHelper.signup)},
+                                  ),
                                 ],
                               ),
                             ),

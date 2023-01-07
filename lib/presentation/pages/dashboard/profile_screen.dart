@@ -9,7 +9,6 @@ import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_text_field.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
-import 'package:ahmedabad_brts_amts/presentation/widgets/base/password_text_field.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
@@ -19,7 +18,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String? from;
@@ -69,116 +67,162 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: AppColors.appBackground2,
         body: AppConstant.IsLoggedIn.isNotEmpty
-            ? Column(
-                children: [
-                  const SizedBox(height: Dimensions.dp25),
-                  CustomToolbar(
-                    title: "profile",
-                    showOption: false,
-                    back: widget.from == "home" ? true : false,
-                  ),
-                  const SizedBox(height: Dimensions.dp25),
-                  CircleAvatar(
-                    radius: Dimensions.dp22,
-                    backgroundColor: AppColors.profileBackgroundGrey,
-                    child: ClipOval(
-                      child: Image.asset(
-                        ImageConstant.iAvatar,
-                        height: Dimensions.dp50,
-                        width: Dimensions.dp50,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: Dimensions.dp10,
-                  ),
-                  Text(
-                    name ?? "",
-                    style: satoshiRegular.copyWith(
-                        fontSize: Dimensions.dp19,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.darkGray),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                        top: Dimensions.dp50,
-                        left: Dimensions.dp35,
-                        right: Dimensions.dp35),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
+            ? SingleChildScrollView(
+              child: BlocConsumer<UserProfileBloc, UserProfileState>(
+                  listener: (context, state) {
+                    if (state is UserProfileLoadingState) {
+                      Loader.show(context);
+                    } else if (state is UserProfileSuccessState) {
+                      AppConstant.nameData = _nameController.text.toString();
+                      Loader.hide();
+                    } else if (state is UserProfileFailedState) {
+                      Loader.hide();
+                    }
+                  },
+                  buildWhen: (previous, current) =>
+                      previous != current && current is UserProfileSuccessState,
+                  builder: (context, state) {
+                    return Column(
                       children: [
+                        const SizedBox(height: Dimensions.dp25),
+                        CustomToolbar(
+                          title: "profile",
+                          showOption: false,
+                          back: widget.from == "home" ? true : false,
+                        ),
+                        const SizedBox(height: Dimensions.dp25),
+                        CircleAvatar(
+                          radius: Dimensions.dp22,
+                          backgroundColor: AppColors.profileBackgroundGrey,
+                          child: ClipOval(
+                            child: Image.asset(
+                              ImageConstant.iAvatar,
+                              height: Dimensions.dp50,
+                              width: Dimensions.dp50,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: Dimensions.dp10,
+                        ),
                         Text(
-                          "Name",
+                          name,
                           style: satoshiRegular.copyWith(
-                              fontSize: 15.sp,
+                              fontSize: Dimensions.dp19,
                               fontWeight: FontWeight.w500,
                               color: AppColors.darkGray),
                         ),
-                        CustomTextField(
-                          textStyle: satoshiRegular.copyWith(
-                              color: AppColors.darkGray),
-                          controller: _nameController,
-                          focusNode: _nameFocus,
-                          nextFocus: _emailFocus,
-                          inputType: TextInputType.name,
-                          onChanged: () {},
-                          onSubmit: () {},
-                          capitalization: TextCapitalization.words,
-                          divider: false,
-                          hintText: "Kapil",
-                        ),
-                        const SizedBox(
-                          height: Dimensions.dp20,
-                        ),
-                        Text(
-                          "Email",
-                          style: satoshiRegular.copyWith(
-                              fontSize: 15.sp,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.darkGray),
-                        ),
-                        CustomTextField(
-                          isEnabled: false,
-                          textStyle: satoshiRegular.copyWith(
-                              color: AppColors.darkGray),
-                          controller: _emailController,
-                          focusNode: _emailFocus,
-                          nextFocus: _passwordFocus,
-                          inputType: TextInputType.name,
-                          onChanged: () {},
-                          onSubmit: () {},
-                          capitalization: TextCapitalization.words,
-                          divider: false,
-                          hintText: "kapil@gmail.com",
-                        ),
-                        const SizedBox(
-                          height: Dimensions.dp20,
-                        ),
-                        CustomButton(
-                          color: Theme.of(context).primaryColor,
-                          text: "Save",
-                          width: MediaQuery.of(context).size.width,
-                          onPressed: () {
-                            if(_nameController.text.toString().isEmpty){
-                              showCustomSnackBar("Please Enter FirstName", context);
-                            }else if(_lastnameController.text.toString().isEmpty){
-                              showCustomSnackBar("Please Enter LastName", context);
-                            }else{
-                              getData();
-                            }
-                          },
-                          style: poppinsMedium.copyWith(
-                              color: Colors.white, fontSize: 15.sp),
-                          height: 53,
+                        Container(
+                          margin: const EdgeInsets.only(
+                              top: Dimensions.dp50,
+                              left: Dimensions.dp35,
+                              right: Dimensions.dp35),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Name",
+                                style: satoshiRegular.copyWith(
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.darkGray),
+                              ),
+                              CustomTextField(
+                                textStyle: satoshiRegular.copyWith(
+                                    color: AppColors.darkGray),
+                                controller: _nameController,
+                                focusNode: _nameFocus,
+                                nextFocus: _emailFocus,
+                                inputType: TextInputType.name,
+                                onChanged: () {},
+                                onSubmit: () {},
+                                capitalization: TextCapitalization.words,
+                                divider: false,
+                                hintText: "Kapil",
+                              ),
+                              const SizedBox(
+                                height: Dimensions.dp20,
+                              ),
+                              Text(
+                                "LastName",
+                                style: satoshiRegular.copyWith(
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.darkGray),
+                              ),
+                              CustomTextField(
+                                textStyle: satoshiRegular.copyWith(
+                                    color: AppColors.darkGray),
+                                controller: _lastnameController,
+                                focusNode: _lastnameFocus,
+                                nextFocus: _emailFocus,
+                                inputType: TextInputType.name,
+                                onChanged: () {},
+                                onSubmit: () {},
+                                capitalization: TextCapitalization.words,
+                                divider: false,
+                                hintText: "Shah",
+                              ),
+                              const SizedBox(
+                                height: Dimensions.dp20,
+                              ),
+                              Text(
+                                "Email",
+                                style: satoshiRegular.copyWith(
+                                    fontSize: 15.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.darkGray),
+                              ),
+                              CustomTextField(
+                                isEnabled: false,
+                                textStyle: satoshiRegular.copyWith(
+                                    color: AppColors.darkGray),
+                                controller: _emailController,
+                                focusNode: _emailFocus,
+                                nextFocus: _passwordFocus,
+                                inputType: TextInputType.name,
+                                onChanged: () {},
+                                onSubmit: () {},
+                                capitalization: TextCapitalization.words,
+                                divider: false,
+                                hintText: "kapil@gmail.com",
+                              ),
+                              const SizedBox(
+                                height: Dimensions.dp20,
+                              ),
+                              CustomButton(
+                                color: Theme.of(context).primaryColor,
+                                text: "Save",
+                                width: MediaQuery.of(context).size.width,
+                                onPressed: () {
+                                  if (_nameController.text.toString().isEmpty) {
+                                    showCustomSnackBar(
+                                        "Please Enter FirstName", context);
+                                  } else if (_lastnameController.text
+                                      .toString()
+                                      .isEmpty) {
+                                    showCustomSnackBar(
+                                        "Please Enter LastName", context);
+                                  } else {
+                                    getData();
+                                  }
+                                },
+                                style: poppinsMedium.copyWith(
+                                    color: Colors.white, fontSize: 15.sp),
+                                height: 53,
+                              ),
+                            ],
+                          ),
                         ),
                       ],
-                    ),
-                  ),
-                ],
-              )
+                    );
+                  },
+                ),
+            )
             : Center(
                 child: Container(
                   height: 53,

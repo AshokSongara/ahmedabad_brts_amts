@@ -1,29 +1,22 @@
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/forget_password_request.dart';
-import 'package:ahmedabad_brts_amts/data/requestmodels/login_request.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/forgetpassword/forget_password_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/forgetpassword/forget_password_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/forgetpassword/forget_password_state.dart';
-import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
-import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_event.dart';
-import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_text_field.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
-import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:ahmedabad_brts_amts/utils/app_util.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
   const ForgetPasswordScreen({Key? key}) : super(key: key);

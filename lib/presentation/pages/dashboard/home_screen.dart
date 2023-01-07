@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (AppConstant.IsLoggedIn.isNotEmpty) {
       userName = prefs.getString(AppConstant.name) ?? "Guest User";
-    }else {
+    } else {
       userName = "Guest User";
     }
   }
@@ -248,8 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     onTap: () {
-                      Get.toNamed(RouteHelper.getNearByMapScreenRoute());
-                      // Navigator.pop(context);
+                      Get.toNamed(RouteHelper.getTransitMapScreenRoute());
                     },
                   ),
                   ListTile(
@@ -704,15 +703,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             width: MediaQuery.of(context).size.width,
                             onPressed: () {
                               if (routeData != null) {
-                                Get.toNamed(RouteHelper.getRouteDetailsRoute(
-                                    routeData?.routeName
-                                            ?.split("-")[0]
-                                            .trim() ??
-                                        "",
-                                    routeData?.routeName
-                                            ?.split("-")[1]
-                                            .trim() ??
-                                        ""));
+                                Get.toNamed(
+                                  RouteHelper.getRouteDetailsRoute(
+                                      routeData?.routeName
+                                              ?.split("-")[0]
+                                              .trim() ??
+                                          "",
+                                      routeData?.customerRouteCode ?? "",
+                                      routeData?.routeName
+                                              ?.split("-")[1]
+                                              .trim() ??
+                                          "",
+                                      routeData?.customerRouteCode ?? "",
+                                      routeData?.routeCode ?? ""),
+                                );
                               } else if (newFromSelectedStation != null &&
                                   newToSelectedStation != null) {
                                 Get.toNamed(RouteHelper.getSearchResultRoute(
@@ -843,6 +847,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Get.toNamed(RouteHelper.getNearByRoute());
         } else if (model.title == "smartrecharge") {
           Get.toNamed(RouteHelper.getCardDetailsRoute());
+        } else if (model.title == "transitmap") {
+          Get.toNamed(RouteHelper.getTransitMapScreenRoute());
         }
       },
       child: Column(

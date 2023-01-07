@@ -27,12 +27,14 @@ class AppConstant {
   static String searchRouteList = "Route/plan/start/";
   static String forgetPassword = "User/forgot-password";
   static String userProfile = "User/user-profile";
-  static String updateProfile = "User/user-profile/update";
+  static String updateProfile = "User/userprofile/update";
   static String notifications = "Notification/List";
   static String favouriteRouteList = "Favourite/List";
   static String deleteFavouriteRoute = "Favourite/Delete/";
   static String addFavouriteRoute = "Favourite/";
   static String refreshToken = "User/refresh-token";
+  static String transitMap = "http://103.69.196.78:8082/images/map.jpg";
+  static String routeDetails = "Route/201/stops/from/1/to/10";
 
   //SharedPreferences Keys
   static String accessToken = "accessToken";

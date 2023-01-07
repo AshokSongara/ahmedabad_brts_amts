@@ -1,4 +1,4 @@
-package com.ahmedabad_brts_amts.ahmedabad_brts_amts;
+package com.ahmedabad_brts_amts;
 
 public class Constant {
     //public static final String MerchantId           = "470000000332260";
