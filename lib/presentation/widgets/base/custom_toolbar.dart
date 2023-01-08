@@ -11,13 +11,15 @@ class CustomToolbar extends StatelessWidget {
       {Key? key,
       required this.title,
       this.showOption = true,
-      this.showFavourite = false,
+        this.actionWidget,
+        this.showFavourite = false,
       this.back = true})
       : super(key: key);
   final String title;
   final bool showOption;
   final bool showFavourite;
   final bool back;
+  final Widget? actionWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +49,7 @@ class CustomToolbar extends StatelessWidget {
           if (showFavourite)
             SvgPicture.asset(ImageConstant.iEmptyFavorite,
                 color: Theme.of(context).primaryColor),
+          if(actionWidget!=null) actionWidget!,
         ],
       ),
     );

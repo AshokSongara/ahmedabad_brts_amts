@@ -60,5 +60,6 @@ class ImageConstant {
 
   //Temp Images
   static const String iAvatar = 'assets/images/img_avatar.png';
+  static const String iBarcode = 'assets/images/barcode.png';
 
 }

@@ -1,11 +1,12 @@
-import 'package:ahmedabad_brts_amts/presentation/pages/payment_details/ticket_painter.dart';
+
+
+import 'package:ahmedabad_brts_amts/presentation/pages/payment_details/dashed_line_widget.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -17,13 +18,6 @@ class PaymentDetailsScreen extends StatefulWidget {
 }
 
 class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
-  String payment_response = "";
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,44 +26,162 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
         children: [
           const SizedBox(height: Dimensions.dp25),
           CustomToolbar(
-            title: "payment_details",
+            title: "Payment Details",
             showOption: false,
+            actionWidget: Container(
+              padding: const EdgeInsets.all(Dimensions.dp3),
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(
+                      Dimensions.dp5,
+                    ),
+                  ),
+                  border: Border.all(color: AppColors.primaryColor)),
+              child: Row(
+                children: [
+                  SvgPicture.asset(ImageConstant.iRedTime,color: AppColors.primaryColor,),
+                  const SizedBox(width: Dimensions.dp4,),
+                  Text("10:10 mins",
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp10.sp,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.primaryColor)),
+                ],
+              ),
+            ),
           ),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   const Padding(
-                    padding: EdgeInsets.only(right: 43, left: 39),
+                    padding: EdgeInsets.only(right: Dimensions.dp43, left: Dimensions.dp39),
                   ),
-                  Container(
-                    height: MediaQuery.of(context).size.height / 1.2,
-                    margin: const EdgeInsets.only(left: 16, right: 16),
-                    width: MediaQuery.of(context).size.width,
-                    child: CustomPaint(
-                      painter: TicketPainter(
-                        borderColor: Colors.transparent,
-                        bgColor: Colors.white,
-                      ),
-                      child: Padding(
-                        padding:
-                            EdgeInsets.only(left: 18, right: 18, top: 20.h),
+                  Column(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(
+                          left: Dimensions.dp24,
+                          right: Dimensions.dp24,
+                        ),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.gray6E8EE7,
+                              blurRadius: 5.0,
+                            ),
+                          ],
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(Dimensions.dp15),
+                          ),
+                        ),
                         child: Column(
                           children: [
-                            Container(
-                              margin: EdgeInsets.only(
-                                bottom: 80.h,
+                            Padding(
+                              padding: const EdgeInsets.only(
+                                  top: Dimensions.dp20, right: Dimensions.dp27, left: Dimensions.dp27),
+                              child: Text(
+                                "Scan at your bording gate",
+                                textAlign: TextAlign.center,
+                                style: satoshiRegular.copyWith(
+                                    fontSize: Dimensions.dp12.sp,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.lightGray),
                               ),
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                    flex: 1,
+                                    child: SvgPicture.asset(
+                                        ImageConstant.iLeftArrow)),
+                                Expanded(
+                                    flex: 2,
+                                    child: Image.asset(ImageConstant.iBarcode)),
+                                Expanded(
+                                    flex: 1,
+                                    child: RotatedBox(
+                                        quarterTurns: 2,
+                                        child: SvgPicture.asset(
+                                          ImageConstant.iLeftArrow,
+                                        ))),
+                              ],
+                            ),
+                            Text(
+                              "Passenger 01",
+                              textAlign: TextAlign.center,
+                              style: satoshiRegular.copyWith(
+                                  fontSize: Dimensions.dp12.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.darkGray),
+                            ),
+                            SizedBox(
+                              height: Dimensions.dp15,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.only(
+                          left: Dimensions.dp24,
+                          right: Dimensions.dp24,
+                        ),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              color: AppColors.gray6E8EE7,
+                              blurRadius: 3.0,
+                            ),
+                          ],
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(Dimensions.dp15),
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: Dimensions.dp8, right: Dimensions.dp8),
+                              child: DashLineView(
+                                fillRate: 0.6,
+                                dashColor: AppColors.grayC4C$C$,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: Dimensions.dp23),
                               child: Column(
                                 children: [
+                                  Container(
+                                    margin:
+                                        EdgeInsets.only(top: Dimensions.dp33),
+                                    padding: EdgeInsets.all(Dimensions.dp8),
+                                    decoration: const BoxDecoration(
+                                      color: AppColors.greyF6F6F6,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(Dimensions.dp6),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      "The validity period is 2 hours and the entry time is 15 minutes.",
+                                      textAlign: TextAlign.center,
+                                      style: satoshiRegular.copyWith(
+                                          fontSize: Dimensions.dp12.sp,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.darkGray),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: Dimensions.dp12,
+                                  ),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        "Adalaj Gam",
+                                        "Fatakwadi",
                                         style: satoshiRegular.copyWith(
                                             fontSize: Dimensions.dp16.sp,
                                             fontWeight: FontWeight.w500,
@@ -78,7 +190,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                       SvgPicture.asset(
                                           ImageConstant.iArrowRight),
                                       Text(
-                                        "Ahm Airport",
+                                        "Canal Juction VIP Road",
                                         style: satoshiRegular.copyWith(
                                             fontSize: Dimensions.dp16.sp,
                                             fontWeight: FontWeight.w500,
@@ -86,11 +198,12 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                       ),
                                     ],
                                   ),
+                                  SizedBox(
+                                    height: Dimensions.dp8,
+                                  ),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
                                     children: [
                                       Text(
                                         "Route Number",
@@ -100,7 +213,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                             color: AppColors.lightGray),
                                       ),
                                       Text(
-                                        "Bus Service",
+                                        "Ticket Number",
                                         style: satoshiRegular.copyWith(
                                             fontSize: Dimensions.dp12.sp,
                                             fontWeight: FontWeight.w500,
@@ -108,281 +221,234 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                       ),
                                     ],
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 7),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            SvgPicture.asset(
-                                              ImageConstant.iBus,
-                                              color: AppColors.darkGray,
-                                              width: 14.w,
-                                              height: 16.h,
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              "4U",
-                                              style: satoshiRegular.copyWith(
-                                                  fontSize: Dimensions.dp14.sp,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: AppColors.darkGray),
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            SvgPicture.asset(
-                                              ImageConstant.iRightGrayArrow,
-                                              color: AppColors.darkGray,
-                                              width: 14.w,
-                                              height: 14.h,
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            SvgPicture.asset(
-                                              ImageConstant.iBus,
-                                              color: AppColors.darkGray,
-                                              width: 14.w,
-                                              height: 16.h,
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              "18S",
-                                              style: satoshiRegular.copyWith(
-                                                  fontSize: Dimensions.dp14.sp,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: AppColors.darkGray),
-                                            ),
-                                          ],
-                                        ),
-                                        Text(
-                                          "AMTS",
-                                          style: satoshiRegular.copyWith(
-                                              fontSize: Dimensions.dp14.sp,
-                                              fontWeight: FontWeight.w700,
-                                              color: AppColors.darkGray),
-                                        ),
-                                      ],
-                                    ),
+                                  SizedBox(
+                                    height: Dimensions.dp4,
                                   ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              child: Column(
-                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            ImageConstant.iRedBus,
+                                            color: AppColors.darkGray,
+                                          ),
+                                          const SizedBox(
+                                            width: Dimensions.dp3,
+                                          ),
+                                          Text(
+                                            "4U",
+                                            style: satoshiSmall.copyWith(
+                                                fontWeight: FontWeight.w700,
+                                                color: AppColors.darkGray),
+                                          ),
+                                          const SizedBox(
+                                            width: Dimensions.dp8,
+                                          ),
+                                          SvgPicture.asset(
+                                              ImageConstant.iRightGrayArrow),
+                                          const SizedBox(
+                                            width: Dimensions.dp8,
+                                          ),
+                                          SvgPicture.asset(
+                                            ImageConstant.iRedBus,
+                                            color: AppColors.darkGray,
+                                          ),
+                                          const SizedBox(
+                                            width: Dimensions.dp4,
+                                          ),
+                                          Text(
+                                            "15D",
+                                            style: satoshiSmall.copyWith(
+                                                fontWeight: FontWeight.w700,
+                                                color: AppColors.darkGray),
+                                          ),
+                                        ],
+                                      ),
+                                      Text(
+                                        "500100122395034",
+                                        style: satoshiSmall.copyWith(
+                                            fontWeight: FontWeight.w700,
+                                            color: AppColors.darkGray),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: Dimensions.dp25,
+                                  ),
+                                  const Divider(
+                                    height: 1,
+                                    color: AppColors.lightGray,
+                                  ),
+                                  SizedBox(
+                                    height: Dimensions.dp15,
+                                  ),
                                   Align(
-                                    alignment: Alignment.centerLeft,
+                                    alignment: Alignment.topLeft,
                                     child: Text(
-                                      "Boarding Point",
+                                      "Passenger",
                                       style: satoshiRegular.copyWith(
                                           fontSize: Dimensions.dp12.sp,
                                           fontWeight: FontWeight.w500,
                                           color: AppColors.lightGray),
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 6),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Adalaj Gam",
-                                          style: satoshiRegular.copyWith(
-                                              fontSize: Dimensions.dp14.sp,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.darkGray),
-                                        ),
-                                        Text(
-                                          "15 Oct 2022, 09:34 PM",
-                                          style: satoshiRegular.copyWith(
-                                              fontSize: Dimensions.dp14.sp,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.darkGray),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 8),
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "Dropping Point",
-                                        style: satoshiRegular.copyWith(
-                                            fontSize: Dimensions.dp12.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.lightGray),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 6),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Ahm Airport",
-                                          style: satoshiRegular.copyWith(
-                                              fontSize: Dimensions.dp14.sp,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.darkGray),
-                                        ),
-                                        Text(
-                                          "15 Oct 2022, 10:54 PM",
-                                          style: satoshiRegular.copyWith(
-                                              fontSize: Dimensions.dp14.sp,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.darkGray),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 60.h, bottom: 20.h),
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Travellers",
-                                      style: satoshiRegular.copyWith(
-                                          fontSize: Dimensions.dp12.sp,
-                                          fontWeight: FontWeight.w500,
-                                          color: AppColors.lightGray),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 10),
-                                    child: Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          ImageConstant.iSelectedMan,
-                                          width: 24,
-                                          height: 24,
-                                        ),
-                                        const SizedBox(
-                                          width: 12,
-                                        ),
-                                        Text(
-                                          "Amit Yogi",
-                                          style: satoshiRegular.copyWith(
-                                              fontSize: Dimensions.dp16.sp,
-                                              fontWeight: FontWeight.w400,
-                                              color: AppColors.darkGray),
-                                        ),
-                                        const SizedBox(
-                                          width: 28,
-                                        ),
-                                        Text(
-                                          "28 yrs",
-                                          style: satoshiRegular.copyWith(
-                                              fontSize: Dimensions.dp16.sp,
-                                              fontWeight: FontWeight.w400,
-                                              color: AppColors.darkGray),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 40.h),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "Total Fare (For 1 seat)",
-                                        style: satoshiRegular.copyWith(
-                                            fontSize: Dimensions.dp14.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.darkGray),
-                                      ),
-                                      Text(
-                                        "₹50.00",
-                                        style: satoshiRegular.copyWith(
-                                            fontSize: Dimensions.dp14.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.darkGray),
-                                      ),
-                                    ],
+                                  SizedBox(
+                                    height: Dimensions.dp10,
                                   ),
                                   Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        "GST Amount",
-                                        style: satoshiRegular.copyWith(
-                                            fontSize: Dimensions.dp14.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.darkGray),
+                                      Row(
+                                        children: [
+                                          Column(
+                                            children: [
+                                              Text(
+                                                "Adults",
+                                                style: satoshiRegular.copyWith(
+                                                    fontSize:
+                                                        Dimensions.dp12.sp,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: AppColors.darkGray),
+                                              ),
+                                              Text(
+                                                "2",
+                                                style: satoshiRegular.copyWith(
+                                                    fontSize:
+                                                        Dimensions.dp16.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: AppColors.darkGray),
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            width: 30,
+                                          ),
+                                          Column(
+                                            children: [
+                                              Text(
+                                                "Kids",
+                                                style: satoshiRegular.copyWith(
+                                                    fontSize:
+                                                        Dimensions.dp12.sp,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: AppColors.darkGray),
+                                              ),
+                                              Text(
+                                                "0",
+                                                style: satoshiRegular.copyWith(
+                                                    fontSize:
+                                                        Dimensions.dp16.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: AppColors.darkGray),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
-                                      Text(
-                                        "₹10.00",
-                                        style: satoshiRegular.copyWith(
-                                            fontSize: Dimensions.dp14.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.darkGray),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            "Total",
+                                            style: satoshiRegular.copyWith(
+                                                fontSize: Dimensions.dp12.sp,
+                                                fontWeight: FontWeight.w700,
+                                                color: AppColors.darkGray),
+                                          ),
+                                          Text(
+                                            "2",
+                                            style: satoshiRegular.copyWith(
+                                                fontSize: Dimensions.dp16.sp,
+                                                fontWeight: FontWeight.w400,
+                                                color: AppColors.darkGray),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: Dimensions.dp25,
+                                  ),
+                                  const Divider(
+                                    height: 1,
+                                    color: AppColors.lightGray,
+                                  ),
+                                  SizedBox(
+                                    height: Dimensions.dp15,
+                                  ),
+                                  Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Total Fare",
+                                            style: satoshiRegular.copyWith(
+                                                fontSize: Dimensions.dp14.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.darkGray),
+                                          ),
+                                          Text(
+                                            "₹50.00",
+                                            style: satoshiRegular.copyWith(
+                                                fontSize: Dimensions.dp14.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.darkGray),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "GST Amount",
+                                            style: satoshiRegular.copyWith(
+                                                fontSize: Dimensions.dp14.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.darkGray),
+                                          ),
+                                          Text(
+                                            "₹10.00",
+                                            style: satoshiRegular.copyWith(
+                                                fontSize: Dimensions.dp14.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.darkGray),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Free cancellation charge",
+                                            style: satoshiRegular.copyWith(
+                                                fontSize: Dimensions.dp14.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.darkGray),
+                                          ),
+                                          Text(
+                                            "₹60.00",
+                                            style: satoshiRegular.copyWith(
+                                                fontSize: Dimensions.dp14.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.darkGray),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "Free cancellation charge",
-                                        style: satoshiRegular.copyWith(
-                                            fontSize: Dimensions.dp14.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.darkGray),
-                                      ),
-                                      Text(
-                                        "₹60.00",
-                                        style: satoshiRegular.copyWith(
-                                            fontSize: Dimensions.dp14.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.darkGray),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Column(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(top: 80.h),
-                                  child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment:
@@ -395,32 +461,36 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                             fontWeight: FontWeight.w700,
                                             color: AppColors.darkGray),
                                       ),
-                                      SvgPicture.asset(
-                                        ImageConstant.iTopRedArrow,
-                                        height: 7,
-                                        width: 14,
-                                        color: Theme.of(context).primaryColor,
-                                      ),
                                       Text(
                                         "₹60.00",
                                         style: satoshiRegular.copyWith(
                                             fontSize: Dimensions.dp14.sp,
                                             fontWeight: FontWeight.w700,
-                                            color:
-                                                Theme.of(context).primaryColor),
+                                            color: AppColors.primaryColor),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(
+                                    height: Dimensions.dp15,
+                                  ),
+                                  SvgPicture.asset(
+                                    ImageConstant.iTopRedArrow,
+                                    height: Dimensions.dp7,
+                                    width: Dimensions.dp14,
+                                  ),
+                                  const SizedBox(
+                                    height: Dimensions.dp21,
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                    ),
+                      )
+                    ],
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: Dimensions.dp20,
                   ),
                 ],
               ),
