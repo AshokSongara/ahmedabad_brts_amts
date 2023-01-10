@@ -1,5 +1,3 @@
-
-
 import 'package:ahmedabad_brts_amts/presentation/pages/payment_details/dashed_line_widget.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
@@ -18,6 +16,18 @@ class PaymentDetailsScreen extends StatefulWidget {
 }
 
 class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
+  List<LocalSliderModel> modelList = [];
+  CarouselController carouselController = CarouselController();
+
+  @override
+  void initState() {
+    super.initState();
+    modelList.add(LocalSliderModel(ImageConstant.iBarcode, "Passenger 01"));
+    modelList.add(LocalSliderModel(ImageConstant.iBarcode, "Passenger 02"));
+    modelList.add(LocalSliderModel(ImageConstant.iBarcode, "Passenger 03"));
+    modelList.add(LocalSliderModel(ImageConstant.iBarcode, "Passenger 04"));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,8 +49,13 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                   border: Border.all(color: AppColors.primaryColor)),
               child: Row(
                 children: [
-                  SvgPicture.asset(ImageConstant.iRedTime,color: AppColors.primaryColor,),
-                  const SizedBox(width: Dimensions.dp4,),
+                  SvgPicture.asset(
+                    ImageConstant.iRedTime,
+                    color: AppColors.primaryColor,
+                  ),
+                  const SizedBox(
+                    width: Dimensions.dp4,
+                  ),
                   Text("10:10 mins",
                       style: satoshiRegular.copyWith(
                           fontSize: Dimensions.dp10.sp,
@@ -55,7 +70,8 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
               child: Column(
                 children: [
                   const Padding(
-                    padding: EdgeInsets.only(right: Dimensions.dp43, left: Dimensions.dp39),
+                    padding: EdgeInsets.only(
+                        right: Dimensions.dp43, left: Dimensions.dp39),
                   ),
                   Column(
                     children: [
@@ -80,7 +96,9 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(
-                                  top: Dimensions.dp20, right: Dimensions.dp27, left: Dimensions.dp27),
+                                  top: Dimensions.dp20,
+                                  right: Dimensions.dp27,
+                                  left: Dimensions.dp27),
                               child: Text(
                                 "Scan at your bording gate",
                                 textAlign: TextAlign.center,
@@ -94,27 +112,62 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                               children: [
                                 Expanded(
                                     flex: 1,
-                                    child: SvgPicture.asset(
-                                        ImageConstant.iLeftArrow)),
+                                    child: GestureDetector(
+                                      onTap: (){
+                                        carouselController.previousPage();
+                                      },
+                                      child: SvgPicture.asset(
+                                          ImageConstant.iLeftArrow),
+                                    )),
                                 Expanded(
                                     flex: 2,
-                                    child: Image.asset(ImageConstant.iBarcode)),
+                                    child: CarouselSlider(
+                                      carouselController: carouselController,
+                                      options: CarouselOptions(
+                                        scrollPhysics: NeverScrollableScrollPhysics(),
+                                        height: 200.0,
+                                        viewportFraction: 1,
+                                        enlargeFactor: 0.3,
+                                      ),
+                                      items: modelList
+                                          .map((i) =>
+                                              Builder(builder: (context) {
+                                                return Column(
+                                                  children: [
+                                                    Image.asset(i.path),
+                                                    Text(
+                                                      i.passengerRank,
+                                                      textAlign:
+                                                          TextAlign.center,
+                                                      style: satoshiRegular
+                                                          .copyWith(
+                                                              fontSize:
+                                                                  Dimensions
+                                                                      .dp12.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: AppColors
+                                                                  .darkGray),
+                                                    ),
+                                                  ],
+                                                );
+                                              }))
+                                          .toList(),
+                                    )),
                                 Expanded(
                                     flex: 1,
-                                    child: RotatedBox(
-                                        quarterTurns: 2,
-                                        child: SvgPicture.asset(
-                                          ImageConstant.iLeftArrow,
-                                        ))),
+                                    child: GestureDetector(
+                                      onTap: (){
+                                        carouselController.nextPage();
+                                      },
+                                      child: RotatedBox(
+                                          quarterTurns: 2,
+                                          child: SvgPicture.asset(
+                                            ImageConstant.iLeftArrow,
+                                          )),
+                                    )),
                               ],
-                            ),
-                            Text(
-                              "Passenger 01",
-                              textAlign: TextAlign.center,
-                              style: satoshiRegular.copyWith(
-                                  fontSize: Dimensions.dp12.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.darkGray),
                             ),
                             SizedBox(
                               height: Dimensions.dp15,
@@ -142,8 +195,8 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                         child: Column(
                           children: [
                             Padding(
-                              padding:
-                                  const EdgeInsets.only(left: Dimensions.dp8, right: Dimensions.dp8),
+                              padding: const EdgeInsets.only(
+                                  left: Dimensions.dp8, right: Dimensions.dp8),
                               child: DashLineView(
                                 fillRate: 0.6,
                                 dashColor: AppColors.grayC4C$C$,
@@ -500,4 +553,11 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
       ),
     );
   }
+}
+
+class LocalSliderModel {
+  String path;
+  String passengerRank;
+
+  LocalSliderModel(this.path, this.passengerRank);
 }
