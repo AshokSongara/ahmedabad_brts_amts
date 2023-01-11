@@ -34,17 +34,17 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<HomeScreenBloc>(context)
-        .add(GetAvailableStopsEvent(StopRequestModel(stopType: 1)));
-
-    BlocProvider.of<HomeScreenBloc>(context)
-        .add(GetAvailableStopsEvent(StopRequestModel(stopType: 2)));
-
-    BlocProvider.of<HomeScreenBloc>(context)
-        .add(GetAvailableRoutesEvent(RoutesRequestModel(stopType: 1)));
-
-    BlocProvider.of<HomeScreenBloc>(context)
-        .add(GetAvailableRoutesEvent(RoutesRequestModel(stopType: 2)));
+    // BlocProvider.of<HomeScreenBloc>(context)
+    //     .add(GetAvailableStopsEvent(StopRequestModel(stopType: 1)));
+    //
+    // BlocProvider.of<HomeScreenBloc>(context)
+    //     .add(GetAvailableStopsEvent(StopRequestModel(stopType: 2)));
+    //
+    // BlocProvider.of<HomeScreenBloc>(context)
+    //     .add(GetAvailableRoutesEvent(RoutesRequestModel(stopType: 1)));
+    //
+    // BlocProvider.of<HomeScreenBloc>(context)
+    //     .add(GetAvailableRoutesEvent(RoutesRequestModel(stopType: 2)));
 
     _getLocationPermission();
     getMemberID();
@@ -102,7 +102,7 @@ class _SplashScreenState extends State<SplashScreen> {
               GestureDetector(
                 onTap: () {
                  // _initiatePayment();
-                  Get.toNamed(RouteHelper.getLoginRoute());
+                 Get.toNamed(RouteHelper.getLoginRoute());
                 },
                 child: const RoundContainerWidget(
                     imagePath: ImageConstant.iMail,

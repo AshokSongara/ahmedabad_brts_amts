@@ -15,6 +15,11 @@ double roundDouble(double? value, int places) {
   return ((value! * mod).round().toDouble() / mod);
 }
 
+String getFare(int value){
+  double fare = value / 100 ;
+  return fare.toString();
+}
+
 String getDateTime(String dateTimeData) {
   var dateTime = DateFormat("yyyy-MM-dd HH:mm").parse(dateTimeData, true);
   var dateLocal = dateTime.toLocal();
@@ -24,4 +29,9 @@ String getDateTime(String dateTimeData) {
 String getDistanceInMeters(String distance){
   double convertedDistance = double.parse((double.parse(distance)).toStringAsFixed(2));
   return "${convertedDistance} Mtrs";
+}
+
+String toMinutes(String dateData){
+  final date = DateTime.parse(dateData);
+  return date.minute.toString();
 }

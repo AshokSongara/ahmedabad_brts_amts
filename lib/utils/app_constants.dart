@@ -35,6 +35,8 @@ class AppConstant {
   static String refreshToken = "User/refresh-token";
   static String transitMap = "http://103.69.196.78:8082/images/map.jpg";
   static String routeDetails = "Route/201/stops/from/1/to/10";
+  static String fareDetails = "fare/BRTS/201/startStop/57/endStop/62";
+  static String etaDetails = "eta/201/281";
 
   //SharedPreferences Keys
   static String accessToken = "accessToken";
@@ -46,23 +48,6 @@ class AppConstant {
   static String emailData = "";
   static String nameData = "";
   static String lastNameData = "";
-
-  static List<TextDto> orderList = [
-    TextDto("Your order has been placed", "+ 11 Stops"),
-  ];
-
-  static List<TextDto> shippedList = [
-    TextDto("Your order has been shipped", "+ 11 Stops"),
-    TextDto("Your item has been received in the nearest hub to you.", null),
-  ];
-
-  static List<TextDto> outOfDeliveryList = [
-    TextDto("Your order is out for delivery", "+ 11 Stops"),
-  ];
-
-  static List<TextDto> deliveredList = [
-    TextDto("Your order has been delivered", "+ 11 Stops"),
-  ];
 
   static LanguageList getLocaleType(String locale) {
     if (locale == "hi") {

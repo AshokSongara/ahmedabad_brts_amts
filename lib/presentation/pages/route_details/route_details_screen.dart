@@ -8,6 +8,7 @@ import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/route_title_widget.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
+import 'package:ahmedabad_brts_amts/utils/app_util.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
@@ -23,15 +24,19 @@ class RouteDetailScreen extends StatefulWidget {
   final String? endRouteName;
   final String? endRouteCode;
   final String? routeCode;
+  final String? startTime;
+  final String? interChange;
 
-  const RouteDetailScreen(
-      {Key? key,
-      required this.startRouteName,
-      required this.startRouteCode,
-      required this.endRouteName,
-      required this.endRouteCode,
-      required this.routeCode})
-      : super(key: key);
+  const RouteDetailScreen({
+    Key? key,
+    required this.startRouteName,
+    required this.startRouteCode,
+    required this.endRouteName,
+    required this.endRouteCode,
+    required this.routeCode,
+    required this.startTime,
+    required this.interChange,
+  }) : super(key: key);
 
   @override
   State<RouteDetailScreen> createState() => _RouteDetailScreenState();
@@ -42,6 +47,9 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
   void initState() {
     super.initState();
     RouteDetailsRequest routeDetailsRequest = RouteDetailsRequest();
+    routeDetailsRequest.startCode = widget.startRouteCode;
+    routeDetailsRequest.endCode = widget.endRouteCode;
+    routeDetailsRequest.routeCode = widget.routeCode;
 
     BlocProvider.of<RouteDetailsBloc>(context).add(
       GetRouteDetailsEvent(request: routeDetailsRequest),
@@ -81,7 +89,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                               width: 5,
                             ),
                             Text(
-                              "11:38 AM",
+                              widget.startTime ?? "",
                               style: screenTitle.copyWith(
                                   fontWeight: FontWeight.w500, fontSize: 15.sp),
                             ),
@@ -106,7 +114,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                               width: 5,
                             ),
                             Text(
-                              "1",
+                              widget.interChange ?? "",
                               style: screenTitle.copyWith(
                                   fontWeight: FontWeight.w500, fontSize: 15.sp),
                             ),
@@ -131,7 +139,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                               width: 5,
                             ),
                             Text(
-                              "₹50.00",
+                              "₹${getFare(state.fareResponse.data?.adult ?? 0)}",
                               style: screenTitle.copyWith(
                                   fontWeight: FontWeight.w500, fontSize: 15.sp),
                             ),
@@ -156,7 +164,6 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: OrderTracker(
-                    status: Status.delivered,
                     activeColor: Theme.of(context).primaryColor,
                     inActiveColor: AppColors.darkGray,
                     orderTitleAndDateList: state.routeDetailsRepsonse.data,
@@ -189,7 +196,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                                   width: 5,
                                 ),
                                 Text(
-                                  "12 Mins",
+                                  toMinutes("${state.etaResponse.data![0].eta} Mins" ?? ""),
                                   style: screenTitle.copyWith(
                                       fontWeight: FontWeight.w500,
                                       fontSize: 15.sp),

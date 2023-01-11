@@ -30,7 +30,6 @@ import javax.crypto.spec.SecretKeySpec
 import kotlin.Exception
 import kotlin.Int
 import kotlin.String
-import kotlin.TODO
 import kotlin.Throwable
 import kotlin.let
 
@@ -130,7 +129,7 @@ class MainActivity : FlutterActivity() {
                 response: Response<TokenResponse?>
             ) {
                 sessionToken = response.body()?.response!!.sessionTokenId
-                fdPaymentSDK = FDPaymentSDK(sessionToken, Constant.PageId, this@MainActivity)
+                fdPaymentSDK = FDPaymentSDK(sessionToken, Constant.PageId, activity)
                 fdPaymentSDK!!.initSDK()
             }
 

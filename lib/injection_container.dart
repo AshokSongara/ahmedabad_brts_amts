@@ -5,6 +5,8 @@ import 'package:ahmedabad_brts_amts/domain/repositories/routes/routes_repository
 import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/add_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/delete_route_list_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/route/eta_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/route/fare_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/nearme_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/route_details_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/search_route_usecase.dart';
@@ -56,7 +58,8 @@ Future<void> init() async {
   );
 
   injector.registerFactory<LoginBloc>(
-    () => LoginBloc(userProfileUseCase: injector(),loginUserUseCase: injector()),
+    () =>
+        LoginBloc(userProfileUseCase: injector(), loginUserUseCase: injector()),
   );
 
   injector.registerFactory<MobileNumberLoginBloc>(
@@ -80,7 +83,8 @@ Future<void> init() async {
   );
 
   injector.registerFactory<SearchResultRouteBloc>(
-    () => SearchResultRouteBloc(searchResultRouteUseCase: injector()),
+    () => SearchResultRouteBloc(
+        searchResultRouteUseCase: injector(), fareUseCase: injector()),
   );
 
   injector.registerFactory<ForgetPasswordBloc>(
@@ -101,7 +105,10 @@ Future<void> init() async {
     () => NearByMapBloc(nearmeRouteUseCase: injector()),
   );
   injector.registerFactory<RouteDetailsBloc>(
-    () => RouteDetailsBloc(routeDetailsUseCase: injector()),
+    () => RouteDetailsBloc(
+        routeDetailsUseCase: injector(),
+        fareUseCase: injector(),
+        etaUseCase: injector()),
   );
   injector.registerFactory<FavouriteRouteListBloc>(
     () => FavouriteRouteListBloc(
@@ -110,6 +117,8 @@ Future<void> init() async {
   );
 
   injector.registerLazySingleton(() => SignupUserUseCase(injector()));
+  injector.registerLazySingleton(() => FareUseCase(injector()));
+  injector.registerLazySingleton(() => ETAUseCase(injector()));
 
   injector.registerLazySingleton(() => LoginUserUseCase(injector()));
 

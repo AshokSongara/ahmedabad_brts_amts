@@ -75,12 +75,15 @@ class RouteHelper {
       '$searchResult?startRoute=$startRoute&endRoute=$endRoute&startRouteName=$startRouteName&endRouteName=$endRouteName';
 
   static String getRouteDetailsRoute(
-          String startRouteName,
-          String startRouteCode,
-          String endRouteName,
-          String endRouteCode,
-          String routeCode) =>
-      '$routeDetails?startRouteName=$startRouteName&startRouteCode=$startRouteCode&endRouteName=$endRouteName&endRouteCode=$endRouteCode&routeCode=$routeCode';
+    String startRouteName,
+    String startRouteCode,
+    String endRouteName,
+    String endRouteCode,
+    String routeCode,
+    String startTime,
+    String interChange,
+  ) =>
+      '$routeDetails?startRouteName=$startRouteName&startRouteCode=$startRouteCode&endRouteName=$endRouteName&endRouteCode=$endRouteCode&routeCode=$routeCode&startTime=$startTime&interChange=$interChange';
 
   static String getPassengerDetailsRoute() => '$passengerDetails';
 
@@ -166,6 +169,8 @@ class RouteHelper {
               endRouteName: Get.parameters['endRouteName'],
               endRouteCode: Get.parameters['endRouteCode'],
               routeCode: Get.parameters['routeCode'],
+              startTime: Get.parameters['startTime'],
+              interChange: Get.parameters['interChange'],
             )),
     GetPage(name: passengerDetails, page: () => const PassengerDetails()),
     GetPage(name: cardDetails, page: () => const CardDetailsScreen()),

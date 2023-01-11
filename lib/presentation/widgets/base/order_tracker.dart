@@ -12,7 +12,6 @@ class OrderTracker extends StatefulWidget {
   final String startRouteTitle;
   final String endRouteTitle;
   final String routeCode;
-  final Status? status;
   final List<Data>? orderTitleAndDateList;
   final Color? activeColor;
   final Color? inActiveColor;
@@ -23,7 +22,6 @@ class OrderTracker extends StatefulWidget {
       required this.startRouteTitle,
       required this.endRouteTitle,
       required this.routeCode,
-      required this.status,
       this.orderTitleAndDateList,
       this.activeColor,
       this.inActiveColor,
@@ -178,11 +176,3 @@ class _OrderTrackerState extends State<OrderTracker> {
   }
 }
 
-class TextDto {
-  String? title;
-  String? date;
-
-  TextDto(this.title, this.date);
-}
-
-enum Status { order, shipped, outOfDelivery, delivered }

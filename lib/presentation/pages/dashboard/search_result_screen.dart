@@ -69,8 +69,22 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
                               onTap: () {
-                                Get.toNamed(
-                                    RouteHelper.getRouteDetailsRoute("", "","","",""));
+                                Get.toNamed(RouteHelper.getRouteDetailsRoute(
+                                    state.searchRouteResponse.data![index]
+                                        .routeDetails![0].startStopName ?? "",
+                                    state.searchRouteResponse.data![index]
+                                        .routeDetails![0].startStopSequenceNumber.toString(),
+                                    state.searchRouteResponse.data![index]
+                                        .routeDetails![0].endStopName ?? "",
+                                    state.searchRouteResponse.data![index]
+                                        .routeDetails![0].endStopSequenceNumber.toString(),
+                                  state.searchRouteResponse.data![index]
+                                      .routeDetails![0].routeCode.toString(),
+                                  state.searchRouteResponse.data![index]
+                                      .routeDetails![0].startArrivalTime ?? "0",
+                                  state.searchRouteResponse.data![index]
+                                      .interChanges?.length.toString() ?? "0",
+                                    ));
                               },
                               child: SearchResultItem(
                                 routeResult:
@@ -80,7 +94,8 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                     : Center(
                         child: Text(
                           "No Route Available",
-                          style: satoshiRegularSmall.copyWith(color: Theme.of(context).primaryColor),
+                          style: satoshiRegularSmall.copyWith(
+                              color: Theme.of(context).primaryColor),
                         ),
                       ),
               ),

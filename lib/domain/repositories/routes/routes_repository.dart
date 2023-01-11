@@ -6,6 +6,8 @@ import 'package:ahmedabad_brts_amts/data/requestmodels/search_route_request.dart
 import 'package:ahmedabad_brts_amts/data/responsemodels/add_route_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/delete_favourite_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/eta_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/fare_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/nearme_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/route_details_repsonse.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/search_route_response.dart';
@@ -19,4 +21,6 @@ abstract class RouteRepository {
   Box<BrtsRoutesResponseModel> getLocalBrtsRoutesData();
   Box<BrtsRoutesResponseModel> getLocalAmtsRoutesData();
   Future<RouteDetailsRepsonse> getRouteDetails(RouteDetailsRequest routeDetailsRequest);
+  Future<FareResponse> getFareDetails(RouteDetailsRequest routeDetailsRequest);
+  Future<ETAResponse> getETADetails(RouteDetailsRequest routeDetailsRequest);
 }
