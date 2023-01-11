@@ -127,14 +127,14 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<BrtsStopResponseModel> getStop(body) async {
     Box brtsBox = getLocalBrtsStopData();
-    BrtsStopResponseModel brtsData = brtsBox.get("key");
+    BrtsStopResponseModel? brtsData = brtsBox.get("key");
     Box amtsBox = getLocalAmtsStopData();
-    BrtsStopResponseModel amtsData = amtsBox.get("key");
+    BrtsStopResponseModel? amtsData = amtsBox.get("key");
     Response response = await apiClient.getData(
       AppConstant.getStops + "${body.stopType}",
     );
     if (body.stopType == 1) {
-      if (brtsData.data==null || brtsData.data!.isEmpty) {
+      if (brtsData==null || brtsData?.data==null || brtsData!.data!.isEmpty) {
         print("response.body ${response.body}");
         BrtsStopResponseModel stopResponseModel =
             BrtsStopResponseModel.fromJson(response.body);
@@ -149,7 +149,7 @@ class UserRepositoryImpl implements UserRepository {
         return brtsBox.get("key");
       }
     } else {
-      if (amtsData.data==null || amtsData.data!.isEmpty) {
+      if (amtsData==null || amtsData.data==null || amtsData.data!.isEmpty) {
         print("response.body ${response.body}");
         BrtsStopResponseModel stopResponseModel =
             BrtsStopResponseModel.fromJson(response.body);
@@ -169,15 +169,15 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<BrtsRoutesResponseModel> getRoutes(body) async {
     Box brtsBox = getLocalBrtsRoutesData();
-    BrtsRoutesResponseModel brtsData = brtsBox.get("key");
+    BrtsRoutesResponseModel? brtsData = brtsBox.get("key");
     Box amtsBox = getLocalAmtsRoutesData();
-    BrtsRoutesResponseModel amtsData = brtsBox.get("key");
+    BrtsRoutesResponseModel? amtsData = amtsBox.get("key");
 
     Response response = await apiClient.getData(
       AppConstant.getRoutes + "${body.stopType}",
     );
     if (body.stopType == 1) {
-      if  (brtsData.data==null || brtsData.data!.isEmpty) {
+      if  (brtsData==null || brtsData.data==null || brtsData.data!.isEmpty) {
         print("getRoutes response.body ${response.body}");
         BrtsRoutesResponseModel stopResponseModel =
             BrtsRoutesResponseModel.fromJson(response.body);
@@ -192,7 +192,7 @@ class UserRepositoryImpl implements UserRepository {
         return brtsBox.get("key");
       }
     } else {
-      if(amtsData.data==null || amtsData.data!.isEmpty){
+      if(amtsData==null || amtsData.data==null || amtsData.data!.isEmpty){
         print("getRoutes response.body ${response.body}");
         BrtsRoutesResponseModel stopResponseModel =
             BrtsRoutesResponseModel.fromJson(response.body);
