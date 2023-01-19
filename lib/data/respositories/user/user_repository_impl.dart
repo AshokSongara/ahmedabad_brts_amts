@@ -7,6 +7,7 @@ import 'package:ahmedabad_brts_amts/data/requestmodels/otp_request.dart';
 import 'package:ahmedabad_brts_amts/data/responseModels/signup_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/contactus_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/favourite_route_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/feedback_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/forget_password_response.dart';
@@ -134,7 +135,9 @@ class UserRepositoryImpl implements UserRepository {
       AppConstant.getStops + "${body.stopType}",
     );
     if (body.stopType == 1) {
-      if (brtsData==null || brtsData?.data==null || brtsData!.data!.isEmpty) {
+      if (brtsData == null ||
+          brtsData?.data == null ||
+          brtsData!.data!.isEmpty) {
         print("response.body ${response.body}");
         BrtsStopResponseModel stopResponseModel =
             BrtsStopResponseModel.fromJson(response.body);
@@ -149,7 +152,7 @@ class UserRepositoryImpl implements UserRepository {
         return brtsBox.get("key");
       }
     } else {
-      if (amtsData==null || amtsData.data==null || amtsData.data!.isEmpty) {
+      if (amtsData == null || amtsData.data == null || amtsData.data!.isEmpty) {
         print("response.body ${response.body}");
         BrtsStopResponseModel stopResponseModel =
             BrtsStopResponseModel.fromJson(response.body);
@@ -177,7 +180,7 @@ class UserRepositoryImpl implements UserRepository {
       AppConstant.getRoutes + "${body.stopType}",
     );
     if (body.stopType == 1) {
-      if  (brtsData==null || brtsData.data==null || brtsData.data!.isEmpty) {
+      if (brtsData == null || brtsData.data == null || brtsData.data!.isEmpty) {
         print("getRoutes response.body ${response.body}");
         BrtsRoutesResponseModel stopResponseModel =
             BrtsRoutesResponseModel.fromJson(response.body);
@@ -192,7 +195,7 @@ class UserRepositoryImpl implements UserRepository {
         return brtsBox.get("key");
       }
     } else {
-      if(amtsData==null || amtsData.data==null || amtsData.data!.isEmpty){
+      if (amtsData == null || amtsData.data == null || amtsData.data!.isEmpty) {
         print("getRoutes response.body ${response.body}");
         BrtsRoutesResponseModel stopResponseModel =
             BrtsRoutesResponseModel.fromJson(response.body);
@@ -262,9 +265,9 @@ class UserRepositoryImpl implements UserRepository {
     var bodyData = json.encode(data);
 
     Response response =
-    await apiClient.postDataWithHeader(AppConstant.updateProfile,bodyData);
+        await apiClient.postDataWithHeader(AppConstant.updateProfile, bodyData);
     UserProfileResponse userProfileResponse =
-    UserProfileResponse.fromJson(response.body);
+        UserProfileResponse.fromJson(response.body);
     return userProfileResponse;
   }
 
@@ -278,10 +281,20 @@ class UserRepositoryImpl implements UserRepository {
 
   @override
   Future<FavouriteRouteResponse> getFavouriteRouteListData() async {
-    Response response = await apiClient.getDataWihHeader(AppConstant.favouriteRouteList);
+    Response response =
+        await apiClient.getDataWihHeader(AppConstant.favouriteRouteList);
     FavouriteRouteResponse favouriteRouteResponse =
         FavouriteRouteResponse.fromJson(response.body);
 
     return favouriteRouteResponse;
+  }
+
+  @override
+  Future<ContactUsResponse> getContactDetails() async {
+    Response response = await apiClient.getData(AppConstant.contactUs);
+    ContactUsResponse contactUsResponse =
+        ContactUsResponse.fromJson(response.body);
+
+    return contactUsResponse;
   }
 }

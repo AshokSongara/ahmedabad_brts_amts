@@ -34,9 +34,11 @@ class AppConstant {
   static String addFavouriteRoute = "Favourite/";
   static String refreshToken = "User/refresh-token";
   static String transitMap = "http://103.69.196.78:8082/images/map.jpg";
-  static String routeDetails = "Route/201/stops/from/1/to/10";
-  static String fareDetails = "fare/BRTS/201/startStop/57/endStop/62";
-  static String etaDetails = "eta/201/281";
+ // static String routeDetails = "Route/201/stops/from/1/to/10";
+  static String stopLists = "Route/stoplist/";
+  //static String fareDetails = "fare/BRTS/201/startStop/57/endStop/62";
+  //static String etaDetails = "eta/201/281";
+  static String contactUs = "ContactUs";
 
   //SharedPreferences Keys
   static String accessToken = "accessToken";

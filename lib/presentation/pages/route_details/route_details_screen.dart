@@ -26,6 +26,10 @@ class RouteDetailScreen extends StatefulWidget {
   final String? routeCode;
   final String? startTime;
   final String? interChange;
+  final String? fromHome;
+  final String? originStart;
+  final String? originEnd;
+  final String? serviceType;
 
   const RouteDetailScreen({
     Key? key,
@@ -36,6 +40,10 @@ class RouteDetailScreen extends StatefulWidget {
     required this.routeCode,
     required this.startTime,
     required this.interChange,
+    required this.fromHome,
+    required this.originStart,
+    required this.originEnd,
+    required this.serviceType,
   }) : super(key: key);
 
   @override
@@ -50,6 +58,10 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
     routeDetailsRequest.startCode = widget.startRouteCode;
     routeDetailsRequest.endCode = widget.endRouteCode;
     routeDetailsRequest.routeCode = widget.routeCode;
+    routeDetailsRequest.fromHome = widget.fromHome;
+    routeDetailsRequest.originStart = widget.originStart;
+    routeDetailsRequest.originEnd = widget.originEnd;
+    routeDetailsRequest.serviceType = widget.serviceType;
 
     BlocProvider.of<RouteDetailsBloc>(context).add(
       GetRouteDetailsEvent(request: routeDetailsRequest),
@@ -114,7 +126,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                               width: 5,
                             ),
                             Text(
-                              widget.interChange ?? "",
+                              widget.interChange ?? "0",
                               style: screenTitle.copyWith(
                                   fontWeight: FontWeight.w500, fontSize: 15.sp),
                             ),
@@ -155,73 +167,74 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                 startRouteName: widget.startRouteName ?? "",
                 endRouteName: widget.endRouteName ?? "",
               ),
-              Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                margin: const EdgeInsets.all(20),
-                color: Colors.white,
-                child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: OrderTracker(
-                    activeColor: Theme.of(context).primaryColor,
-                    inActiveColor: AppColors.darkGray,
-                    orderTitleAndDateList: state.routeDetailsRepsonse.data,
-                    startRouteTitle: widget.startRouteName ?? "",
-                    endRouteTitle: widget.endRouteName ?? "",
-                    routeCode: widget.routeCode ?? "",
+              Expanded(
+                child: Card(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  margin: const EdgeInsets.all(20),
+                  color: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: OrderTracker(
+                      activeColor: Theme.of(context).primaryColor,
+                      inActiveColor: AppColors.darkGray,
+                      orderTitleAndDateList: widget.fromHome == "No" ? state.routeDetailsRepsonse.data
+                      : state.routeStopListResponse.data,
+                      startRouteTitle: widget.startRouteName ?? "",
+                      endRouteTitle: widget.endRouteName ?? "",
+                      routeCode: widget.routeCode ?? "",
+                    ),
                   ),
                 ),
               ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 40, bottom: 40),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              "ETA",
-                              style: screenTitle.copyWith(
-                                  fontWeight: FontWeight.w700, fontSize: 16.sp),
-                            ),
-                            Row(
-                              children: [
-                                SvgPicture.asset(ImageConstant.iRedTime),
-                                const SizedBox(
-                                  width: 5,
-                                ),
-                                Text(
-                                  toMinutes("${state.etaResponse.data![0].eta} Mins" ?? ""),
-                                  style: screenTitle.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 15.sp),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: CustomButton(
-                            color: Theme.of(context).primaryColor,
-                            text: "Book Tickets",
-                            width: MediaQuery.of(context).size.width / 2,
-                            onPressed: () {
-                              Get.toNamed(
-                                  RouteHelper.getPassengerDetailsRoute());
-                            },
-                            style: poppinsMedium.copyWith(
-                                color: Colors.white, fontSize: 15.sp),
-                            height: 53,
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 40),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text(
+                            "ETA",
+                            style: screenTitle.copyWith(
+                                fontWeight: FontWeight.w700, fontSize: 16.sp),
                           ),
+                          Row(
+                            children: [
+                              SvgPicture.asset(ImageConstant.iRedTime),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                 state.etaResponse.data!.isNotEmpty ? toMinutes("${state.etaResponse.data![0].eta}"  "" "" ?? "") : "",
+                                style: screenTitle.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15.sp),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Align(
+                        alignment: Alignment.bottomCenter,
+                        child: CustomButton(
+                          color: Theme.of(context).primaryColor,
+                          text: "Book Tickets",
+                          width: MediaQuery.of(context).size.width / 2,
+                          onPressed: () {
+                            Get.toNamed(
+                                RouteHelper.getPassengerDetailsRoute());
+                          },
+                          style: poppinsMedium.copyWith(
+                              color: Colors.white, fontSize: 15.sp),
+                          height: 53,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),

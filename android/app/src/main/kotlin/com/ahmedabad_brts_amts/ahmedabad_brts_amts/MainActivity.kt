@@ -65,20 +65,20 @@ class MainActivity : FlutterActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         try {
             super.onActivityResult(requestCode, resultCode, data)
-//            val myIntent = Intent(
-//                this@MainActivity,
-//                SuccessActivity::class.java
-//            )
+            val myIntent = Intent(
+                this@MainActivity,
+                SuccessActivity::class.java
+            )
             val value = data.getStringExtra(FD_PAYMENT_RESULT)
             val gson = Gson()
             val paymentCallResponse: PaymentCallResponse =
                 gson.fromJson(value, PaymentCallResponse::class.java)
             val response: String = paymentCallResponse.response
             Log.e("Nithin", "Came inside here response$response")
-        //    myIntent.putExtra("key", value)
-          //  ClearData()
-          //  this@MainActivity.startActivity(myIntent)
-          //  finish()
+
+            myIntent.putExtra("key", value)
+            this@MainActivity.startActivity(myIntent)
+            finish()
         } catch (ex: java.lang.Exception) {
             Toast.makeText(this@MainActivity, ex.toString(), Toast.LENGTH_SHORT).show()
         }

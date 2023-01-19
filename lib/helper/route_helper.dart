@@ -71,19 +71,22 @@ class RouteHelper {
   static String getDashboardRoute() => '$dashboard';
 
   static String getSearchResultRoute(String startRoute, String endRoute,
-          String startRouteName, String endRouteName) =>
-      '$searchResult?startRoute=$startRoute&endRoute=$endRoute&startRouteName=$startRouteName&endRouteName=$endRouteName';
+          String startRouteName, String endRouteName,String serviceType) =>
+      '$searchResult?startRoute=$startRoute&endRoute=$endRoute&startRouteName=$startRouteName&endRouteName=$endRouteName&serviceType=$serviceType';
 
   static String getRouteDetailsRoute(
-    String startRouteName,
-    String startRouteCode,
-    String endRouteName,
-    String endRouteCode,
-    String routeCode,
-    String startTime,
-    String interChange,
-  ) =>
-      '$routeDetails?startRouteName=$startRouteName&startRouteCode=$startRouteCode&endRouteName=$endRouteName&endRouteCode=$endRouteCode&routeCode=$routeCode&startTime=$startTime&interChange=$interChange';
+          String startRouteName,
+          String startRouteCode,
+          String endRouteName,
+          String endRouteCode,
+          String routeCode,
+          String startTime,
+          String interChange,
+          String fromHome,
+          String originStart,
+          String originEnd,
+      String serviceType) =>
+      '$routeDetails?startRouteName=$startRouteName&startRouteCode=$startRouteCode&endRouteName=$endRouteName&endRouteCode=$endRouteCode&routeCode=$routeCode&startTime=$startTime&interChange=$interChange&fromHome=$fromHome&originStart=$originStart&originEnd=$originEnd&serviceType=$serviceType';
 
   static String getPassengerDetailsRoute() => '$passengerDetails';
 
@@ -160,6 +163,7 @@ class RouteHelper {
               endRoute: Get.parameters['endRoute'],
               startRouteName: Get.parameters['startRouteName'],
               endRouteName: Get.parameters['endRouteName'],
+          serviceType: Get.parameters['serviceType'],
             )),
     GetPage(
         name: routeDetails,
@@ -171,6 +175,10 @@ class RouteHelper {
               routeCode: Get.parameters['routeCode'],
               startTime: Get.parameters['startTime'],
               interChange: Get.parameters['interChange'],
+              fromHome: Get.parameters['fromHome'],
+              originStart: Get.parameters['originStart'],
+              originEnd: Get.parameters['originEnd'],
+          serviceType: Get.parameters['serviceType'],
             )),
     GetPage(name: passengerDetails, page: () => const PassengerDetails()),
     GetPage(name: cardDetails, page: () => const CardDetailsScreen()),

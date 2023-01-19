@@ -12,7 +12,7 @@ class OrderTracker extends StatefulWidget {
   final String startRouteTitle;
   final String endRouteTitle;
   final String routeCode;
-  final List<Data>? orderTitleAndDateList;
+  final List<dynamic>? orderTitleAndDateList;
   final Color? activeColor;
   final Color? inActiveColor;
   final TextStyle? headingTitleStyle;
@@ -49,13 +49,13 @@ class _OrderTrackerState extends State<OrderTracker> {
         Row(
           children: [
             const SizedBox(
-              width: 50,
+              width: 60,
             ),
             Container(
               height: 15,
               width: 15,
               decoration: BoxDecoration(
-                  color: widget.activeColor ?? Colors.green,
+                  color: widget.activeColor,
                   borderRadius: BorderRadius.circular(50)),
             ),
             const SizedBox(
@@ -70,7 +70,7 @@ class _OrderTrackerState extends State<OrderTracker> {
         Row(
           children: [
             SizedBox(
-              width: 50,
+              width: 60,
               child: Row(children: [
                 SvgPicture.asset(
                   ImageConstant.iRedBus,
@@ -79,81 +79,99 @@ class _OrderTrackerState extends State<OrderTracker> {
                 const SizedBox(
                   width: 3,
                 ),
-                Text(
-                  widget.routeCode,
-                  style: satoshiSmall.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: Theme.of(context).primaryColor),
+                Expanded(
+                  child: Text(
+                    widget.routeCode,
+                    style: satoshiSmall.copyWith(
+                        fontWeight: FontWeight.w700,
+                        color: Theme.of(context).primaryColor),
+                  ),
                 ),
               ]),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 6),
-              child: SizedBox(
-                width: 2,
-                height: widget.orderTitleAndDateList != null &&
-                        widget.orderTitleAndDateList!.isNotEmpty
-                    ? widget.orderTitleAndDateList!.length * 30
-                    : 60,
-                child: LinearProgressIndicator(
-                  backgroundColor: widget.inActiveColor ?? Colors.grey[300],
-                  color: AppColors.darkGray,
-                ),
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 2.5,
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 6),
+                    child: SizedBox(
+                      width: 2,
+                      height: widget.orderTitleAndDateList != null &&
+                              widget.orderTitleAndDateList!.isNotEmpty
+                          ? widget.orderTitleAndDateList!.length * 30
+                          : 60,
+                      child: LinearProgressIndicator(
+                        backgroundColor: widget.inActiveColor ?? Colors.grey[300],
+                        color: AppColors.darkGray,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                      height: widget.orderTitleAndDateList!.length * 30,
+                      width: MediaQuery.of(context).size.width / 2,
+                      child: showList
+                          ? ListView.builder(
+                        padding: EdgeInsets.zero,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  margin:
+                                      const EdgeInsets.only(top: 5, bottom: 5),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        height: 15,
+                                        width: 15,
+                                        child:
+                                            SvgPicture.asset(ImageConstant.iStop),
+                                      ),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      Expanded(
+                                        child: Text(
+                                          widget.orderTitleAndDateList?[index]
+                                                  .stopName ??
+                                              "",
+                                          style: satoshiRegularSmallDark,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              itemCount: widget.orderTitleAndDateList != null &&
+                                      widget.orderTitleAndDateList!.isNotEmpty
+                                  ? widget.orderTitleAndDateList!.length
+                                  : 0)
+                          : GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  showList = true;
+                                });
+                              },
+                              child: Center(
+                                child: Text(
+                                  "${widget.orderTitleAndDateList?.length.toString()}+",
+                                  style: satoshiSmall.copyWith(
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16,
+                                      color: Theme.of(context).primaryColor),
+                                ),
+                              ),
+                            ))
+                ],
               ),
             ),
             const SizedBox(
-              width: 30,
+              width: 0,
             ),
-            Expanded(
-              child: showList
-                  ? ListView.separated(
-                      shrinkWrap: true,
-                      padding: EdgeInsets.zero,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              widget.orderTitleAndDateList?[index].stopName ??
-                                  "",
-                              style: satoshiSmall.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 13.sp,
-                                  color: Theme.of(context).primaryColor),
-                            )
-                          ],
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return const SizedBox(
-                          height: 0,
-                        );
-                      },
-                      itemCount: widget.orderTitleAndDateList != null &&
-                              widget.orderTitleAndDateList!.isNotEmpty
-                          ? widget.orderTitleAndDateList!.length
-                          : 0)
-                  : GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          showList = true;
-                        });
-                      },
-                      child: Text(
-                        "${widget.orderTitleAndDateList?.length.toString()}+",
-                        style: satoshiSmall.copyWith(
-                            fontWeight: FontWeight.w700,
-                            color: Theme.of(context).primaryColor),
-                      ),
-                    ),
-            )
           ],
         ),
         Row(
           children: [
             const SizedBox(
-              width: 50,
+              width: 60,
             ),
             Container(
               height: 15,
@@ -175,4 +193,3 @@ class _OrderTrackerState extends State<OrderTracker> {
     );
   }
 }
-

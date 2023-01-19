@@ -18,13 +18,15 @@ class SearchResultScreen extends StatefulWidget {
   final String? endRoute;
   final String? startRouteName;
   final String? endRouteName;
+  final String? serviceType;
 
   const SearchResultScreen(
       {Key? key,
       required this.startRoute,
       required this.endRoute,
       required this.startRouteName,
-      required this.endRouteName})
+      required this.endRouteName,
+      required this.serviceType})
       : super(key: key);
 
   @override
@@ -36,7 +38,9 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
   void initState() {
     super.initState();
     var request = SearchRouteRequest(
-        startCode: widget.startRoute ?? "", endCode: widget.endRoute ?? "");
+        startCode: widget.startRoute ?? "",
+        endCode: widget.endRoute ?? "",
+        serviceType: widget.serviceType ?? "BRTS");
 
     BlocProvider.of<SearchResultRouteBloc>(context).add(
       GetSearchResultRouteEvent(searchRouteRequest: request),
@@ -70,21 +74,38 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                           return GestureDetector(
                               onTap: () {
                                 Get.toNamed(RouteHelper.getRouteDetailsRoute(
+                                    state.searchRouteResponse.data![index].routeDetails![0].startStopName ??
+                                        "",
+                                    state
+                                        .searchRouteResponse
+                                        .data![index]
+                                        .routeDetails![0]
+                                        .startStopSequenceNumber
+                                        .toString(),
+                                    state.searchRouteResponse.data![index].routeDetails![0].endStopName ??
+                                        "",
                                     state.searchRouteResponse.data![index]
-                                        .routeDetails![0].startStopName ?? "",
+                                        .routeDetails![0].endStopSequenceNumber
+                                        .toString(),
                                     state.searchRouteResponse.data![index]
-                                        .routeDetails![0].startStopSequenceNumber.toString(),
+                                        .routeDetails![0].routeCode
+                                        .toString(),
+                                    state
+                                            .searchRouteResponse
+                                            .data![index]
+                                            .routeDetails![0]
+                                            .startArrivalTime ??
+                                        "0",
+                                    state.searchRouteResponse.data![index].interChanges?.length.toString() ??
+                                        "0",
+                                    "No",
                                     state.searchRouteResponse.data![index]
-                                        .routeDetails![0].endStopName ?? "",
+                                        .routeDetails![0].startStopCode
+                                        .toString(),
                                     state.searchRouteResponse.data![index]
-                                        .routeDetails![0].endStopSequenceNumber.toString(),
-                                  state.searchRouteResponse.data![index]
-                                      .routeDetails![0].routeCode.toString(),
-                                  state.searchRouteResponse.data![index]
-                                      .routeDetails![0].startArrivalTime ?? "0",
-                                  state.searchRouteResponse.data![index]
-                                      .interChanges?.length.toString() ?? "0",
-                                    ));
+                                        .routeDetails![0].endStopCode
+                                        .toString(),
+                                    widget.serviceType ?? "BRTS"));
                               },
                               child: SearchResultItem(
                                 routeResult:

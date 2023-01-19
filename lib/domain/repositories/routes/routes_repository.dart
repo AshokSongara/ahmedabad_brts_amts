@@ -10,6 +10,7 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/eta_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/fare_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/nearme_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/route_details_repsonse.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/route_stoplist_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/search_route_response.dart';
 import 'package:hive/hive.dart';
 
@@ -23,4 +24,5 @@ abstract class RouteRepository {
   Future<RouteDetailsRepsonse> getRouteDetails(RouteDetailsRequest routeDetailsRequest);
   Future<FareResponse> getFareDetails(RouteDetailsRequest routeDetailsRequest);
   Future<ETAResponse> getETADetails(RouteDetailsRequest routeDetailsRequest);
+  Future<RouteStopListResponse> getRouteStopList(RouteDetailsRequest routeDetailsRequest);
 }

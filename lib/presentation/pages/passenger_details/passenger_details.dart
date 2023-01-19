@@ -6,6 +6,7 @@ import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -20,6 +21,7 @@ class PassengerDetails extends StatefulWidget {
 class _PassengerDetailsState extends State<PassengerDetails> {
   int _addedAdultsCount = 0;
   int _addedKidsCount = 0;
+  static const platform = MethodChannel('nativeChannel');
 
   @override
   Widget build(BuildContext context) {
@@ -209,8 +211,9 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                       .primaryColor,
                   text: "Payment",
                   onPressed: () {
-                    Get.toNamed(
-                        RouteHelper.payment);
+                    // Get.toNamed(
+                    //     RouteHelper.payment);
+                    _initiatePayment();
                   },
                   width: MediaQuery
                       .of(context)
@@ -226,6 +229,15 @@ class _PassengerDetailsState extends State<PassengerDetails> {
         ],
       ),
     );
+  }
+
+  Future<void> _initiatePayment() async {
+    dynamic data;
+    try {
+      data = await platform.invokeMethod('setToast');
+    } on PlatformException catch (e) {
+      data = 0;
+    }
   }
 
   Widget getSourceDestination(String title, String schedule) {

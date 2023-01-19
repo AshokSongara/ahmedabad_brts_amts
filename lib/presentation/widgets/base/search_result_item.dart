@@ -261,7 +261,7 @@ class SearchResultItem extends StatelessWidget {
                             fontSize: 14.5.sp, color: AppColors.darkGray),
                         children: <TextSpan>[
                           TextSpan(
-                              text: "₹ ${routeResult.fare}",
+                              text: "₹${getFare(routeResult.fare ?? 0)}",
                               style: satoshiRegularSmall.copyWith(
                                   fontWeight: FontWeight.w700,
                                   fontSize: 19.sp,

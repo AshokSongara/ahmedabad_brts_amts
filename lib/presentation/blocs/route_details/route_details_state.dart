@@ -2,6 +2,7 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/eta_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/fare_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/login_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/route_details_repsonse.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/route_stoplist_response.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class RouteDetailsState extends Equatable {
@@ -19,14 +20,16 @@ class RouteDetailsSuccessState extends RouteDetailsState {
   final RouteDetailsRepsonse routeDetailsRepsonse;
   final FareResponse fareResponse;
   final ETAResponse etaResponse;
+  final RouteStopListResponse routeStopListResponse;
 
   const RouteDetailsSuccessState(
       {required this.routeDetailsRepsonse,
       required this.fareResponse,
-      required this.etaResponse});
+      required this.etaResponse,
+      required this.routeStopListResponse});
 
   @override
-  List<Object> get props => [routeDetailsRepsonse, fareResponse, etaResponse];
+  List<Object> get props => [routeDetailsRepsonse, fareResponse, etaResponse,routeStopListResponse];
 }
 
 class RouteDetailsFailedState extends RouteDetailsState {

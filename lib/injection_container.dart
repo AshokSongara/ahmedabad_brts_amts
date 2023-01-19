@@ -9,8 +9,10 @@ import 'package:ahmedabad_brts_amts/domain/usecases/route/eta_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/fare_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/nearme_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/route_details_route_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/route/route_stoplist_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/search_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/favourite_route_list_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/user/contactus_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/forget_password_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/home_get_routes_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/login_user_usecase.dart';
@@ -21,6 +23,7 @@ import 'package:ahmedabad_brts_amts/domain/usecases/user/home_screen_usecase.dar
 import 'package:ahmedabad_brts_amts/domain/usecases/user/user_profile_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/user_update_profile_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/verify_otp_usecase.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/contactus/contact_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_route_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/feedback/feedback_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
@@ -108,7 +111,7 @@ Future<void> init() async {
     () => RouteDetailsBloc(
         routeDetailsUseCase: injector(),
         fareUseCase: injector(),
-        etaUseCase: injector()),
+        etaUseCase: injector(),routeStopListUseCase: injector()),
   );
   injector.registerFactory<FavouriteRouteListBloc>(
     () => FavouriteRouteListBloc(
@@ -116,9 +119,17 @@ Future<void> init() async {
         deleteRouteListUseCase: injector()),
   );
 
+  injector.registerFactory<ContactBloc>(
+    () => ContactBloc(
+        contactUsUseCase: injector(),
+      ),
+  );
+
   injector.registerLazySingleton(() => SignupUserUseCase(injector()));
   injector.registerLazySingleton(() => FareUseCase(injector()));
   injector.registerLazySingleton(() => ETAUseCase(injector()));
+  injector.registerLazySingleton(() => ContactUsUseCase(injector()));
+  injector.registerLazySingleton(() => RouteStopListUseCase(injector()));
 
   injector.registerLazySingleton(() => LoginUserUseCase(injector()));
 

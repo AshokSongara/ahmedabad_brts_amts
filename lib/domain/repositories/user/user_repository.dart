@@ -6,6 +6,7 @@ import 'package:ahmedabad_brts_amts/data/requestmodels/signup_request.dart';
 import 'package:ahmedabad_brts_amts/data/responseModels/signup_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/contactus_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/favourite_route_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/feedback_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/forget_password_response.dart';
@@ -36,6 +37,7 @@ abstract class UserRepository {
   Box<BrtsRoutesResponseModel> getLocalAmtsRoutesData();
   Future<UserProfileResponse> getProfileData();
   Future<NotificationResponse> getNotificationsData();
+  Future<ContactUsResponse> getContactDetails();
   Future<FavouriteRouteResponse> getFavouriteRouteListData();
   Future<UserProfileResponse> updateProfile(ProfileRequest body);
 }

@@ -50,15 +50,6 @@ class _SplashScreenState extends State<SplashScreen> {
     getMemberID();
   }
 
-  Future<void> _initiatePayment() async {
-    dynamic data;
-    try {
-      data = await platform.invokeMethod('setToast');
-    } on PlatformException catch (e) {
-      data = 0;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     context.read<LanguageCubit>().changeStartLang();

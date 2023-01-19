@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 extension EmailValidator on String {
   bool isValidEmail() {
@@ -33,5 +34,18 @@ String getDistanceInMeters(String distance){
 
 String toMinutes(String dateData){
   final date = DateTime.parse(dateData);
-  return date.minute.toString();
+  return "${date.minute} Mins";
+}
+
+Future<void> launchPhoneDialer(String contactNumber) async {
+  final Uri _phoneUri = Uri(
+      scheme: "tel",
+      path: contactNumber
+  );
+  try {
+    if (await canLaunch(_phoneUri.toString()))
+      await launch(_phoneUri.toString());
+  } catch (error) {
+    throw("Cannot dial");
+  }
 }

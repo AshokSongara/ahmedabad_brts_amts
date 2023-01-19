@@ -13,6 +13,7 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/eta_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/fare_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/nearme_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/route_details_repsonse.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/route_stoplist_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/search_route_response.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/routes/routes_repository.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
@@ -101,7 +102,8 @@ class RouteRepositoryImpl implements RouteRepository {
   @override
   Future<RouteDetailsRepsonse> getRouteDetails(
       RouteDetailsRequest routeDetailsRequest) async {
-    Response response = await apiClient.getData(AppConstant.routeDetails);
+    Response response = await apiClient.getData(
+        "Route/${routeDetailsRequest.routeCode}/stops/from/${routeDetailsRequest.startCode}/to/${routeDetailsRequest.endCode}");
     RouteDetailsRepsonse routeDetailsRepsonse =
         RouteDetailsRepsonse.fromJson(response.body);
     return routeDetailsRepsonse;
@@ -110,17 +112,36 @@ class RouteRepositoryImpl implements RouteRepository {
   @override
   Future<FareResponse> getFareDetails(
       RouteDetailsRequest routeDetailsRequest) async {
-    Response response = await apiClient.getDataWihHeader(
-        "fare/BRTS/${routeDetailsRequest.routeCode}/startStop/${routeDetailsRequest.startCode}/endStop/${routeDetailsRequest.endCode}");
-    FareResponse fareResponse = FareResponse.fromJson(response.body);
-    return fareResponse;
+    FareResponse fareResponse;
+    if (routeDetailsRequest.serviceType == "BRTS") {
+      Response response = await apiClient.getDataWihHeader(
+          "fare/BRTS/startStop/${routeDetailsRequest.startCode}/endStop/${routeDetailsRequest.endCode}");
+      fareResponse = FareResponse.fromJson(response.body);
+      return fareResponse;
+    } else {
+      Response response = await apiClient.getDataWihHeader(
+          "fare/AMTS/${routeDetailsRequest.routeCode}/startStop/${routeDetailsRequest.startCode}/endStop/${routeDetailsRequest.endCode}");
+      fareResponse = FareResponse.fromJson(response.body);
+      return fareResponse;
+    }
   }
 
   @override
-  Future<ETAResponse> getETADetails(RouteDetailsRequest routeDetailsRequest) async {
+  Future<ETAResponse> getETADetails(
+      RouteDetailsRequest routeDetailsRequest) async {
     Response response = await apiClient.getDataWihHeader(
-    "eta/${routeDetailsRequest.routeCode}/${routeDetailsRequest.startCode}");
+        "eta/${routeDetailsRequest.routeCode}/${routeDetailsRequest.originStart}");
     ETAResponse etaResponse = ETAResponse.fromJson(response.body);
     return etaResponse;
+  }
+
+  @override
+  Future<RouteStopListResponse> getRouteStopList(
+      RouteDetailsRequest routeDetailsRequest) async {
+    Response response = await apiClient
+        .getData("${AppConstant.stopLists}${routeDetailsRequest.routeCode}");
+    RouteStopListResponse routeStopListResponse =
+        RouteStopListResponse.fromJson(response.body);
+    return routeStopListResponse;
   }
 }

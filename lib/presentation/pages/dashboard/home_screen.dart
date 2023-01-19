@@ -717,7 +717,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       routeData?.customerRouteCode ?? "",
                                       routeData?.routeCode ?? "",
                                       "",
-                                      ""),
+                                      "0",
+                                      "Yes",
+                                      "",
+                                      "",
+                                      isAmts ? "AMTS" : "BRTS"),
                                 );
                               } else if (newFromSelectedStation != null &&
                                   newToSelectedStation != null) {
@@ -729,7 +733,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             .toString() ??
                                         "",
                                     newFromSelectedStation?.stopName ?? "",
-                                    newToSelectedStation?.stopName ?? ""));
+                                    newToSelectedStation?.stopName ?? "",
+                                    isAmts ? "AMTS" : "BRTS"));
                               } else {
                                 showCustomSnackBar(
                                     "Please Select Source & Destination Station",
