@@ -226,7 +226,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             : Center(
                 child: Container(
                   height: 53,
-                  margin: EdgeInsets.all(50),
+                  margin: const EdgeInsets.all(50),
                   child: CustomButton(
                     color: Theme.of(context).primaryColor,
                     text: AppLocalizations.of(context)

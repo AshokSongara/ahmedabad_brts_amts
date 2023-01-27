@@ -7,7 +7,7 @@ class DashLineView extends StatelessWidget {
   final double fillRate; // [0, 1] totalDashSpace/totalSpace
   final Axis direction;
 
-  DashLineView(
+  const DashLineView(
       {this.dashHeight = 1,
         this.dashWith = 8,
         this.dashColor = Colors.black,

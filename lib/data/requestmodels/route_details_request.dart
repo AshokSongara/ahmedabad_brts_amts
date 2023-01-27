@@ -6,6 +6,9 @@ class RouteDetailsRequest {
   String? originStart;
   String? originEnd;
   String? serviceType;
+  String? routeTwo;
+  String? startRouteTwo;
+  String? endRouteTwo;
 
   RouteDetailsRequest(
       {this.routeCode,
@@ -14,5 +17,9 @@ class RouteDetailsRequest {
       this.fromHome,
       this.originStart,
       this.originEnd,
-      this.serviceType});
+      this.serviceType,
+      this.routeTwo,
+      this.startRouteTwo,
+      this.endRouteTwo,
+      });
 }

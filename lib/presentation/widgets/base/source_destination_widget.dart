@@ -1,6 +1,5 @@
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
-import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,7 +25,7 @@ class _SourceDestinationWidgetState extends State<SourceDestinationWidget> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(
                 Dimensions.dp10), // if you need this
-            side: BorderSide(
+            side: const BorderSide(
               color: AppColors.gray6E8EE7,
               width: 1,
             ),
@@ -48,7 +47,7 @@ class _SourceDestinationWidgetState extends State<SourceDestinationWidget> {
                     children: [
                       SvgPicture.asset(
                           widget.svgImageFile),
-                      SizedBox(
+                      const SizedBox(
                         width: Dimensions.dp14,
                       ),
                       Expanded(
@@ -83,7 +82,7 @@ class _SourceDestinationWidgetState extends State<SourceDestinationWidget> {
             top: -3,
             child: Container(
               color: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: Dimensions.dp10),
+              padding: const EdgeInsets.symmetric(horizontal: Dimensions.dp10),
               child: Text(
                 widget.title,
                 style: TextStyle(

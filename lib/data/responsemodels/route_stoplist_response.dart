@@ -19,7 +19,7 @@ class RouteStopListResponse {
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['succeeded'] = this.succeeded;
+    data['succeeded'] = succeeded;
     return data;
   }
 }
@@ -41,10 +41,10 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['sequenceNumber'] = this.sequenceNumber;
-    data['stopCode'] = this.stopCode;
-    data['stopName'] = this.stopName;
-    data['routeName'] = this.routeName;
+    data['sequenceNumber'] = sequenceNumber;
+    data['stopCode'] = stopCode;
+    data['stopName'] = stopName;
+    data['routeName'] = routeName;
     return data;
   }
 }

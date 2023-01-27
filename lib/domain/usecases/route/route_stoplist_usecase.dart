@@ -1,5 +1,4 @@
 import 'package:ahmedabad_brts_amts/core/models/params.dart';
-import 'package:ahmedabad_brts_amts/data/responsemodels/eta_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/route_stoplist_response.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/routes/routes_repository.dart';
 

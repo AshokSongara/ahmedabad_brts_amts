@@ -19,12 +19,12 @@ class NotificationBloc extends Bloc<NotificationEvent, NotificationState> {
     if (event is GetNotificationEvent) {
       yield NotificationLoadingState();
       NotificationResponse notificationResponse =
-          await notificationUseCase(Params(data: ""));
+          await notificationUseCase(const Params(data: ""));
       if (notificationResponse.succeeded == true) {
         yield NotificationSuccessState(
             notificationResponse: notificationResponse);
       } else {
-        yield NotificationFailedState(errorMessage: "Something Went Wrong");
+        yield const NotificationFailedState(errorMessage: "Something Went Wrong");
       }
     }
   }

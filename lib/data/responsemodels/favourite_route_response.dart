@@ -19,7 +19,7 @@ class FavouriteRouteResponse {
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['succeeded'] = this.succeeded;
+    data['succeeded'] = succeeded;
     return data;
   }
 }
@@ -39,9 +39,9 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    data['id'] = this.id;
-    data['routeName'] = this.routeName;
-    data['routeNameGujarati'] = this.routeNameGujarati;
+    data['id'] = id;
+    data['routeName'] = routeName;
+    data['routeNameGujarati'] = routeNameGujarati;
     return data;
   }
 }

@@ -1,6 +1,5 @@
 import 'package:ahmedabad_brts_amts/data/responsemodels/delete_favourite_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/favourite_route_response.dart';
-import 'package:ahmedabad_brts_amts/data/responsemodels/notification_response.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class FavouriteRouteListState extends Equatable {
@@ -17,7 +16,7 @@ class FavouriteRouteLoadingState extends FavouriteRouteListState {}
 class FavouriteRouteSuccessState extends FavouriteRouteListState {
   final FavouriteRouteResponse favouriteRouteResponse;
 
-  FavouriteRouteSuccessState({required this.favouriteRouteResponse});
+  const FavouriteRouteSuccessState({required this.favouriteRouteResponse});
 
   @override
   List<Object> get props => [favouriteRouteResponse];
@@ -26,7 +25,7 @@ class FavouriteRouteSuccessState extends FavouriteRouteListState {
 class FavouriteDeleteRouteSuccessState extends FavouriteRouteListState {
   final DeleteFavouriteResponse favouriteRouteResponse;
 
-  FavouriteDeleteRouteSuccessState({required this.favouriteRouteResponse});
+  const FavouriteDeleteRouteSuccessState({required this.favouriteRouteResponse});
 
   @override
   List<Object> get props => [favouriteRouteResponse];
@@ -35,7 +34,7 @@ class FavouriteDeleteRouteSuccessState extends FavouriteRouteListState {
 class FavouriteRouteFailedState extends FavouriteRouteListState {
   final String errorMessage;
 
-  FavouriteRouteFailedState({required this.errorMessage});
+  const FavouriteRouteFailedState({required this.errorMessage});
 
   @override
   List<Object> get props => [errorMessage];

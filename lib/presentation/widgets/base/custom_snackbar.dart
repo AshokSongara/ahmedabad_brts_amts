@@ -7,17 +7,17 @@ void showCustomSnackBar(String message, BuildContext context,
   if (message != null && message.isNotEmpty) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       dismissDirection: DismissDirection.horizontal,
-      margin: EdgeInsets.only(
+      margin: const EdgeInsets.only(
         right: Dimensions.dp10,
         top: Dimensions.dp10,
         bottom: Dimensions.dp10,
         left: Dimensions.dp10,
       ),
-      duration: Duration(seconds: 3),
+      duration: const Duration(seconds: 3),
       backgroundColor: isError ? Colors.red : Colors.green,
       behavior: SnackBarBehavior.floating,
       shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(Dimensions.RADIUS_SMALL)),
+          borderRadius: BorderRadius.circular(Dimensions.radiusSmall)),
       content:
           Text(message, style: satoshiRegular),
     ));

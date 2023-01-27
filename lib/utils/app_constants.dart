@@ -1,5 +1,3 @@
-import '../presentation/widgets/base/order_tracker.dart';
-
 class AppConstant {
   static String apiUrl = "http://103.69.196.78:8082/";
   static String mapKey = "AIzaSyB-f76UEQUmRrsajG14qz2cobJCiVLTz3A";

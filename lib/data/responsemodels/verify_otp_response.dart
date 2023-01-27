@@ -6,20 +6,20 @@ class VerifyOtpResponse {
   VerifyOtpResponse({this.data, this.error, this.succeeded});
 
   VerifyOtpResponse.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-    error = json['error'] != null ? new Error.fromJson(json['error']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    error = json['error'] != null ? Error.fromJson(json['error']) : null;
     succeeded = json['succeeded'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    if (this.error != null) {
-      data['error'] = this.error!.toJson();
+    if (error != null) {
+      data['error'] = error!.toJson();
     }
-    data['succeeded'] = this.succeeded;
+    data['succeeded'] = succeeded;
     return data;
   }
 }
@@ -31,16 +31,16 @@ class Data {
   Data({this.jwt, this.refreshToken});
 
   Data.fromJson(Map<String, dynamic> json) {
-    jwt = json['jwt'] != null ? new Jwt.fromJson(json['jwt']) : null;
+    jwt = json['jwt'] != null ? Jwt.fromJson(json['jwt']) : null;
     refreshToken = json['refreshToken'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.jwt != null) {
-      data['jwt'] = this.jwt!.toJson();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (jwt != null) {
+      data['jwt'] = jwt!.toJson();
     }
-    data['refreshToken'] = this.refreshToken;
+    data['refreshToken'] = refreshToken;
     return data;
   }
 }
@@ -61,11 +61,11 @@ class Jwt {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['accessToken'] = this.accessToken;
-    data['expiry'] = this.expiry;
-    data['email'] = this.email;
-    data['statusCode'] = this.statusCode;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['accessToken'] = accessToken;
+    data['expiry'] = expiry;
+    data['email'] = email;
+    data['statusCode'] = statusCode;
     return data;
   }
 }
@@ -80,8 +80,8 @@ class Error {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = this.title;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['title'] = title;
     return data;
   }
 }

@@ -1,4 +1,3 @@
-import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
@@ -9,7 +8,7 @@ class RouteTitleWidget extends StatelessWidget {
   final String startRouteName;
   final String endRouteName;
 
-  RouteTitleWidget(
+  const RouteTitleWidget(
       {Key? key,
       required this.mainAxisAlignment,
       required this.startRouteName,

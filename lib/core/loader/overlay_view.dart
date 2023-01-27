@@ -19,7 +19,7 @@ class OverlayView {
     required BuildContext context,
     required Widget childWidget,
     Color? backgroundColor,
-    double blur: 4.0,
+    double blur = 4.0,
     Function? onBackgroundTap,
     bool withoutBackdropFilter = false,
   }) {

@@ -15,7 +15,7 @@ class NotificationLoadingState extends NotificationState {}
 class NotificationSuccessState extends NotificationState {
   final NotificationResponse notificationResponse;
 
-  NotificationSuccessState({required this.notificationResponse});
+  const NotificationSuccessState({required this.notificationResponse});
 
   @override
   List<Object> get props => [notificationResponse];
@@ -24,7 +24,7 @@ class NotificationSuccessState extends NotificationState {
 class NotificationFailedState extends NotificationState {
   final String errorMessage;
 
-  NotificationFailedState({required this.errorMessage});
+  const NotificationFailedState({required this.errorMessage});
 
   @override
   List<Object> get props => [errorMessage];

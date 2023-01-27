@@ -5,6 +5,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/contactus/contact_state.d
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
+import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:ahmedabad_brts_amts/utils/app_util.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
@@ -28,7 +29,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
   }
 
   getData() {
-    BlocProvider.of<ContactBloc>(context).add(GetContactEvent());
+    BlocProvider.of<ContactBloc>(context).add(const GetContactEvent());
   }
 
   @override
@@ -43,19 +44,19 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
             Loader.hide();
             return Column(
               children: [
-                SizedBox(height: Dimensions.dp25),
-                CustomToolbar(
+                const SizedBox(height: Dimensions.dp25),
+                const CustomToolbar(
                   title: "contact_us",
                   showOption: false,
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                       horizontal: Dimensions.dp19, vertical: Dimensions.dp26),
                   margin: const EdgeInsets.only(
                       left: Dimensions.dp24,
                       right: Dimensions.dp24,
                       top: Dimensions.dp10),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
@@ -70,7 +71,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                   child: Column(
                     children: [
                       Text(
-                        "Hello Amit Yogi",
+                        "Hello ${AppConstant.nameData}",
                         textAlign: TextAlign.center,
                         style: satoshiRegular.copyWith(
                             fontSize: Dimensions.dp15,
@@ -91,7 +92,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       SizedBox(
                         height: Dimensions.dp26.h,
                       ),
-                      Container(
+                      SizedBox(
                         height: 53,
                         child: CustomButton(
                           color: Theme.of(context).primaryColor,
@@ -125,7 +126,7 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
                       SizedBox(
                         height: Dimensions.dp26.h,
                       ),
-                      Container(
+                      SizedBox(
                         height: 53,
                         child: CustomButton(
                           color: Theme.of(context).primaryColor,

@@ -12,7 +12,6 @@ import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -64,14 +63,14 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
       }, builder: (context, state) {
         return Column(
           children: [
-            SizedBox(height: Dimensions.dp25),
+            const SizedBox(height: Dimensions.dp25),
             CustomToolbar(
               title: "feedback",
               showOption: false,
             ),
             Expanded(
                 child: ListView(
-              padding: EdgeInsets.only(right: 43, left: 39),
+              padding: const EdgeInsets.only(right: 43, left: 39),
               children: [
                 getQuestionWidget(
                     "1. What is the route number of the bus you are currently riding/rode?*"),
@@ -111,7 +110,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                 getQuestionWidget(
                     "a) The length of time you waited for the bus?*"),
                 Padding(
-                  padding: EdgeInsets.only(top: 22),
+                  padding: const EdgeInsets.only(top: 22),
                   child: FeedBackStatusList(
                     list: list,
                     selectedIndex: (index) {
@@ -121,7 +120,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                 ),
                 getQuestionWidget("b) Your comfort on the bus?*"),
                 Padding(
-                  padding: EdgeInsets.only(top: 22),
+                  padding: const EdgeInsets.only(top: 22),
                   child: FeedBackStatusList(
                     list: list,
                     selectedIndex: (index) {
@@ -132,7 +131,7 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                 getQuestionWidget(
                     "3. How satisfied were you with the overall quality of service?"),
                 Padding(
-                  padding: EdgeInsets.only(top: 22),
+                  padding: const EdgeInsets.only(top: 22),
                   child: FeedBackStatusList(
                     list: list,
                     selectedIndex: (index) {

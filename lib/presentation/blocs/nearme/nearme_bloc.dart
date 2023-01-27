@@ -4,7 +4,7 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/nearme_response.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/nearme_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_state.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class NearMeBloc extends Bloc<NearMeEvent, NearmeState> {
   NearMeBloc({required this.nearmeRouteUseCase}) : super(NearMeInitialState());

@@ -32,16 +32,22 @@ class SearchResultRouteBloc
 
         routeDetailsRequest.routeCode =
             searchRouteResponse.data![i].routeDetails![0].routeCode ?? "";
-        routeDetailsRequest.startCode = searchRouteResponse
-                .data![i].routeDetails![0].startStopSequenceNumber
-                .toString() ??
-            ""; routeDetailsRequest.endCode = searchRouteResponse
-                .data![i].routeDetails![0].endStopSequenceNumber
-                .toString() ??
-            "";
+
+        if (searchRouteResponse.data![i].routes!.isNotEmpty) {
+          routeDetailsRequest.startCode = event.searchRouteRequest.startCode;
+          routeDetailsRequest.endCode = event.searchRouteRequest.endCode;
+        } else {
+          routeDetailsRequest.startCode = searchRouteResponse
+              .data![i].routeDetails![0].startStopSequenceNumber
+              .toString();
+          routeDetailsRequest.endCode = searchRouteResponse
+              .data![i].routeDetails![0].endStopSequenceNumber
+              .toString();
+        }
+
         routeDetailsRequest.originStart =
             searchRouteResponse.data![i].routeDetails![0].startStopCode ?? "";
-        routeDetailsRequest.serviceType = event.searchRouteRequest.serviceType ?? "";
+        routeDetailsRequest.serviceType = event.searchRouteRequest.serviceType;
 
         FareResponse fareResponse =
             await fareUseCase(Params(data: routeDetailsRequest));

@@ -46,7 +46,7 @@ class _OneDayPassScreenState extends State<OneDayPassScreen> {
       body: Column(
         children: [
           const SizedBox(height: Dimensions.dp25),
-          CustomToolbar(
+          const CustomToolbar(
             title: "One Day Pass",
           ),
           const SizedBox(
@@ -123,7 +123,7 @@ class _OneDayPassScreenState extends State<OneDayPassScreen> {
                         ),
                       );
                     }),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Container(
@@ -143,7 +143,7 @@ class _OneDayPassScreenState extends State<OneDayPassScreen> {
                     height: Dimensions.dp53,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 32,
                 ),
               ],

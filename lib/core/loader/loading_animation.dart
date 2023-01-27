@@ -19,7 +19,7 @@ class _LoadingAnimationState extends State<LoadingAnimation>
   void initState() {
     super.initState();
     rotationController =
-        AnimationController(duration: Duration(seconds: 1), vsync: this)
+        AnimationController(duration: const Duration(seconds: 1), vsync: this)
           ..repeat();
   }
 

@@ -1,5 +1,4 @@
 import 'package:ahmedabad_brts_amts/data/responsemodels/contactus_response.dart';
-import 'package:ahmedabad_brts_amts/data/responsemodels/notification_response.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class ContactState extends Equatable {
@@ -16,7 +15,7 @@ class ContactLoadingState extends ContactState {}
 class ContactSuccessState extends ContactState {
   final ContactUsResponse contactUsResponse;
 
-  ContactSuccessState({required this.contactUsResponse});
+  const ContactSuccessState({required this.contactUsResponse});
 
   @override
   List<Object> get props => [contactUsResponse];
@@ -25,7 +24,7 @@ class ContactSuccessState extends ContactState {
 class ContactFailedState extends ContactState {
   final String errorMessage;
 
-  ContactFailedState({required this.errorMessage});
+  const ContactFailedState({required this.errorMessage});
 
   @override
   List<Object> get props => [errorMessage];

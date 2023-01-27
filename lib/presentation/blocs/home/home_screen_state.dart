@@ -1,6 +1,5 @@
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
-import 'package:ahmedabad_brts_amts/data/responsemodels/stop_response_model.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class HomeState extends Equatable {

@@ -15,7 +15,7 @@ class UserProfileLoadingState extends UserProfileState {}
 class UserProfileSuccessState extends UserProfileState {
   final UserProfileResponse userProfileResponse;
 
-  UserProfileSuccessState({required this.userProfileResponse});
+  const UserProfileSuccessState({required this.userProfileResponse});
 
   @override
   List<Object> get props => [userProfileResponse];
@@ -24,7 +24,7 @@ class UserProfileSuccessState extends UserProfileState {
 class UserProfileFailedState extends UserProfileState {
   final String errorMessage;
 
-  UserProfileFailedState({required this.errorMessage});
+  const UserProfileFailedState({required this.errorMessage});
 
   @override
   List<Object> get props => [errorMessage];

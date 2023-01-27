@@ -149,7 +149,7 @@ class _RouteTabScreenState extends State<RouteTabScreen>
             ),
           ),
           Container(
-            margin: EdgeInsets.all(20),
+            margin: const EdgeInsets.all(20),
             child: CustomButton(
               color: Theme.of(context).primaryColor,
               text: "Buy Ticket",

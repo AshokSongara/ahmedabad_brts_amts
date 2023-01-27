@@ -27,12 +27,12 @@ class FavouriteRouteListBloc
     if (event is GetFavouriteRouteListEvent) {
       yield FavouriteRouteLoadingState();
       FavouriteRouteResponse favouriteRouteResponse =
-          await favouriteRouteListUseCase(Params(data: ""));
+          await favouriteRouteListUseCase(const Params(data: ""));
       if (favouriteRouteResponse.succeeded == true) {
         yield FavouriteRouteSuccessState(
             favouriteRouteResponse: favouriteRouteResponse);
       } else {
-        yield FavouriteRouteFailedState(errorMessage: "Something Went Wrong");
+        yield const FavouriteRouteFailedState(errorMessage: "Something Went Wrong");
       }
     } else if (event is DeleteFavouriteRouteEvent) {
       yield FavouriteRouteLoadingState();
@@ -42,7 +42,7 @@ class FavouriteRouteListBloc
         yield FavouriteDeleteRouteSuccessState(
             favouriteRouteResponse: deleteFavouriteResponse);
       } else {
-        yield FavouriteRouteFailedState(errorMessage: "Something Went Wrong");
+        yield const FavouriteRouteFailedState(errorMessage: "Something Went Wrong");
       }
     }
   }

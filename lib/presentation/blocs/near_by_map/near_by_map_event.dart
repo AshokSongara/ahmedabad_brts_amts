@@ -11,7 +11,7 @@ abstract class NearByMapEvent extends Equatable {
 class NearByMapRouteEvent extends NearByMapEvent {
   final NearMeRequest nearMeRequest;
 
-  NearByMapRouteEvent({required this.nearMeRequest});
+  const NearByMapRouteEvent({required this.nearMeRequest});
 
   @override
   List<Object> get props => [nearMeRequest];

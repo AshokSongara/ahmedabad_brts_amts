@@ -11,7 +11,7 @@ abstract class ForgetPasswordEvent extends Equatable {
 class GetForgetPasswordEvent extends ForgetPasswordEvent {
   final ForgetPasswordRequest forgetPasswordRequest;
 
-  GetForgetPasswordEvent({required this.forgetPasswordRequest});
+  const GetForgetPasswordEvent({required this.forgetPasswordRequest});
 
   @override
   List<Object> get props => [forgetPasswordRequest];

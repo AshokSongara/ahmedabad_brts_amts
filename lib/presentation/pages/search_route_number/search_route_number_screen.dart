@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../data/responseModels/my_routes_internal_model.dart';
-
 class SearchRouteNumberScreen extends StatefulWidget {
   const SearchRouteNumberScreen({Key? key}) : super(key: key);
 
@@ -31,7 +29,7 @@ class _SearchRouteNumberScreenState extends State<SearchRouteNumberScreen> {
       body: Column(
         children: [
           const SizedBox(height: Dimensions.dp25),
-          CustomToolbar(
+          const CustomToolbar(
             title: "Search Route Number",
             showOption: false,
           ),

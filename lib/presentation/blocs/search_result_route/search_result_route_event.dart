@@ -10,7 +10,7 @@ abstract class SearchResultRouteEvent extends Equatable {
 
 class GetSearchResultRouteEvent extends SearchResultRouteEvent {
   final SearchRouteRequest searchRouteRequest;
-  GetSearchResultRouteEvent({required this.searchRouteRequest});
+  const GetSearchResultRouteEvent({required this.searchRouteRequest});
 
   @override
   List<Object> get props => [searchRouteRequest];

@@ -38,8 +38,8 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
         child: SingleChildScrollView(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            SizedBox(height: Dimensions.dp25),
-            CustomToolbar(
+            const SizedBox(height: Dimensions.dp25),
+            const CustomToolbar(
               title: "choose_language",
               showOption: false,
             ),
@@ -49,7 +49,7 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
             Container(
               decoration: const BoxDecoration(
                 color: AppColors.grayC4C$C$,
-                borderRadius: const BorderRadius.all(Radius.circular(50)),
+                borderRadius: BorderRadius.all(Radius.circular(50)),
               ),
               margin: const EdgeInsets.only(left: 30, right: 30),
               child: RadioListTile<LanguageList>(

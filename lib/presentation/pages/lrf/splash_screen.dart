@@ -1,8 +1,4 @@
-import 'package:ahmedabad_brts_amts/data/requestmodels/routes_request_model.dart';
-import 'package:ahmedabad_brts_amts/data/requestmodels/stop_request_model.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
-import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
-import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/language/language_cubit.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/round_container_widget.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
@@ -11,7 +7,6 @@ import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -29,7 +24,6 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   String token = "";
-  static const platform = MethodChannel('nativeChannel');
 
   @override
   void initState() {
@@ -208,32 +202,32 @@ class _SplashScreenState extends State<SplashScreen> {
 void _getLocationPermission() async {
   Location location = Location();
 
-  bool _serviceEnabled;
-  PermissionStatus _permissionGranted;
-  LocationData _locationData;
+  bool serviceEnabled;
+  PermissionStatus permissionGranted;
+  LocationData locationData;
 
-  _serviceEnabled = await location.serviceEnabled();
-  if (!_serviceEnabled) {
+  serviceEnabled = await location.serviceEnabled();
+  if (!serviceEnabled) {
     debugPrint("Location service is not enabled :(");
-    _serviceEnabled = await location.requestService();
-    if (!_serviceEnabled) {
+    serviceEnabled = await location.requestService();
+    if (!serviceEnabled) {
       return;
     }
   }
 
-  _permissionGranted = await location.hasPermission();
-  if (_permissionGranted == PermissionStatus.denied) {
+  permissionGranted = await location.hasPermission();
+  if (permissionGranted == PermissionStatus.denied) {
     debugPrint("Location Permission Denied :(");
-    _permissionGranted = await location.requestPermission();
-    if (_permissionGranted != PermissionStatus.granted) {
+    permissionGranted = await location.requestPermission();
+    if (permissionGranted != PermissionStatus.granted) {
       debugPrint("Location Permission Granted!!");
       return;
     }
   }
 
-  _locationData = await location.getLocation();
-  debugPrint("_locationData latitude:- ${_locationData.latitude}");
-  debugPrint("_locationData longitude:- ${_locationData.longitude}");
-  debugPrint("_locationData altitude:- ${_locationData.altitude}");
-  debugPrint("_locationData provider:- ${_locationData.provider}");
+  locationData = await location.getLocation();
+  debugPrint("_locationData latitude:- ${locationData.latitude}");
+  debugPrint("_locationData longitude:- ${locationData.longitude}");
+  debugPrint("_locationData altitude:- ${locationData.altitude}");
+  debugPrint("_locationData provider:- ${locationData.provider}");
 }

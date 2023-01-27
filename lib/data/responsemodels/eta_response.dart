@@ -8,18 +8,18 @@ class ETAResponse {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
     succeeded = json['succeeded'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['succeeded'] = this.succeeded;
+    data['succeeded'] = succeeded;
     return data;
   }
 }
@@ -38,10 +38,10 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['eta'] = this.eta;
-    data['stopCode'] = this.stopCode;
-    data['routeCode'] = this.routeCode;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['eta'] = eta;
+    data['stopCode'] = stopCode;
+    data['routeCode'] = routeCode;
     return data;
   }
 }

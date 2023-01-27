@@ -99,7 +99,7 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                      borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                       color: Theme.of(context).primaryColor),
                   width: MediaQuery.of(context).size.width,
                   alignment: Alignment.center,

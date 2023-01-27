@@ -5,16 +5,16 @@ class ContactUsResponse {
   ContactUsResponse({this.data, this.succeeded});
 
   ContactUsResponse.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
     succeeded = json['succeeded'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['succeeded'] = this.succeeded;
+    data['succeeded'] = succeeded;
     return data;
   }
 }
@@ -31,9 +31,9 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['email'] = this.email;
-    data['mobile'] = this.mobile;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['email'] = email;
+    data['mobile'] = mobile;
     return data;
   }
 }

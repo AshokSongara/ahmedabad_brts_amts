@@ -1,4 +1,3 @@
-import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
@@ -9,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 
 class PassengerDetails extends StatefulWidget {
   const PassengerDetails({Key? key}) : super(key: key);
@@ -30,7 +28,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
       body: Column(
         children: [
           const SizedBox(height: Dimensions.dp25),
-          CustomToolbar(
+          const CustomToolbar(
             title: "passenger_details",
             showOption: false,
           ),
@@ -203,7 +201,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Container(
-                margin: EdgeInsets.all(20),
+                margin: const EdgeInsets.all(20),
                 height: 53,
                 child: CustomButton(
                   color: Theme
@@ -235,7 +233,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     dynamic data;
     try {
       data = await platform.invokeMethod('setToast');
-    } on PlatformException catch (e) {
+    } on PlatformException {
       data = 0;
     }
   }

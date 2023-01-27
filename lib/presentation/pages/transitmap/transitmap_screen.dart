@@ -13,32 +13,34 @@ class TransitMapScreen extends StatelessWidget {
       backgroundColor: AppColors.appBackground2,
       body: Column(
         children: [
-          SizedBox(height: Dimensions.dp25),
-          CustomToolbar(
+          const SizedBox(height: Dimensions.dp25),
+          const CustomToolbar(
             title: "transit_map",
             showOption: false,
           ),
-          Container(
-            padding: EdgeInsets.symmetric(
-                horizontal: Dimensions.dp19, vertical: Dimensions.dp26),
-            margin: const EdgeInsets.only(
-                left: Dimensions.dp24,
-                right: Dimensions.dp24,
-                top: Dimensions.dp10),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.gray6E8EE7,
-                  blurRadius: 5.0,
+          Center(
+            child: Container(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: Dimensions.dp19, vertical: Dimensions.dp26),
+              margin: const EdgeInsets.only(
+                  left: Dimensions.dp24,
+                  right: Dimensions.dp24,
+                  top: Dimensions.dp10),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.gray6E8EE7,
+                    blurRadius: 5.0,
+                  ),
+                ],
+                borderRadius: BorderRadius.all(
+                  Radius.circular(Dimensions.dp10),
                 ),
-              ],
-              borderRadius: BorderRadius.all(
-                Radius.circular(Dimensions.dp10),
               ),
+              child:
+                  InteractiveViewer(child: Image.network(AppConstant.transitMap)),
             ),
-            child:
-                InteractiveViewer(child: Image.network(AppConstant.transitMap)),
           )
         ],
       ),

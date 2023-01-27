@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:ahmedabad_brts_amts/core/models/params.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/user_profile_response.dart';
-import 'package:ahmedabad_brts_amts/domain/usecases/user/user_profile_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/user_update_profile_usecase.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/user_profile/user_profile_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/user_profile/user_profile_state.dart';
@@ -25,7 +24,7 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
         saveMemberID(userProfileResponse);
         yield UserProfileSuccessState(userProfileResponse: userProfileResponse);
       } else {
-        yield UserProfileFailedState(errorMessage: "Something Went Wrong");
+        yield const UserProfileFailedState(errorMessage: "Something Went Wrong");
       }
     }
   }

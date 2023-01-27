@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:ahmedabad_brts_amts/api/api_client.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/mobile_number_otp_request_param.dart';
@@ -14,7 +13,6 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/forget_password_response
 import 'package:ahmedabad_brts_amts/data/responsemodels/login_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/mobile_number_otp_response_entity.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/notification_response.dart';
-import 'package:ahmedabad_brts_amts/data/responsemodels/stop_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/user_profile_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/verify_otp_response.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dart';
@@ -136,8 +134,8 @@ class UserRepositoryImpl implements UserRepository {
     );
     if (body.stopType == 1) {
       if (brtsData == null ||
-          brtsData?.data == null ||
-          brtsData!.data!.isEmpty) {
+          brtsData.data == null ||
+          brtsData.data!.isEmpty) {
         print("response.body ${response.body}");
         BrtsStopResponseModel stopResponseModel =
             BrtsStopResponseModel.fromJson(response.body);

@@ -15,7 +15,7 @@ class SearchResultRouteLoadingState extends SearchResultRouteState {}
 class SearchResultRouteSuccessState extends SearchResultRouteState {
   final SearchRouteResponse searchRouteResponse;
 
-  SearchResultRouteSuccessState({required this.searchRouteResponse});
+  const SearchResultRouteSuccessState({required this.searchRouteResponse});
 
   @override
   List<Object> get props => [searchRouteResponse];

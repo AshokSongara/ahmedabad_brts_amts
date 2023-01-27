@@ -5,16 +5,16 @@ class FareResponse {
   FareResponse({this.data, this.succeeded});
 
   FareResponse.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
     succeeded = json['succeeded'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    data['succeeded'] = this.succeeded;
+    data['succeeded'] = succeeded;
     return data;
   }
 }
@@ -42,12 +42,12 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['adult'] = this.adult;
-    data['child'] = this.child;
-    data['startStopCode'] = this.startStopCode;
-    data['endStopCode'] = this.endStopCode;
-    data['routeCode'] = this.routeCode;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['adult'] = adult;
+    data['child'] = child;
+    data['startStopCode'] = startStopCode;
+    data['endStopCode'] = endStopCode;
+    data['routeCode'] = routeCode;
     return data;
   }
 }

@@ -60,7 +60,7 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
         return Column(
           children: [
             const SizedBox(height: Dimensions.dp25),
-            CustomToolbar(
+            const CustomToolbar(
               title: "near_you",
               showOption: false,
             ),
@@ -112,7 +112,7 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
               color: Theme.of(context).primaryColor,
               child: Row(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Text("Near by bus stop",
@@ -124,7 +124,7 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
                       onPressed: () {
                         _getNearByRoutes();
                       },
-                      icon: Icon(Icons.refresh, color: Colors.white))
+                      icon: const Icon(Icons.refresh, color: Colors.white))
                 ],
               ),
             ),
@@ -175,20 +175,20 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
 
   void _getNearByRoutes() async {
     Location location = Location();
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
+    PermissionStatus permissionGranted;
+    LocationData locationData;
     await location.requestService();
 
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
       debugPrint("Location Permission Denied :(");
-      _permissionGranted = await location.requestPermission();
+      permissionGranted = await location.requestPermission();
     } else {
-      _locationData = await location.getLocation();
+      locationData = await location.getLocation();
 
       var nearByRequest = NearMeRequest();
-      nearByRequest.latitude = _locationData.latitude;
-      nearByRequest.longitude = _locationData.longitude;
+      nearByRequest.latitude = locationData.latitude;
+      nearByRequest.longitude = locationData.longitude;
       nearByRequest.stopType = 2;
 
       BlocProvider.of<NearByMapBloc>(context).add(

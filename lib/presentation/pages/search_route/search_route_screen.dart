@@ -54,8 +54,8 @@ class _SearchRouteScreenState extends State<SearchRouteScreen> {
           builder: (context, state) {
             return Column(
               children: [
-                SizedBox(height: Dimensions.dp25),
-                CustomToolbar(
+                const SizedBox(height: Dimensions.dp25),
+                const CustomToolbar(
                   title: "search_route_number",
                   showOption: false,
                 ),
@@ -127,13 +127,13 @@ class _SearchRouteScreenState extends State<SearchRouteScreen> {
                       borderRadius: BorderRadius.circular(10),
                       //set border radius more than 50% of height and width to make circle
                     ),
-                    margin: EdgeInsets.all(20),
+                    margin: const EdgeInsets.all(20),
                     child: ListView.builder(
                       padding: const EdgeInsets.symmetric(horizontal: 15),
                       itemCount: localBrtsStopList.length,
                       itemBuilder: (context, index) {
                         return Container(
-                          margin: EdgeInsets.only(top: 10),
+                          margin: const EdgeInsets.only(top: 10),
                           child: Column(
                             children: [
                               ListTile(
@@ -160,7 +160,7 @@ class _SearchRouteScreenState extends State<SearchRouteScreen> {
                                           style: satoshiRegularSmallDark
                                               .copyWith(fontSize: 22.sp),
                                         ),
-                                        Spacer(),
+                                        const Spacer(),
                                         InkWell(
                                           onTap: () {
                                             localBrtsStopList[index].setFav(

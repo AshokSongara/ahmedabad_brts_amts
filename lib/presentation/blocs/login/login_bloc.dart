@@ -26,7 +26,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       if (loginResponse.succeeded == true) {
         UserProfileResponse userProfileResponse =
-            await userProfileUseCase(Params(data: ""));
+            await userProfileUseCase(const Params(data: ""));
         saveMemberID(userProfileResponse);
       }
 

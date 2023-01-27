@@ -8,18 +8,18 @@ class NearMeResponse {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
     succeeded = json['succeeded'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['succeeded'] = this.succeeded;
+    data['succeeded'] = succeeded;
     return data;
   }
 }
@@ -56,15 +56,15 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['stationCode'] = this.stationCode;
-    data['stopCode'] = this.stopCode;
-    data['stopName'] = this.stopName;
-    data['stopNameGujarati'] = this.stopNameGujarati;
-    data['latitude'] = this.latitude;
-    data['longitude'] = this.longitude;
-    data['distance'] = this.distance;
-    data['statusCode'] = this.statusCode;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['stationCode'] = stationCode;
+    data['stopCode'] = stopCode;
+    data['stopName'] = stopName;
+    data['stopNameGujarati'] = stopNameGujarati;
+    data['latitude'] = latitude;
+    data['longitude'] = longitude;
+    data['distance'] = distance;
+    data['statusCode'] = statusCode;
     return data;
   }
 }

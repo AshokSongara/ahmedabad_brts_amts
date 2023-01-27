@@ -66,7 +66,6 @@ class Loader {
     if (_currentLoader != null) {
       try {
         _currentLoader?.remove();
-      } catch (e) {
       } finally {
         _currentLoader = null;
         _isShowing = false;

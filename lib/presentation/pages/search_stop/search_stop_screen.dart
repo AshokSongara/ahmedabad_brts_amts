@@ -39,8 +39,8 @@ class _SearchStopScreenState extends State<SearchStopScreen> {
       backgroundColor: AppColors.profileBackgroundGrey,
       body: Column(
         children: [
-          SizedBox(height: Dimensions.dp25),
-          CustomToolbar(
+          const SizedBox(height: Dimensions.dp25),
+          const CustomToolbar(
             title: "search_stop",
             showOption: false,
           ),

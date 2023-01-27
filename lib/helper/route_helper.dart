@@ -55,23 +55,23 @@ class RouteHelper {
   static const String nearbyMap = '/nearbyMap';
   static const String transitMap = '/transitMap';
 
-  static String getInitialRoute() => '$initial';
+  static String getInitialRoute() => initial;
 
-  static String getSplashRoute() => '$splash';
+  static String getSplashRoute() => splash;
 
-  static String getLoginRoute() => '$login';
+  static String getLoginRoute() => login;
 
-  static String getSignUpRoute() => '$signup';
+  static String getSignUpRoute() => signup;
 
-  static String getMobileNumberRoute() => '$mobileNumber';
+  static String getMobileNumberRoute() => mobileNumber;
 
   static String getEnterCodeRoute(String mobileNumber) =>
       '$enterCode?mobile=$mobileNumber';
 
-  static String getDashboardRoute() => '$dashboard';
+  static String getDashboardRoute() => dashboard;
 
   static String getSearchResultRoute(String startRoute, String endRoute,
-          String startRouteName, String endRouteName,String serviceType) =>
+          String startRouteName, String endRouteName, String serviceType) =>
       '$searchResult?startRoute=$startRoute&endRoute=$endRoute&startRouteName=$startRouteName&endRouteName=$endRouteName&serviceType=$serviceType';
 
   static String getRouteDetailsRoute(
@@ -85,32 +85,37 @@ class RouteHelper {
           String fromHome,
           String originStart,
           String originEnd,
-      String serviceType) =>
-      '$routeDetails?startRouteName=$startRouteName&startRouteCode=$startRouteCode&endRouteName=$endRouteName&endRouteCode=$endRouteCode&routeCode=$routeCode&startTime=$startTime&interChange=$interChange&fromHome=$fromHome&originStart=$originStart&originEnd=$originEnd&serviceType=$serviceType';
+          String serviceType,
+          String interChangeName,
+          String routeTwo,
+          String startRouteTwo,
+          String endRouteTwo,
+      ) =>
+      '$routeDetails?startRouteName=$startRouteName&startRouteCode=$startRouteCode&endRouteName=$endRouteName&endRouteCode=$endRouteCode&routeCode=$routeCode&startTime=$startTime&interChange=$interChange&fromHome=$fromHome&originStart=$originStart&originEnd=$originEnd&serviceType=$serviceType&interChangeName=$interChangeName&routeTwo=$routeTwo&startRouteTwo=$startRouteTwo&endRouteTwo=$endRouteTwo';
 
-  static String getPassengerDetailsRoute() => '$passengerDetails';
+  static String getPassengerDetailsRoute() => passengerDetails;
 
-  static String getCardDetailsRoute() => '$cardDetails';
+  static String getCardDetailsRoute() => cardDetails;
 
-  static String getNearByRoute() => '$nearBy';
+  static String getNearByRoute() => nearBy;
 
-  static String getFeedbackRoute() => '$feedback';
+  static String getFeedbackRoute() => feedback;
 
-  static String getMyRouteScreen() => '$myRoute';
+  static String getMyRouteScreen() => myRoute;
 
-  static String getSearchRoute() => '$searchRoute';
+  static String getSearchRoute() => searchRoute;
 
-  static String getoneDayPassRoute() => '$oneDayPassRoute';
+  static String getoneDayPassRoute() => oneDayPassRoute;
 
-  static String getContactUsRoute() => '$contactUs';
+  static String getContactUsRoute() => contactUs;
 
-  static String getPaymentDetailsRoute() => '$payment';
+  static String getPaymentDetailsRoute() => payment;
 
   static String getBookingRoute(String from) => '$booking?from=$from';
 
-  static String getForgetPasswordRoute() => '$forgetPassword';
+  static String getForgetPasswordRoute() => forgetPassword;
 
-  static String getResetPasswordRoute() => '$resetPassword';
+  static String getResetPasswordRoute() => resetPassword;
 
   static String getSearchStopScreenRoute(String selectedLanguage) =>
       '$searchStopScreen?selectedLanguage=$selectedLanguage';
@@ -118,13 +123,13 @@ class RouteHelper {
   static String getSearchRouteScreenRoute(String selectedLanguage) =>
       '$searchRouteScreen?selectedLanguage=$selectedLanguage';
 
-  static String getNearBySearchStopScreenRoute() => '$nearBySearchStopScreen';
+  static String getNearBySearchStopScreenRoute() => nearBySearchStopScreen;
 
-  static String getChangeLangaugeScreenRoute() => '$changeLanguage';
+  static String getChangeLangaugeScreenRoute() => changeLanguage;
 
-  static String getNearByMapScreenRoute() => '$nearbyMap';
+  static String getNearByMapScreenRoute() => nearbyMap;
 
-  static String getTransitMapScreenRoute() => '$transitMap';
+  static String getTransitMapScreenRoute() => transitMap;
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => const SplashScreen()),
@@ -163,7 +168,7 @@ class RouteHelper {
               endRoute: Get.parameters['endRoute'],
               startRouteName: Get.parameters['startRouteName'],
               endRouteName: Get.parameters['endRouteName'],
-          serviceType: Get.parameters['serviceType'],
+              serviceType: Get.parameters['serviceType'],
             )),
     GetPage(
         name: routeDetails,
@@ -178,7 +183,11 @@ class RouteHelper {
               fromHome: Get.parameters['fromHome'],
               originStart: Get.parameters['originStart'],
               originEnd: Get.parameters['originEnd'],
-          serviceType: Get.parameters['serviceType'],
+              serviceType: Get.parameters['serviceType'],
+              interChangeName: Get.parameters['interChangeName'],
+              routeTwo: Get.parameters['routeTwo'],
+              startRouteTwo: Get.parameters['startRouteTwo'],
+              endRouteTwo: Get.parameters['endRouteTwo'],
             )),
     GetPage(name: passengerDetails, page: () => const PassengerDetails()),
     GetPage(name: cardDetails, page: () => const CardDetailsScreen()),

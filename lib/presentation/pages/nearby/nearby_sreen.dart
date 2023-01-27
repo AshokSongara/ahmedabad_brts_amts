@@ -27,8 +27,6 @@ class NearByScreen extends StatefulWidget {
 }
 
 class _NearByScreenState extends State<NearByScreen> {
-  final _serviceController = TextEditingController();
-  final FocusNode _serviceFocus = FocusNode();
   NearMeResponse? nearMeResponse;
   Data? data;
 
@@ -102,7 +100,7 @@ class _NearByScreenState extends State<NearByScreen> {
                               left: Dimensions.dp30,
                               right: Dimensions.dp30,
                               top: Dimensions.dp20),
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               vertical: 10.0, horizontal: 14),
                           decoration: const BoxDecoration(
                             color: Colors.white,
@@ -115,13 +113,12 @@ class _NearByScreenState extends State<NearByScreen> {
                               data = await Get.toNamed(
                                   RouteHelper.getNearBySearchStopScreenRoute(),
                                   arguments: nearMeResponse) as Data;
-                              print(data?.stopName ?? "");
                             },
                             child: Row(
                               children: [
                                 SvgPicture.asset(ImageConstant.iSearch,
                                     height: 20, width: 20),
-                                SizedBox(
+                                const SizedBox(
                                   width: 14,
                                 ),
                                 Expanded(
@@ -213,20 +210,20 @@ class _NearByScreenState extends State<NearByScreen> {
 
   void _getNearByRoutes() async {
     Location location = Location();
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
+    PermissionStatus permissionGranted;
+    LocationData locationData;
     await location.requestService();
 
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
+    permissionGranted = await location.hasPermission();
+    if (permissionGranted == PermissionStatus.denied) {
       debugPrint("Location Permission Denied :(");
-      _permissionGranted = await location.requestPermission();
+      permissionGranted = await location.requestPermission();
     } else {
-      _locationData = await location.getLocation();
+      locationData = await location.getLocation();
 
       var nearByRequest = NearMeRequest();
-      nearByRequest.latitude = _locationData.latitude;
-      nearByRequest.longitude = _locationData.longitude;
+      nearByRequest.latitude = locationData.latitude;
+      nearByRequest.longitude = locationData.longitude;
       nearByRequest.stopType = 2;
 
       BlocProvider.of<NearMeBloc>(context).add(

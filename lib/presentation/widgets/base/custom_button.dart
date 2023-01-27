@@ -1,4 +1,3 @@
-import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {

@@ -1,4 +1,3 @@
-import 'package:ahmedabad_brts_amts/data/responsemodels/login_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/nearme_response.dart';
 import 'package:equatable/equatable.dart';
 
@@ -16,7 +15,7 @@ class NearMeLoadingState extends NearmeState {}
 class NearMeSuccessState extends NearmeState {
   final NearMeResponse nearMeResponse;
 
-  NearMeSuccessState({required this.nearMeResponse});
+  const NearMeSuccessState({required this.nearMeResponse});
 
   @override
   List<Object> get props => [nearMeResponse];

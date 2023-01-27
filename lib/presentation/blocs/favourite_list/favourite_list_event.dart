@@ -8,7 +8,7 @@ abstract class FavouriteRouteListEvent extends Equatable {
 }
 
 class GetFavouriteRouteListEvent extends FavouriteRouteListEvent {
-  GetFavouriteRouteListEvent();
+  const GetFavouriteRouteListEvent();
 
   @override
   List<Object> get props => [];
@@ -17,7 +17,7 @@ class GetFavouriteRouteListEvent extends FavouriteRouteListEvent {
 class DeleteFavouriteRouteEvent extends FavouriteRouteListEvent {
   final String routeId;
 
-  DeleteFavouriteRouteEvent({required this.routeId});
+  const DeleteFavouriteRouteEvent({required this.routeId});
 
   @override
   List<Object> get props => [];

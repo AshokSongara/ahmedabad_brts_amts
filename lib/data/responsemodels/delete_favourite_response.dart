@@ -8,8 +8,8 @@ class DeleteFavouriteResponse {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['succeeded'] = this.succeeded;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['succeeded'] = succeeded;
     return data;
   }
 }

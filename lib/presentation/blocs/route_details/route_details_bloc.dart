@@ -13,7 +13,7 @@ import 'package:ahmedabad_brts_amts/domain/usecases/route/route_details_route_us
 import 'package:ahmedabad_brts_amts/domain/usecases/route/route_stoplist_usecase.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/route_details/route_details_state.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'route_details_event.dart';
@@ -63,33 +63,73 @@ class RouteDetailsBloc extends Bloc<RouteDetailsEvent, RouteDetailsState> {
 
         if (routeDetailsRepsonse.succeeded == true) {
           yield RouteDetailsSuccessState(
-              routeDetailsRepsonse: routeDetailsRepsonse,
+              routeDetailsResponse: routeDetailsRepsonse,
               fareResponse: fareResponse,
               etaResponse: etaResponse,
-              routeStopListResponse: routeStopListResponse);
+              routeStopListResponse: routeStopListResponse,
+              routeDetailsResponse1: routeDetailsRepsonse);
         } else {
           yield const RouteDetailsFailedState(
               errorMessage: "Something Went Wrong");
         }
       } else {
-        RouteDetailsRepsonse routeDetailsRepsonse =
-            await routeDetailsUseCase(Params(data: event.request));
+        if (event.request.routeTwo!.isNotEmpty) {
+          RouteDetailsRepsonse routeDetailsRepsonse =
+              await routeDetailsUseCase(Params(data: event.request));
 
-        FareResponse fareResponse =
-            await fareUseCase(Params(data: event.request));
+          RouteDetailsRequest req = RouteDetailsRequest();
 
-        ETAResponse etaResponse = await etaUseCase(Params(data: event.request));
+          req.startCode = event.request.startRouteTwo;
+          req.endCode = event.request.endRouteTwo;
+          req.routeCode = event.request.routeTwo;
 
-        if (routeDetailsRepsonse.succeeded == true) {
-          RouteStopListResponse routeStopListResponse = RouteStopListResponse();
-          yield RouteDetailsSuccessState(
-              routeDetailsRepsonse: routeDetailsRepsonse,
-              fareResponse: fareResponse,
-              etaResponse: etaResponse,
-              routeStopListResponse: routeStopListResponse);
+          RouteDetailsRepsonse routeDetailsRepsonse1 =
+              await routeDetailsUseCase(Params(data: req));
+
+          FareResponse fareResponse =
+              await fareUseCase(Params(data: event.request));
+
+          ETAResponse etaResponse =
+              await etaUseCase(Params(data: event.request));
+
+          if (routeDetailsRepsonse.succeeded == true) {
+            RouteStopListResponse routeStopListResponse =
+                RouteStopListResponse();
+
+            yield RouteDetailsSuccessState(
+                routeDetailsResponse: routeDetailsRepsonse,
+                fareResponse: fareResponse,
+                etaResponse: etaResponse,
+                routeStopListResponse: routeStopListResponse,
+                routeDetailsResponse1: routeDetailsRepsonse1);
+          } else {
+            yield const RouteDetailsFailedState(
+                errorMessage: "Something Went Wrong");
+          }
         } else {
-          yield const RouteDetailsFailedState(
-              errorMessage: "Something Went Wrong");
+          RouteDetailsRepsonse routeDetailsRepsonse =
+              await routeDetailsUseCase(Params(data: event.request));
+
+          FareResponse fareResponse =
+              await fareUseCase(Params(data: event.request));
+
+          ETAResponse etaResponse =
+              await etaUseCase(Params(data: event.request));
+
+          if (routeDetailsRepsonse.succeeded == true) {
+            RouteStopListResponse routeStopListResponse =
+                RouteStopListResponse();
+
+            yield RouteDetailsSuccessState(
+                routeDetailsResponse: routeDetailsRepsonse,
+                fareResponse: fareResponse,
+                etaResponse: etaResponse,
+                routeStopListResponse: routeStopListResponse,
+                routeDetailsResponse1: routeDetailsRepsonse);
+          } else {
+            yield const RouteDetailsFailedState(
+                errorMessage: "Something Went Wrong");
+          }
         }
       }
     }

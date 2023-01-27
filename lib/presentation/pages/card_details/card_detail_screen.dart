@@ -34,7 +34,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
       body: Column(
         children: [
           const SizedBox(height: Dimensions.dp25),
-          CustomToolbar(
+          const CustomToolbar(
             title: "card_details",
             showOption: false,
           ),
@@ -125,9 +125,6 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                   ),
                   TextField(
                     controller: enterAmountController,
-                    inputFormatters: [
-                      // FilteringTextInputFormatter.digitsOnly,
-                    ],
                     style: satoshiRegular.copyWith(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w300,

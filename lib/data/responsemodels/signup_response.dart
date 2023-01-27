@@ -7,17 +7,17 @@ class SignUpResponse {
 
   SignUpResponse.fromJson(Map<String, dynamic> json) {
     data = json['data'];
-    error = json['error'] != null ? new Error.fromJson(json['error']) : null;
+    error = json['error'] != null ? Error.fromJson(json['error']) : null;
     succeeded = json['succeeded'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['data'] = this.data;
-    if (this.error != null) {
-      data['error'] = this.error!.toJson();
+    if (error != null) {
+      data['error'] = error!.toJson();
     }
-    data['succeeded'] = this.succeeded;
+    data['succeeded'] = succeeded;
     return data;
   }
 }
@@ -32,8 +32,8 @@ class Error {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['title'] = this.title;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['title'] = title;
     return data;
   }
 }

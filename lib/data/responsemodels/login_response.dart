@@ -16,10 +16,10 @@ class LoginResponse {
     if (this.data != null) {
       data['data'] = this.data!.toJson();
     }
-    if (this.error != null) {
-      data['error'] = this.error!.toJson();
+    if (error != null) {
+      data['error'] = error!.toJson();
     }
-    data['succeeded'] = this.succeeded;
+    data['succeeded'] = succeeded;
     return data;
   }
 }
@@ -41,10 +41,10 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    data['accessToken'] = this.accessToken;
-    data['expiry'] = this.expiry;
-    data['email'] = this.email;
-    data['statusCode'] = this.statusCode;
+    data['accessToken'] = accessToken;
+    data['expiry'] = expiry;
+    data['email'] = email;
+    data['statusCode'] = statusCode;
     return data;
   }
 }
@@ -60,7 +60,7 @@ class Error {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = Map<String, dynamic>();
-    data['title'] = this.title;
+    data['title'] = title;
     return data;
   }
 }

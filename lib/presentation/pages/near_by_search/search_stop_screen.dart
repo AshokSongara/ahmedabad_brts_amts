@@ -121,7 +121,7 @@ class _NearBySearchStopScreenState extends State<NearBySearchStopScreen> {
           Expanded(
             child: ListView.builder(
               padding: const EdgeInsets.symmetric(horizontal: 34),
-              itemCount: localNearMeList.length ?? 0,
+              itemCount: localNearMeList.length,
               itemBuilder: (context, index) {
                 return Column(
                   children: [

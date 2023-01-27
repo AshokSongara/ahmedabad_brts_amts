@@ -39,7 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
   List<QuickLinkInternalModel> quickLinkList = [];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   double fontSize = Dimensions.dp18.sp;
-  TextEditingController _serviceController = TextEditingController();
   BrtsRoutesResponseModel? brtsRoutesResponseModel;
   BrtsStopResponseModel? operationBrtsStopResponseModel;
   RouteData? routeData;
@@ -480,7 +479,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       left: Dimensions.dp24,
                       right: Dimensions.dp24,
                       top: Dimensions.dp26),
-                  padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 14),
+                  padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 14),
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(
@@ -500,7 +499,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         SvgPicture.asset(ImageConstant.iSearch,
                             height: 20, width: 20),
-                        SizedBox(
+                        const SizedBox(
                           width: 14,
                         ),
                         Text(
@@ -721,7 +720,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       "Yes",
                                       "",
                                       "",
-                                      isAmts ? "AMTS" : "BRTS"),
+                                      isAmts ? "AMTS" : "BRTS","","","",""),
                                 );
                               } else if (newFromSelectedStation != null &&
                                   newToSelectedStation != null) {

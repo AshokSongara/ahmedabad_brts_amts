@@ -8,18 +8,18 @@ class SearchRouteResponse {
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(Data.fromJson(v));
       });
     }
     succeeded = json['succeeded'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    data['succeeded'] = this.succeeded;
+    data['succeeded'] = succeeded;
     return data;
   }
 }
@@ -61,24 +61,24 @@ class Data {
     if (json['routeDetails'] != null) {
       routeDetails = <RouteDetails>[];
       json['routeDetails'].forEach((v) {
-        routeDetails!.add(new RouteDetails.fromJson(v));
+        routeDetails!.add(RouteDetails.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['journeyStartDate'] = this.journeyStartDate;
-    data['journeyEndDate'] = this.journeyEndDate;
-    data['startTime'] = this.startTime;
-    data['endTime'] = this.endTime;
-    data['totalTime'] = this.totalTime;
-    data['routes'] = this.routes;
-    data['interChanges'] = this.interChanges;
-    data['totalDistance'] = this.totalDistance;
-    data['fare'] = this.fare;
-    if (this.routeDetails != null) {
-      data['routeDetails'] = this.routeDetails!.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data['journeyStartDate'] = journeyStartDate;
+    data['journeyEndDate'] = journeyEndDate;
+    data['startTime'] = startTime;
+    data['endTime'] = endTime;
+    data['totalTime'] = totalTime;
+    data['routes'] = routes;
+    data['interChanges'] = interChanges;
+    data['totalDistance'] = totalDistance;
+    data['fare'] = fare;
+    if (routeDetails != null) {
+      data['routeDetails'] = routeDetails!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -143,24 +143,24 @@ class RouteDetails {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['startStopCode'] = this.startStopCode;
-    data['endStopCode'] = this.endStopCode;
-    data['startStopName'] = this.startStopName;
-    data['endStopName'] = this.endStopName;
-    data['startStopPosition'] = this.startStopPosition;
-    data['endStopPosition'] = this.endStopPosition;
-    data['routeCode'] = this.routeCode;
-    data['customerRouteCode'] = this.customerRouteCode;
-    data['routeName'] = this.routeName;
-    data['scheduleForRouteCode'] = this.scheduleForRouteCode;
-    data['startStopSequenceNumber'] = this.startStopSequenceNumber;
-    data['endStopSequenceNumber'] = this.endStopSequenceNumber;
-    data['distance'] = this.distance;
-    data['startArrivalTime'] = this.startArrivalTime;
-    data['startDepartureTime'] = this.startDepartureTime;
-    data['endArrivalTime'] = this.endArrivalTime;
-    data['endDepartureTime'] = this.endDepartureTime;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['startStopCode'] = startStopCode;
+    data['endStopCode'] = endStopCode;
+    data['startStopName'] = startStopName;
+    data['endStopName'] = endStopName;
+    data['startStopPosition'] = startStopPosition;
+    data['endStopPosition'] = endStopPosition;
+    data['routeCode'] = routeCode;
+    data['customerRouteCode'] = customerRouteCode;
+    data['routeName'] = routeName;
+    data['scheduleForRouteCode'] = scheduleForRouteCode;
+    data['startStopSequenceNumber'] = startStopSequenceNumber;
+    data['endStopSequenceNumber'] = endStopSequenceNumber;
+    data['distance'] = distance;
+    data['startArrivalTime'] = startArrivalTime;
+    data['startDepartureTime'] = startDepartureTime;
+    data['endArrivalTime'] = endArrivalTime;
+    data['endDepartureTime'] = endDepartureTime;
     return data;
   }
 }

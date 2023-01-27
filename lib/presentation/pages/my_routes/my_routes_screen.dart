@@ -47,7 +47,7 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
 
   getData() {
     BlocProvider.of<FavouriteRouteListBloc>(context)
-        .add(GetFavouriteRouteListEvent());
+        .add(const GetFavouriteRouteListEvent());
   }
 
   @override
@@ -94,7 +94,7 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
           return Center(
             child: Container(
               height: 53,
-              margin: EdgeInsets.all(50),
+              margin: const EdgeInsets.all(50),
               child: CustomButton(
                 color: Theme.of(context).primaryColor,
                 text: AppLocalizations.of(context)?.translate("go_to_login") ?? "",

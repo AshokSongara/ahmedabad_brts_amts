@@ -30,6 +30,10 @@ class RouteDetailScreen extends StatefulWidget {
   final String? originStart;
   final String? originEnd;
   final String? serviceType;
+  final String? interChangeName;
+  final String? routeTwo;
+  final String? startRouteTwo;
+  final String? endRouteTwo;
 
   const RouteDetailScreen({
     Key? key,
@@ -44,6 +48,10 @@ class RouteDetailScreen extends StatefulWidget {
     required this.originStart,
     required this.originEnd,
     required this.serviceType,
+    required this.interChangeName,
+    required this.routeTwo,
+    required this.startRouteTwo,
+    required this.endRouteTwo,
   }) : super(key: key);
 
   @override
@@ -62,6 +70,9 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
     routeDetailsRequest.originStart = widget.originStart;
     routeDetailsRequest.originEnd = widget.originEnd;
     routeDetailsRequest.serviceType = widget.serviceType;
+    routeDetailsRequest.routeTwo = widget.routeTwo;
+    routeDetailsRequest.startRouteTwo = widget.startRouteTwo;
+    routeDetailsRequest.endRouteTwo = widget.endRouteTwo;
 
     BlocProvider.of<RouteDetailsBloc>(context).add(
       GetRouteDetailsEvent(request: routeDetailsRequest),
@@ -80,7 +91,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
             Loader.hide();
             return Column(children: [
               const SizedBox(height: 25),
-              CustomToolbar(title: "route_detail"),
+              const CustomToolbar(title: "route_detail"),
               Container(
                 padding: const EdgeInsets.only(top: 15, bottom: 15),
                 color: Colors.white,
@@ -179,11 +190,16 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                     child: OrderTracker(
                       activeColor: Theme.of(context).primaryColor,
                       inActiveColor: AppColors.darkGray,
-                      orderTitleAndDateList: widget.fromHome == "No" ? state.routeDetailsRepsonse.data
+                      orderTitleAndDateList: widget.fromHome == "No" ? state.routeDetailsResponse.data
+                      : state.routeStopListResponse.data,
+                      orderTitleAndDateList2: widget.fromHome == "No" ? state.routeDetailsResponse1.data
                       : state.routeStopListResponse.data,
                       startRouteTitle: widget.startRouteName ?? "",
                       endRouteTitle: widget.endRouteName ?? "",
                       routeCode: widget.routeCode ?? "",
+                      interChangeName: widget.interChangeName,
+                      interChange: widget.interChange,
+                      routeCodeTwo: widget.routeTwo,
                     ),
                   ),
                 ),
@@ -210,7 +226,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                                 width: 5,
                               ),
                               Text(
-                                 state.etaResponse.data!.isNotEmpty ? toMinutes("${state.etaResponse.data![0].eta}"  "" "" ?? "") : "",
+                                 state.etaResponse.data!.isNotEmpty ? toMinutes("${state.etaResponse.data![0].eta}"  "" "") : "",
                                 style: screenTitle.copyWith(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 15.sp),

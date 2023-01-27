@@ -36,12 +36,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SuccessActivity"></activity>
-        <activity
-            android:name="com.firstdata.fdsdk.view.activity.FDMainActivity"
-            android:screenOrientation="sensorPortrait"
-            android:theme="@style/MyAppTheme"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-
+        <activity android:name=".SecondMainActivity" android:theme="@style/MyAppTheme"></activity>
         <!-- Don't delete the meta-data below.
              This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
         <meta-data

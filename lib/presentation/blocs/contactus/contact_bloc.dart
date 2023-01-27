@@ -18,11 +18,11 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
     if (event is GetContactEvent) {
       yield ContactLoadingState();
       ContactUsResponse contactUsResponse =
-          await contactUsUseCase(Params(data: ""));
+          await contactUsUseCase(const Params(data: ""));
       if (contactUsResponse.succeeded == true) {
         yield ContactSuccessState(contactUsResponse: contactUsResponse);
       } else {
-        yield ContactFailedState(errorMessage: "Something Went Wrong");
+        yield const ContactFailedState(errorMessage: "Something Went Wrong");
       }
     }
   }

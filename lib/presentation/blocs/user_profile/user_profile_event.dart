@@ -11,7 +11,7 @@ abstract class UserProfileEvent extends Equatable {
 class GetUserProfileEvent extends UserProfileEvent {
   final ProfileRequest profileRequest;
 
-  GetUserProfileEvent({required this.profileRequest});
+  const GetUserProfileEvent({required this.profileRequest});
 
   @override
   List<Object> get props => [profileRequest];

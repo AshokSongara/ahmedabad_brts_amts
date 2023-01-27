@@ -47,19 +47,17 @@ class MainActivity : FlutterActivity() {
             .setMethodCallHandler { call: MethodCall, result: MethodChannel.Result? ->
                 if (call.method == "setToast") {
                     apiService = RetrofitApiClient.getClient().create(ApiInterface::class.java)
-                    Toast.makeText(context,"Called here",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Called here", Toast.LENGTH_SHORT).show()
                     initiateApiCall()
-                    val myText = call.argument<String>("myText")
-//                    this.startActivity(
-//                        Intent(
-//                            this,
-//                            MainActivity::class.java
-//                        )
+//                    val myText = call.argument<String>("myText")
+//                    val myIntent = Intent(
+//                        this@MainActivity,
+//                        SecondMainActivity::class.java
 //                    )
-//                    setText(myText)
+//                    this@MainActivity.startActivity(myIntent)
                 }
             }
-       // startActivity(FlutterActivity.withCachedEngine(CHANNEL).build(this));
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -78,7 +76,7 @@ class MainActivity : FlutterActivity() {
 
             myIntent.putExtra("key", value)
             this@MainActivity.startActivity(myIntent)
-            finish()
+            // finish()
         } catch (ex: java.lang.Exception) {
             Toast.makeText(this@MainActivity, ex.toString(), Toast.LENGTH_SHORT).show()
         }

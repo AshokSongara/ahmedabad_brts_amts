@@ -28,7 +28,7 @@ class NumericKeyboard extends StatefulWidget {
   /// Main axis alignment [default = MainAxisAlignment.spaceEvenly]
   final MainAxisAlignment mainAxisAlignment;
 
-  NumericKeyboard(
+  const NumericKeyboard(
       {Key? key,
       required this.onKeyboardTap,
       this.textColor = Colors.black,

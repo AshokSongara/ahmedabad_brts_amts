@@ -43,8 +43,9 @@ Future<void> launchPhoneDialer(String contactNumber) async {
       path: contactNumber
   );
   try {
-    if (await canLaunch(_phoneUri.toString()))
+    if (await canLaunch(_phoneUri.toString())) {
       await launch(_phoneUri.toString());
+    }
   } catch (error) {
     throw("Cannot dial");
   }

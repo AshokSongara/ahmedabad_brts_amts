@@ -5,12 +5,12 @@ class ForgetPasswordResponse {
   ForgetPasswordResponse({this.error, this.succeeded});
 
   ForgetPasswordResponse.fromJson(Map<String, dynamic> json) {
-    error = json['error'] != null ? new Error.fromJson(json['error']) : null;
+    error = json['error'] != null ? Error.fromJson(json['error']) : null;
     succeeded = json['succeeded'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     if (error != null) {
       data['error'] = error!.toJson();
     }
@@ -28,11 +28,11 @@ class Error {
   Error.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     errors =
-        json['errors'] != null ? new Errors.fromJson(json['errors']) : null;
+        json['errors'] != null ? Errors.fromJson(json['errors']) : null;
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['title'] = title;
     if (errors != null) {
       data['errors'] = errors!.toJson();
@@ -51,7 +51,7 @@ class Errors {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = Map<String, dynamic>();
     data['Email'] = email;
     return data;
   }

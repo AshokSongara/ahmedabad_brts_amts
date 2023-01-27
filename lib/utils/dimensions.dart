@@ -1,5 +1,5 @@
 class Dimensions {
-  static const double RADIUS_SMALL = 5.0;
+  static const double radiusSmall = 5.0;
   static const double dp75 = 75.0;
   static const double dp16 = 16.0;
   static const double dp100 = 100.0;
@@ -51,8 +51,5 @@ class Dimensions {
   static const double dp6=6.0;
   static const double dp33=33.0;
   static const double dp21=21.0;
-
-  static const double WEB_MAX_WIDTH = 1170;
-  static const int MESSAGE_INPUT_LENGTH = 250;
 
 }

@@ -11,7 +11,7 @@ abstract class SignupEvent extends Equatable {
 class SignupUserEvent extends SignupEvent {
   final SignupRequest data;
 
-  SignupUserEvent({required this.data});
+  const SignupUserEvent({required this.data});
 
   @override
   List<Object> get props => [data];

@@ -8,7 +8,7 @@ abstract class NotificationEvent extends Equatable {
 }
 
 class GetNotificationEvent extends NotificationEvent {
-  GetNotificationEvent();
+  const GetNotificationEvent();
 
   @override
   List<Object> get props => [];

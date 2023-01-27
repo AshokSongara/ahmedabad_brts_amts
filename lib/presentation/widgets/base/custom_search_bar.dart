@@ -25,7 +25,7 @@ class CustomSearchBar extends StatefulWidget {
   final Color fillColor;
   final double radius;
 
-  CustomSearchBar(
+  const CustomSearchBar(
       {this.hintText = 'Write something...',
       required this.controller,
       required this.focusNode,

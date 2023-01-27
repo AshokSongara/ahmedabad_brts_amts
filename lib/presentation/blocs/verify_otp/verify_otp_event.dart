@@ -11,7 +11,7 @@ abstract class VerifyOtpEvent extends Equatable {
 class PostVerifyOtpEvent extends VerifyOtpEvent {
   final OtpRequest otpRequest;
 
-  PostVerifyOtpEvent({required this.otpRequest});
+  const PostVerifyOtpEvent({required this.otpRequest});
 
   @override
   List<Object> get props => [otpRequest];

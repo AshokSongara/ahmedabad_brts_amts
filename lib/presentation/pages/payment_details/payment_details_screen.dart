@@ -125,7 +125,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                     child: CarouselSlider(
                                       carouselController: carouselController,
                                       options: CarouselOptions(
-                                        scrollPhysics: NeverScrollableScrollPhysics(),
+                                        scrollPhysics: const NeverScrollableScrollPhysics(),
                                         height: 200.0,
                                         viewportFraction: 1,
                                         enlargeFactor: 0.3,
@@ -170,7 +170,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                     )),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: Dimensions.dp15,
                             ),
                           ],
@@ -195,8 +195,8 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                         ),
                         child: Column(
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
+                            const Padding(
+                              padding: EdgeInsets.only(
                                   left: Dimensions.dp8, right: Dimensions.dp8),
                               child: DashLineView(
                                 fillRate: 0.6,
@@ -210,8 +210,8 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                 children: [
                                   Container(
                                     margin:
-                                        EdgeInsets.only(top: Dimensions.dp33),
-                                    padding: EdgeInsets.all(Dimensions.dp8),
+                                        const EdgeInsets.only(top: Dimensions.dp33),
+                                    padding: const EdgeInsets.all(Dimensions.dp8),
                                     decoration: const BoxDecoration(
                                       color: AppColors.greyF6F6F6,
                                       borderRadius: BorderRadius.all(
@@ -227,7 +227,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                           color: AppColors.darkGray),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: Dimensions.dp12,
                                   ),
                                   Row(
@@ -252,7 +252,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: Dimensions.dp8,
                                   ),
                                   Row(
@@ -275,7 +275,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: Dimensions.dp4,
                                   ),
                                   Row(
@@ -328,14 +328,14 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: Dimensions.dp25,
                                   ),
                                   const Divider(
                                     height: 1,
                                     color: AppColors.lightGray,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: Dimensions.dp15,
                                   ),
                                   Align(
@@ -348,7 +348,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                           color: AppColors.lightGray),
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: Dimensions.dp10,
                                   ),
                                   Row(
@@ -422,14 +422,14 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: Dimensions.dp25,
                                   ),
                                   const Divider(
                                     height: 1,
                                     color: AppColors.lightGray,
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: Dimensions.dp15,
                                   ),
                                   Column(
