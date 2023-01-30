@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class PassengerDetails extends StatefulWidget {
   const PassengerDetails({Key? key}) : super(key: key);
@@ -25,206 +26,208 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.appBackground,
-      body: Column(
-        children: [
-          const SizedBox(height: Dimensions.dp25),
-          const CustomToolbar(
-            title: "passenger_details",
-            showOption: false,
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 24),
-            margin: const EdgeInsets.only(
-                left: Dimensions.dp24,
-                right: Dimensions.dp24,
-                top: Dimensions.dp35),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.gray6E8EE7,
-                  blurRadius: 5.0,
+      body: SafeArea(
+        child: Column(
+          children: [
+            // const SizedBox(height: Dimensions.dp25),
+            const CustomToolbar(
+              title: "passenger_details",
+              showOption: false,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 24),
+              margin: const EdgeInsets.only(
+                  left: Dimensions.dp24,
+                  right: Dimensions.dp24,
+                  top: Dimensions.dp35),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.gray6E8EE7,
+                    blurRadius: 5.0,
+                  ),
+                ],
+                borderRadius: BorderRadius.all(
+                  Radius.circular(Dimensions.dp10),
                 ),
-              ],
-              borderRadius: BorderRadius.all(
-                Radius.circular(Dimensions.dp10),
               ),
-            ),
-            child: Row(
-              children: [
-                getSourceDestination("Adalaj Gam", "15 Oct 2022, 10:54 PM"),
-                Expanded(
-                  flex: 1,
-                  child: SvgPicture.asset(ImageConstant.iArrowRight),
-                ),
-                getSourceDestination("Ahm Airport", "15 Oct 2022, 10:54 PM")
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(
-                left: Dimensions.dp24,
-                right: Dimensions.dp24,
-                top: Dimensions.dp35),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: AppColors.gray6E8EE7,
-                  blurRadius: 5.0,
-                ),
-              ],
-              borderRadius: BorderRadius.all(
-                Radius.circular(Dimensions.dp10),
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 15, right: 18, left: 18),
-              child: Column(
+              child: Row(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Passenger Details",
-                        style: satoshiRegular.copyWith(
-                            fontSize: Dimensions.dp16.sp,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.darkGray),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          openBottomSheetForPassengers();
-                        },
-                        child: Container(
-                          padding:
-                          const EdgeInsets.symmetric(
-                              vertical: 4, horizontal: 9),
-                          decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(
-                                  Dimensions.dp5,
-                                ),
-                              ),
-                              border:
-                              Border.all(color: Theme
-                                  .of(context)
-                                  .primaryColor)),
-                          child: Text("Add Passenger",
-                              style: satoshiRegular.copyWith(
-                                  fontSize: Dimensions.dp10.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: Theme
-                                      .of(context)
-                                      .primaryColor)),
-                        ),
-                      )
-                    ],
+                  getSourceDestination("Adalaj Gam", "15 Oct 2022, 10:54 PM"),
+                  Expanded(
+                    flex: 1,
+                    child: SvgPicture.asset(ImageConstant.iArrowRight),
                   ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Column(
-                            children: [
-                              Text(
-                                "Adults",
-                                style: satoshiRegular.copyWith(
-                                    fontSize: Dimensions.dp12.sp,
-                                    fontWeight: FontWeight.w700,
-                                    color: AppColors.darkGray),
-                              ),
-                              Text(
-                                "$_addedAdultsCount",
-                                style: satoshiRegular.copyWith(
-                                    fontSize: Dimensions.dp16.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.darkGray),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            width: 30,
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                "Kids",
-                                style: satoshiRegular.copyWith(
-                                    fontSize: Dimensions.dp12.sp,
-                                    fontWeight: FontWeight.w700,
-                                    color: AppColors.darkGray),
-                              ),
-                              Text(
-                                "$_addedKidsCount",
-                                style: satoshiRegular.copyWith(
-                                    fontSize: Dimensions.dp16.sp,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.darkGray),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Text(
-                            "Total",
-                            style: satoshiRegular.copyWith(
-                                fontSize: Dimensions.dp12.sp,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.darkGray),
-                          ),
-                          Text(
-                            "${_addedAdultsCount + _addedKidsCount}",
-                            style: satoshiRegular.copyWith(
-                                fontSize: Dimensions.dp16.sp,
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.darkGray),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
+                  getSourceDestination("Ahm Airport", "15 Oct 2022, 10:54 PM")
                 ],
               ),
             ),
-          ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: const EdgeInsets.all(20),
-                height: 53,
-                child: CustomButton(
-                  color: Theme
-                      .of(context)
-                      .primaryColor,
-                  text: "Payment",
-                  onPressed: () {
-                    // Get.toNamed(
-                    //     RouteHelper.payment);
-                    _initiatePayment();
-                  },
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .width,
-                  style: poppinsMedium.copyWith(
-                      color: Colors.white, fontSize: 15.sp),
-                  height: 53,
+            Container(
+              margin: const EdgeInsets.only(
+                  left: Dimensions.dp24,
+                  right: Dimensions.dp24,
+                  top: Dimensions.dp35),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.gray6E8EE7,
+                    blurRadius: 5.0,
+                  ),
+                ],
+                borderRadius: BorderRadius.all(
+                  Radius.circular(Dimensions.dp10),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 15, right: 18, left: 18),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Passenger Details",
+                          style: satoshiRegular.copyWith(
+                              fontSize: Dimensions.dp16.sp,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.darkGray),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            openBottomSheetForPassengers();
+                          },
+                          child: Container(
+                            padding:
+                            const EdgeInsets.symmetric(
+                                vertical: 4, horizontal: 9),
+                            decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(
+                                    Dimensions.dp5,
+                                  ),
+                                ),
+                                border:
+                                Border.all(color: Theme
+                                    .of(context)
+                                    .primaryColor)),
+                            child: Text("Add Passenger",
+                                style: satoshiRegular.copyWith(
+                                    fontSize: Dimensions.dp10.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: Theme
+                                        .of(context)
+                                        .primaryColor)),
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Column(
+                              children: [
+                                Text(
+                                  "Adults",
+                                  style: satoshiRegular.copyWith(
+                                      fontSize: Dimensions.dp12.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.darkGray),
+                                ),
+                                Text(
+                                  "$_addedAdultsCount",
+                                  style: satoshiRegular.copyWith(
+                                      fontSize: Dimensions.dp16.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.darkGray),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              width: 30,
+                            ),
+                            Column(
+                              children: [
+                                Text(
+                                  "Kids",
+                                  style: satoshiRegular.copyWith(
+                                      fontSize: Dimensions.dp12.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.darkGray),
+                                ),
+                                Text(
+                                  "$_addedKidsCount",
+                                  style: satoshiRegular.copyWith(
+                                      fontSize: Dimensions.dp16.sp,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.darkGray),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              "Total",
+                              style: satoshiRegular.copyWith(
+                                  fontSize: Dimensions.dp12.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.darkGray),
+                            ),
+                            Text(
+                              "${_addedAdultsCount + _addedKidsCount}",
+                              style: satoshiRegular.copyWith(
+                                  fontSize: Dimensions.dp16.sp,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.darkGray),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                  ],
                 ),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: const EdgeInsets.all(20),
+                  height: 53,
+                  child: CustomButton(
+                    color: Theme
+                        .of(context)
+                        .primaryColor,
+                    text: "Payment",
+                    onPressed: () {
+                      // Get.toNamed(
+                      //     RouteHelper.payment);
+                      _initiatePayment();
+                    },
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width,
+                    style: poppinsMedium.copyWith(
+                        color: Colors.white, fontSize: 15.sp),
+                    height: 53,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -46,130 +46,132 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.appBackground,
-      body: BlocConsumer<NearByMapBloc, NearByMapState>(
-          listener: (context, state) {
-        if (state is NearByMapLoadingState) {
-          Loader.show(context);
-        } else if (state is NearByMapSuccessState) {
-          Loader.hide();
-          nearMeResponse = state.nearMeResponse;
-        } else if (state is NearByMapFailState) {
-          Loader.hide();
-        }
-      }, builder: (context, state) {
-        return Column(
-          children: [
-            const SizedBox(height: Dimensions.dp25),
-            const CustomToolbar(
-              title: "near_you",
-              showOption: false,
-            ),
-            Expanded(
-              flex: 1,
-              child: OSMFlutter(
-                controller: controller,
-                trackMyPosition: true,
-                initZoom: 12,
-                minZoomLevel: 8,
-                maxZoomLevel: 14,
-                stepZoom: 1.0,
-                userLocationMarker: UserLocationMaker(
-                  personMarker: const MarkerIcon(
+      body: SafeArea(
+        child: BlocConsumer<NearByMapBloc, NearByMapState>(
+            listener: (context, state) {
+          if (state is NearByMapLoadingState) {
+            Loader.show(context);
+          } else if (state is NearByMapSuccessState) {
+            Loader.hide();
+            nearMeResponse = state.nearMeResponse;
+          } else if (state is NearByMapFailState) {
+            Loader.hide();
+          }
+        }, builder: (context, state) {
+          return Column(
+            children: [
+              // const SizedBox(height: Dimensions.dp25),
+              const CustomToolbar(
+                title: "near_you",
+                showOption: false,
+              ),
+              Expanded(
+                flex: 1,
+                child: OSMFlutter(
+                  controller: controller,
+                  trackMyPosition: true,
+                  initZoom: 12,
+                  minZoomLevel: 8,
+                  maxZoomLevel: 14,
+                  stepZoom: 1.0,
+                  userLocationMarker: UserLocationMaker(
+                    personMarker: const MarkerIcon(
+                      icon: Icon(
+                        Icons.person_pin_circle,
+                        color: Colors.blue,
+                        size: 76,
+                      ),
+                    ),
+                    directionArrowMarker: const MarkerIcon(
+                      icon: Icon(
+                        Icons.double_arrow,
+                        size: 48,
+                      ),
+                    ),
+                  ),
+                  roadConfiguration: RoadConfiguration(
+                    startIcon: const MarkerIcon(
+                      icon: Icon(
+                        Icons.person,
+                        size: 64,
+                        color: Colors.brown,
+                      ),
+                    ),
+                    roadColor: Colors.yellowAccent,
+                  ),
+                  markerOption: MarkerOption(
+                      defaultMarker: const MarkerIcon(
                     icon: Icon(
                       Icons.person_pin_circle,
                       color: Colors.blue,
-                      size: 76,
+                      size: 56,
                     ),
-                  ),
-                  directionArrowMarker: const MarkerIcon(
-                    icon: Icon(
-                      Icons.double_arrow,
-                      size: 48,
-                    ),
-                  ),
+                  )),
                 ),
-                roadConfiguration: RoadConfiguration(
-                  startIcon: const MarkerIcon(
-                    icon: Icon(
-                      Icons.person,
-                      size: 64,
-                      color: Colors.brown,
+              ),
+              Container(
+                color: Theme.of(context).primaryColor,
+                child: Row(
+                  children: [
+                    const SizedBox(
+                      width: 10,
                     ),
-                  ),
-                  roadColor: Colors.yellowAccent,
+                    Text("Near by bus stop",
+                        style: satoshiRegular.copyWith(
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white)),
+                    IconButton(
+                        onPressed: () {
+                          _getNearByRoutes();
+                        },
+                        icon: const Icon(Icons.refresh, color: Colors.white))
+                  ],
                 ),
-                markerOption: MarkerOption(
-                    defaultMarker: const MarkerIcon(
-                  icon: Icon(
-                    Icons.person_pin_circle,
-                    color: Colors.blue,
-                    size: 56,
-                  ),
-                )),
               ),
-            ),
-            Container(
-              color: Theme.of(context).primaryColor,
-              child: Row(
-                children: [
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Text("Near by bus stop",
-                      style: satoshiRegular.copyWith(
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white)),
-                  IconButton(
-                      onPressed: () {
-                        _getNearByRoutes();
-                      },
-                      icon: const Icon(Icons.refresh, color: Colors.white))
-                ],
-              ),
-            ),
-            Expanded(
-              flex: 2,
-              child: nearMeResponse != null
-                  ? ListView.separated(
-                      padding: EdgeInsets.zero,
-                      itemCount: nearMeResponse?.data?.length ?? 0,
-                      separatorBuilder: (context, index) => Container(
-                          margin: const EdgeInsets.only(
-                              left: Dimensions.dp20, right: Dimensions.dp20),
-                          child: CustomPaint(painter: DashedLinePainter())),
-                      itemBuilder: (context, index) {
-                        return ListTile(
-                          title: Text(
-                            (nearMeResponse?.data?[index].stopName ?? "")
-                                .toUpperCase(),
-                            style: satoshiRegular.copyWith(
-                                fontSize: 19.sp,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.darkGray),
-                          ),
-                          trailing: Text(
-                              "${getDistanceInMeters(nearMeResponse?.data?[index].distance.toString() ?? "")} Mtr",
+              Expanded(
+                flex: 2,
+                child: nearMeResponse != null
+                    ? ListView.separated(
+                        padding: EdgeInsets.zero,
+                        itemCount: nearMeResponse?.data?.length ?? 0,
+                        separatorBuilder: (context, index) => Container(
+                            margin: const EdgeInsets.only(
+                                left: Dimensions.dp20, right: Dimensions.dp20),
+                            child: CustomPaint(painter: DashedLinePainter())),
+                        itemBuilder: (context, index) {
+                          return ListTile(
+                            title: Text(
+                              (nearMeResponse?.data?[index].stopName ?? "")
+                                  .toUpperCase(),
                               style: satoshiRegular.copyWith(
                                   fontSize: 19.sp,
                                   fontWeight: FontWeight.w500,
-                                  color: AppColors.gray555555)),
-                          onTap: () {
-                            controller.changeLocation(GeoPoint(
-                                latitude:
-                                    nearMeResponse?.data?[index].latitude ?? 0,
-                                longitude:
-                                    nearMeResponse?.data?[index].longitude ??
-                                        0));
-                            setState(() {});
-                          },
-                        );
-                      })
-                  : Container(),
-            ),
-          ],
-        );
-      }),
+                                  color: AppColors.darkGray),
+                            ),
+                            trailing: Text(
+                                "${getDistanceInMeters(nearMeResponse?.data?[index].distance.toString() ?? "")} Mtr",
+                                style: satoshiRegular.copyWith(
+                                    fontSize: 19.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.gray555555)),
+                            onTap: () {
+                              controller.changeLocation(GeoPoint(
+                                  latitude:
+                                      nearMeResponse?.data?[index].latitude ?? 0,
+                                  longitude:
+                                      nearMeResponse?.data?[index].longitude ??
+                                          0));
+                              setState(() {});
+                            },
+                          );
+                        })
+                    : Container(),
+              ),
+            ],
+          );
+        }),
+      ),
     );
   }
 

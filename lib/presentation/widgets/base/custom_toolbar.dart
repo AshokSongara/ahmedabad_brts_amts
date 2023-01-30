@@ -4,6 +4,7 @@ import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class CustomToolbar extends StatelessWidget {
   const CustomToolbar(
@@ -31,7 +32,7 @@ class CustomToolbar extends StatelessWidget {
         children: [
           GestureDetector(
               onTap: () {
-                Navigator.of(context).pop();
+                Get.back();
               },
               child: Visibility(
                   visible: back,

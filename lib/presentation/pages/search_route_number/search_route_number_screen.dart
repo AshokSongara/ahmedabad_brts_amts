@@ -26,54 +26,56 @@ class _SearchRouteNumberScreenState extends State<SearchRouteNumberScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.appBackground,
-      body: Column(
-        children: [
-          const SizedBox(height: Dimensions.dp25),
-          const CustomToolbar(
-            title: "Search Route Number",
-            showOption: false,
-          ),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
-              margin: const EdgeInsets.only(
-                  left: Dimensions.dp24,
-                  right: Dimensions.dp24,
-                  bottom: Dimensions.dp20),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.gray6E8EE7,
-                    blurRadius: 5.0,
-                  ),
-                ],
-                borderRadius: BorderRadius.all(
-                  Radius.circular(Dimensions.dp10),
-                ),
-              ),
-              child: ListView.separated(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                  separatorBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.only(
-                          top: Dimensions.dp5.h, bottom: Dimensions.dp5.h),
-                      child: const Divider(
-                        color: AppColors.darkGray,
-                      ),
-                    );
-                  },
-                  itemCount: 20,
-                  itemBuilder: (context, index) {
-                    return Container(
-                        margin: EdgeInsets.only(
-                            left: Dimensions.dp20.w, right: Dimensions.dp20.w),
-                        child: getSearchRouteWidget());
-                  }),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // const SizedBox(height: Dimensions.dp25),
+            const CustomToolbar(
+              title: "Search Route Number",
+              showOption: false,
             ),
-          ),
-        ],
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+                margin: const EdgeInsets.only(
+                    left: Dimensions.dp24,
+                    right: Dimensions.dp24,
+                    bottom: Dimensions.dp20),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.gray6E8EE7,
+                      blurRadius: 5.0,
+                    ),
+                  ],
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(Dimensions.dp10),
+                  ),
+                ),
+                child: ListView.separated(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                    separatorBuilder: (context, index) {
+                      return Container(
+                        margin: EdgeInsets.only(
+                            top: Dimensions.dp5.h, bottom: Dimensions.dp5.h),
+                        child: const Divider(
+                          color: AppColors.darkGray,
+                        ),
+                      );
+                    },
+                    itemCount: 20,
+                    itemBuilder: (context, index) {
+                      return Container(
+                          margin: EdgeInsets.only(
+                              left: Dimensions.dp20.w, right: Dimensions.dp20.w),
+                          child: getSearchRouteWidget());
+                    }),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

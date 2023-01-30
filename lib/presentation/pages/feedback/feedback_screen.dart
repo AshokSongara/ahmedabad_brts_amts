@@ -50,135 +50,137 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
     return Scaffold(
       backgroundColor: AppColors.appBackground2,
       body:
-          BlocConsumer<FeedbackBloc, FeedbackState>(listener: (context, state) {
+          SafeArea(
+            child: BlocConsumer<FeedbackBloc, FeedbackState>(listener: (context, state) {
         if (state is FeedbackLoadingState) {
-          Loader.show(context);
+            Loader.show(context);
         } else if (state is FeedbackResponseState) {
-          Loader.hide();
-          showCustomSnackBar("Feedback Submitted..!", context, isError: false);
-          Navigator.of(context).pop();
+            Loader.hide();
+            showCustomSnackBar("Feedback Submitted..!", context, isError: false);
+            Navigator.of(context).pop();
         } else {
-          Loader.hide();
+            Loader.hide();
         }
       }, builder: (context, state) {
         return Column(
-          children: [
-            const SizedBox(height: Dimensions.dp25),
-            CustomToolbar(
-              title: "feedback",
-              showOption: false,
-            ),
-            Expanded(
-                child: ListView(
-              padding: const EdgeInsets.only(right: 43, left: 39),
-              children: [
-                getQuestionWidget(
-                    "1. What is the route number of the bus you are currently riding/rode?*"),
-                Padding(
-                  padding: const EdgeInsets.only(top: 18),
-                  child: TextField(
-                    controller: _routeController,
-                    style: satoshiRegular.copyWith(
-                        fontSize: Dimensions.dp16.sp,
-                        fontWeight: FontWeight.w300,
-                        color: AppColors.darkGray),
-                    textAlign: TextAlign.start,
-                    keyboardType: TextInputType.text,
-                    onChanged: (value) {},
-                    decoration: InputDecoration(
-                      border: const UnderlineInputBorder(
-                          borderSide: BorderSide(color: AppColors.lightGray)),
-                      focusedBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(color: AppColors.lightGray)),
-                      enabledBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(color: AppColors.lightGray)),
-                      errorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Theme.of(context).primaryColor)),
-                      disabledBorder: const UnderlineInputBorder(
-                          borderSide: BorderSide(color: AppColors.lightGray)),
-                      hintText: "Route number",
-                      hintStyle: satoshiRegular.copyWith(
+            children: [
+              // const SizedBox(height: Dimensions.dp25),
+              CustomToolbar(
+                title: "feedback",
+                showOption: false,
+              ),
+              Expanded(
+                  child: ListView(
+                padding: const EdgeInsets.only(right: 43, left: 39),
+                children: [
+                  getQuestionWidget(
+                      "1. What is the route number of the bus you are currently riding/rode?*"),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 18),
+                    child: TextField(
+                      controller: _routeController,
+                      style: satoshiRegular.copyWith(
                           fontSize: Dimensions.dp16.sp,
                           fontWeight: FontWeight.w300,
-                          color: AppColors.lightGray),
+                          color: AppColors.darkGray),
+                      textAlign: TextAlign.start,
+                      keyboardType: TextInputType.text,
+                      onChanged: (value) {},
+                      decoration: InputDecoration(
+                        border: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: AppColors.lightGray)),
+                        focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: AppColors.lightGray)),
+                        enabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: AppColors.lightGray)),
+                        errorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor)),
+                        disabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: AppColors.lightGray)),
+                        hintText: "Route number",
+                        hintStyle: satoshiRegular.copyWith(
+                            fontSize: Dimensions.dp16.sp,
+                            fontWeight: FontWeight.w300,
+                            color: AppColors.lightGray),
+                      ),
                     ),
                   ),
-                ),
-                getQuestionWidget(
-                    "2. Thinking about your experience on any bus route in the last 30 days/last trip, how satisfied were you with:"),
-                getQuestionWidget(
-                    "a) The length of time you waited for the bus?*"),
-                Padding(
-                  padding: const EdgeInsets.only(top: 22),
-                  child: FeedBackStatusList(
-                    list: list,
-                    selectedIndex: (index) {
-                      feedbackOne = index + 1;
-                    },
+                  getQuestionWidget(
+                      "2. Thinking about your experience on any bus route in the last 30 days/last trip, how satisfied were you with:"),
+                  getQuestionWidget(
+                      "a) The length of time you waited for the bus?*"),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 22),
+                    child: FeedBackStatusList(
+                      list: list,
+                      selectedIndex: (index) {
+                        feedbackOne = index + 1;
+                      },
+                    ),
                   ),
-                ),
-                getQuestionWidget("b) Your comfort on the bus?*"),
-                Padding(
-                  padding: const EdgeInsets.only(top: 22),
-                  child: FeedBackStatusList(
-                    list: list,
-                    selectedIndex: (index) {
-                      feedbackTwo = index + 1;
-                    },
+                  getQuestionWidget("b) Your comfort on the bus?*"),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 22),
+                    child: FeedBackStatusList(
+                      list: list,
+                      selectedIndex: (index) {
+                        feedbackTwo = index + 1;
+                      },
+                    ),
                   ),
-                ),
-                getQuestionWidget(
-                    "3. How satisfied were you with the overall quality of service?"),
-                Padding(
-                  padding: const EdgeInsets.only(top: 22),
-                  child: FeedBackStatusList(
-                    list: list,
-                    selectedIndex: (index) {
-                      feedbackThree = index + 1;
-                    },
+                  getQuestionWidget(
+                      "3. How satisfied were you with the overall quality of service?"),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 22),
+                    child: FeedBackStatusList(
+                      list: list,
+                      selectedIndex: (index) {
+                        feedbackThree = index + 1;
+                      },
+                    ),
                   ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(
-                      left: Dimensions.dp42,
-                      right: Dimensions.dp42,
-                      top: Dimensions.dp76,
-                      bottom: 43),
-                  child: CustomButton(
-                    color: Theme.of(context).primaryColor,
-                    text: "Submit",
-                    width: MediaQuery.of(context).size.width,
-                    onPressed: () {
-                      if (_routeController.text.isEmpty) {
-                        showCustomSnackBar("Please Enter Route Code", context);
-                      } else {
-                        BlocProvider.of<FeedbackBloc>(context).add(
-                          FeedbackSubmitEvent(
-                            FeedbackRequestModel(
-                              routeId: _routeController.text,
-                              waiting: feedbackOne,
-                              comfort: feedbackTwo,
-                              crowding: feedbackThree,
-                              serviceQuality: feedbackThree,
-                              journey: "AtoB",
+                  Container(
+                    margin: const EdgeInsets.only(
+                        left: Dimensions.dp42,
+                        right: Dimensions.dp42,
+                        top: Dimensions.dp76,
+                        bottom: 43),
+                    child: CustomButton(
+                      color: Theme.of(context).primaryColor,
+                      text: "Submit",
+                      width: MediaQuery.of(context).size.width,
+                      onPressed: () {
+                        if (_routeController.text.isEmpty) {
+                          showCustomSnackBar("Please Enter Route Code", context);
+                        } else {
+                          BlocProvider.of<FeedbackBloc>(context).add(
+                            FeedbackSubmitEvent(
+                              FeedbackRequestModel(
+                                routeId: _routeController.text,
+                                waiting: feedbackOne,
+                                comfort: feedbackTwo,
+                                crowding: feedbackThree,
+                                serviceQuality: feedbackThree,
+                                journey: "AtoB",
+                              ),
                             ),
-                          ),
-                        );
-                      }
-                    },
-                    style: satoshiRegular.copyWith(
-                        fontSize: Dimensions.dp18.sp,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white),
-                    height: Dimensions.dp56,
+                          );
+                        }
+                      },
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp18.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                      height: Dimensions.dp56,
+                    ),
                   ),
-                ),
-              ],
-            )),
-          ],
+                ],
+              )),
+            ],
         );
       }),
+          ),
     );
   }
 

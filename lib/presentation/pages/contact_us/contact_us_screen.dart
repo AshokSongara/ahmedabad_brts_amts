@@ -42,113 +42,115 @@ class _ContactUsScreenState extends State<ContactUsScreen> {
             Loader.show(context);
           } else if (state is ContactSuccessState) {
             Loader.hide();
-            return Column(
-              children: [
-                const SizedBox(height: Dimensions.dp25),
-                const CustomToolbar(
-                  title: "contact_us",
-                  showOption: false,
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: Dimensions.dp19, vertical: Dimensions.dp26),
-                  margin: const EdgeInsets.only(
-                      left: Dimensions.dp24,
-                      right: Dimensions.dp24,
-                      top: Dimensions.dp10),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.gray6E8EE7,
-                        blurRadius: 5.0,
+            return SafeArea(
+              child: Column(
+                children: [
+                  // const SizedBox(height: Dimensions.dp25),
+                  const CustomToolbar(
+                    title: "contact_us",
+                    showOption: false,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: Dimensions.dp19, vertical: Dimensions.dp26),
+                    margin: const EdgeInsets.only(
+                        left: Dimensions.dp24,
+                        right: Dimensions.dp24,
+                        top: Dimensions.dp10),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppColors.gray6E8EE7,
+                          blurRadius: 5.0,
+                        ),
+                      ],
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(Dimensions.dp10),
                       ),
-                    ],
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(Dimensions.dp10),
                     ),
-                  ),
-                  child: Column(
-                    children: [
-                      Text(
-                        "Hello ${AppConstant.nameData}",
-                        textAlign: TextAlign.center,
-                        style: satoshiRegular.copyWith(
-                            fontSize: Dimensions.dp15,
-                            fontWeight: FontWeight.w500,
-                            color: Theme.of(context).primaryColor),
-                      ),
-                      SizedBox(
-                        height: Dimensions.dp25.h,
-                      ),
-                      Text(
-                        "How can we help you?",
-                        textAlign: TextAlign.center,
-                        style: satoshiRegular.copyWith(
-                            fontSize: Dimensions.dp15,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.darkGray),
-                      ),
-                      SizedBox(
-                        height: Dimensions.dp26.h,
-                      ),
-                      SizedBox(
-                        height: 53,
-                        child: CustomButton(
-                          color: Theme.of(context).primaryColor,
-                          text: "Email Us",
-                          width: MediaQuery.of(context).size.width,
-                          onPressed: () {
-                            final Uri emailLaunchUri = Uri(
-                              scheme: 'mailto',
-                              path: state.contactUsResponse.data?.email ?? "",
-                            );
-                            launchUrlString(emailLaunchUri.toString());
-                          },
-                          style: poppinsMedium.copyWith(
+                    child: Column(
+                      children: [
+                        Text(
+                          "Hello ${AppConstant.nameData}",
+                          textAlign: TextAlign.center,
+                          style: satoshiRegular.copyWith(
+                              fontSize: Dimensions.dp15,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                              fontSize: 18),
-                          height: 53,
+                              color: Theme.of(context).primaryColor),
                         ),
-                      ),
-                      SizedBox(
-                        height: Dimensions.dp26.h,
-                      ),
-                      Text(
-                        "OR",
-                        textAlign: TextAlign.center,
-                        style: satoshiRegular.copyWith(
-                            fontSize: Dimensions.dp14,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.darkGray),
-                      ),
-                      SizedBox(
-                        height: Dimensions.dp26.h,
-                      ),
-                      SizedBox(
-                        height: 53,
-                        child: CustomButton(
-                          color: Theme.of(context).primaryColor,
-                          text: "Call Us",
-                          width: MediaQuery.of(context).size.width,
-                          onPressed: () async {
-                            launchPhoneDialer(state.contactUsResponse.data?.mobile ?? "");
-                          },
-                          style: poppinsMedium.copyWith(
+                        SizedBox(
+                          height: Dimensions.dp25.h,
+                        ),
+                        Text(
+                          "How can we help you?",
+                          textAlign: TextAlign.center,
+                          style: satoshiRegular.copyWith(
+                              fontSize: Dimensions.dp15,
                               fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                              fontSize: 18),
-                          height: 53,
+                              color: AppColors.darkGray),
                         ),
-                      ),
-                      SizedBox(
-                        height: Dimensions.dp14.h,
-                      ),
-                    ],
-                  ),
-                )
-              ],
+                        SizedBox(
+                          height: Dimensions.dp26.h,
+                        ),
+                        SizedBox(
+                          height: 53,
+                          child: CustomButton(
+                            color: Theme.of(context).primaryColor,
+                            text: "Email Us",
+                            width: MediaQuery.of(context).size.width,
+                            onPressed: () {
+                              final Uri emailLaunchUri = Uri(
+                                scheme: 'mailto',
+                                path: state.contactUsResponse.data?.email ?? "",
+                              );
+                              launchUrlString(emailLaunchUri.toString());
+                            },
+                            style: poppinsMedium.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                                fontSize: 18),
+                            height: 53,
+                          ),
+                        ),
+                        SizedBox(
+                          height: Dimensions.dp26.h,
+                        ),
+                        Text(
+                          "OR",
+                          textAlign: TextAlign.center,
+                          style: satoshiRegular.copyWith(
+                              fontSize: Dimensions.dp14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.darkGray),
+                        ),
+                        SizedBox(
+                          height: Dimensions.dp26.h,
+                        ),
+                        SizedBox(
+                          height: 53,
+                          child: CustomButton(
+                            color: Theme.of(context).primaryColor,
+                            text: "Call Us",
+                            width: MediaQuery.of(context).size.width,
+                            onPressed: () async {
+                              launchPhoneDialer(state.contactUsResponse.data?.mobile ?? "");
+                            },
+                            style: poppinsMedium.copyWith(
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                                fontSize: 18),
+                            height: 53,
+                          ),
+                        ),
+                        SizedBox(
+                          height: Dimensions.dp14.h,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             );
           }
           return Container();

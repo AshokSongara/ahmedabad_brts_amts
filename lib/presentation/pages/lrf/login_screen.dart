@@ -130,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             inputType: TextInputType.emailAddress,
                             onChanged: () {},
                             onSubmit: () {},
-                            capitalization: TextCapitalization.words,
+                            capitalization: TextCapitalization.none,
                             divider: false,
                             hintText: "kapil@gmail.com",
                           ),

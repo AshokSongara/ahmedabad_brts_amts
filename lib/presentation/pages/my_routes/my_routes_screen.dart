@@ -54,61 +54,63 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.appBackground,
-      body: BlocConsumer<FavouriteRouteListBloc, FavouriteRouteListState>(
-        listener: (context, state) {
-          if (state is FavouriteDeleteRouteSuccessState) {
-            Loader.hide();
-            getData();
-          }
-          else if (state is FavouriteRouteLoadingState) {
-            Loader.show(context);
-          } else {
-            Loader.hide();
-          }
-        },
-        builder: (context, state) {
-          if (state is FavouriteRouteSuccessState) {
-            return Column(
-              children: [
-                const SizedBox(height: Dimensions.dp25),
-                CustomToolbar(
-                  title: "myroutes",
-                  showOption: false,
-                ),
-                Expanded(
-                  child: ListView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: state.favouriteRouteResponse.data?.length,
-                      itemBuilder: (context, index) {
-                        return getMyRoutesWidget(
-                            state.favouriteRouteResponse.data![index]);
-                      }),
-                ),
-              ],
-            );
-          } else if (state is FavouriteRouteFailedState) {
-            Loader.hide();
-            showCustomSnackBar("Something Went Wrong Try again..!", context,
-                isError: false);
-          }
-          return Center(
-            child: Container(
-              height: 53,
-              margin: const EdgeInsets.all(50),
-              child: CustomButton(
-                color: Theme.of(context).primaryColor,
-                text: AppLocalizations.of(context)?.translate("go_to_login") ?? "",
-                width: MediaQuery.of(context).size.width,
-                onPressed: () {
-                  Get.offNamed(RouteHelper.login);
-                },
-                style: poppinsMedium.copyWith(
-                    color: Colors.white, fontSize: 15.sp),
+      body: SafeArea(
+        child: BlocConsumer<FavouriteRouteListBloc, FavouriteRouteListState>(
+          listener: (context, state) {
+            if (state is FavouriteDeleteRouteSuccessState) {
+              Loader.hide();
+              getData();
+            }
+            else if (state is FavouriteRouteLoadingState) {
+              Loader.show(context);
+            } else {
+              Loader.hide();
+            }
+          },
+          builder: (context, state) {
+            if (state is FavouriteRouteSuccessState) {
+              return Column(
+                children: [
+                  // const SizedBox(height: Dimensions.dp25),
+                  CustomToolbar(
+                    title: "myroutes",
+                    showOption: false,
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                        padding: EdgeInsets.zero,
+                        itemCount: state.favouriteRouteResponse.data?.length,
+                        itemBuilder: (context, index) {
+                          return getMyRoutesWidget(
+                              state.favouriteRouteResponse.data![index]);
+                        }),
+                  ),
+                ],
+              );
+            } else if (state is FavouriteRouteFailedState) {
+              Loader.hide();
+              showCustomSnackBar("Something Went Wrong Try again..!", context,
+                  isError: false);
+            }
+            return Center(
+              child: Container(
                 height: 53,
+                margin: const EdgeInsets.all(50),
+                child: CustomButton(
+                  color: Theme.of(context).primaryColor,
+                  text: AppLocalizations.of(context)?.translate("go_to_login") ?? "",
+                  width: MediaQuery.of(context).size.width,
+                  onPressed: () {
+                    Get.offNamed(RouteHelper.login);
+                  },
+                  style: poppinsMedium.copyWith(
+                      color: Colors.white, fontSize: 15.sp),
+                  height: 53,
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

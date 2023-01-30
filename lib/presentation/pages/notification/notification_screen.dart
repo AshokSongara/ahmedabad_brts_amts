@@ -38,93 +38,95 @@ class _NotificationScreenState extends State<NotificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.appBackground2,
-      body: BlocBuilder<NotificationBloc, NotificationState>(
-        builder: (context, state) {
-          if (state is NotificationLoadingState) {
-            Loader.show(context);
-          } else if (state is NotificationSuccessState) {
-            Loader.hide();
-            return Column(
-              children: [
-                const SizedBox(height: Dimensions.dp25),
-                CustomToolbar(
-                  title: "notification",
-                  showOption: false,
-                  back: widget.from == "home" ? true : false,
-                ),
-                Expanded(
-                  child: state.notificationResponse.data!.isEmpty
-                      ? const Center(child: Text("No Notification"))
-                      : ListView.builder(
-                          padding: EdgeInsets.zero,
-                          itemCount: state.notificationResponse.data?.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              padding: const EdgeInsets.only(
-                                  left: Dimensions.dp19,
-                                  right: Dimensions.dp19,
-                                  top: Dimensions.dp14,
-                                  bottom: Dimensions.dp10),
-                              margin: const EdgeInsets.only(
-                                  left: Dimensions.dp24,
-                                  right: Dimensions.dp24,
-                                  top: Dimensions.dp14),
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColors.gray6E8EE7,
-                                    blurRadius: 5.0,
+      body: SafeArea(
+        child: BlocBuilder<NotificationBloc, NotificationState>(
+          builder: (context, state) {
+            if (state is NotificationLoadingState) {
+              Loader.show(context);
+            } else if (state is NotificationSuccessState) {
+              Loader.hide();
+              return Column(
+                children: [
+                  // const SizedBox(height: Dimensions.dp25),
+                  CustomToolbar(
+                    title: "notification",
+                    showOption: false,
+                    back: widget.from == "home" ? true : false,
+                  ),
+                  Expanded(
+                    child: state.notificationResponse.data!.isEmpty
+                        ? const Center(child: Text("No Notification"))
+                        : ListView.builder(
+                            padding: EdgeInsets.zero,
+                            itemCount: state.notificationResponse.data?.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                padding: const EdgeInsets.only(
+                                    left: Dimensions.dp19,
+                                    right: Dimensions.dp19,
+                                    top: Dimensions.dp14,
+                                    bottom: Dimensions.dp10),
+                                margin: const EdgeInsets.only(
+                                    left: Dimensions.dp24,
+                                    right: Dimensions.dp24,
+                                    top: Dimensions.dp14),
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.gray6E8EE7,
+                                      blurRadius: 5.0,
+                                    ),
+                                  ],
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(Dimensions.dp10),
                                   ),
-                                ],
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(Dimensions.dp10),
                                 ),
-                              ),
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    ImageConstant.iRedBus,
-                                    color: Theme.of(context).primaryColor,
-                                    width: 13,
-                                    height: 15,
-                                  ),
-                                  const SizedBox(
-                                    width: Dimensions.dp8,
-                                  ),
-                                  Expanded(
-                                    child: Text(
-                                      state.notificationResponse.data![index]
-                                              .detail ??
-                                          "",
-                                      style: satoshiSmall.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: Dimensions.dp12,
-                                          color: AppColors.darkGray),
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      ImageConstant.iRedBus,
+                                      color: Theme.of(context).primaryColor,
+                                      width: 13,
+                                      height: 15,
                                     ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.topRight,
-                                    child: Text("08:15 PM",
-                                      textAlign: TextAlign.end,
-                                      style: satoshiSmall.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: Dimensions.dp12,
-                                          color: AppColors.lightGray),
+                                    const SizedBox(
+                                      width: Dimensions.dp8,
                                     ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          }),
-                ),
-              ],
-            );
-          } else if (state is NotificationFailedState) {
-            Loader.hide();
-          }
-          return Container();
-        },
+                                    Expanded(
+                                      child: Text(
+                                        state.notificationResponse.data![index]
+                                                .detail ??
+                                            "",
+                                        style: satoshiSmall.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: Dimensions.dp12,
+                                            color: AppColors.darkGray),
+                                      ),
+                                    ),
+                                    Align(
+                                      alignment: Alignment.topRight,
+                                      child: Text("08:15 PM",
+                                        textAlign: TextAlign.end,
+                                        style: satoshiSmall.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: Dimensions.dp12,
+                                            color: AppColors.lightGray),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                  ),
+                ],
+              );
+            } else if (state is NotificationFailedState) {
+              Loader.hide();
+            }
+            return Container();
+          },
+        ),
       ),
     );
   }

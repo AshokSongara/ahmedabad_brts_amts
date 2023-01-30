@@ -29,103 +29,105 @@ class _ChooseLanguageState extends State<ChooseLanguage> {
         AppLocalizations.of(context)?.locale.toString() ?? "");
     return Scaffold(
       backgroundColor: AppColors.appBackground,
-      body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-          color: AppColors.appBackground,
-        ),
-        child: SingleChildScrollView(
-          child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            const SizedBox(height: Dimensions.dp25),
-            const CustomToolbar(
-              title: "choose_language",
-              showOption: false,
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-            Container(
-              decoration: const BoxDecoration(
-                color: AppColors.grayC4C$C$,
-                borderRadius: BorderRadius.all(Radius.circular(50)),
+      body: SafeArea(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+          decoration: const BoxDecoration(
+            color: AppColors.appBackground,
+          ),
+          child: SingleChildScrollView(
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              // const SizedBox(height: Dimensions.dp25),
+              const CustomToolbar(
+                title: "choose_language",
+                showOption: false,
               ),
-              margin: const EdgeInsets.only(left: 30, right: 30),
-              child: RadioListTile<LanguageList>(
-                activeColor: AppColors.gray777777,
-                controlAffinity: ListTileControlAffinity.trailing,
-                title: Text(
-                  'ગુજરાતી',
-                  style: poppinsMedium,
+              const SizedBox(
+                height: 40,
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                  color: AppColors.grayC4C$C$,
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
                 ),
-                value: LanguageList.gujarati,
-                groupValue: _languageList,
-                onChanged: (LanguageList? value) {
-                  setState(() {
-                    languageSelected = true;
-                    _languageList = value;
-                    context.read<LanguageCubit>().changeLang(context, 'gu');
-                  });
-                },
-              ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Container(
-              decoration: const BoxDecoration(
-                color: AppColors.grayC4C$C$,
-                borderRadius: BorderRadius.all(Radius.circular(50)),
-              ),
-              margin: const EdgeInsets.only(left: 30, right: 30),
-              child: RadioListTile<LanguageList>(
-                activeColor: AppColors.gray777777,
-                controlAffinity: ListTileControlAffinity.trailing,
-                title: Text(
-                  'English',
-                  style: poppinsMedium,
+                margin: const EdgeInsets.only(left: 30, right: 30),
+                child: RadioListTile<LanguageList>(
+                  activeColor: AppColors.gray777777,
+                  controlAffinity: ListTileControlAffinity.trailing,
+                  title: Text(
+                    'ગુજરાતી',
+                    style: poppinsMedium,
+                  ),
+                  value: LanguageList.gujarati,
+                  groupValue: _languageList,
+                  onChanged: (LanguageList? value) {
+                    setState(() {
+                      languageSelected = true;
+                      _languageList = value;
+                      context.read<LanguageCubit>().changeLang(context, 'gu');
+                    });
+                  },
                 ),
-                value: LanguageList.english,
-                groupValue: _languageList,
-                onChanged: (LanguageList? value) {
-                  setState(() {
-                    languageSelected = true;
-                    _languageList = value;
-                    context.read<LanguageCubit>().changeLang(context, 'en');
-                  });
-                },
               ),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            Container(
-              height: 55,
-              margin: const EdgeInsets.only(left: 30, right: 30),
-              child: CustomButton(
-                text: AppLocalizations.of(context)?.translate('save') ??
-                    "",
-                width: MediaQuery.of(context).size.width,
-                onPressed: ()async {
-                  if (!languageSelected) {
-                    _languageList = LanguageList.english;
-                    context.read<LanguageCubit>().changeLang(context, 'en');
-                  }
-                  String? selectedLanguage =await context.read<LanguageCubit>().getCurrentSelectedLanguage();
-                  Get.back(result: selectedLanguage);
-                },
-                style: poppinsMedium.copyWith(
-                    color: Colors.white, fontSize: 15.sp),
+              const SizedBox(
+                height: 15,
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                  color: AppColors.grayC4C$C$,
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                ),
+                margin: const EdgeInsets.only(left: 30, right: 30),
+                child: RadioListTile<LanguageList>(
+                  activeColor: AppColors.gray777777,
+                  controlAffinity: ListTileControlAffinity.trailing,
+                  title: Text(
+                    'English',
+                    style: poppinsMedium,
+                  ),
+                  value: LanguageList.english,
+                  groupValue: _languageList,
+                  onChanged: (LanguageList? value) {
+                    setState(() {
+                      languageSelected = true;
+                      _languageList = value;
+                      context.read<LanguageCubit>().changeLang(context, 'en');
+                    });
+                  },
+                ),
+              ),
+              const SizedBox(
+                height: 50,
+              ),
+              Container(
                 height: 55,
-                radius: 50,
-                color: Theme.of(context).primaryColor,
+                margin: const EdgeInsets.only(left: 30, right: 30),
+                child: CustomButton(
+                  text: AppLocalizations.of(context)?.translate('save') ??
+                      "",
+                  width: MediaQuery.of(context).size.width,
+                  onPressed: ()async {
+                    if (!languageSelected) {
+                      _languageList = LanguageList.english;
+                      context.read<LanguageCubit>().changeLang(context, 'en');
+                    }
+                    String? selectedLanguage =await context.read<LanguageCubit>().getCurrentSelectedLanguage();
+                    Get.back(result: selectedLanguage);
+                  },
+                  style: poppinsMedium.copyWith(
+                      color: Colors.white, fontSize: 15.sp),
+                  height: 55,
+                  radius: 50,
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            )
-          ]),
+              const SizedBox(
+                height: 20,
+              )
+            ]),
+          ),
         ),
       ),
     );

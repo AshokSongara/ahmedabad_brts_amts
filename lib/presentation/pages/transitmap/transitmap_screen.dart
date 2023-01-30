@@ -11,38 +11,40 @@ class TransitMapScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.appBackground2,
-      body: Column(
-        children: [
-          const SizedBox(height: Dimensions.dp25),
-          const CustomToolbar(
-            title: "transit_map",
-            showOption: false,
-          ),
-          Center(
-            child: Container(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: Dimensions.dp19, vertical: Dimensions.dp26),
-              margin: const EdgeInsets.only(
-                  left: Dimensions.dp24,
-                  right: Dimensions.dp24,
-                  top: Dimensions.dp10),
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.gray6E8EE7,
-                    blurRadius: 5.0,
-                  ),
-                ],
-                borderRadius: BorderRadius.all(
-                  Radius.circular(Dimensions.dp10),
-                ),
-              ),
-              child:
-                  InteractiveViewer(child: Image.network(AppConstant.transitMap)),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // const SizedBox(height: Dimensions.dp25),
+            const CustomToolbar(
+              title: "transit_map",
+              showOption: false,
             ),
-          )
-        ],
+            Center(
+              child: Container(
+                padding: const EdgeInsets.symmetric(
+                    horizontal: Dimensions.dp19, vertical: Dimensions.dp26),
+                margin: const EdgeInsets.only(
+                    left: Dimensions.dp24,
+                    right: Dimensions.dp24,
+                    top: Dimensions.dp10),
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.gray6E8EE7,
+                      blurRadius: 5.0,
+                    ),
+                  ],
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(Dimensions.dp10),
+                  ),
+                ),
+                child:
+                    InteractiveViewer(child: Image.network(AppConstant.transitMap)),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
