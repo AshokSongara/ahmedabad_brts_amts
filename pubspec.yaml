@@ -57,6 +57,7 @@ dependencies:
   flutter_osm_plugin: ^0.42.0
   http_interceptor: ^1.0.2
   carousel_slider: ^4.2.1
+  flutter_phone_direct_caller: ^2.1.1
 
 flutter_icons:
   android: true

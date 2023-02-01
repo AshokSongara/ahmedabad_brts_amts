@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/gestures.dart';
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/otp_request.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
@@ -21,7 +22,8 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
-  const OtpVerificationScreen({Key? key,required this.mobileNumber}) : super(key: key);
+  const OtpVerificationScreen({Key? key, required this.mobileNumber})
+      : super(key: key);
 
   final String? mobileNumber;
 
@@ -34,7 +36,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   StreamController<ErrorAnimationType>? errorController;
 
   late Timer _timer;
-  int _seconds = 0;
+  int _seconds = 120;
   String _timerText = "";
   String currentText = "";
 
@@ -53,19 +55,30 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   }
 
   void _startTimer() {
-    _seconds = 120;
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      _seconds = _seconds - 1;
-      if (_seconds == 0) {
-        timer.cancel();
-        _timer.cancel();
-      }
-      setState(() {});
-    });
+    const oneSec = Duration(seconds: 1);
+    _timer = Timer.periodic(
+      oneSec,
+          (Timer timer) {
+        if (_seconds == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            _seconds--;
+          });
+        }
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    Duration clockTimer = Duration(seconds: _seconds);
+
+    _timerText =
+    '${clockTimer.inMinutes.remainder(60).toString()}:${clockTimer.inSeconds.remainder(60).toString().padLeft(2, '0')}';
+
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
@@ -114,7 +127,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 height: Dimensions.dp5,
               ),
               Text(
-                "We sent it to the number +91 8734 99**",
+                "We sent it to the number "+"${widget.mobileNumber!.substring(0, 8)}XX",
                 style: satoshiRegular.copyWith(
                     fontSize: 14.sp, color: AppColors.gray555555),
               ),
@@ -124,13 +137,13 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               Container(
                 width: MediaQuery.of(context).size.width,
                 margin: const EdgeInsets.only(
-                    left: Dimensions.dp56, right: Dimensions.dp56),
+                    left: Dimensions.dp20, right: Dimensions.dp20),
                 child: PinCodeTextField(
                   keyboardType: TextInputType.none,
                   appContext: context,
                   pastedTextStyle: satoshiRegular.copyWith(
                       color: AppColors.darkGray, fontSize: 24.sp),
-                  length: 4,
+                  length: 6,
                   animationType: AnimationType.fade,
                   validator: (v) {},
                   textStyle: satoshiRegular.copyWith(
@@ -185,18 +198,37 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               ),
               RichText(
                 text: TextSpan(
-                  text: "Don’t have an account?",
+                  text:  _seconds > 0 ?  "Resend code in " : '',
                   style: satoshiRegular.copyWith(
-                      fontSize: 12.sp, color: Colors.black),
+                      fontSize: 14.sp, color: Colors.black),
                   children: <TextSpan>[
+
                     TextSpan(
-                        text: " ",
-                        style: satoshiRegular.copyWith(
-                            fontSize: 12, color: Colors.black)),
-                    TextSpan(
-                        text: "00:47",
+                        text: _timerText.toString(),
                         style: satoshiRegular.copyWith(
                             color: Theme.of(context).primaryColor, fontSize: 12.sp)),
+                  ],
+                ),
+              ),
+              RichText(
+                text: TextSpan(
+                  text: _seconds > 0 ? "" : "Didn't receive OTP ?",
+                  style: satoshiRegular.copyWith(
+                      fontSize: 14, color: Colors.black),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: _seconds > 0 ? "" : " Resend",
+                      style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () => {
+                          setState(() {
+                            _seconds = 20;
+                            _startTimer();
+                          })
+                        },
+                    ),
                   ],
                 ),
               ),
@@ -207,7 +239,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     margin: const EdgeInsets.only(
                         left: 30, right: 30, bottom: Dimensions.dp10),
                     child: CustomButton(
-                      color: Theme.of(context).primaryColor,
                       text: "NEXT",
                       width: MediaQuery.of(context).size.width,
                       onPressed: () {
@@ -224,7 +255,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       },
                       style: poppinsMedium.copyWith(
                           color: Colors.white, fontSize: 15.sp),
-                      height: 53,
+                      height: 53, color: Theme.of(context).primaryColor,
                     ),
                   ),
                 ),

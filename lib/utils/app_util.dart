@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -38,15 +39,5 @@ String toMinutes(String dateData){
 }
 
 Future<void> launchPhoneDialer(String contactNumber) async {
-  final Uri _phoneUri = Uri(
-      scheme: "tel",
-      path: contactNumber
-  );
-  try {
-    if (await canLaunch(_phoneUri.toString())) {
-      await launch(_phoneUri.toString());
-    }
-  } catch (error) {
-    throw("Cannot dial");
-  }
+  bool? res = await FlutterPhoneDirectCaller.callNumber(contactNumber);
 }

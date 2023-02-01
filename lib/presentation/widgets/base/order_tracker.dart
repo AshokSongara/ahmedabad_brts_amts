@@ -97,7 +97,10 @@ class _OrderTrackerState extends State<OrderTracker> {
                 ]),
               ),
               SizedBox(
-                height: MediaQuery.of(context).size.height / 2.5,
+                height:  widget.orderTitleAndDateList != null &&
+                    widget.orderTitleAndDateList!.isNotEmpty
+                    ? widget.orderTitleAndDateList!.length * 30
+                    : 60,
                 child: Stack(
                   children: [
                     Padding(
@@ -120,7 +123,6 @@ class _OrderTrackerState extends State<OrderTracker> {
                         width: MediaQuery.of(context).size.width / 2,
                         child: showList
                             ? ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
                                 padding: EdgeInsets.zero,
                                 itemBuilder: (context, index) {
                                   return Container(
@@ -249,7 +251,6 @@ class _OrderTrackerState extends State<OrderTracker> {
                           width: MediaQuery.of(context).size.width / 2,
                           child: showList
                               ? ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
                               padding: EdgeInsets.zero,
                               itemBuilder: (context, index) {
                                 return Container(
