@@ -49,6 +49,8 @@ class SearchResultRouteBloc
             searchRouteResponse.data![i].routeDetails![0].startStopCode ?? "";
         routeDetailsRequest.serviceType = event.searchRouteRequest.serviceType;
 
+        //FareResponse fareResponse = FareResponse()
+
         FareResponse fareResponse =
             await fareUseCase(Params(data: routeDetailsRequest));
 
