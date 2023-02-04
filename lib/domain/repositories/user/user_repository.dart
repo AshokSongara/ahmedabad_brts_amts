@@ -12,6 +12,7 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/forget_password_response
 import 'package:ahmedabad_brts_amts/data/responsemodels/login_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/mobile_number_otp_response_entity.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/notification_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/qr_code_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/user_profile_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/verify_otp_response.dart';
 import 'package:hive/hive.dart';
@@ -37,5 +38,6 @@ abstract class UserRepository {
   Future<NotificationResponse> getNotificationsData();
   Future<ContactUsResponse> getContactDetails();
   Future<FavouriteRouteResponse> getFavouriteRouteListData();
+  Future<QRCodeResponse> getQRCodeData();
   Future<UserProfileResponse> updateProfile(ProfileRequest body);
 }

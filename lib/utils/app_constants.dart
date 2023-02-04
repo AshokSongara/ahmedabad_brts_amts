@@ -37,6 +37,7 @@ class AppConstant {
   //static String fareDetails = "fare/BRTS/201/startStop/57/endStop/62";
   //static String etaDetails = "eta/201/281";
   static String contactUs = "ContactUs";
+  static String qrCodeData = "GenerateQRCode/9902000136200001";
 
   //SharedPreferences Keys
   static String accessToken = "accessToken";

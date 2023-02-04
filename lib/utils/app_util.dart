@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -39,5 +42,17 @@ String toMinutes(String dateData){
 }
 
 Future<void> launchPhoneDialer(String contactNumber) async {
-  bool? res = await FlutterPhoneDirectCaller.callNumber(contactNumber);
+   bool? res = await FlutterPhoneDirectCaller.callNumber(contactNumber);
+}
+
+Image imageFromBase64String(String base64String) {
+  return Image.memory(base64Decode(base64String));
+}
+
+Uint8List dataFromBase64String(String base64String) {
+  return base64Decode(base64String);
+}
+
+String base64String(Uint8List data) {
+  return base64Encode(data);
 }

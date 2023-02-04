@@ -31,7 +31,7 @@ class OrderTracker extends StatefulWidget {
       this.headingTitleStyle,
       this.interChange = "",
       this.interChangeName = "",
-      this.routeCodeTwo= ""})
+      this.routeCodeTwo = ""})
       : super(key: key);
 
   @override
@@ -97,10 +97,10 @@ class _OrderTrackerState extends State<OrderTracker> {
                 ]),
               ),
               SizedBox(
-                height:  widget.orderTitleAndDateList != null &&
-                    widget.orderTitleAndDateList!.isNotEmpty
+                height: widget.orderTitleAndDateList != null &&
+                        widget.orderTitleAndDateList!.isNotEmpty && showList
                     ? widget.orderTitleAndDateList!.length * 30
-                    : 60,
+                    : 100,
                 child: Stack(
                   children: [
                     Padding(
@@ -108,9 +108,9 @@ class _OrderTrackerState extends State<OrderTracker> {
                       child: SizedBox(
                         width: 2,
                         height: widget.orderTitleAndDateList != null &&
-                                widget.orderTitleAndDateList!.isNotEmpty
+                                widget.orderTitleAndDateList!.isNotEmpty && showList
                             ? widget.orderTitleAndDateList!.length * 30
-                            : 60,
+                            : 100,
                         child: LinearProgressIndicator(
                           backgroundColor:
                               widget.inActiveColor ?? Colors.grey[300],
@@ -119,15 +119,18 @@ class _OrderTrackerState extends State<OrderTracker> {
                       ),
                     ),
                     SizedBox(
-                        height: widget.orderTitleAndDateList!.length * 30,
+                        height: showList
+                            ? widget.orderTitleAndDateList!.length * 30
+                            : 100,
                         width: MediaQuery.of(context).size.width / 2,
                         child: showList
                             ? ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
                                 padding: EdgeInsets.zero,
                                 itemBuilder: (context, index) {
                                   return Container(
-                                    margin:
-                                        const EdgeInsets.only(top: 5, bottom: 5),
+                                    margin: const EdgeInsets.only(
+                                        top: 5, bottom: 5),
                                     child: Row(
                                       children: [
                                         SizedBox(
@@ -151,7 +154,8 @@ class _OrderTrackerState extends State<OrderTracker> {
                                     ),
                                   );
                                 },
-                                itemCount: widget.orderTitleAndDateList != null &&
+                                itemCount: widget.orderTitleAndDateList !=
+                                            null &&
                                         widget.orderTitleAndDateList!.isNotEmpty
                                     ? widget.orderTitleAndDateList!.length
                                     : 0)
@@ -228,7 +232,10 @@ class _OrderTrackerState extends State<OrderTracker> {
                   ]),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height / 2.5,
+                  height: widget.orderTitleAndDateList2 != null &&
+                      widget.orderTitleAndDateList2!.isNotEmpty && showList
+                      ? widget.orderTitleAndDateList2!.length * 30
+                      : 100,
                   child: Stack(
                     children: [
                       Padding(
@@ -236,12 +243,12 @@ class _OrderTrackerState extends State<OrderTracker> {
                         child: SizedBox(
                           width: 2,
                           height: widget.orderTitleAndDateList2 != null &&
-                              widget.orderTitleAndDateList2!.isNotEmpty
+                                  widget.orderTitleAndDateList2!.isNotEmpty && showList
                               ? widget.orderTitleAndDateList2!.length * 40
-                              : 60,
+                              : 100,
                           child: LinearProgressIndicator(
                             backgroundColor:
-                            widget.inActiveColor ?? Colors.grey[300],
+                                widget.inActiveColor ?? Colors.grey[300],
                             color: AppColors.darkGray,
                           ),
                         ),
@@ -251,54 +258,60 @@ class _OrderTrackerState extends State<OrderTracker> {
                           width: MediaQuery.of(context).size.width / 2,
                           child: showList
                               ? ListView.builder(
-                              padding: EdgeInsets.zero,
-                              itemBuilder: (context, index) {
-                                return Container(
-                                  margin:
-                                  const EdgeInsets.only(top: 5, bottom: 5),
-                                  child: Row(
-                                    children: [
-                                      SizedBox(
-                                        height: 15,
-                                        width: 15,
-                                        child: SvgPicture.asset(
-                                            ImageConstant.iStop),
+                            physics: const NeverScrollableScrollPhysics(),
+                                  padding: EdgeInsets.zero,
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      margin: const EdgeInsets.only(
+                                          top: 5, bottom: 5),
+                                      child: Row(
+                                        children: [
+                                          SizedBox(
+                                            height: 15,
+                                            width: 15,
+                                            child: SvgPicture.asset(
+                                                ImageConstant.iStop),
+                                          ),
+                                          const SizedBox(
+                                            width: 20,
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              widget
+                                                      .orderTitleAndDateList2?[
+                                                          index]
+                                                      .stopName ??
+                                                  "",
+                                              style: satoshiRegularSmallDark,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                      const SizedBox(
-                                        width: 20,
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          widget.orderTitleAndDateList2?[index]
-                                              .stopName ??
-                                              "",
-                                          style: satoshiRegularSmallDark,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              },
-                              itemCount: widget.orderTitleAndDateList2 != null &&
-                                  widget.orderTitleAndDateList2!.isNotEmpty
-                                  ? widget.orderTitleAndDateList2!.length
-                                  : 0)
+                                    );
+                                  },
+                                  itemCount: widget.orderTitleAndDateList2 !=
+                                              null &&
+                                          widget.orderTitleAndDateList2!
+                                              .isNotEmpty
+                                      ? widget.orderTitleAndDateList2!.length
+                                      : 0)
                               : GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                showList = true;
-                              });
-                            },
-                            child: Center(
-                              child: Text(
-                                "${widget.orderTitleAndDateList2?.length.toString()}+",
-                                style: satoshiSmall.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16,
-                                    color: Theme.of(context).primaryColor),
-                              ),
-                            ),
-                          ))
+                                  onTap: () {
+                                    setState(() {
+                                      showList = true;
+                                    });
+                                  },
+                                  child: Center(
+                                    child: Text(
+                                      "${widget.orderTitleAndDateList2?.length.toString()}+",
+                                      style: satoshiSmall.copyWith(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 16,
+                                          color:
+                                              Theme.of(context).primaryColor),
+                                    ),
+                                  ),
+                                ))
                     ],
                   ),
                 ),

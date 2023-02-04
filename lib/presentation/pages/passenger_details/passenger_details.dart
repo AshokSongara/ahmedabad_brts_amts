@@ -1,3 +1,4 @@
+import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
@@ -211,9 +212,9 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                         .primaryColor,
                     text: "Payment",
                     onPressed: () {
-                      // Get.toNamed(
-                      //     RouteHelper.payment);
-                      _initiatePayment();
+                      Get.toNamed(
+                          RouteHelper.payment);
+                    //  _initiatePayment();
                     },
                     width: MediaQuery
                         .of(context)

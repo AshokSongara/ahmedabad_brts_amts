@@ -49,12 +49,7 @@ class MainActivity : FlutterActivity() {
                     apiService = RetrofitApiClient.getClient().create(ApiInterface::class.java)
                     Toast.makeText(context, "Called here", Toast.LENGTH_SHORT).show()
                     initiateApiCall()
-//                    val myText = call.argument<String>("myText")
-//                    val myIntent = Intent(
-//                        this@MainActivity,
-//                        SecondMainActivity::class.java
-//                    )
-//                    this@MainActivity.startActivity(myIntent)
+
                 }
             }
 

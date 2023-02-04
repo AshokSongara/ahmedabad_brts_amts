@@ -18,6 +18,7 @@ import 'package:ahmedabad_brts_amts/domain/usecases/user/home_get_routes_usecase
 import 'package:ahmedabad_brts_amts/domain/usecases/user/login_user_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/mobile_number_login_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/notification_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/user/qr_user_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/signup_user_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/home_screen_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/user_profile_usecase.dart';
@@ -28,6 +29,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_
 import 'package:ahmedabad_brts_amts/presentation/blocs/feedback/feedback_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/payment/payment_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/route_details/route_details_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/near_by_map/near_by_map_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
@@ -111,7 +113,8 @@ Future<void> init() async {
     () => RouteDetailsBloc(
         routeDetailsUseCase: injector(),
         fareUseCase: injector(),
-        etaUseCase: injector(),routeStopListUseCase: injector()),
+        etaUseCase: injector(),
+        routeStopListUseCase: injector()),
   );
   injector.registerFactory<FavouriteRouteListBloc>(
     () => FavouriteRouteListBloc(
@@ -121,11 +124,17 @@ Future<void> init() async {
 
   injector.registerFactory<ContactBloc>(
     () => ContactBloc(
-        contactUsUseCase: injector(),
-      ),
+      contactUsUseCase: injector(),
+    ),
+  );
+  injector.registerFactory<PaymentBloc>(
+    () => PaymentBloc(
+      qrUserUseCase: injector(),
+    ),
   );
 
   injector.registerLazySingleton(() => SignupUserUseCase(injector()));
+  injector.registerLazySingleton(() => QRUserUseCase(injector()));
   injector.registerLazySingleton(() => FareUseCase(injector()));
   injector.registerLazySingleton(() => ETAUseCase(injector()));
   injector.registerLazySingleton(() => ContactUsUseCase(injector()));

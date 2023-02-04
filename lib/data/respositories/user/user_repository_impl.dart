@@ -13,6 +13,7 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/forget_password_response
 import 'package:ahmedabad_brts_amts/data/responsemodels/login_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/mobile_number_otp_response_entity.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/notification_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/qr_code_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/user_profile_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/verify_otp_response.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dart';
@@ -133,9 +134,7 @@ class UserRepositoryImpl implements UserRepository {
       AppConstant.getStops + "${body.stopType}",
     );
     if (body.stopType == 1) {
-      if (brtsData == null ||
-          brtsData.data == null ||
-          brtsData.data!.isEmpty) {
+      if (brtsData == null || brtsData.data == null || brtsData.data!.isEmpty) {
         print("response.body ${response.body}");
         BrtsStopResponseModel stopResponseModel =
             BrtsStopResponseModel.fromJson(response.body);
@@ -294,5 +293,14 @@ class UserRepositoryImpl implements UserRepository {
         ContactUsResponse.fromJson(response.body);
 
     return contactUsResponse;
+  }
+
+  @override
+  Future<QRCodeResponse> getQRCodeData() async {
+    Response response =
+        await apiClient.getDataWihHeader(AppConstant.qrCodeData);
+    QRCodeResponse qrCodeResponse = QRCodeResponse.fromJson(response.body);
+
+    return qrCodeResponse;
   }
 }

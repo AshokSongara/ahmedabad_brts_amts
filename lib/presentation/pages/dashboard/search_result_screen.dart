@@ -124,6 +124,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                                 child: SearchResultItem(
                                   routeResult:
                                       state.searchRouteResponse.data![index],
+                                  serviceType: widget.serviceType,
                                 ));
                           })
                       : Center(
