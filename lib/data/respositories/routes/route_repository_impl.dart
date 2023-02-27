@@ -21,6 +21,8 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../responsemodels/Nearby_stops_response_model.dart';
+
 class RouteRepositoryImpl implements RouteRepository {
   final ApiClient apiClient;
   final SharedPreferences sharedPreferences;
@@ -118,7 +120,7 @@ class RouteRepositoryImpl implements RouteRepository {
       return fareResponse;
     } else {
       Response response = await apiClient.getDataWihHeader(
-          "fare/AMTS/${routeDetailsRequest.routeCode?.replaceAll("/", "%2F")}/startStop/${routeDetailsRequest.startCode}/endStop/${routeDetailsRequest.endCode}");
+          "Fare/AMTS/${routeDetailsRequest.routeCode?.replaceAll("/", "%2F")}/startStop/${routeDetailsRequest.startCode}/endStop/${routeDetailsRequest.endCode}");
       fareResponse = FareResponse.fromJson(response.body);
       return fareResponse;
     }
@@ -141,5 +143,12 @@ class RouteRepositoryImpl implements RouteRepository {
     RouteStopListResponse routeStopListResponse =
         RouteStopListResponse.fromJson(response.body);
     return routeStopListResponse;
+  }
+  @override
+  Future<NearbyStopsResponseModel> nearbyStops(String routeCode) async{
+    Response response = await apiClient.getData("Stop/$routeCode/upcoming-route-schedules");
+    NearbyStopsResponseModel deleteFavouriteResponse =
+    NearbyStopsResponseModel.fromJson(response.body);
+    return deleteFavouriteResponse;
   }
 }

@@ -20,6 +20,9 @@ class HomeScreenBloc extends Bloc<HomeEvent,HomeState>{
       brtsStopResponseModel=data;
       yield StopsResponseState(data);
     }
+    else if(event is SourceSelectionFromMapScreenEvent){
+      yield SourceSelectionFromMapScreenState(event.data);
+    }
     if(event is GetAvailableRoutesEvent){
       // yield HomeLoadingState();
       var data = await homeGetRoutesUseCase.call(Params(data: event.model));

@@ -14,6 +14,8 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/route_stoplist_response.
 import 'package:ahmedabad_brts_amts/data/responsemodels/search_route_response.dart';
 import 'package:hive/hive.dart';
 
+import '../../../data/responsemodels/Nearby_stops_response_model.dart';
+
 abstract class RouteRepository {
   Future<NearMeResponse> nearMe(NearMeRequest body);
   Future<SearchRouteResponse> searchResultRoute(SearchRouteRequest body);
@@ -25,4 +27,5 @@ abstract class RouteRepository {
   Future<FareResponse> getFareDetails(RouteDetailsRequest routeDetailsRequest);
   Future<ETAResponse> getETADetails(RouteDetailsRequest routeDetailsRequest);
   Future<RouteStopListResponse> getRouteStopList(RouteDetailsRequest routeDetailsRequest);
+  Future<NearbyStopsResponseModel> nearbyStops(String routeCode);
 }

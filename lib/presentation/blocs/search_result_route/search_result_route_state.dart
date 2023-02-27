@@ -22,3 +22,4 @@ class SearchResultRouteSuccessState extends SearchResultRouteState {
 }
 
 class SearchResultRouteFailedState extends SearchResultRouteState {}
+class SearchResultRouteFairLoadingState extends SearchResultRouteState {}

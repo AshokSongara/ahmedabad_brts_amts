@@ -18,6 +18,7 @@ import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -46,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Data? newToSelectedStation, oldToSelectedStation;
   String? selectedLanguage;
   String userName = "Guest User";
+  static const platform = MethodChannel('nativeChannel');
 
   @override
   void initState() {
@@ -64,15 +66,22 @@ class _HomeScreenState extends State<HomeScreen> {
     BlocProvider.of<HomeScreenBloc>(context).add(
         GetAvailableRoutesEvent(RoutesRequestModel(stopType: isAmts ? 2 : 1)));
     Loader.show(context);
+    setQuickLinks();
+  }
+
+  setQuickLinks(){
+    quickLinkList.clear();
     quickLinkList.add(QuickLinkInternalModel("mticket", ImageConstant.iTicket));
     quickLinkList
         .add(QuickLinkInternalModel("smartrecharge", ImageConstant.iMobileRed));
-    quickLinkList.add(QuickLinkInternalModel("routes", ImageConstant.iRoute));
+    quickLinkList.add(QuickLinkInternalModel("near_me", ImageConstant.iRoute));
     quickLinkList.add(QuickLinkInternalModel("myroutes", ImageConstant.iRate));
-    quickLinkList.add(QuickLinkInternalModel("transitmap", ImageConstant.iMap));
+    if (!isAmts) {
+      quickLinkList
+          .add(QuickLinkInternalModel("transitmap", ImageConstant.iMap));
+    }
     quickLinkList.add(QuickLinkInternalModel("feedback", ImageConstant.iChat));
   }
-
   getMemberID() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     AppConstant.IsLoggedIn = prefs.getString(AppConstant.accessToken) ?? "";
@@ -130,7 +139,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              userName,
+                              AppConstant.nameData,
                               style: satoshiRegular.copyWith(
                                   fontSize: Dimensions.dp19,
                                   fontWeight: FontWeight.w500,
@@ -203,14 +212,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: Dimensions.dp28,
                     ),
                     title: Text(
-                      AppLocalizations.of(context)?.translate("routes") ?? "",
+                      AppLocalizations.of(context)?.translate("near_me") ?? "",
                       style: satoshiRegular.copyWith(
                           fontSize: Dimensions.dp19,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
                     onTap: () {
-                      Get.toNamed(RouteHelper.getMyRouteScreen());
+                      Get.toNamed(RouteHelper.getNearByMapScreenRoute());
                     },
                   ),
                   ListTile(
@@ -231,25 +240,26 @@ class _HomeScreenState extends State<HomeScreen> {
                       Get.toNamed(RouteHelper.getMyRouteScreen());
                     },
                   ),
-                  ListTile(
-                    leading: SvgPicture.asset(
-                      ImageConstant.iMap,
-                      color: Colors.white,
-                      height: Dimensions.dp28,
-                      width: Dimensions.dp28,
+                  if (!isAmts)
+                    ListTile(
+                      leading: SvgPicture.asset(
+                        ImageConstant.iMap,
+                        color: Colors.white,
+                        height: Dimensions.dp28,
+                        width: Dimensions.dp28,
+                      ),
+                      title: Text(
+                        AppLocalizations.of(context)?.translate("transitmap") ??
+                            "",
+                        style: satoshiRegular.copyWith(
+                            fontSize: 19.sp,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white),
+                      ),
+                      onTap: () {
+                        Get.toNamed(RouteHelper.getTransitMapScreenRoute());
+                      },
                     ),
-                    title: Text(
-                      AppLocalizations.of(context)?.translate("transitmap") ??
-                          "",
-                      style: satoshiRegular.copyWith(
-                          fontSize: 19.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white),
-                    ),
-                    onTap: () {
-                      Get.toNamed(RouteHelper.getTransitMapScreenRoute());
-                    },
-                  ),
                   ListTile(
                     leading: SvgPicture.asset(
                       ImageConstant.iChat,
@@ -362,6 +372,9 @@ class _HomeScreenState extends State<HomeScreen> {
           if (state is StopsResponseState) {
             operationBrtsStopResponseModel = state.model;
           }
+          if (state is SourceSelectionFromMapScreenState) {
+            newFromSelectedStation = state.data;
+          }
           if (state is RoutesResponseState) {
             brtsRoutesResponseModel = state.model;
             Loader.hide();
@@ -396,6 +409,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       Future.delayed(const Duration(milliseconds: 100), () {
                         ThemeService().switchTheme(isAmts);
                       });
+                      setQuickLinks();
                       setState(() {});
                     },
                     child: Container(
@@ -479,7 +493,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       left: Dimensions.dp24,
                       right: Dimensions.dp24,
                       top: Dimensions.dp26),
-                  padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 14),
+                  padding: const EdgeInsets.symmetric(
+                      vertical: 10.0, horizontal: 14),
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.all(
@@ -700,7 +715,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ?.translate("showroutefare") ??
                                 "",
                             width: MediaQuery.of(context).size.width,
-                            onPressed: () {
+                            onPressed: () async{
                               if (routeData != null) {
                                 Get.toNamed(
                                   RouteHelper.getRouteDetailsRoute(
@@ -720,7 +735,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                       "Yes",
                                       "",
                                       "",
-                                      isAmts ? "AMTS" : "BRTS","","","",""),
+                                      isAmts ? "AMTS" : "BRTS",
+                                      "",
+                                      "",
+                                      "",
+                                      ""),
                                 );
                               } else if (newFromSelectedStation != null &&
                                   newToSelectedStation != null) {
@@ -849,8 +868,9 @@ class _HomeScreenState extends State<HomeScreen> {
           Get.toNamed(RouteHelper.getFeedbackRoute());
         } else if (model.title == "myroutes") {
           Get.toNamed(RouteHelper.getMyRouteScreen());
-        } else if (model.title == "routes") {
-          Get.toNamed(RouteHelper.getNearByRoute());
+        } else if (model.title == "near_me") {
+          // Get.toNamed(RouteHelper.getNearByRoute());
+          Get.toNamed(RouteHelper.getNearByMapScreenRoute());
         } else if (model.title == "smartrecharge") {
           Get.toNamed(RouteHelper.getCardDetailsRoute());
         } else if (model.title == "transitmap") {

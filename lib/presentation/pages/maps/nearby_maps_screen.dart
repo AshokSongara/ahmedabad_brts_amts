@@ -14,7 +14,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:location/location.dart';
+
+import '../../../helper/route_helper.dart';
 
 class NearByMapsScreen extends StatefulWidget {
   const NearByMapsScreen({Key? key}) : super(key: key);
@@ -26,7 +29,7 @@ class NearByMapsScreen extends StatefulWidget {
 class _NearByMapsScreenState extends State<NearByMapsScreen> {
   MapController controller = MapController(
     initMapWithUserPosition: false,
-    initPosition: GeoPoint(latitude: 23.194638, longitude: 72.42798),
+    initPosition: GeoPoint(latitude: 23.033863, longitude: 72.585022),
   );
   NearMeResponse? nearMeResponse;
 
@@ -38,7 +41,7 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
   @override
   void initState() {
     super.initState();
-    controller.enableTracking(enableStopFollow: false);
+
     _getNearByRoutes();
   }
 
@@ -54,6 +57,18 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
           } else if (state is NearByMapSuccessState) {
             Loader.hide();
             nearMeResponse = state.nearMeResponse;
+            if (nearMeResponse != null) {
+              for (Data data in nearMeResponse!.data!) {
+                controller.goToLocation(GeoPoint(
+                    latitude: data.latitude ?? 0.0,
+                    longitude: data.longitude ?? 0.0));
+                controller.addMarker(
+                  GeoPoint(
+                      latitude: data.latitude ?? 0.0,
+                      longitude: data.longitude ?? 0.0),
+                );
+              }
+            }
           } else if (state is NearByMapFailState) {
             Loader.hide();
           }
@@ -69,7 +84,7 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
                 flex: 1,
                 child: OSMFlutter(
                   controller: controller,
-                  trackMyPosition: true,
+                  trackMyPosition: false,
                   initZoom: 12,
                   minZoomLevel: 8,
                   maxZoomLevel: 14,
@@ -89,24 +104,24 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
                       ),
                     ),
                   ),
-                  roadConfiguration: RoadConfiguration(
-                    startIcon: const MarkerIcon(
-                      icon: Icon(
-                        Icons.person,
-                        size: 64,
-                        color: Colors.brown,
-                      ),
-                    ),
-                    roadColor: Colors.yellowAccent,
-                  ),
-                  markerOption: MarkerOption(
-                      defaultMarker: const MarkerIcon(
-                    icon: Icon(
-                      Icons.person_pin_circle,
-                      color: Colors.blue,
-                      size: 56,
-                    ),
-                  )),
+                  // roadConfiguration: RoadConfiguration(
+                  //   startIcon: const MarkerIcon(
+                  //     icon: Icon(
+                  //       Icons.person,
+                  //       size: 64,
+                  //       color: Colors.brown,
+                  //     ),
+                  //   ),
+                  //   roadColor: Colors.yellowAccent,
+                  // ),
+                  // markerOption: MarkerOption(
+                  //     defaultMarker: const MarkerIcon(
+                  //   icon: Icon(
+                  //     Icons.person_pin_circle,
+                  //     color: Colors.blue,
+                  //     size: 56,
+                  //   ),
+                  // )),
                 ),
               ),
               Container(
@@ -156,13 +171,17 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
                                     fontWeight: FontWeight.w500,
                                     color: AppColors.gray555555)),
                             onTap: () {
-                              controller.changeLocation(GeoPoint(
-                                  latitude:
-                                      nearMeResponse?.data?[index].latitude ?? 0,
-                                  longitude:
-                                      nearMeResponse?.data?[index].longitude ??
-                                          0));
-                              setState(() {});
+                              Get.toNamed(RouteHelper.getNearByStops(
+                                  nearMeResponse?.data?[index].stopName ?? "",
+                                  nearMeResponse?.data?[index].stopCode??""));
+                              // controller.goToLocation(GeoPoint(
+                              //     latitude:
+                              //         nearMeResponse?.data?[index].latitude ??
+                              //             0,
+                              //     longitude:
+                              //         nearMeResponse?.data?[index].longitude ??
+                              //             0));
+                              // setState(() {});
                             },
                           );
                         })

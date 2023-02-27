@@ -25,6 +25,8 @@ import 'package:ahmedabad_brts_amts/presentation/pages/transitmap/transitmap_scr
 import 'package:get/get.dart';
 import '../presentation/pages/dashboard/search_result_screen.dart';
 import '../presentation/pages/lrf/splash_screen.dart';
+import '../presentation/pages/nearby_stops/nearby_stops_screen.dart';
+import '../presentation/pages/search_route_number/route_tab_screen.dart';
 
 class RouteHelper {
   static const String initial = '/';
@@ -54,6 +56,9 @@ class RouteHelper {
   static const String changeLanguage = '/changeLanguage';
   static const String nearbyMap = '/nearbyMap';
   static const String transitMap = '/transitMap';
+  static const String routeSearchTab = '/route_search_tab';
+  static const String nearByStops = '/near_by_stops';
+
 
   static String getInitialRoute() => initial;
 
@@ -130,6 +135,10 @@ class RouteHelper {
   static String getNearByMapScreenRoute() => nearbyMap;
 
   static String getTransitMapScreenRoute() => transitMap;
+  static String getNearByStops(String title,String routeCode) =>
+      '$nearByStops?title=$title&routeCode=$routeCode';
+  static String getRouteSearchTab(String title,String routeCode) =>
+      '$routeSearchTab?title=$title&routeCode=$routeCode';
 
   static List<GetPage> routes = [
     GetPage(name: initial, page: () => const SplashScreen()),
@@ -205,6 +214,18 @@ class RouteHelper {
     GetPage(name: resetPassword, page: () => const ResetPasswordScreen()),
     GetPage(name: changeLanguage, page: () => const ChooseLanguage()),
     GetPage(name: nearbyMap, page: () => const NearByMapsScreen()),
-    GetPage(name: transitMap, page: () => const TransitMapScreen())
+    GetPage(name: transitMap, page: () => const TransitMapScreen()),
+    GetPage(
+        name: routeSearchTab,
+        page: () => RouteTabScreen(
+          title: Get.parameters['title'] ?? "",
+          routeCode: Get.parameters['routeCode'] ?? "",
+        )),
+    GetPage(
+        name: nearByStops,
+        page: () => NearbyStopsScreen(
+          title: Get.parameters['title'] ?? "",
+          routeCode: Get.parameters['routeCode'] ?? "",
+        )),
   ];
 }

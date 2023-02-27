@@ -18,3 +18,7 @@ class RoutesResponseState extends HomeState{
   final BrtsRoutesResponseModel model;
   const RoutesResponseState(this.model);
 }
+class SourceSelectionFromMapScreenState extends HomeState{
+  final Data data;
+  const SourceSelectionFromMapScreenState(this.data);
+}

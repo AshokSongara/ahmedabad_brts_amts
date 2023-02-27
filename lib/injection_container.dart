@@ -29,6 +29,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_
 import 'package:ahmedabad_brts_amts/presentation/blocs/feedback/feedback_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/nearby_stops/nearby_stops_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/payment/payment_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/route_details/route_details_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/near_by_map/near_by_map_bloc.dart';
@@ -36,12 +37,14 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobile_number_login_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/stop_search/stop_search_details_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/verify_otp/verify_otp_bloc.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'domain/usecases/nearby_stops_usecase.dart';
 import 'domain/usecases/user/feddback_usecase.dart';
 import 'presentation/blocs/forgetpassword/forget_password_bloc.dart';
 import 'presentation/blocs/notification/notification_bloc.dart';
@@ -177,5 +180,12 @@ Future<void> init() async {
   injector.registerLazySingleton<RouteRepository>(
     () => RouteRepositoryImpl(
         apiClient: injector(), sharedPreferences: injector()),
+  );
+  injector.registerFactory<NearByStopsBloc>(
+        () => NearByStopsBloc(injector()),
+  );
+  injector.registerLazySingleton(() => NearByStopsUseCase(injector()));
+  injector.registerFactory<StopSearchDetailsBloc>(
+        () => StopSearchDetailsBloc(routeStopListUseCase:injector()),
   );
 }

@@ -83,7 +83,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                                               .searchRouteResponse
                                               .data![index]
                                               .routeDetails![0]
-                                              .startStopSequenceNumber
+                                              .startStopCode
                                               .toString()
                                           : widget.startRoute ?? "",
                                       state.searchRouteResponse.data![index].interChanges!.isEmpty
@@ -97,7 +97,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                                               .searchRouteResponse
                                               .data![index]
                                               .routeDetails![0]
-                                              .endStopSequenceNumber
+                                              .endStopCode
                                               .toString()
                                           : widget.endRoute ?? "",
                                       state.searchRouteResponse.data![index].routeDetails![0].routeCode

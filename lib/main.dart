@@ -8,6 +8,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_
 import 'package:ahmedabad_brts_amts/presentation/blocs/forgetpassword/forget_password_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/nearby_stops/nearby_stops_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/route_details/route_details_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/near_by_map/near_by_map_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
@@ -15,6 +16,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobil
 import 'package:ahmedabad_brts_amts/presentation/blocs/notification/notification_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/stop_search/stop_search_details_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/splash_screen.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
@@ -107,6 +109,12 @@ void main() async {
         ),
         BlocProvider<PaymentBloc>(
           create: (context) => injector<PaymentBloc>(),
+        ),
+        BlocProvider<StopSearchDetailsBloc>(
+          create: (context) => injector<StopSearchDetailsBloc>(),
+        ),
+        BlocProvider<NearByStopsBloc>(
+          create: (context) => injector<NearByStopsBloc>(),
         ),
       ],
       child: MyApp(),

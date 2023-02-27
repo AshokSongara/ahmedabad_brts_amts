@@ -38,10 +38,10 @@ class SearchResultRouteBloc
           routeDetailsRequest.endCode = event.searchRouteRequest.endCode;
         } else {
           routeDetailsRequest.startCode = searchRouteResponse
-              .data![i].routeDetails![0].startStopSequenceNumber
+              .data![i].routeDetails![0].startStopCode
               .toString();
           routeDetailsRequest.endCode = searchRouteResponse
-              .data![i].routeDetails![0].endStopSequenceNumber
+              .data![i].routeDetails![0].endStopCode
               .toString();
         }
 
