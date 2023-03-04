@@ -86,9 +86,9 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
                   controller: controller,
                   trackMyPosition: false,
                   initZoom: 12,
-                  minZoomLevel: 8,
-                  maxZoomLevel: 14,
-                  stepZoom: 1.0,
+                  minZoomLevel: 2,
+                  maxZoomLevel: 19,
+                  stepZoom: 2.0,
                   userLocationMarker: UserLocationMaker(
                     personMarker: const MarkerIcon(
                       icon: Icon(

@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:ahmedabad_brts_amts/core/models/params.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/route_details_request.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/add_favourite_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/fare_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/search_route_response.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/route/add_favourite_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/fare_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/search_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_event.dart';
@@ -13,11 +15,12 @@ import 'search_result_route_state.dart';
 class SearchResultRouteBloc
     extends Bloc<SearchResultRouteEvent, SearchResultRouteState> {
   SearchResultRouteBloc(
-      {required this.searchResultRouteUseCase, required this.fareUseCase})
+      {required this.searchResultRouteUseCase, required this.fareUseCase,required this.addFavouriteUseCase})
       : super(SearchResultRouteInitialState());
 
   final SearchResultRouteUseCase searchResultRouteUseCase;
   final FareUseCase fareUseCase;
+  final AddFavouriteUseCase addFavouriteUseCase;
 
   @override
   Stream<SearchResultRouteState> mapEventToState(
@@ -59,9 +62,22 @@ class SearchResultRouteBloc
 
       if (searchRouteResponse.succeeded == true) {
         yield SearchResultRouteSuccessState(
-            searchRouteResponse: searchRouteResponse);
+            searchRouteResponse: searchRouteResponse,value: false);
       } else {
         yield SearchResultRouteFailedState();
+      }
+    }else if (event is AddFavouriteRouteEvent) {
+      yield AddFavouriteRouteLoadingState();
+
+      AddFavouriteResponse addFavouriteResponse =
+      await addFavouriteUseCase(Params(data: event.addFavouriteRequest));
+
+      if (addFavouriteResponse.succeeded == true) {
+
+        yield SearchResultRouteSuccessState(
+            searchRouteResponse: event.searchRouteResponse,value: true);
+      } else {
+        yield AddFavouriteRouteFailedState();
       }
     }
   }

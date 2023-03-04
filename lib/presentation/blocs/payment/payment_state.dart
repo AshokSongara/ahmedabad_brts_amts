@@ -1,4 +1,4 @@
-import 'package:ahmedabad_brts_amts/data/responsemodels/qr_code_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/PaymentInitResponseModel.dart';
 import 'package:equatable/equatable.dart';
 
 abstract class PaymentState extends Equatable {
@@ -13,7 +13,7 @@ class PaymentInitialState extends PaymentState {}
 class PaymentLoadingState extends PaymentState {}
 
 class PaymentSuccessState extends PaymentState {
-  final QRCodeResponse qrCodeResponse;
+  final PaymentInitResponseModel qrCodeResponse;
 
   const PaymentSuccessState({required this.qrCodeResponse});
 

@@ -1,5 +1,6 @@
-import 'package:ahmedabad_brts_amts/data/requestmodels/payment_request.dart';
+
 import 'package:equatable/equatable.dart';
+import 'package:ahmedabad_brts_amts/data/requestmodels/payment_request.dart';
 
 abstract class PaymentEvent extends Equatable {
   const PaymentEvent();
@@ -9,7 +10,7 @@ abstract class PaymentEvent extends Equatable {
 }
 
 class GetQRCodeEvent extends PaymentEvent {
-  final PaymentInternalRequest paymentRequest;
+  final PaymentRequest paymentRequest;
 
   const GetQRCodeEvent({required this.paymentRequest});
 

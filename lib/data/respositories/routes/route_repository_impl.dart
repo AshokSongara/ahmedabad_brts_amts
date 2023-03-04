@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:ahmedabad_brts_amts/api/api_client.dart';
+import 'package:ahmedabad_brts_amts/data/requestmodels/add_favourite_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/add_route_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/delete_route_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/nearme_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/route_details_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/search_route_request.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/add_favourite_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/add_route_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/delete_favourite_response.dart';
@@ -150,5 +152,17 @@ class RouteRepositoryImpl implements RouteRepository {
     NearbyStopsResponseModel deleteFavouriteResponse =
     NearbyStopsResponseModel.fromJson(response.body);
     return deleteFavouriteResponse;
+  }
+
+  @override
+  Future<AddFavouriteResponse> addFavourite(AddFavouriteRequest body) async {
+    Map data = {};
+    var bodyData = json.encode(data);
+
+    Response response = await apiClient.postDataWithHeader(
+        "Favourite/start/${body.startStop}/end/${body.endStop}", bodyData);
+    AddFavouriteResponse addFavouriteResponse =
+    AddFavouriteResponse.fromJson(response.body);
+    return addFavouriteResponse;
   }
 }

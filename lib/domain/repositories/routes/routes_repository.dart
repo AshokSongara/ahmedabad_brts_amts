@@ -1,8 +1,10 @@
+import 'package:ahmedabad_brts_amts/data/requestmodels/add_favourite_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/add_route_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/delete_route_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/nearme_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/route_details_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/search_route_request.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/add_favourite_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/add_route_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/delete_favourite_response.dart';
@@ -28,4 +30,5 @@ abstract class RouteRepository {
   Future<ETAResponse> getETADetails(RouteDetailsRequest routeDetailsRequest);
   Future<RouteStopListResponse> getRouteStopList(RouteDetailsRequest routeDetailsRequest);
   Future<NearbyStopsResponseModel> nearbyStops(String routeCode);
+  Future<AddFavouriteResponse> addFavourite(AddFavouriteRequest body);
 }

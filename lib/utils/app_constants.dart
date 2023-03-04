@@ -38,6 +38,7 @@ class AppConstant {
   //static String etaDetails = "eta/201/281";
   static String contactUs = "ContactUs";
   static String qrCodeData = "GenerateQRCode/9902000136200001";
+  static String addTransaction = "AddTransaction";
 
   //SharedPreferences Keys
   static String accessToken = "accessToken";

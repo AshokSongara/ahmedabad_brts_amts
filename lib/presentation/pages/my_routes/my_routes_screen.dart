@@ -1,10 +1,8 @@
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
-import 'package:ahmedabad_brts_amts/localization/app_localizations.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_list_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_list_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_route_bloc.dart';
-import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
@@ -59,9 +57,10 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
           listener: (context, state) {
             if (state is FavouriteDeleteRouteSuccessState) {
               Loader.hide();
+              showCustomSnackBar("Favourite Route is Deleted", context,
+                  isError: false);
               getData();
-            }
-            else if (state is FavouriteRouteLoadingState) {
+            } else if (state is FavouriteRouteLoadingState) {
               Loader.show(context);
             } else {
               Loader.hide();
@@ -72,7 +71,7 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
               return Column(
                 children: [
                   // const SizedBox(height: Dimensions.dp25),
-                  CustomToolbar(
+                  const CustomToolbar(
                     title: "myroutes",
                     showOption: false,
                   ),
@@ -92,23 +91,7 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
               showCustomSnackBar("Something Went Wrong Try again..!", context,
                   isError: false);
             }
-            return Center(
-              child: Container(
-                height: 53,
-                margin: const EdgeInsets.all(50),
-                child: CustomButton(
-                  color: Theme.of(context).primaryColor,
-                  text: AppLocalizations.of(context)?.translate("go_to_login") ?? "",
-                  width: MediaQuery.of(context).size.width,
-                  onPressed: () {
-                    Get.offNamed(RouteHelper.login);
-                  },
-                  style: poppinsMedium.copyWith(
-                      color: Colors.white, fontSize: 15.sp),
-                  height: 53,
-                ),
-              ),
-            );
+            return Container();
           },
         ),
       ),
@@ -116,59 +99,72 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
   }
 
   Widget getMyRoutesWidget(Data model) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 19),
-      margin: const EdgeInsets.only(
-          left: Dimensions.dp24,
-          right: Dimensions.dp24,
-          bottom: Dimensions.dp20),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.gray6E8EE7,
-            blurRadius: 5.0,
+    return GestureDetector(
+      onTap: () {
+        Get.toNamed(RouteHelper.getSearchResultRoute(
+            model.startStopId.toString(),
+            model.endStopId.toString(),
+            model.startStop?.toString() ?? "",
+            model.endStop?.toString() ?? "",
+            ""));
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 19),
+        margin: const EdgeInsets.only(
+            left: Dimensions.dp24,
+            right: Dimensions.dp24,
+            bottom: Dimensions.dp20),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.gray6E8EE7,
+              blurRadius: 5.0,
+            ),
+          ],
+          borderRadius: BorderRadius.all(
+            Radius.circular(Dimensions.dp10),
           ),
-        ],
-        borderRadius: BorderRadius.all(
-          Radius.circular(Dimensions.dp10),
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    model.routeName ?? "",
-                    style: satoshiRegular.copyWith(
-                        fontSize: Dimensions.dp16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: AppColors.darkGray),
-                  ),
-                ],
-              ),
-              InkWell(
-                  onTap: () {
-                    BlocProvider.of<FavouriteRouteListBloc>(context).add(
-                        DeleteFavouriteRouteEvent(
-                            routeId: model.id.toString()));
-                  },
-                  child: SvgPicture.asset(
-                    ImageConstant.iFavorite,
-                    color: Theme.of(context).primaryColor,
-                  )),
-            ],
-          ),
-          Text(DateTime.now().toString(),
-              style: satoshiRegular.copyWith(
-                  fontSize: Dimensions.dp10.sp,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.darkGray)),
-        ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Text(
+                      model.favouriteRoute ?? "",
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp16.sp,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.darkGray),
+                    ),
+                  ],
+                ),
+                InkWell(
+                    onTap: () {
+                      BlocProvider.of<FavouriteRouteListBloc>(context).add(
+                          DeleteFavouriteRouteEvent(
+                              routeId: model.id.toString()));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SvgPicture.asset(
+                        ImageConstant.iFavorite,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    )),
+              ],
+            ),
+            // Text(DateTime.now().toString(),
+            //     style: satoshiRegular.copyWith(
+            //         fontSize: Dimensions.dp10.sp,
+            //         fontWeight: FontWeight.w400,
+            //         color: AppColors.darkGray)),
+          ],
+        ),
       ),
     );
   }

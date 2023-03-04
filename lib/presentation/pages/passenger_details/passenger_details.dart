@@ -12,7 +12,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class PassengerDetails extends StatefulWidget {
-  const PassengerDetails({Key? key}) : super(key: key);
+  const PassengerDetails({
+    Key? key,
+    required this.sourceStopId,
+    required this.destinationStopId,
+  }) : super(key: key);
+
+  final String? sourceStopId;
+  final String? destinationStopId;
 
   @override
   _PassengerDetailsState createState() => _PassengerDetailsState();
@@ -212,9 +219,15 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                         .primaryColor,
                     text: "Payment",
                     onPressed: () {
-                      Get.toNamed(
-                          RouteHelper.payment);
-                    //  _initiatePayment();
+                      Get.toNamed(RouteHelper.getPaymentDetailsRoute(
+                          widget.sourceStopId ?? "",
+                          widget.destinationStopId ?? "",
+                          "",
+                          "",
+                          "",
+                          "",
+                          ""));
+
                     },
                     width: MediaQuery
                         .of(context)

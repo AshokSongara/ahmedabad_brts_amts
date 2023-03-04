@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:ahmedabad_brts_amts/api/api_client.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/mobile_number_otp_request_param.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/otp_request.dart';
+import 'package:ahmedabad_brts_amts/data/requestmodels/payment_request.dart';
 import 'package:ahmedabad_brts_amts/data/responseModels/signup_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/PaymentInitResponseModel.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/contactus_response.dart';
@@ -302,5 +304,26 @@ class UserRepositoryImpl implements UserRepository {
     QRCodeResponse qrCodeResponse = QRCodeResponse.fromJson(response.body);
 
     return qrCodeResponse;
+  }
+
+  @override
+  Future<PaymentInitResponseModel> addTransaction(PaymentRequest body) async {
+    Map data = {
+      "sourceStopId": body.sourceStopId,
+      "destinationStopId": body.destinationStopId,
+      "discountype": body.discountype,
+      "txnStatus": body.txnStatus,
+      "merchantId": body.merchantId,
+      "sourcecompanycode": body.sourcecompanycode,
+      "destinationcompanycode": body.destinationcompanycode,
+    };
+
+    var bodyData = json.encode(data);
+
+    Response response = await apiClient.postDataWithHeader(
+        AppConstant.addTransaction, bodyData);
+    PaymentInitResponseModel loginResponse =
+    PaymentInitResponseModel.fromJson(response.body);
+    return loginResponse;
   }
 }

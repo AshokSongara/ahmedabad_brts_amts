@@ -739,7 +739,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       "",
                                       "",
                                       "",
-                                      ""),
+                                      "","00:00:00"),
                                 );
                               } else if (newFromSelectedStation != null &&
                                   newToSelectedStation != null) {

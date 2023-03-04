@@ -95,10 +95,13 @@ class RouteHelper {
           String routeTwo,
           String startRouteTwo,
           String endRouteTwo,
+      String endTime,
       ) =>
-      '$routeDetails?startRouteName=$startRouteName&startRouteCode=$startRouteCode&endRouteName=$endRouteName&endRouteCode=$endRouteCode&routeCode=$routeCode&startTime=$startTime&interChange=$interChange&fromHome=$fromHome&originStart=$originStart&originEnd=$originEnd&serviceType=$serviceType&interChangeName=$interChangeName&routeTwo=$routeTwo&startRouteTwo=$startRouteTwo&endRouteTwo=$endRouteTwo';
+      '$routeDetails?startRouteName=$startRouteName&startRouteCode=$startRouteCode&endRouteName=$endRouteName&endRouteCode=$endRouteCode&routeCode=$routeCode&startTime=$startTime&interChange=$interChange&fromHome=$fromHome&originStart=$originStart&originEnd=$originEnd&serviceType=$serviceType&interChangeName=$interChangeName&routeTwo=$routeTwo&startRouteTwo=$startRouteTwo&endRouteTwo=$endRouteTwo&endTime$endTime';
 
-  static String getPassengerDetailsRoute() => passengerDetails;
+  static String getPassengerDetailsRoute(
+      String sourceStopId, String destinationStopId) =>
+      '$passengerDetails?sourceStopId=$sourceStopId&destinationStopId=$destinationStopId';
 
   static String getCardDetailsRoute() => cardDetails;
 
@@ -114,7 +117,16 @@ class RouteHelper {
 
   static String getContactUsRoute() => contactUs;
 
-  static String getPaymentDetailsRoute() => payment;
+  static String getPaymentDetailsRoute(
+      String sourceStopId,
+      String destinationStopId,
+      String discountype,
+      String txnStatus,
+      String merchantId,
+      String sourcecompanycode,
+      String destinationcompanycode) =>
+      '$payment?sourceStopId=$sourceStopId&destinationStopId=$destinationStopId&discountype=$discountype&txnStatus=$txnStatus&merchantId=$merchantId&sourcecompanycode=$sourcecompanycode&destinationcompanycode=$destinationcompanycode';
+
 
   static String getBookingRoute(String from) => '$booking?from=$from';
 
@@ -197,14 +209,30 @@ class RouteHelper {
               routeTwo: Get.parameters['routeTwo'],
               startRouteTwo: Get.parameters['startRouteTwo'],
               endRouteTwo: Get.parameters['endRouteTwo'],
+          endTime: Get.parameters['endTime'],
             )),
-    GetPage(name: passengerDetails, page: () => const PassengerDetails()),
+    GetPage(
+        name: passengerDetails,
+        page: () => PassengerDetails(
+          sourceStopId: Get.parameters['sourceStopId'],
+          destinationStopId: Get.parameters['destinationStopId'],
+        )),
     GetPage(name: cardDetails, page: () => const CardDetailsScreen()),
     GetPage(name: nearBy, page: () => const NearByScreen()),
     GetPage(name: feedback, page: () => const FeedBackScreen()),
     GetPage(name: myRoute, page: () => const MyRoutesScreen()),
     GetPage(name: searchRoute, page: () => const SearchRouteNumberScreen()),
-    GetPage(name: payment, page: () => const PaymentDetailsScreen()),
+    GetPage(
+        name: payment,
+        page: () => PaymentDetailsScreen(
+          sourceStopId: Get.parameters['sourceStopId'],
+          destinationStopId: Get.parameters['destinationStopId'],
+          discountype: Get.parameters['discountype'],
+          txnStatus: Get.parameters['txnStatus'],
+          merchantId: Get.parameters['merchantId'],
+          sourcecompanycode: Get.parameters['sourcecompanycode'],
+          destinationcompanycode: Get.parameters['destinationcompanycode'],
+        )),
     GetPage(
         name: booking,
         page: () => BookingScreen(

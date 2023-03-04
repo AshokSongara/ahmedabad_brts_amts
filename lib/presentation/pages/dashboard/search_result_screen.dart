@@ -1,16 +1,21 @@
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
+import 'package:ahmedabad_brts_amts/data/requestmodels/add_favourite_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/search_route_request.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/search_route_response.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_state.dart';
-import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
+import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/route_title_widget.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/search_result_item.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
+import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
+import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class SearchResultScreen extends StatefulWidget {
@@ -52,7 +57,17 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
     return Scaffold(
       backgroundColor: AppColors.appBackground,
       body: SafeArea(
-        child: BlocBuilder<SearchResultRouteBloc, SearchResultRouteState>(
+        child: BlocConsumer<SearchResultRouteBloc, SearchResultRouteState>(
+          listener: (context, state) {
+            if (state is SearchResultRouteSuccessState) {
+              Loader.hide();
+              print("#####${state.value}");
+              if (state.value == true) {
+                showCustomSnackBar("Favourite Route Added", context,
+                    isError: false);
+              }
+            }
+          },
           builder: (context, state) {
             if (state is SearchResultRouteLoadingState) {
               Loader.show(context);
@@ -60,7 +75,47 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
               Loader.hide();
               return Column(children: [
                 // const SizedBox(height: 25),
-                const CustomToolbar(title: "search_result"),
+                Container(
+                  margin:  const EdgeInsets.only(
+                      left: Dimensions.dp15, right: Dimensions.dp20),
+                  padding:  const EdgeInsets.only(
+                      top: Dimensions.dp10, bottom: Dimensions.dp10),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            Get.back();
+                          },
+                          child: SvgPicture.asset(ImageConstant.iLeftArrow)),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            "Search Result",
+                            style: screenTitle,
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        child: SvgPicture.asset(ImageConstant.iEmptyFavorite),
+                        onTap: () {
+                          var request = AddFavouriteRequest(
+                            startStop: widget.startRoute ?? "",
+                            endStop: widget.endRoute ?? "",
+                          );
+
+                          SearchRouteResponse response = SearchRouteResponse();
+                          response = state.searchRouteResponse;
+
+                          BlocProvider.of<SearchResultRouteBloc>(context).add(
+                            AddFavouriteRouteEvent(
+                                addFavouriteRequest: request,
+                                searchRouteResponse: response),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
                 RouteTitleWidget(
                   mainAxisAlignment: MainAxisAlignment.center,
                   startRouteName: widget.startRouteName ?? "",
@@ -119,7 +174,10 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                                     state.searchRouteResponse.data![index].routeDetails!.length > 1
                                         ? state.searchRouteResponse.data![index].routeDetails![1].startStopSequenceNumber.toString() ?? "": "",
                                     state.searchRouteResponse.data![index].routeDetails!.length > 1
-                                        ? state.searchRouteResponse.data![index].routeDetails![1].endStopSequenceNumber.toString() ?? "": "",));
+                                        ? state.searchRouteResponse.data![index].routeDetails![1].endStopSequenceNumber.toString() ?? "": "",
+                                    state.searchRouteResponse.data![index]
+                                        .endTime
+                                        .toString(),));
                                 },
                                 child: SearchResultItem(
                                   routeResult:
@@ -136,7 +194,9 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                         ),
                 ),
               ]);
-            } else {
+            } else if (state is AddFavouriteRouteLoadingState) {
+              Loader.show(context);
+            }else {
               Loader.hide();
             }
             return Container();
