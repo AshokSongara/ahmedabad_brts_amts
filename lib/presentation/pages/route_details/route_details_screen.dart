@@ -36,25 +36,25 @@ class RouteDetailScreen extends StatefulWidget {
   final String? endRouteTwo;
   final String? endTime;
 
-  const RouteDetailScreen({
-    Key? key,
-    required this.startRouteName,
-    required this.startRouteCode,
-    required this.endRouteName,
-    required this.endRouteCode,
-    required this.routeCode,
-    required this.startTime,
-    required this.interChange,
-    required this.fromHome,
-    required this.originStart,
-    required this.originEnd,
-    required this.serviceType,
-    required this.interChangeName,
-    required this.routeTwo,
-    required this.startRouteTwo,
-    required this.endRouteTwo,
-    required this.endTime
-  }) : super(key: key);
+  const RouteDetailScreen(
+      {Key? key,
+      required this.startRouteName,
+      required this.startRouteCode,
+      required this.endRouteName,
+      required this.endRouteCode,
+      required this.routeCode,
+      required this.startTime,
+      required this.interChange,
+      required this.fromHome,
+      required this.originStart,
+      required this.originEnd,
+      required this.serviceType,
+      required this.interChangeName,
+      required this.routeTwo,
+      required this.startRouteTwo,
+      required this.endRouteTwo,
+      required this.endTime})
+      : super(key: key);
 
   @override
   State<RouteDetailScreen> createState() => _RouteDetailScreenState();
@@ -88,212 +88,202 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
         body: SafeArea(
           child: BlocBuilder<RouteDetailsBloc, RouteDetailsState>(
               builder: (context, state) {
-                if (state is RouteDetailsLoadingState) {
-                  Loader.show(context);
-                } else if (state is RouteDetailsSuccessState) {
-                  Loader.hide();
-                  return Column(children: [
-                    // const SizedBox(height: 25),
-                    const CustomToolbar(title: "route_detail"),
-                    Container(
-                      padding: const EdgeInsets.only(top: 15, bottom: 15),
-                      color: Colors.white,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            if (state is RouteDetailsLoadingState) {
+              Loader.show(context);
+            } else if (state is RouteDetailsSuccessState) {
+              Loader.hide();
+              return Column(children: [
+                // const SizedBox(height: 25),
+                const CustomToolbar(title: "route_detail"),
+                Container(
+                  padding: const EdgeInsets.only(top: 15, bottom: 15),
+                  color: Colors.white,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
                         children: [
-                          Column(
-                            children: [
-                              Text(
-                                "Start Time",
-                                style: screenTitle.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16.sp),
-                              ),
-                              Row(
-                                children: [
-                                  SvgPicture.asset(ImageConstant.iRedTime),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    widget.startTime ?? "",
-                                    style: screenTitle.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
-                              ),
-                            ],
+                          Text(
+                            "Start Time",
+                            style: screenTitle.copyWith(
+                                fontWeight: FontWeight.w700, fontSize: 16.sp),
                           ),
-                          Column(
+                          Row(
                             children: [
+                              SvgPicture.asset(ImageConstant.iRedTime),
+                              const SizedBox(
+                                width: 5,
+                              ),
                               Text(
-                                "Interchange",
+                                widget.startTime ?? "",
                                 style: screenTitle.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16.sp),
-                              ),
-                              Row(
-                                children: [
-                                  SizedBox(
-                                      height: 20,
-                                      width: 20,
-                                      child: SvgPicture.asset(
-                                          ImageConstant.iRoute)),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    widget.interChange ?? "0",
-                                    style: screenTitle.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                "Fare",
-                                style: screenTitle.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16.sp),
-                              ),
-                              Row(
-                                children: [
-                                  SizedBox(
-                                      height: 20,
-                                      width: 20,
-                                      child: SvgPicture.asset(
-                                          ImageConstant.iTicket)),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "₹${getFare(
-                                        state.fareResponse.data?.adult ?? 0)}",
-                                    style: screenTitle.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 15.sp),
-                                  ),
-                                ],
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15.sp),
                               ),
                             ],
                           ),
                         ],
                       ),
-                    ),
-                    RouteTitleWidget(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      startRouteName: widget.startRouteName ?? "",
-                      endRouteName: widget.endRouteName ?? "",
-                    ),
-                    Expanded(
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        margin: const EdgeInsets.all(20),
-                        color: Colors.white,
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: OrderTracker(
-                            activeColor: Theme
-                                .of(context)
-                                .primaryColor,
-                            inActiveColor: AppColors.darkGray,
-                            orderTitleAndDateList: widget.fromHome == "No"
-                                ? state.routeDetailsResponse.data
-                                : state.routeStopListResponse.data,
-                            orderTitleAndDateList2: widget.fromHome == "No"
-                                ? state.routeDetailsResponse1.data
-                                : state.routeStopListResponse.data,
-                            startRouteTitle: widget.startRouteName ?? "",
-                            endRouteTitle: widget.endRouteName ?? "",
-                            routeCode: widget.routeCode ?? "",
-                            interChangeName: widget.interChangeName,
-                            interChange: widget.interChange,
-                            routeCodeTwo: widget.routeTwo,
+                      Column(
+                        children: [
+                          Text(
+                            "Interchange",
+                            style: screenTitle.copyWith(
+                                fontWeight: FontWeight.w700, fontSize: 16.sp),
                           ),
-                        ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child:
+                                      SvgPicture.asset(ImageConstant.iRoute)),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                widget.interChange ?? "0",
+                                style: screenTitle.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15.sp),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            "Fare",
+                            style: screenTitle.copyWith(
+                                fontWeight: FontWeight.w700, fontSize: 16.sp),
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child:
+                                      SvgPicture.asset(ImageConstant.iTicket)),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                "₹${getFare(state.fareResponse.data?.adult ?? 0)}",
+                                style: screenTitle.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15.sp),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                RouteTitleWidget(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  startRouteName: widget.startRouteName ?? "",
+                  endRouteName: widget.endRouteName ?? "",
+                  from: false,
+                ),
+                Expanded(
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                    ),
+                    margin: const EdgeInsets.all(20),
+                    color: Colors.white,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: OrderTracker(
+                        activeColor: Theme.of(context).primaryColor,
+                        inActiveColor: AppColors.darkGray,
+                        orderTitleAndDateList: widget.fromHome == "No"
+                            ? state.routeDetailsResponse.data
+                            : state.routeStopListResponse.data,
+                        orderTitleAndDateList2: widget.fromHome == "No"
+                            ? state.routeDetailsResponse1.data
+                            : state.routeStopListResponse.data,
+                        startRouteTitle: widget.startRouteName ?? "",
+                        endRouteTitle: widget.endRouteName ?? "",
+                        routeCode: widget.routeCode ?? "",
+                        interChangeName: widget.interChangeName,
+                        interChange: widget.interChange,
+                        routeCodeTwo: widget.routeTwo,
                       ),
                     ),
-                    Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 40),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 40),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                            Text(
+                              "ETA",
+                              style: screenTitle.copyWith(
+                                  fontWeight: FontWeight.w700, fontSize: 16.sp),
+                            ),
+                            Row(
                               children: [
-                                Text(
-                                  "ETA",
-                                  style: screenTitle.copyWith(
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 16.sp),
+                                SvgPicture.asset(ImageConstant.iRedTime),
+                                const SizedBox(
+                                  width: 5,
                                 ),
-                                Row(
-                                  children: [
-                                    SvgPicture.asset(ImageConstant.iRedTime),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      state.etaResponse.data!.isNotEmpty
-                                          ? toMinutes(
-                                          "${state.etaResponse.data![0]
-                                              .eta}" "" "")
-                                          : "",
-                                      style: screenTitle.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 15.sp),
-                                    ),
-                                  ],
+                                Text(
+                                  state.etaResponse.data!.isNotEmpty
+                                      ? toMinutes(
+                                          "${state.etaResponse.data![0].eta}"
+                                          ""
+                                          "")
+                                      : "",
+                                  style: screenTitle.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 15.sp),
                                 ),
                               ],
                             ),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: CustomButton(
-                                color: Theme
-                                    .of(context)
-                                    .primaryColor,
-                                text: "Book Tickets",
-                                width: MediaQuery
-                                    .of(context)
-                                    .size
-                                    .width / 2,
-                                onPressed: () {
-                                  Get.toNamed(
-                                      RouteHelper.getPassengerDetailsRoute(
-                                          widget.startRouteCode ?? "",
-                                          widget.endRouteCode ?? ""),
-                                      arguments: [
-                                        widget.startRouteName,
-                                        widget.endRouteName,
-                                        widget.startTime,
-                                        widget.endTime
-                                      ]);
-                                },
-                                style: poppinsMedium.copyWith(
-                                    color: Colors.white, fontSize: 15.sp),
-                                height: 53,
-                              ),
-                            ),
                           ],
                         ),
-                      ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: CustomButton(
+                            color: Theme.of(context).primaryColor,
+                            text: "Book Tickets",
+                            width: MediaQuery.of(context).size.width / 2,
+                            onPressed: () {
+                              Get.toNamed(
+                                  RouteHelper.getPassengerDetailsRoute(
+                                      widget.startRouteCode ?? "",
+                                      widget.endRouteCode ?? ""),
+                                  arguments: [
+                                    widget.startRouteName,
+                                    widget.endRouteName,
+                                    widget.startTime,
+                                    widget.endTime
+                                  ]);
+                            },
+                            style: poppinsMedium.copyWith(
+                                color: Colors.white, fontSize: 15.sp),
+                            height: 53,
+                          ),
+                        ),
+                      ],
                     ),
-                  ]);
-                } else if (state is RouteDetailsFailedState) {
-                  Loader.hide();
-                }
-                return Container();
-              }),
+                  ),
+                ),
+              ]);
+            } else if (state is RouteDetailsFailedState) {
+              Loader.hide();
+            }
+            return Container();
+          }),
         ));
   }
 }

@@ -120,6 +120,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   startRouteName: widget.startRouteName ?? "",
                   endRouteName: widget.endRouteName ?? "",
+                  from: true,
                 ),
                 Expanded(
                   child: state.searchRouteResponse.data!.isNotEmpty

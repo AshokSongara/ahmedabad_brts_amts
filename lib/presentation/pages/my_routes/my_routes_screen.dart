@@ -134,12 +134,16 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
               children: [
                 Row(
                   children: [
-                    Text(
-                      model.favouriteRoute ?? "",
-                      style: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp16.sp,
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.darkGray),
+                    Container(
+                      width: MediaQuery.of(context).size.width / 2,
+                      child: Text(
+                        model.favouriteRoute ?? "",
+                        style: satoshiRegular.copyWith(
+                            fontSize: Dimensions.dp16.sp,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.darkGray),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                   ],
                 ),

@@ -74,6 +74,7 @@ class RouteDetailsBloc extends Bloc<RouteDetailsEvent, RouteDetailsState> {
         }
       } else {
         if (event.request.routeTwo!.isNotEmpty) {
+
           RouteDetailsRepsonse routeDetailsRepsonse =
               await routeDetailsUseCase(Params(data: event.request));
 

@@ -148,6 +148,7 @@ class _OrderTrackerState extends State<OrderTracker> {
                                                     .stopName ??
                                                 "",
                                             style: satoshiRegularSmallDark,
+                                            overflow: TextOverflow.ellipsis,
                                           ),
                                         ),
                                       ],
@@ -283,6 +284,7 @@ class _OrderTrackerState extends State<OrderTracker> {
                                                       .stopName ??
                                                   "",
                                               style: satoshiRegularSmallDark,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
                                           ),
                                         ],
