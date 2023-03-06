@@ -4,7 +4,9 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/verify_otp_response.dart
 import 'package:ahmedabad_brts_amts/domain/usecases/user/verify_otp_usecase.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/verify_otp/verify_otp_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/verify_otp/verify_otp_state.dart';
+import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:bloc/bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class VerifyOtpBloc extends Bloc<VerifyOtpEvent, VerifyOtpState> {
   VerifyOtpBloc({required this.verifyOtpUseCase}) : super(VerifyOtpInitialState());

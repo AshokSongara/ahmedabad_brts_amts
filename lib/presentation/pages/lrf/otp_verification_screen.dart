@@ -98,9 +98,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
           }
         },
         builder: (context, state) {
-          return Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
+          return ListView(
+            // physics: const NeverScrollableScrollPhysics(),
+            // mainAxisAlignment: MainAxisAlignment.start,
+            // crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ClipRRect(
                 borderRadius: const BorderRadius.only(
@@ -116,150 +117,155 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               const SizedBox(
                 height: Dimensions.dp30,
               ),
-              Text(
-                "Enter code sent to your phone",
-                style: satoshiRegular.copyWith(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.darkGray),
-              ),
-              const SizedBox(
-                height: Dimensions.dp5,
-              ),
-              Text(
-                "We sent it to the number "+"${widget.mobileNumber!.substring(0, 8)}XX",
-                style: satoshiRegular.copyWith(
-                    fontSize: 14.sp, color: AppColors.gray555555),
-              ),
-              const SizedBox(
-                height: Dimensions.dp30,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.only(
-                    left: Dimensions.dp20, right: Dimensions.dp20),
-                child: PinCodeTextField(
-                  keyboardType: TextInputType.none,
-                  appContext: context,
-                  pastedTextStyle: satoshiRegular.copyWith(
-                      color: AppColors.darkGray, fontSize: 24.sp),
-                  length: 6,
-                  animationType: AnimationType.fade,
-                  validator: (v) {},
-                  textStyle: satoshiRegular.copyWith(
-                      color: AppColors.darkGray, fontSize: 24.sp),
-                  pinTheme: PinTheme(
-                      shape: PinCodeFieldShape.box,
-                      borderRadius: BorderRadius.circular(10),
-                      fieldHeight: Dimensions.dp50,
-                      fieldWidth: Dimensions.dp50,
-                      activeColor: Theme.of(context).primaryColor,
-                      inactiveColor: AppColors.lightGray,
-                      activeFillColor: Colors.white,
-                      inactiveFillColor: Colors.white,
-                      selectedFillColor: Colors.white,
-                      selectedColor: Theme.of(context).primaryColor),
-                  cursorColor: Colors.white,
-                  animationDuration: const Duration(milliseconds: 300),
-                  enableActiveFill: true,
-                  errorAnimationController: errorController,
-                  controller: textEditingController,
-                  onCompleted: (v) {
-                    debugPrint("Completed");
-                  },
-                  onChanged: (value) {
-                    debugPrint(value);
-                    setState(() {
-                      currentText = value;
-                    });
-                  },
-                  beforeTextPaste: (text) {
-                    debugPrint("Allowing to paste $text");
-                    return true;
-                  },
-                ),
-              ),
-              NumericKeyboard(
-                onKeyboardTap: _onKeyboardTap,
-                textColor: AppColors.darkGray,
-                rightButtonFn: () {
-                  setState(() {
-                    textEditingController.text = textEditingController.text
-                        .substring(0, textEditingController.text.length - 1);
-                  });
-                },
-                rightIcon: Icon(
-                  Icons.backspace,
-                  color: Theme.of(context).primaryColor,
-                ),
-              ),
-              const SizedBox(
-                height: Dimensions.dp60,
-              ),
-              RichText(
-                text: TextSpan(
-                  text:  _seconds > 0 ?  "Resend code in " : '',
-                  style: satoshiRegular.copyWith(
-                      fontSize: 14.sp, color: Colors.black),
-                  children: <TextSpan>[
-
-                    TextSpan(
-                        text: _timerText.toString(),
-                        style: satoshiRegular.copyWith(
-                            color: Theme.of(context).primaryColor, fontSize: 12.sp)),
-                  ],
-                ),
-              ),
-              RichText(
-                text: TextSpan(
-                  text: _seconds > 0 ? "" : "Didn't receive OTP ?",
-                  style: satoshiRegular.copyWith(
-                      fontSize: 14, color: Colors.black),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: _seconds > 0 ? "" : " Resend",
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () => {
-                          setState(() {
-                            _seconds = 20;
-                            _startTimer();
-                          })
-                        },
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Enter code sent to your phone",
+                    style: satoshiRegular.copyWith(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.darkGray),
+                  ),
+                  const SizedBox(
+                    height: Dimensions.dp5,
+                  ),
+                  Text(
+                    "We sent it to the number "+"${widget.mobileNumber!.substring(0, 8)}XX",
+                    style: satoshiRegular.copyWith(
+                        fontSize: 14.sp, color: AppColors.gray555555),
+                  ),
+                  const SizedBox(
+                    height: Dimensions.dp30,
+                  ),
+                  Container(
+                    width: MediaQuery.of(context).size.width,
                     margin: const EdgeInsets.only(
-                        left: 30, right: 30, bottom: Dimensions.dp10),
-                    child: CustomButton(
-                      text: "NEXT",
-                      width: MediaQuery.of(context).size.width,
-                      onPressed: () {
-                        if (textEditingController.text.toString().isEmpty) {
-                          showCustomSnackBar("Please Enter OTP", context);
-                        } else {
-                          var request = OtpRequest();
-                          request.phoneNumber = widget.mobileNumber;
-                          request.otp = textEditingController.text;
-                          BlocProvider.of<VerifyOtpBloc>(context).add(
-                            PostVerifyOtpEvent(otpRequest: request),
-                          );
-                        }
+                        left: Dimensions.dp20, right: Dimensions.dp20),
+                    child: PinCodeTextField(
+                      keyboardType: TextInputType.none,
+                      appContext: context,
+                      pastedTextStyle: satoshiRegular.copyWith(
+                          color: AppColors.darkGray, fontSize: 24.sp),
+                      length: 6,
+                      animationType: AnimationType.fade,
+                      validator: (v) {},
+                      textStyle: satoshiRegular.copyWith(
+                          color: AppColors.darkGray, fontSize: 24.sp),
+                      pinTheme: PinTheme(
+                          shape: PinCodeFieldShape.box,
+                          borderRadius: BorderRadius.circular(10),
+                          fieldHeight: Dimensions.dp50,
+                          fieldWidth: Dimensions.dp50,
+                          activeColor: Theme.of(context).primaryColor,
+                          inactiveColor: AppColors.lightGray,
+                          activeFillColor: Colors.white,
+                          inactiveFillColor: Colors.white,
+                          selectedFillColor: Colors.white,
+                          selectedColor: Theme.of(context).primaryColor),
+                      cursorColor: Colors.white,
+                      animationDuration: const Duration(milliseconds: 300),
+                      enableActiveFill: true,
+                      errorAnimationController: errorController,
+                      controller: textEditingController,
+                      onCompleted: (v) {
+                        debugPrint("Completed");
                       },
-                      style: poppinsMedium.copyWith(
-                          color: Colors.white, fontSize: 15.sp),
-                      height: 53, color: Theme.of(context).primaryColor,
+                      onChanged: (value) {
+                        debugPrint(value);
+                        setState(() {
+                          currentText = value;
+                        });
+                      },
+                      beforeTextPaste: (text) {
+                        debugPrint("Allowing to paste $text");
+                        return true;
+                      },
                     ),
                   ),
-                ),
+                  NumericKeyboard(
+                    onKeyboardTap: _onKeyboardTap,
+                    textColor: AppColors.darkGray,
+                    rightButtonFn: () {
+                      setState(() {
+                        textEditingController.text = textEditingController.text
+                            .substring(0, textEditingController.text.length - 1);
+                      });
+                    },
+                    rightIcon: Icon(
+                      Icons.backspace,
+                      color: Theme.of(context).primaryColor,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: Dimensions.dp60,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text:  _seconds > 0 ?  "Resend code in " : '',
+                      style: satoshiRegular.copyWith(
+                          fontSize: 14.sp, color: Colors.black),
+                      children: <TextSpan>[
+
+                        TextSpan(
+                            text: _timerText.toString(),
+                            style: satoshiRegular.copyWith(
+                                color: Theme.of(context).primaryColor, fontSize: 12.sp)),
+                      ],
+                    ),
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: _seconds > 0 ? "" : "Didn't receive OTP ?",
+                      style: satoshiRegular.copyWith(
+                          fontSize: 14, color: Colors.black),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: _seconds > 0 ? "" : " Resend",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => {
+                              setState(() {
+                                _seconds = 20;
+                                _startTimer();
+                              })
+                            },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                          left: 30, right: 30, bottom: Dimensions.dp10),
+                      child: CustomButton(
+                        text: "NEXT",
+                        width: MediaQuery.of(context).size.width,
+                        onPressed: () {
+                          if (textEditingController.text.toString().isEmpty) {
+                            showCustomSnackBar("Please Enter OTP", context);
+                          } else {
+                            var request = OtpRequest();
+                            request.phoneNumber = widget.mobileNumber;
+                            request.otp = textEditingController.text;
+                            BlocProvider.of<VerifyOtpBloc>(context).add(
+                              PostVerifyOtpEvent(otpRequest: request),
+                            );
+                          }
+                        },
+                        style: poppinsMedium.copyWith(
+                            color: Colors.white, fontSize: 15.sp),
+                        height: 53, color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                ],
               ),
+
             ],
           );
         },
