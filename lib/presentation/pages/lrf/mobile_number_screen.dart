@@ -46,156 +46,158 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
-      body: Column(
-        // mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(50),
-                bottomRight: Radius.circular(50)),
-            child: AspectRatio(
-              aspectRatio: 1 / 0.35,
-              child: Container(
-                color: Theme.of(context).primaryColor,
+      body: SingleChildScrollView(
+        child: Column(
+          // mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(50),
+                  bottomRight: Radius.circular(50)),
+              child: AspectRatio(
+                aspectRatio: 1 / 0.35,
+                child: Container(
+                  color: Theme.of(context).primaryColor,
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            height: Dimensions.dp30,
-          ),
-          BlocConsumer<MobileNumberLoginBloc, MobileNumberLoginState>(
-              listener: (BuildContext context, state) {
-            if (state is MobileNumberLoginSuccessState) {
-              Loader.hide();
-              Get.toNamed(RouteHelper.getEnterCodeRoute(_mobileController.text.toString()));
-            } else if (state is MobileNumberLoginErrorState) {
-              Loader.hide();
-              debugPrint("Api Call Error");
-            } else if (state is MobileNumberLoadingState) {
-              Loader.show(context);
-            } else if (state is MobileNumberValidationErrorState) {
-              Loader.hide();
-              debugPrint("Validation Error");
-            }
-          }, builder: (context, state) {
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Welcome to AMTS - BRTS",
-                  style: satoshiRegular.copyWith(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.darkGray),
-                ),
-                Text(
-                  "We will send an OTP on this mobile number.",
-                  style: satoshiRegular.copyWith(
-                      fontSize: 14.sp, color: AppColors.gray555555),
-                ),
-                const SizedBox(
-                  height: Dimensions.dp20,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                      color: Theme.of(context).primaryColor),
-                  width: MediaQuery.of(context).size.width,
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.only(left: 30, right: 30),
-                  child: TextFormField(
-                    controller: _mobileController,
-                    focusNode: _mobileFocus,
-                    textAlign: TextAlign.start,
-                    maxLines: 1,
-                    maxLength: 10,
-                    cursorColor: Colors.white,
-                    autofocus: true,
-                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp('[0-9]')),
-                      LengthLimitingTextInputFormatter(10),
-                    ],
-                    keyboardType: TextInputType.none,
-                    style: TextStyle(
-                      fontSize: 17.0.sp,
-                      color: Colors.black,
-                    ),
-                    decoration: InputDecoration(
-                      prefixText: '+91 | ',
-                      counterText: "",
-                      prefixStyle:
-                          satoshiRegular.copyWith(color: AppColors.darkGray),
-                      filled: true,
-                      fillColor: Colors.white,
-                      hintText: "Enter Mobile Number",
-                      hintStyle:
-                          satoshiRegular.copyWith(color: AppColors.grayC4C$C$),
-                      contentPadding: const EdgeInsets.only(
-                          top: 8.0, bottom: 8.0, left: 10.0, right: 10.0),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Theme.of(context).primaryColor),
+            const SizedBox(
+              height: Dimensions.dp30,
+            ),
+            BlocConsumer<MobileNumberLoginBloc, MobileNumberLoginState>(
+                listener: (BuildContext context, state) {
+              if (state is MobileNumberLoginSuccessState) {
+                Loader.hide();
+                Get.toNamed(RouteHelper.getEnterCodeRoute(_mobileController.text.toString()));
+              } else if (state is MobileNumberLoginErrorState) {
+                Loader.hide();
+                debugPrint("Api Call Error");
+              } else if (state is MobileNumberLoadingState) {
+                Loader.show(context);
+              } else if (state is MobileNumberValidationErrorState) {
+                Loader.hide();
+                debugPrint("Validation Error");
+              }
+            }, builder: (context, state) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    "Welcome to AMTS - BRTS",
+                    style: satoshiRegular.copyWith(
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.darkGray),
+                  ),
+                  Text(
+                    "We will send an OTP on this mobile number.",
+                    style: satoshiRegular.copyWith(
+                        fontSize: 14.sp, color: AppColors.gray555555),
+                  ),
+                  const SizedBox(
+                    height: Dimensions.dp20,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                        color: Theme.of(context).primaryColor),
+                    width: MediaQuery.of(context).size.width,
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.only(left: 30, right: 30),
+                    child: TextFormField(
+                      controller: _mobileController,
+                      focusNode: _mobileFocus,
+                      textAlign: TextAlign.start,
+                      maxLines: 1,
+                      maxLength: 10,
+                      cursorColor: Colors.white,
+                      autofocus: true,
+                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp('[0-9]')),
+                        LengthLimitingTextInputFormatter(10),
+                      ],
+                      keyboardType: TextInputType.none,
+                      style: TextStyle(
+                        fontSize: 17.0.sp,
+                        color: Colors.black,
                       ),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: Theme.of(context).primaryColor),
+                      decoration: InputDecoration(
+                        prefixText: '+91 | ',
+                        counterText: "",
+                        prefixStyle:
+                            satoshiRegular.copyWith(color: AppColors.darkGray),
+                        filled: true,
+                        fillColor: Colors.white,
+                        hintText: "Enter Mobile Number",
+                        hintStyle:
+                            satoshiRegular.copyWith(color: AppColors.grayC4C$C$),
+                        contentPadding: const EdgeInsets.only(
+                            top: 8.0, bottom: 8.0, left: 10.0, right: 10.0),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Theme.of(context).primaryColor),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(color: Theme.of(context).primaryColor),
+                        ),
                       ),
+                      validator: (mobile) {
+                        if (mobile!.isEmpty) {
+                          "Please Enter Mobile Number";
+                        } else if (mobile.length < 10) {
+                          return "Please Enter Valid Number";
+                        } else {
+                          return null;
+                        }
+                      },
+                      onSaved: (mobile) => _mobile = mobile!,
+                      textInputAction: TextInputAction.next,
                     ),
-                    validator: (mobile) {
-                      if (mobile!.isEmpty) {
-                        "Please Enter Mobile Number";
-                      } else if (mobile.length < 10) {
-                        return "Please Enter Valid Number";
-                      } else {
-                        return null;
-                      }
+                  ),
+                  const SizedBox(
+                    height: Dimensions.dp30,
+                  ),
+                  NumericKeyboard(
+                    onKeyboardTap: _onKeyboardTap,
+                    textColor: AppColors.darkGray,
+                    rightButtonFn: () {
+                      setState(() {
+                        _mobileController.text = _mobileController.text
+                            .substring(0, _mobileController.text.length - 1);
+                      });
                     },
-                    onSaved: (mobile) => _mobile = mobile!,
-                    textInputAction: TextInputAction.next,
+                    rightIcon: Icon(
+                      Icons.backspace,
+                      color: Theme.of(context).primaryColor,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  height: Dimensions.dp30,
-                ),
-                NumericKeyboard(
-                  onKeyboardTap: _onKeyboardTap,
-                  textColor: AppColors.darkGray,
-                  rightButtonFn: () {
-                    setState(() {
-                      _mobileController.text = _mobileController.text
-                          .substring(0, _mobileController.text.length - 1);
-                    });
+                ],
+              );
+            }),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                margin: const EdgeInsets.only(
+                    left: 30, right: 30, bottom: Dimensions.dp10),
+                child: CustomButton(
+                  color: Theme.of(context).primaryColor,
+                  text: "PEOCEED",
+                  width: MediaQuery.of(context).size.width,
+                  onPressed: () {
+                    BlocProvider.of<MobileNumberLoginBloc>(context)
+                        .add(PhoneNumberSubmitEvent(_mobileController.text));
                   },
-                  rightIcon: Icon(
-                    Icons.backspace,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  style: poppinsMedium.copyWith(
+                      color: Colors.white, fontSize: 15.sp),
+                  height: 53,
                 ),
-              ],
-            );
-          }),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              margin: const EdgeInsets.only(
-                  left: 30, right: 30, bottom: Dimensions.dp10),
-              child: CustomButton(
-                color: Theme.of(context).primaryColor,
-                text: "PEOCEED",
-                width: MediaQuery.of(context).size.width,
-                onPressed: () {
-                  BlocProvider.of<MobileNumberLoginBloc>(context)
-                      .add(PhoneNumberSubmitEvent(_mobileController.text));
-                },
-                style: poppinsMedium.copyWith(
-                    color: Colors.white, fontSize: 15.sp),
-                height: 53,
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

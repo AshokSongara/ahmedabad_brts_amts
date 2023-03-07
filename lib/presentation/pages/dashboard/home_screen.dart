@@ -349,7 +349,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       SharedPreferences preferences =
                           await SharedPreferences.getInstance();
                       await preferences.clear();
-                      Get.offAllNamed(RouteHelper.login);
+                      Get.offNamed(RouteHelper.getSplashRoute());
                     },
                   ),
                   const SizedBox(
