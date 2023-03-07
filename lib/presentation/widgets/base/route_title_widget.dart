@@ -22,7 +22,7 @@ class RouteTitleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppColors.primaryColor,
+      color: Theme.of(context).primaryColor,
       padding: const EdgeInsets.all(Dimensions.dp15),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,

@@ -110,7 +110,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                           ),
                           Row(
                             children: [
-                              SvgPicture.asset(ImageConstant.iRedTime),
+                              SvgPicture.asset(ImageConstant.iRedTime,color: Theme.of(context).primaryColor),
                               const SizedBox(
                                 width: 5,
                               ),
@@ -137,7 +137,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                                   height: 20,
                                   width: 20,
                                   child:
-                                      SvgPicture.asset(ImageConstant.iRoute)),
+                                      SvgPicture.asset(ImageConstant.iRoute,color: Theme.of(context).primaryColor)),
                               const SizedBox(
                                 width: 5,
                               ),
@@ -164,7 +164,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                                   height: 20,
                                   width: 20,
                                   child:
-                                      SvgPicture.asset(ImageConstant.iTicket)),
+                                      SvgPicture.asset(ImageConstant.iTicket,color: Theme.of(context).primaryColor,)),
                               const SizedBox(
                                 width: 5,
                               ),
@@ -201,7 +201,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                         inActiveColor: AppColors.darkGray,
                         orderTitleAndDateList: widget.fromHome == "No"
                             ? state.routeDetailsResponse.data
-                            : state.routeStopListResponse.data,
+                            : state.routeStopListResponse.data?..removeAt(0)..removeAt(state.routeStopListResponse.data!.length - 1),
                         orderTitleAndDateList2: widget.fromHome == "No"
                             ? state.routeDetailsResponse1.data
                             : state.routeStopListResponse.data,
@@ -232,7 +232,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                             ),
                             Row(
                               children: [
-                                SvgPicture.asset(ImageConstant.iRedTime),
+                                SvgPicture.asset(ImageConstant.iRedTime,color: Theme.of(context).primaryColor),
                                 const SizedBox(
                                   width: 5,
                                 ),

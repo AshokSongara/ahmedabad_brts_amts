@@ -235,7 +235,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           "",
                       width: MediaQuery.of(context).size.width,
                       onPressed: () {
-                        Get.offNamed(RouteHelper.login);
+                        Get.offNamed(RouteHelper.splash);
                       },
                       style: poppinsMedium.copyWith(
                           color: Colors.white, fontSize: 15.sp),

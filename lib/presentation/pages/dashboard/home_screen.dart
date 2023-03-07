@@ -139,16 +139,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              AppConstant.nameData,
+                              userName,
                               style: satoshiRegular.copyWith(
                                   fontSize: Dimensions.dp19,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white),
-                            ),
-                            Text(
-                              "View Profile",
-                              style: satoshiRegular.copyWith(
-                                  fontSize: Dimensions.dp12,
                                   fontWeight: FontWeight.w500,
                                   color: Colors.white),
                             ),
