@@ -76,9 +76,9 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
               return Column(children: [
                 // const SizedBox(height: 25),
                 Container(
-                  margin:  const EdgeInsets.only(
+                  margin: const EdgeInsets.only(
                       left: Dimensions.dp15, right: Dimensions.dp20),
-                  padding:  const EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                       top: Dimensions.dp10, bottom: Dimensions.dp10),
                   child: Row(
                     children: [
@@ -96,7 +96,10 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                         ),
                       ),
                       GestureDetector(
-                        child: SvgPicture.asset(ImageConstant.iEmptyFavorite),
+                        child: SvgPicture.asset(
+                          ImageConstant.iEmptyFavorite,
+                          color: Theme.of(context).primaryColor,
+                        ),
                         onTap: () {
                           var request = AddFavouriteRequest(
                             startStop: widget.startRoute ?? "",
@@ -131,54 +134,95 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                             return GestureDetector(
                                 onTap: () {
                                   Get.toNamed(RouteHelper.getRouteDetailsRoute(
-                                      state.searchRouteResponse.data![index]
-                                              .routeDetails![0].startStopName ??
-                                          "",
-                                      state.searchRouteResponse.data![index].interChanges!.isEmpty
-                                          ? state
-                                              .searchRouteResponse
-                                              .data![index]
-                                              .routeDetails![0]
-                                              .startStopCode
-                                              .toString()
-                                          : widget.startRoute ?? "",
-                                      state.searchRouteResponse.data![index].interChanges!.isEmpty
-                                          ? state.searchRouteResponse.data![index]
-                                                  .routeDetails![0].endStopName ??
-                                              ""
-                                          : state.searchRouteResponse.data![index].routeDetails![state.searchRouteResponse.data![index].routeDetails!.length - 1].endStopName ??
-                                              "",
-                                      state.searchRouteResponse.data![index].interChanges!.isEmpty
-                                          ? state
-                                              .searchRouteResponse
-                                              .data![index]
-                                              .routeDetails![0]
-                                              .endStopCode
-                                              .toString()
-                                          : widget.endRoute ?? "",
-                                      state.searchRouteResponse.data![index].routeDetails![0].routeCode
-                                          .toString(),
-                                      state
-                                              .searchRouteResponse
-                                              .data![index]
-                                              .routeDetails![0]
-                                              .startArrivalTime ??
-                                          "0",
-                                      state.searchRouteResponse.data![index].interChanges?.length.toString() ?? "0",
-                                      "No",
-                                      state.searchRouteResponse.data![index].routeDetails![0].startStopCode.toString(),
-                                      state.searchRouteResponse.data![index].routeDetails![0].endStopCode.toString(),
-                                      widget.serviceType ?? "BRTS",
-                                      state.searchRouteResponse.data![index].interChanges!.isNotEmpty ? state.searchRouteResponse.data![index].interChanges![0] : "",
-                                    state.searchRouteResponse.data![index].routeDetails!.length > 1
-                                          ? state.searchRouteResponse.data![index].routeDetails![1].routeCode ?? "": "",
-                                    state.searchRouteResponse.data![index].routeDetails!.length > 1
-                                        ? state.searchRouteResponse.data![index].routeDetails![1].startStopSequenceNumber.toString() ?? "": "",
-                                    state.searchRouteResponse.data![index].routeDetails!.length > 1
-                                        ? state.searchRouteResponse.data![index].routeDetails![1].endStopSequenceNumber.toString() ?? "": "",
+                                    state.searchRouteResponse.data![index]
+                                            .routeDetails![0].startStopName ??
+                                        "",
+                                    widget.startRoute ?? "",
+                                    state.searchRouteResponse.data![index]
+                                            .interChanges!.isEmpty
+                                        ? state.searchRouteResponse.data![index]
+                                                .routeDetails![0].endStopName ??
+                                            ""
+                                        : state
+                                                .searchRouteResponse
+                                                .data![index]
+                                                .routeDetails![state
+                                                        .searchRouteResponse
+                                                        .data![index]
+                                                        .routeDetails!
+                                                        .length -
+                                                    1]
+                                                .endStopName ??
+                                            "",
+                                    widget.endRoute ?? "",
+                                    state.searchRouteResponse.data![index]
+                                        .routeDetails![0].routeCode
+                                        .toString(),
+                                    state
+                                            .searchRouteResponse
+                                            .data![index]
+                                            .routeDetails![0]
+                                            .startArrivalTime ??
+                                        "0",
+                                    state.searchRouteResponse.data![index]
+                                            .interChanges?.length
+                                            .toString() ??
+                                        "0",
+                                    "No",
+                                    state.searchRouteResponse.data![index]
+                                        .routeDetails![0].startStopCode
+                                        .toString(),
+                                    state.searchRouteResponse.data![index]
+                                        .routeDetails![0].endStopCode
+                                        .toString(),
+                                    widget.serviceType ?? "BRTS",
+                                    state.searchRouteResponse.data![index]
+                                            .interChanges!.isNotEmpty
+                                        ? state.searchRouteResponse.data![index]
+                                            .interChanges![0]
+                                        : "",
+                                    state.searchRouteResponse.data![index]
+                                                .routeDetails!.length >
+                                            1
+                                        ? state.searchRouteResponse.data![index]
+                                                .routeDetails![1].routeCode ??
+                                            ""
+                                        : "",
+                                    state.searchRouteResponse.data![index]
+                                                .routeDetails!.length >
+                                            1
+                                        ? state
+                                                .searchRouteResponse
+                                                .data![index]
+                                                .routeDetails![1]
+                                                .startStopSequenceNumber
+                                                .toString() ??
+                                            ""
+                                        : "",
+                                    state.searchRouteResponse.data![index]
+                                                .routeDetails!.length >
+                                            1
+                                        ? state
+                                                .searchRouteResponse
+                                                .data![index]
+                                                .routeDetails![1]
+                                                .endStopSequenceNumber
+                                                .toString() ??
+                                            ""
+                                        : "",
                                     state.searchRouteResponse.data![index]
                                         .endTime
-                                        .toString(),));
+                                        .toString(),
+                                    state
+                                        .searchRouteResponse
+                                        .data![index]
+                                        .routeDetails![0]
+                                        .startStopSequenceNumber
+                                        .toString(),
+                                    state.searchRouteResponse.data![index]
+                                        .routeDetails![0].endStopSequenceNumber
+                                        .toString(),
+                                  ));
                                 },
                                 child: SearchResultItem(
                                   routeResult:
@@ -197,7 +241,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
               ]);
             } else if (state is AddFavouriteRouteLoadingState) {
               Loader.show(context);
-            }else {
+            } else {
               Loader.hide();
             }
             return Container();

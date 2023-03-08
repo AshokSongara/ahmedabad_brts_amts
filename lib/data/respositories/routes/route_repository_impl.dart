@@ -52,7 +52,7 @@ class RouteRepositoryImpl implements RouteRepository {
   @override
   Future<SearchRouteResponse> searchResultRoute(SearchRouteRequest body) async {
     Response response = await apiClient.getData(
-        "${AppConstant.searchRouteList}${body.startCode}/end/${body.endCode}");
+        "${AppConstant.searchRouteList}${body.serviceType}${"/plan/start/"}${body.startCode}/end/${body.endCode}");
     SearchRouteResponse searchRouteResponse =
         SearchRouteResponse.fromJson(response.body);
     return searchRouteResponse;
@@ -104,8 +104,9 @@ class RouteRepositoryImpl implements RouteRepository {
   @override
   Future<RouteDetailsRepsonse> getRouteDetails(
       RouteDetailsRequest routeDetailsRequest) async {
+    print("###### Route/${routeDetailsRequest.routeCode}/stops/from/${routeDetailsRequest.fromHome == "Yes" ? routeDetailsRequest.startCode : routeDetailsRequest.startStopSequenceNumber}/to/${routeDetailsRequest.fromHome == "Yes" ? routeDetailsRequest.endCode : routeDetailsRequest.endStopSequenceNumber}");
     Response response = await apiClient.getData(
-        "Route/${routeDetailsRequest.routeCode}/stops/from/${routeDetailsRequest.startCode}/to/${routeDetailsRequest.endCode}");
+        "Route/${routeDetailsRequest.routeCode}/stops/from/${routeDetailsRequest.fromHome == "Yes" ? routeDetailsRequest.startCode : routeDetailsRequest.startStopSequenceNumber}/to/${routeDetailsRequest.fromHome == "Yes" ? routeDetailsRequest.endCode : routeDetailsRequest.endStopSequenceNumber}");
     RouteDetailsRepsonse routeDetailsRepsonse =
         RouteDetailsRepsonse.fromJson(response.body);
     return routeDetailsRepsonse;
@@ -131,6 +132,9 @@ class RouteRepositoryImpl implements RouteRepository {
   @override
   Future<ETAResponse> getETADetails(
       RouteDetailsRequest routeDetailsRequest) async {
+
+    print("##### eta/${routeDetailsRequest.routeCode}/${routeDetailsRequest.originStart}");
+
     Response response = await apiClient.getDataWihHeader(
         "eta/${routeDetailsRequest.routeCode}/${routeDetailsRequest.originStart}");
     ETAResponse etaResponse = ETAResponse.fromJson(response.body);
@@ -165,4 +169,5 @@ class RouteRepositoryImpl implements RouteRepository {
     AddFavouriteResponse.fromJson(response.body);
     return addFavouriteResponse;
   }
+
 }

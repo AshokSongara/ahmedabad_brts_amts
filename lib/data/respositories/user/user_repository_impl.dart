@@ -6,6 +6,7 @@ import 'package:ahmedabad_brts_amts/data/requestmodels/otp_request.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/payment_request.dart';
 import 'package:ahmedabad_brts_amts/data/responseModels/signup_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/PaymentInitResponseModel.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/booking_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/contactus_response.dart';
@@ -325,5 +326,15 @@ class UserRepositoryImpl implements UserRepository {
     PaymentInitResponseModel loginResponse =
     PaymentInitResponseModel.fromJson(response.body);
     return loginResponse;
+  }
+
+  @override
+  Future<BookingListResponse> getBookingListData() async {
+    Response response =
+    await apiClient.getDataWihHeader(AppConstant.transactionList);
+    BookingListResponse bookingListResponse =
+    BookingListResponse.fromJson(response.body);
+
+    return bookingListResponse;
   }
 }

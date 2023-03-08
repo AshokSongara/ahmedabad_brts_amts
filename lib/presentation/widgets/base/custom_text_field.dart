@@ -57,6 +57,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           padding: const EdgeInsets.only(right: 17),
           child: TextField(
             decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(horizontal: 0,vertical: 0),
                 enabledBorder: const UnderlineInputBorder(
                   borderSide: BorderSide(color: AppColors.lightGray),
                 ),

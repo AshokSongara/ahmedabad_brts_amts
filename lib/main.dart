@@ -32,6 +32,7 @@ import 'package:path_provider/path_provider.dart';
 import 'helper/route_helper.dart';
 import 'injection_container.dart' as di;
 import 'localization/app_localizations.dart';
+import 'presentation/blocs/booking/booking_list_bloc.dart';
 import 'presentation/blocs/feedback/feedback_bloc.dart';
 import 'presentation/blocs/language/language_cubit.dart';
 import 'presentation/blocs/payment/payment_bloc.dart';
@@ -115,6 +116,9 @@ void main() async {
         ),
         BlocProvider<NearByStopsBloc>(
           create: (context) => injector<NearByStopsBloc>(),
+        ),
+        BlocProvider<BookingListBloc>(
+          create: (context) => injector<BookingListBloc>(),
         ),
       ],
       child: MyApp(),

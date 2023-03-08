@@ -73,6 +73,7 @@ class RouteDetailsBloc extends Bloc<RouteDetailsEvent, RouteDetailsState> {
               errorMessage: "Something Went Wrong");
         }
       } else {
+
         if (event.request.routeTwo!.isNotEmpty) {
 
           RouteDetailsRepsonse routeDetailsRepsonse =
@@ -83,6 +84,8 @@ class RouteDetailsBloc extends Bloc<RouteDetailsEvent, RouteDetailsState> {
           req.startCode = event.request.startRouteTwo;
           req.endCode = event.request.endRouteTwo;
           req.routeCode = event.request.routeTwo;
+          req.startStopSequenceNumber = event.request.startRouteTwo;
+          req.endStopSequenceNumber = event.request.endRouteTwo;
 
           RouteDetailsRepsonse routeDetailsRepsonse1 =
               await routeDetailsUseCase(Params(data: req));
@@ -108,6 +111,7 @@ class RouteDetailsBloc extends Bloc<RouteDetailsEvent, RouteDetailsState> {
                 errorMessage: "Something Went Wrong");
           }
         } else {
+
           RouteDetailsRepsonse routeDetailsRepsonse =
               await routeDetailsUseCase(Params(data: event.request));
 

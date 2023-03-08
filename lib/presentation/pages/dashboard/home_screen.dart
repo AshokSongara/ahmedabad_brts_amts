@@ -331,26 +331,29 @@ class _HomeScreenState extends State<HomeScreen> {
                           RouteHelper.getChangeLangaugeScreenRoute()) as String;
                     },
                   ),
-                  ListTile(
-                    leading: SvgPicture.asset(
-                      ImageConstant.iSignOut,
-                      color: Colors.white,
-                      height: Dimensions.dp28,
-                      width: Dimensions.dp28,
+                  Visibility(
+                    visible: AppConstant.IsLoggedIn.isNotEmpty,
+                    child: ListTile(
+                      leading: SvgPicture.asset(
+                        ImageConstant.iSignOut,
+                        color: Colors.white,
+                        height: Dimensions.dp28,
+                        width: Dimensions.dp28,
+                      ),
+                      title: Text(
+                        AppLocalizations.of(context)?.translate("signout") ?? "",
+                        style: satoshiRegular.copyWith(
+                            fontSize: 19.sp,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white),
+                      ),
+                      onTap: () async {
+                        SharedPreferences preferences =
+                            await SharedPreferences.getInstance();
+                        await preferences.clear();
+                        Get.offNamed(RouteHelper.getSplashRoute());
+                      },
                     ),
-                    title: Text(
-                      AppLocalizations.of(context)?.translate("signout") ?? "",
-                      style: satoshiRegular.copyWith(
-                          fontSize: 19.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white),
-                    ),
-                    onTap: () async {
-                      SharedPreferences preferences =
-                          await SharedPreferences.getInstance();
-                      await preferences.clear();
-                      Get.offNamed(RouteHelper.getSplashRoute());
-                    },
                   ),
                   const SizedBox(
                     height: Dimensions.dp50,
@@ -732,7 +735,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       "",
                                       "",
                                       "",
-                                      "","00:00:00"),
+                                      "","00:00:00","",""),
                                 );
                               } else if (newFromSelectedStation != null &&
                                   newToSelectedStation != null) {

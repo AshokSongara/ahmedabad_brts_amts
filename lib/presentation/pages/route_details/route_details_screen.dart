@@ -35,6 +35,8 @@ class RouteDetailScreen extends StatefulWidget {
   final String? startRouteTwo;
   final String? endRouteTwo;
   final String? endTime;
+  final String? startStopSequenceNumber;
+  final String? endStopSequenceNumber;
 
   const RouteDetailScreen(
       {Key? key,
@@ -53,7 +55,9 @@ class RouteDetailScreen extends StatefulWidget {
       required this.routeTwo,
       required this.startRouteTwo,
       required this.endRouteTwo,
-      required this.endTime})
+      required this.endTime,
+        this.startStopSequenceNumber,
+        this.endStopSequenceNumber,})
       : super(key: key);
 
   @override
@@ -75,6 +79,9 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
     routeDetailsRequest.routeTwo = widget.routeTwo;
     routeDetailsRequest.startRouteTwo = widget.startRouteTwo;
     routeDetailsRequest.endRouteTwo = widget.endRouteTwo;
+    routeDetailsRequest.startStopSequenceNumber =
+        widget.startStopSequenceNumber;
+    routeDetailsRequest.endStopSequenceNumber = widget.endStopSequenceNumber;
 
     BlocProvider.of<RouteDetailsBloc>(context).add(
       GetRouteDetailsEvent(request: routeDetailsRequest),
@@ -201,7 +208,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                         inActiveColor: AppColors.darkGray,
                         orderTitleAndDateList: widget.fromHome == "No"
                             ? state.routeDetailsResponse.data
-                            : state.routeStopListResponse.data?..removeAt(0)..removeAt(state.routeStopListResponse.data!.length - 1),
+                            : state.routeStopListResponse.data,
                         orderTitleAndDateList2: widget.fromHome == "No"
                             ? state.routeDetailsResponse1.data
                             : state.routeStopListResponse.data,
@@ -211,6 +218,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                         interChangeName: widget.interChangeName,
                         interChange: widget.interChange,
                         routeCodeTwo: widget.routeTwo,
+                        from: widget.fromHome ?? "No",
                       ),
                     ),
                   ),

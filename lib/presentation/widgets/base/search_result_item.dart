@@ -110,9 +110,9 @@ class SearchResultItem extends StatelessWidget {
                               padding: const EdgeInsets.all(10),
                               width: 45,
                               height: 45,
-                              child: SvgPicture.asset(ImageConstant.iBus),
-                              decoration: const BoxDecoration(
-                                  shape: BoxShape.circle, color: Colors.red),
+                              child: SvgPicture.asset(ImageConstant.iBus,),
+                              decoration:  BoxDecoration(
+                                  shape: BoxShape.circle, color : Theme.of(context).primaryColor,),
                             ),
                             Container(
                               height: 2,
@@ -176,7 +176,7 @@ class SearchResultItem extends StatelessWidget {
                   itemBuilder: (BuildContext context, int index) {
                     return Row(
                       children: [
-                        SvgPicture.asset(ImageConstant.iRedBus),
+                        SvgPicture.asset(ImageConstant.iRedBus,color: Theme.of(context).primaryColor,),
                         const SizedBox(
                           width: 3,
                         ),
@@ -207,23 +207,26 @@ class SearchResultItem extends StatelessWidget {
                           SizedBox(
                               height: 20,
                               width: 20,
-                              child: SvgPicture.asset(ImageConstant.iRoute)),
+                              child: SvgPicture.asset(ImageConstant.iRoute,color: Theme.of(context).primaryColor,)),
                           const SizedBox(
                             width: 5,
                           ),
-                          RichText(
-                            text: TextSpan(
-                              text: "Change at ",
-                              style: satoshiRegular.copyWith(
-                                  fontSize: 12.sp, color: AppColors.darkGray),
-                              children: <TextSpan>[
-                                TextSpan(
-                                    text: routeResult.interChanges![0],
-                                    style: satoshiRegularSmall.copyWith(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 12.sp,
-                                        color: AppColors.darkGray)),
-                              ],
+                          Expanded(
+                            child: RichText(
+                              text: TextSpan(
+                                text: "Change at ",
+                                style: satoshiRegular.copyWith(
+                                    fontSize: 12.sp, color: AppColors.darkGray),
+                                children: <TextSpan>[
+                                  TextSpan(
+                                      text: routeResult.interChanges![0],
+                                      style: satoshiRegularSmall.copyWith(
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: 12.sp,
+                                          color: AppColors.darkGray,
+                                        overflow: TextOverflow.ellipsis,)),
+                                ],
+                              ),
                             ),
                           )
                         ],
@@ -248,7 +251,7 @@ class SearchResultItem extends StatelessWidget {
                         ),
                         child: Row(
                           children: [
-                            SvgPicture.asset(ImageConstant.iInfo),
+                            SvgPicture.asset(ImageConstant.iInfo,color: Theme.of(context).primaryColor,),
                             const SizedBox(
                               width: 5,
                             ),

@@ -5,6 +5,7 @@ import 'package:ahmedabad_brts_amts/domain/repositories/routes/routes_repository
 import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/add_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/add_transaction_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/route/booking_list_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/delete_route_list_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/eta_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/fare_usecase.dart';
@@ -25,6 +26,7 @@ import 'package:ahmedabad_brts_amts/domain/usecases/user/home_screen_usecase.dar
 import 'package:ahmedabad_brts_amts/domain/usecases/user/user_profile_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/user_update_profile_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/verify_otp_usecase.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/booking/booking_list_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/contactus/contact_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_route_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/feedback/feedback_bloc.dart';
@@ -94,7 +96,9 @@ Future<void> init() async {
 
   injector.registerFactory<SearchResultRouteBloc>(
     () => SearchResultRouteBloc(
-        searchResultRouteUseCase: injector(), fareUseCase: injector(),addFavouriteUseCase: injector()),
+        searchResultRouteUseCase: injector(),
+        fareUseCase: injector(),
+        addFavouriteUseCase: injector()),
   );
 
   injector.registerFactory<ForgetPasswordBloc>(
@@ -137,6 +141,11 @@ Future<void> init() async {
       addTransactionUseCase: injector(),
     ),
   );
+  injector.registerFactory<BookingListBloc>(
+    () => BookingListBloc(
+      bookingListUseCase: injector(),
+    ),
+  );
 
   injector.registerLazySingleton(() => SignupUserUseCase(injector()));
   injector.registerLazySingleton(() => QRUserUseCase(injector()));
@@ -175,6 +184,7 @@ Future<void> init() async {
   injector.registerLazySingleton(() => DeleteRouteListUseCase(injector()));
   injector.registerLazySingleton(() => AddRouteUseCase(injector()));
   injector.registerLazySingleton(() => RouteDetailsUseCase(injector()));
+  injector.registerLazySingleton(() => BookingListUseCase(injector()));
 
   injector.registerLazySingleton<UserRepository>(
     () => UserRepositoryImpl(
@@ -186,10 +196,10 @@ Future<void> init() async {
         apiClient: injector(), sharedPreferences: injector()),
   );
   injector.registerFactory<NearByStopsBloc>(
-        () => NearByStopsBloc(injector()),
+    () => NearByStopsBloc(injector()),
   );
   injector.registerLazySingleton(() => NearByStopsUseCase(injector()));
   injector.registerFactory<StopSearchDetailsBloc>(
-        () => StopSearchDetailsBloc(routeStopListUseCase:injector()),
+    () => StopSearchDetailsBloc(routeStopListUseCase: injector()),
   );
 }

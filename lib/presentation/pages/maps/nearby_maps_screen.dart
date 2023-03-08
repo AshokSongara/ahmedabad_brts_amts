@@ -77,8 +77,8 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
         return SafeArea(
           child: Column(
             children: [
-              CustomToolbar(
-                title: "Near You",
+              const CustomToolbar(
+                title: "near_me",
                 showOption: false,
               ),
               Expanded(

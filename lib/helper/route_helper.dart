@@ -59,7 +59,6 @@ class RouteHelper {
   static const String routeSearchTab = '/route_search_tab';
   static const String nearByStops = '/near_by_stops';
 
-
   static String getInitialRoute() => initial;
 
   static String getSplashRoute() => splash;
@@ -80,27 +79,29 @@ class RouteHelper {
       '$searchResult?startRoute=$startRoute&endRoute=$endRoute&startRouteName=$startRouteName&endRouteName=$endRouteName&serviceType=$serviceType';
 
   static String getRouteDetailsRoute(
-          String startRouteName,
-          String startRouteCode,
-          String endRouteName,
-          String endRouteCode,
-          String routeCode,
-          String startTime,
-          String interChange,
-          String fromHome,
-          String originStart,
-          String originEnd,
-          String serviceType,
-          String interChangeName,
-          String routeTwo,
-          String startRouteTwo,
-          String endRouteTwo,
-      String endTime,
-      ) =>
-      '$routeDetails?startRouteName=$startRouteName&startRouteCode=$startRouteCode&endRouteName=$endRouteName&endRouteCode=$endRouteCode&routeCode=$routeCode&startTime=$startTime&interChange=$interChange&fromHome=$fromHome&originStart=$originStart&originEnd=$originEnd&serviceType=$serviceType&interChangeName=$interChangeName&routeTwo=$routeTwo&startRouteTwo=$startRouteTwo&endRouteTwo=$endRouteTwo&endTime$endTime';
+    String startRouteName,
+    String startRouteCode,
+    String endRouteName,
+    String endRouteCode,
+    String routeCode,
+    String startTime,
+    String interChange,
+    String fromHome,
+    String originStart,
+    String originEnd,
+    String serviceType,
+    String interChangeName,
+    String routeTwo,
+    String startRouteTwo,
+    String endRouteTwo,
+    String endTime,
+    String startStopSequenceNumber,
+    String endStopSequenceNumber,
+  ) =>
+      '$routeDetails?startRouteName=$startRouteName&startRouteCode=$startRouteCode&endRouteName=$endRouteName&endRouteCode=$endRouteCode&routeCode=$routeCode&startTime=$startTime&interChange=$interChange&fromHome=$fromHome&originStart=$originStart&originEnd=$originEnd&serviceType=$serviceType&interChangeName=$interChangeName&routeTwo=$routeTwo&startRouteTwo=$startRouteTwo&endRouteTwo=$endRouteTwo&endTime$endTime&startStopSequenceNumber=$startStopSequenceNumber&endStopSequenceNumber=$endStopSequenceNumber';
 
   static String getPassengerDetailsRoute(
-      String sourceStopId, String destinationStopId) =>
+          String sourceStopId, String destinationStopId) =>
       '$passengerDetails?sourceStopId=$sourceStopId&destinationStopId=$destinationStopId';
 
   static String getCardDetailsRoute() => cardDetails;
@@ -118,15 +119,14 @@ class RouteHelper {
   static String getContactUsRoute() => contactUs;
 
   static String getPaymentDetailsRoute(
-      String sourceStopId,
-      String destinationStopId,
-      String discountype,
-      String txnStatus,
-      String merchantId,
-      String sourcecompanycode,
-      String destinationcompanycode) =>
+          String sourceStopId,
+          String destinationStopId,
+          String discountype,
+          String txnStatus,
+          String merchantId,
+          String sourcecompanycode,
+          String destinationcompanycode) =>
       '$payment?sourceStopId=$sourceStopId&destinationStopId=$destinationStopId&discountype=$discountype&txnStatus=$txnStatus&merchantId=$merchantId&sourcecompanycode=$sourcecompanycode&destinationcompanycode=$destinationcompanycode';
-
 
   static String getBookingRoute(String from) => '$booking?from=$from';
 
@@ -147,9 +147,11 @@ class RouteHelper {
   static String getNearByMapScreenRoute() => nearbyMap;
 
   static String getTransitMapScreenRoute() => transitMap;
-  static String getNearByStops(String title,String routeCode) =>
+
+  static String getNearByStops(String title, String routeCode) =>
       '$nearByStops?title=$title&routeCode=$routeCode';
-  static String getRouteSearchTab(String title,String routeCode) =>
+
+  static String getRouteSearchTab(String title, String routeCode) =>
       '$routeSearchTab?title=$title&routeCode=$routeCode';
 
   static List<GetPage> routes = [
@@ -209,14 +211,17 @@ class RouteHelper {
               routeTwo: Get.parameters['routeTwo'],
               startRouteTwo: Get.parameters['startRouteTwo'],
               endRouteTwo: Get.parameters['endRouteTwo'],
-          endTime: Get.parameters['endTime'],
+              endTime: Get.parameters['endTime'],
+              startStopSequenceNumber:
+                  Get.parameters['startStopSequenceNumber'],
+              endStopSequenceNumber: Get.parameters['endStopSequenceNumber'],
             )),
     GetPage(
         name: passengerDetails,
         page: () => PassengerDetails(
-          sourceStopId: Get.parameters['sourceStopId'],
-          destinationStopId: Get.parameters['destinationStopId'],
-        )),
+              sourceStopId: Get.parameters['sourceStopId'],
+              destinationStopId: Get.parameters['destinationStopId'],
+            )),
     GetPage(name: cardDetails, page: () => const CardDetailsScreen()),
     GetPage(name: nearBy, page: () => const NearByScreen()),
     GetPage(name: feedback, page: () => const FeedBackScreen()),
@@ -225,14 +230,14 @@ class RouteHelper {
     GetPage(
         name: payment,
         page: () => PaymentDetailsScreen(
-          sourceStopId: Get.parameters['sourceStopId'],
-          destinationStopId: Get.parameters['destinationStopId'],
-          discountype: Get.parameters['discountype'],
-          txnStatus: Get.parameters['txnStatus'],
-          merchantId: Get.parameters['merchantId'],
-          sourcecompanycode: Get.parameters['sourcecompanycode'],
-          destinationcompanycode: Get.parameters['destinationcompanycode'],
-        )),
+              sourceStopId: Get.parameters['sourceStopId'],
+              destinationStopId: Get.parameters['destinationStopId'],
+              discountype: Get.parameters['discountype'],
+              txnStatus: Get.parameters['txnStatus'],
+              merchantId: Get.parameters['merchantId'],
+              sourcecompanycode: Get.parameters['sourcecompanycode'],
+              destinationcompanycode: Get.parameters['destinationcompanycode'],
+            )),
     GetPage(
         name: booking,
         page: () => BookingScreen(
@@ -246,14 +251,14 @@ class RouteHelper {
     GetPage(
         name: routeSearchTab,
         page: () => RouteTabScreen(
-          title: Get.parameters['title'] ?? "",
-          routeCode: Get.parameters['routeCode'] ?? "",
-        )),
+              title: Get.parameters['title'] ?? "",
+              routeCode: Get.parameters['routeCode'] ?? "",
+            )),
     GetPage(
         name: nearByStops,
         page: () => NearbyStopsScreen(
-          title: Get.parameters['title'] ?? "",
-          routeCode: Get.parameters['routeCode'] ?? "",
-        )),
+              title: Get.parameters['title'] ?? "",
+              routeCode: Get.parameters['routeCode'] ?? "",
+            )),
   ];
 }

@@ -18,6 +18,7 @@ class OrderTracker extends StatefulWidget {
   final String? interChange;
   final String? interChangeName;
   final String? routeCodeTwo;
+  final String from;
 
   const OrderTracker(
       {Key? key,
@@ -31,7 +32,8 @@ class OrderTracker extends StatefulWidget {
       this.headingTitleStyle,
       this.interChange = "",
       this.interChangeName = "",
-      this.routeCodeTwo = ""})
+      this.routeCodeTwo = "",
+        this.from = "No"})
       : super(key: key);
 
   @override
@@ -44,6 +46,11 @@ class _OrderTrackerState extends State<OrderTracker> {
   @override
   void initState() {
     super.initState();
+    if (widget.from != "No") {
+      widget.orderTitleAndDateList
+        ?..removeAt(0)
+        ..removeAt(widget.orderTitleAndDateList!.length - 1);
+    }
   }
 
   @override
@@ -68,9 +75,12 @@ class _OrderTrackerState extends State<OrderTracker> {
               const SizedBox(
                 width: 20,
               ),
-              Text(
-                widget.startRouteTitle,
-                style: satoshiRegularSmallDark,
+              Expanded(
+                child: Text(
+                  widget.startRouteTitle,
+                  style: satoshiRegularSmallDark,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),
@@ -201,9 +211,12 @@ class _OrderTrackerState extends State<OrderTracker> {
                 const SizedBox(
                   width: 20,
                 ),
-                Text(
-                  widget.interChangeName ?? widget.endRouteTitle,
-                  style: satoshiRegularSmallDark,
+                Expanded(
+                  child: Text(
+                    widget.interChangeName ?? widget.endRouteTitle,
+                    style: satoshiRegularSmallDark,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ],
             ),
@@ -338,9 +351,12 @@ class _OrderTrackerState extends State<OrderTracker> {
               const SizedBox(
                 width: 20,
               ),
-              Text(
-                widget.endRouteTitle,
-                style: satoshiRegularSmallDark,
+              Expanded(
+                child: Text(
+                  widget.endRouteTitle,
+                  style: satoshiRegularSmallDark,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),

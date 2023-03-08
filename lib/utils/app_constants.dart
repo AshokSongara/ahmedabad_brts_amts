@@ -22,7 +22,7 @@ class AppConstant {
   static String submitFeedback = "Feedback";
   static String getStops = "Stop/list/";
   static String getRoutes = "Route/list/";
-  static String searchRouteList = "Route/plan/start/";
+  static String searchRouteList = "Route/";
   static String forgetPassword = "User/forgot-password";
   static String userProfile = "User/user-profile";
   static String updateProfile = "User/userprofile/update";
@@ -39,6 +39,7 @@ class AppConstant {
   static String contactUs = "ContactUs";
   static String qrCodeData = "GenerateQRCode/9902000136200001";
   static String addTransaction = "AddTransaction";
+  static String transactionList = "AddTransaction/list";
 
   //SharedPreferences Keys
   static String accessToken = "accessToken";
