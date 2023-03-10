@@ -83,7 +83,7 @@ Future<void> init() async {
   );
 
   injector.registerFactory<VerifyOtpBloc>(
-    () => VerifyOtpBloc(verifyOtpUseCase: injector()),
+    () => VerifyOtpBloc(verifyOtpUseCase: injector(),userProfileUseCase: injector()),
   );
 
   injector.registerFactory<FeedbackBloc>(

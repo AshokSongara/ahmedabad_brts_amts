@@ -271,6 +271,10 @@ class _LoginScreenState extends State<LoginScreen> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(AppConstant.accessToken, token ?? "");
     prefs.setString(AppConstant.email, email ?? "");
+    AppConstant.IsLoggedIn = prefs.getString(AppConstant.accessToken) ?? "";
+    AppConstant.nameData = prefs.getString(AppConstant.name) ?? "";
+    AppConstant.emailData = prefs.getString(AppConstant.email) ?? "";
+    AppConstant.lastNameData = prefs.getString(AppConstant.lastName) ?? "";
     Get.toNamed(RouteHelper.dashboard);
   }
 

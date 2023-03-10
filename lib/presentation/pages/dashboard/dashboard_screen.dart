@@ -2,10 +2,12 @@ import 'package:ahmedabad_brts_amts/presentation/pages/booking/booking_screen.da
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/home_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/profile_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/notification/notification_screen.dart';
+import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {
   DashboardScreen({Key? key, required this.pageIndex}) : super(key: key);
@@ -19,6 +21,7 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   late PageController _pageController;
   int _pageIndex = 0;
+  var ctime;
 
   @override
   void initState() {
@@ -26,10 +29,16 @@ class _DashboardScreenState extends State<DashboardScreen> {
       _pageIndex = widget.pageIndex;
       _pageController = PageController(initialPage: _pageIndex);
     // });
-
+    getMemberID();
   }
 
-  var ctime;
+  getMemberID() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    AppConstant.IsLoggedIn = prefs.getString(AppConstant.accessToken) ?? "";
+    AppConstant.nameData = prefs.getString(AppConstant.name) ?? "";
+    AppConstant.emailData = prefs.getString(AppConstant.email) ?? "";
+    AppConstant.lastNameData = prefs.getString(AppConstant.lastName) ?? "";
+  }
 
   @override
   Widget build(BuildContext context) {

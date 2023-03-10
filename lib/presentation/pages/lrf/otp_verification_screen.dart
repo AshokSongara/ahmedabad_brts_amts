@@ -89,8 +89,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             Loader.show(context);
           } else if (state is VerifyOtpSuccessState) {
             Loader.hide();
-            saveMemberID(state.verifyOtpResponse.data?.jwt?.accessToken,
-                state.verifyOtpResponse.data?.jwt?.email);
+            // saveMemberID(state.verifyOtpResponse.data?.jwt?.accessToken,
+            //     state.verifyOtpResponse.data?.jwt?.email);
+            Get.toNamed(RouteHelper.dashboard);
           } else {
             Loader.hide();
             showCustomSnackBar("Something Went Wrong Try again..!", context,

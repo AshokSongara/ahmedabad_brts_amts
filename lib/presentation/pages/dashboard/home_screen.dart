@@ -52,14 +52,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
+
     Future.delayed(const Duration(milliseconds: 100), () {
       ThemeService().switchTheme(isAmts);
     });
     context.read<LanguageCubit>().getCurrentSelectedLanguage().then((value) {
       selectedLanguage = value;
     });
-
-    getMemberID();
 
     BlocProvider.of<HomeScreenBloc>(context).add(
         GetAvailableStopsEvent(StopRequestModel(stopType: isAmts ? 2 : 1)));
@@ -82,22 +82,11 @@ class _HomeScreenState extends State<HomeScreen> {
     }
     quickLinkList.add(QuickLinkInternalModel("feedback", ImageConstant.iChat));
   }
-  getMemberID() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    AppConstant.IsLoggedIn = prefs.getString(AppConstant.accessToken) ?? "";
-    AppConstant.nameData = prefs.getString(AppConstant.name) ?? "";
-    AppConstant.emailData = prefs.getString(AppConstant.email) ?? "";
-    AppConstant.lastNameData = prefs.getString(AppConstant.lastName) ?? "";
 
-    if (AppConstant.IsLoggedIn.isNotEmpty) {
-      userName = prefs.getString(AppConstant.name) ?? "Guest User";
-    } else {
-      userName = "Guest User";
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
+    print("#####Home build ${AppConstant.nameData}");
     return Scaffold(
         key: _scaffoldKey,
         backgroundColor: AppColors.appBackground,
@@ -139,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              userName,
+                              AppConstant.nameData.isEmpty ? "Guest User" : AppConstant.nameData,
                               style: satoshiRegular.copyWith(
                                   fontSize: Dimensions.dp19,
                                   fontWeight: FontWeight.w500,
@@ -332,7 +321,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                   Visibility(
-                    visible: AppConstant.IsLoggedIn.isNotEmpty,
+                    visible: AppConstant.nameData.isNotEmpty,
                     child: ListTile(
                       leading: SvgPicture.asset(
                         ImageConstant.iSignOut,
@@ -351,6 +340,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         SharedPreferences preferences =
                             await SharedPreferences.getInstance();
                         await preferences.clear();
+                        AppConstant.nameData = "";
                         Get.offNamed(RouteHelper.getSplashRoute());
                       },
                     ),

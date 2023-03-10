@@ -193,6 +193,10 @@ class _SplashScreenState extends State<SplashScreen> {
   getMemberID() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString(AppConstant.accessToken) ?? "";
+    AppConstant.IsLoggedIn = prefs.getString(AppConstant.accessToken) ?? "";
+    AppConstant.nameData = prefs.getString(AppConstant.name) ?? "";
+    AppConstant.emailData = prefs.getString(AppConstant.email) ?? "";
+    AppConstant.lastNameData = prefs.getString(AppConstant.lastName) ?? "";
     if (token.isNotEmpty) {
       Get.offNamed(RouteHelper.dashboard);
     }
