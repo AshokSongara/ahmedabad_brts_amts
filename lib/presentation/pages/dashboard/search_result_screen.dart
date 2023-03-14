@@ -137,7 +137,9 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                                     state.searchRouteResponse.data![index]
                                             .routeDetails![0].startStopName ??
                                         "",
-                                    widget.startRoute ?? "",
+                                    state.searchRouteResponse.data![index]
+                                            .routeDetails![0].startStopCode ??
+                                        "",
                                     state.searchRouteResponse.data![index]
                                             .interChanges!.isEmpty
                                         ? state.searchRouteResponse.data![index]
@@ -154,7 +156,22 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                                                     1]
                                                 .endStopName ??
                                             "",
-                                    widget.endRoute ?? "",
+                                    state.searchRouteResponse.data![index]
+                                            .interChanges!.isEmpty
+                                        ? state.searchRouteResponse.data![index]
+                                                .routeDetails![0].endStopCode ??
+                                            ""
+                                        : state
+                                                .searchRouteResponse
+                                                .data![index]
+                                                .routeDetails![state
+                                                        .searchRouteResponse
+                                                        .data![index]
+                                                        .routeDetails!
+                                                        .length -
+                                                    1]
+                                                .endStopCode ??
+                                            "",
                                     state.searchRouteResponse.data![index]
                                         .routeDetails![0].routeCode
                                         .toString(),

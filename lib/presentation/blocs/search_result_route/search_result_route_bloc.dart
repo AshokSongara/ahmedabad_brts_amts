@@ -15,7 +15,9 @@ import 'search_result_route_state.dart';
 class SearchResultRouteBloc
     extends Bloc<SearchResultRouteEvent, SearchResultRouteState> {
   SearchResultRouteBloc(
-      {required this.searchResultRouteUseCase, required this.fareUseCase,required this.addFavouriteUseCase})
+      {required this.searchResultRouteUseCase,
+      required this.fareUseCase,
+      required this.addFavouriteUseCase})
       : super(SearchResultRouteInitialState());
 
   final SearchResultRouteUseCase searchResultRouteUseCase;
@@ -36,9 +38,14 @@ class SearchResultRouteBloc
         routeDetailsRequest.routeCode =
             searchRouteResponse.data![i].routeDetails![0].routeCode ?? "";
 
-        if (searchRouteResponse.data![i].routes!.isNotEmpty) {
-          routeDetailsRequest.startCode = event.searchRouteRequest.startCode;
-          routeDetailsRequest.endCode = event.searchRouteRequest.endCode;
+        if (searchRouteResponse.data![i].interChanges!.isNotEmpty) {
+          routeDetailsRequest.startCode =
+              searchRouteResponse.data![i].routeDetails![0].startStopCode;
+          routeDetailsRequest.endCode = searchRouteResponse
+              .data![i]
+              .routeDetails![
+                  searchRouteResponse.data![i].routeDetails!.length - 1]
+              .endStopCode;
         } else {
           routeDetailsRequest.startCode = searchRouteResponse
               .data![i].routeDetails![0].startStopCode
@@ -48,11 +55,11 @@ class SearchResultRouteBloc
               .toString();
         }
 
-        routeDetailsRequest.originStart =
-            searchRouteResponse.data![i].routeDetails![0].startStopCode ?? "";
-        routeDetailsRequest.serviceType = event.searchRouteRequest.serviceType;
+        routeDetailsRequest.originStart = event.searchRouteRequest.startCode;
 
-        //FareResponse fareResponse = FareResponse()
+        routeDetailsRequest.originEnd = event.searchRouteRequest.endCode;
+
+        routeDetailsRequest.serviceType = event.searchRouteRequest.serviceType;
 
         FareResponse fareResponse =
             await fareUseCase(Params(data: routeDetailsRequest));
@@ -62,20 +69,19 @@ class SearchResultRouteBloc
 
       if (searchRouteResponse.succeeded == true) {
         yield SearchResultRouteSuccessState(
-            searchRouteResponse: searchRouteResponse,value: false);
+            searchRouteResponse: searchRouteResponse, value: false);
       } else {
         yield SearchResultRouteFailedState();
       }
-    }else if (event is AddFavouriteRouteEvent) {
+    } else if (event is AddFavouriteRouteEvent) {
       yield AddFavouriteRouteLoadingState();
 
       AddFavouriteResponse addFavouriteResponse =
-      await addFavouriteUseCase(Params(data: event.addFavouriteRequest));
+          await addFavouriteUseCase(Params(data: event.addFavouriteRequest));
 
       if (addFavouriteResponse.succeeded == true) {
-
         yield SearchResultRouteSuccessState(
-            searchRouteResponse: event.searchRouteResponse,value: true);
+            searchRouteResponse: event.searchRouteResponse, value: true);
       } else {
         yield AddFavouriteRouteFailedState();
       }

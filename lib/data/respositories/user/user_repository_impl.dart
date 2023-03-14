@@ -100,6 +100,8 @@ class UserRepositoryImpl implements UserRepository {
     VerifyOtpResponse verifyOtpResponse =
         VerifyOtpResponse.fromJson(response.body);
 
+    apiClient.updateHeader(verifyOtpResponse.data?.jwt?.accessToken ?? "");
+
     return verifyOtpResponse;
   }
 
