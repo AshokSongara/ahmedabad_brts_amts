@@ -116,7 +116,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Name",
+                      "First Name",
                       style: satoshiRegular.copyWith(
                           fontSize: 15.sp,
                           fontWeight: FontWeight.w500,
@@ -139,7 +139,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       height: Dimensions.dp20,
                     ),
                     Text(
-                      "LastName",
+                      "Last Name",
                       style: satoshiRegular.copyWith(
                           fontSize: 15.sp,
                           fontWeight: FontWeight.w500,
@@ -151,6 +151,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       controller: _lastNameController,
                       focusNode: _lastNameFocus,
                       nextFocus: _emailFocus,
+                      textLength: 10,
                       inputType: TextInputType.emailAddress,
                       onChanged: () {},
                       onSubmit: () {},
@@ -313,20 +314,23 @@ class _SignupScreenState extends State<SignupScreen> {
                     text: "Sign Up",
                     width: MediaQuery.of(context).size.width,
                     onPressed: () {
+                      if(FocusManager.instance.primaryFocus!.hasFocus){
+                        FocusManager.instance.primaryFocus?.unfocus();
+                      }
                       // Get.toNamed(RouteHelper.getMobileNumberRoute());
-                      if (_nameController.text.toString().isEmpty) {
+                      if (_nameController.text.toString().trim().isEmpty) {
                         showCustomSnackBar("Please Enter Name", context);
-                      } else if (_lastNameController.text.toString().isEmpty) {
+                      } else if (_lastNameController.text.trim().toString().isEmpty) {
                         showCustomSnackBar("Please LastName", context);
-                      } else if (_emailController.text.toString().isEmpty) {
+                      } else if (_emailController.text.trim().toString().isEmpty) {
                         showCustomSnackBar("Please Enter EmailID", context);
                       } else if (!_emailController.text.isValidEmail()) {
                         showCustomSnackBar(
                             "Please Enter Valid EmailID", context);
-                      } else if (_mobileNumberController.text
+                      } else if (_mobileNumberController.text.trim()
                           .toString()
                           .isEmpty) {
-                        showCustomSnackBar("Please Mobile Number", context);
+                        showCustomSnackBar("Please enter Mobile number", context);
                       } else if (_mobileNumberController.text.length > 10) {
                         showCustomSnackBar(
                             "Mobile Number should be 10 Digits", context);
