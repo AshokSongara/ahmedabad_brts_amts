@@ -3,6 +3,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobil
 import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobile_number_login_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobile_number_login_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
+import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/numeric_keyboard.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
@@ -68,7 +69,8 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                 listener: (BuildContext context, state) {
               if (state is MobileNumberLoginSuccessState) {
                 Loader.hide();
-                Get.toNamed(RouteHelper.getEnterCodeRoute(_mobileController.text.toString()));
+                Get.toNamed(RouteHelper.getEnterCodeRoute(
+                    _mobileController.text.toString()));
               } else if (state is MobileNumberLoginErrorState) {
                 Loader.hide();
                 debugPrint("Api Call Error");
@@ -77,6 +79,11 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
               } else if (state is MobileNumberValidationErrorState) {
                 Loader.hide();
                 debugPrint("Validation Error");
+                showCustomSnackBar("Please enter valid Mobile number",context,isError: true);
+              } else if (state is MobileNumberLoginErrorState) {
+                Loader.hide();
+                showCustomSnackBar("User Not Registred", context,
+                    isError: true);
               }
             }, builder: (context, state) {
               return Column(
@@ -100,7 +107,8 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10.0)),
                         color: Theme.of(context).primaryColor),
                     width: MediaQuery.of(context).size.width,
                     alignment: Alignment.center,
@@ -131,8 +139,8 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                         filled: true,
                         fillColor: Colors.white,
                         hintText: "Enter Mobile Number",
-                        hintStyle:
-                            satoshiRegular.copyWith(color: AppColors.grayC4C$C$),
+                        hintStyle: satoshiRegular.copyWith(
+                            color: AppColors.grayC4C$C$),
                         contentPadding: const EdgeInsets.only(
                             top: 8.0, bottom: 8.0, left: 10.0, right: 10.0),
                         focusedBorder: OutlineInputBorder(

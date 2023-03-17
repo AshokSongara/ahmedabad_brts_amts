@@ -126,7 +126,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  "Name",
+                                  "FirstName",
                                   style: satoshiRegular.copyWith(
                                       fontSize: 15.sp,
                                       fontWeight: FontWeight.w500,
