@@ -92,10 +92,14 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             // saveMemberID(state.verifyOtpResponse.data?.jwt?.accessToken,
             //     state.verifyOtpResponse.data?.jwt?.email);
             Get.toNamed(RouteHelper.dashboard);
-          } else {
+          } else if (state is VerifyOtpFailedState) {
+            Loader.hide();
+            showCustomSnackBar(state.errorMessage, context,
+                isError: true);
+          }else {
             Loader.hide();
             showCustomSnackBar("Something Went Wrong Try again..!", context,
-                isError: false);
+                isError: true);
           }
         },
         builder: (context, state) {

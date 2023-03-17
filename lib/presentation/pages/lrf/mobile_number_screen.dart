@@ -13,7 +13,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
+import '../../widgets/base/custom_snackbar.dart';
 import '../../../core/loader/overylay_loader.dart';
 
 class MobileNumberScreen extends StatefulWidget {
@@ -78,6 +78,7 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                 Loader.show(context);
               } else if (state is MobileNumberValidationErrorState) {
                 Loader.hide();
+                showCustomSnackBar("Please enter valid Mobile number",context,isError: true);
                 debugPrint("Validation Error");
                 showCustomSnackBar("Please enter valid Mobile number",context,isError: true);
               } else if (state is MobileNumberLoginErrorState) {
@@ -192,7 +193,7 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                     left: 30, right: 30, bottom: Dimensions.dp10),
                 child: CustomButton(
                   color: Theme.of(context).primaryColor,
-                  text: "PEOCEED",
+                  text: "PROCEED",
                   width: MediaQuery.of(context).size.width,
                   onPressed: () {
                     BlocProvider.of<MobileNumberLoginBloc>(context)
