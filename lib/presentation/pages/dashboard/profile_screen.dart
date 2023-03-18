@@ -17,6 +17,7 @@ import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -72,7 +73,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         body: SafeArea(
           child: AppConstant.IsLoggedIn.isNotEmpty
               ? SingleChildScrollView(
-                child: BlocConsumer<UserProfileBloc, UserProfileState>(
+                  child: BlocConsumer<UserProfileBloc, UserProfileState>(
                     listener: (context, state) {
                       if (state is UserProfileLoadingState) {
                         Loader.show(context);
@@ -84,7 +85,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       }
                     },
                     buildWhen: (previous, current) =>
-                        previous != current && current is UserProfileSuccessState,
+                        previous != current &&
+                        current is UserProfileSuccessState,
                     builder: (context, state) {
                       return Column(
                         children: [
@@ -200,7 +202,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   text: "Save",
                                   width: MediaQuery.of(context).size.width,
                                   onPressed: () {
-                                    if (_nameController.text.toString().isEmpty) {
+                                    if (_nameController.text
+                                        .toString()
+                                        .isEmpty) {
                                       showCustomSnackBar(
                                           "Please Enter FirstName", context);
                                     } else if (_lastnameController.text
@@ -223,24 +227,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       );
                     },
                   ),
-              )
+                )
               : Center(
-                  child: Container(
-                    height: 53,
-                    margin: const EdgeInsets.all(50),
-                    child: CustomButton(
-                      color: Theme.of(context).primaryColor,
-                      text: AppLocalizations.of(context)
-                              ?.translate("go_to_login") ??
-                          "",
-                      width: MediaQuery.of(context).size.width,
-                      onPressed: () {
-                        Get.offNamed(RouteHelper.splash);
-                      },
-                      style: poppinsMedium.copyWith(
-                          color: Colors.white, fontSize: 15.sp),
-                      height: 53,
-                    ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 80.h,),
+                      SizedBox(
+                          height: 80.h,
+                          child: Image.asset(ImageConstant.iCombineLogo)),
+                      Container(
+                        height: 53,
+                        margin: const EdgeInsets.all(50),
+                        child: CustomButton(
+                          color: Theme.of(context).primaryColor,
+                          text: AppLocalizations.of(context)
+                                  ?.translate("go_to_login") ??
+                              "",
+                          width: MediaQuery.of(context).size.width,
+                          onPressed: () {
+                            Get.offNamed(RouteHelper.splash);
+                          },
+                          style: poppinsMedium.copyWith(
+                              color: Colors.white, fontSize: 15.sp),
+                          height: 53,
+                        ),
+                      ),
+                      Container(
+                        height: 53,
+                        margin: const EdgeInsets.all(50),
+                        child: CustomButton(
+                          color:Theme.of(context).primaryColor,
+                          text: "SignUp",
+                          width: MediaQuery.of(context).size.width,
+                          onPressed: () {
+                            Get.offNamed(RouteHelper.signup);
+                          },
+                          style: poppinsMedium.copyWith(
+                              color: Colors.white, fontSize: 15.sp),
+                          height: 53,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
         ));
