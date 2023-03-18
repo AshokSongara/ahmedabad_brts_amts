@@ -76,13 +76,20 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
                     showOption: false,
                   ),
                   Expanded(
-                    child: ListView.builder(
-                        padding: EdgeInsets.zero,
-                        itemCount: state.favouriteRouteResponse.data?.length,
-                        itemBuilder: (context, index) {
-                          return getMyRoutesWidget(
-                              state.favouriteRouteResponse.data![index]);
-                        }),
+                    child: state.favouriteRouteResponse.data!.isNotEmpty
+                        ? ListView.builder(
+                            padding: EdgeInsets.zero,
+                            itemCount:
+                                state.favouriteRouteResponse.data?.length,
+                            itemBuilder: (context, index) {
+                              return getMyRoutesWidget(
+                                  state.favouriteRouteResponse.data![index]);
+                            })
+                        : Center(
+                            child: Text(
+                            "No Data Found",
+                            style: screenTitle,
+                          )),
                   ),
                 ],
               );
