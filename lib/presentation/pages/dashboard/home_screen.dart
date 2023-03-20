@@ -150,15 +150,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     leading: SvgPicture.asset(
                       ImageConstant.iTransactionHistory,
                       color: Colors.white,
-                      height: Dimensions.dp28,
-                      width: Dimensions.dp28,
+                      height: Dimensions.dp20,
+                      width: Dimensions.dp20,
                     ),
                     title: Text(
                       AppLocalizations.of(context)
                               ?.translate("transaction_history") ??
                           "",
                       style: satoshiRegular.copyWith(
-                          fontSize: 19.sp,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
@@ -170,15 +170,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     leading: SvgPicture.asset(
                       ImageConstant.iRoute,
                       color: Colors.white,
-                      height: Dimensions.dp28,
-                      width: Dimensions.dp28,
+                      height: Dimensions.dp20,
+                      width: Dimensions.dp20,
                     ),
                     title: Text(
                       AppLocalizations.of(context)
                               ?.translate("smart_card_recharge") ??
                           "",
                       style: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp19,
+                          fontSize: Dimensions.dp14,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
@@ -190,13 +190,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     leading: SvgPicture.asset(
                       ImageConstant.iRoute,
                       color: Colors.white,
-                      height: Dimensions.dp28,
-                      width: Dimensions.dp28,
+                      height: Dimensions.dp20,
+                      width: Dimensions.dp20,
                     ),
                     title: Text(
                       AppLocalizations.of(context)?.translate("near_me") ?? "",
                       style: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp19,
+                          fontSize: Dimensions.dp14,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
@@ -208,13 +208,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     leading: SvgPicture.asset(
                       ImageConstant.iRate,
                       color: Colors.white,
-                      height: Dimensions.dp28,
-                      width: Dimensions.dp28,
+                      height: Dimensions.dp20,
+                      width: Dimensions.dp20,
                     ),
                     title: Text(
                       AppLocalizations.of(context)?.translate("myroutes") ?? "",
                       style: satoshiRegular.copyWith(
-                          fontSize: 19.sp,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
@@ -227,14 +227,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       leading: SvgPicture.asset(
                         ImageConstant.iMap,
                         color: Colors.white,
-                        height: Dimensions.dp28,
-                        width: Dimensions.dp28,
+                        height: Dimensions.dp20,
+                        width: Dimensions.dp20,
                       ),
                       title: Text(
                         AppLocalizations.of(context)?.translate("transitmap") ??
                             "",
                         style: satoshiRegular.copyWith(
-                            fontSize: 19.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: Colors.white),
                       ),
@@ -246,13 +246,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     leading: SvgPicture.asset(
                       ImageConstant.iChat,
                       color: Colors.white,
-                      height: Dimensions.dp28,
-                      width: Dimensions.dp28,
+                      height: Dimensions.dp20,
+                      width: Dimensions.dp20,
                     ),
                     title: Text(
                       AppLocalizations.of(context)?.translate("feedback") ?? "",
                       style: satoshiRegular.copyWith(
-                          fontSize: 19.sp,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
@@ -264,15 +264,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     leading: SvgPicture.asset(
                       ImageConstant.iSpeaker,
                       color: Colors.white,
-                      height: Dimensions.dp28,
-                      width: Dimensions.dp28,
+                      height: Dimensions.dp20,
+                      width: Dimensions.dp20,
                     ),
                     title: Text(
                       AppLocalizations.of(context)
                               ?.translate("invite_friends") ??
                           "",
                       style: satoshiRegular.copyWith(
-                          fontSize: 19.sp,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
@@ -284,14 +284,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     leading: SvgPicture.asset(
                       ImageConstant.iCall,
                       color: Colors.white,
-                      height: Dimensions.dp28,
-                      width: Dimensions.dp28,
+                      height: Dimensions.dp20,
+                      width: Dimensions.dp20,
                     ),
                     title: Text(
                       AppLocalizations.of(context)?.translate("contact_us") ??
                           "",
                       style: satoshiRegular.copyWith(
-                          fontSize: 19.sp,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
@@ -303,15 +303,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     leading: SvgPicture.asset(
                       ImageConstant.iLangauge,
                       color: Colors.white,
-                      height: Dimensions.dp28,
-                      width: Dimensions.dp28,
+                      height: Dimensions.dp20,
+                      width: Dimensions.dp20,
                     ),
                     title: Text(
                       AppLocalizations.of(context)
                               ?.translate("change_langauge") ??
                           "",
                       style: satoshiRegular.copyWith(
-                          fontSize: 19.sp,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
@@ -326,13 +326,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       leading: SvgPicture.asset(
                         ImageConstant.iSignOut,
                         color: Colors.white,
-                        height: Dimensions.dp28,
-                        width: Dimensions.dp28,
+                        height: Dimensions.dp20,
+                        width: Dimensions.dp20,
                       ),
                       title: Text(
                         AppLocalizations.of(context)?.translate("signout") ?? "",
                         style: satoshiRegular.copyWith(
-                            fontSize: 19.sp,
+                            fontSize: 14.sp,
                             fontWeight: FontWeight.w500,
                             color: Colors.white),
                       ),
