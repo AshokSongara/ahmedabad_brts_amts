@@ -20,7 +20,9 @@ import 'package:get/get.dart';
 import 'package:location/location.dart';
 
 class NearByScreen extends StatefulWidget {
-  const NearByScreen({Key? key}) : super(key: key);
+  final String? stopType;
+
+  const NearByScreen({Key? key,required this.stopType}) : super(key: key);
 
   @override
   State<NearByScreen> createState() => _NearByScreenState();
@@ -224,7 +226,7 @@ class _NearByScreenState extends State<NearByScreen> {
       var nearByRequest = NearMeRequest();
       nearByRequest.latitude = locationData.latitude;
       nearByRequest.longitude = locationData.longitude;
-      nearByRequest.stopType = 2;
+      nearByRequest.stopType = int.parse(widget.stopType ?? "1") ;
 
       BlocProvider.of<NearMeBloc>(context).add(
         GetNearMeRouteEvent(nearMeRequest: nearByRequest),

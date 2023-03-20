@@ -18,10 +18,11 @@ import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart' as latLng;
-import '../../../utils/app_util.dart';
 
 class NearByMapsScreen extends StatefulWidget {
-  const NearByMapsScreen({Key? key}) : super(key: key);
+  final String? stopType;
+
+  const NearByMapsScreen({Key? key,required this.stopType}) : super(key: key);
 
   @override
   State<NearByMapsScreen> createState() => _NearByMapsScreenState();
@@ -187,7 +188,7 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
       var nearByRequest = NearMeRequest();
       nearByRequest.latitude = _locationData.latitude;
       nearByRequest.longitude = _locationData.longitude;
-      nearByRequest.stopType = 2;
+      nearByRequest.stopType = int.parse(widget.stopType ?? "1");
       markers.add( Marker(
         width: 80.0,
         height: 80.0,

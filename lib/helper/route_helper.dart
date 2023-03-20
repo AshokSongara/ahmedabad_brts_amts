@@ -144,7 +144,7 @@ class RouteHelper {
 
   static String getChangeLangaugeScreenRoute() => changeLanguage;
 
-  static String getNearByMapScreenRoute() => nearbyMap;
+  static String getNearByMapScreenRoute(String stopType) => '$nearbyMap?stopType=$stopType';
 
   static String getTransitMapScreenRoute() => transitMap;
 
@@ -223,7 +223,9 @@ class RouteHelper {
               destinationStopId: Get.parameters['destinationStopId'],
             )),
     GetPage(name: cardDetails, page: () => const CardDetailsScreen()),
-    GetPage(name: nearBy, page: () => const NearByScreen()),
+    GetPage(name: nearBy, page: () => NearByScreen(
+      stopType: Get.parameters['stopType'],
+    )),
     GetPage(name: feedback, page: () => const FeedBackScreen()),
     GetPage(name: myRoute, page: () => const MyRoutesScreen()),
     GetPage(name: searchRoute, page: () => const SearchRouteNumberScreen()),
@@ -246,7 +248,9 @@ class RouteHelper {
     GetPage(name: forgetPassword, page: () => const ForgetPasswordScreen()),
     GetPage(name: resetPassword, page: () => const ResetPasswordScreen()),
     GetPage(name: changeLanguage, page: () => const ChooseLanguage()),
-    GetPage(name: nearbyMap, page: () => const NearByMapsScreen()),
+    GetPage(name: nearbyMap, page: () =>  NearByMapsScreen(
+      stopType: Get.parameters['stopType'],
+    )),
     GetPage(name: transitMap, page: () => const TransitMapScreen()),
     GetPage(
         name: routeSearchTab,

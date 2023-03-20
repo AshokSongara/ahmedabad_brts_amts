@@ -3,6 +3,7 @@ import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
 
 class TransitMapScreen extends StatelessWidget {
   const TransitMapScreen({Key? key}) : super(key: key);
@@ -20,11 +21,8 @@ class TransitMapScreen extends StatelessWidget {
             ),
             Expanded(
               child: Center(
-                child: Container(
-                  margin: const EdgeInsets.only(
-                      left: Dimensions.dp24,
-                      right: Dimensions.dp24,),
-                  decoration: const BoxDecoration(
+                child: PhotoView(
+                  backgroundDecoration: const BoxDecoration(
                     color: Colors.white,
                     boxShadow: [
                       BoxShadow(
@@ -36,8 +34,9 @@ class TransitMapScreen extends StatelessWidget {
                       Radius.circular(Dimensions.dp10),
                     ),
                   ),
-                  child:
-                      InteractiveViewer(child: Image.network(AppConstant.transitMap)),
+                  imageProvider: NetworkImage(
+                    AppConstant.transitMap,
+                  ),
                 ),
               ),
             )
