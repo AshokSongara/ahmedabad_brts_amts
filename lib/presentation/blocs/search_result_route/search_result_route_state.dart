@@ -16,11 +16,12 @@ class SearchResultRouteLoadingState extends SearchResultRouteState {}
 class SearchResultRouteSuccessState extends SearchResultRouteState {
   final SearchRouteResponse searchRouteResponse;
   final bool value;
+  final bool error;
 
-  const SearchResultRouteSuccessState({required this.searchRouteResponse,required this.value});
+  const SearchResultRouteSuccessState({required this.searchRouteResponse,required this.value,required this.error});
 
   @override
-  List<Object> get props => [searchRouteResponse,value];
+  List<Object> get props => [searchRouteResponse,value,error];
 }
 
 class SearchResultRouteFailedState extends SearchResultRouteState {}

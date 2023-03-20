@@ -69,7 +69,7 @@ class SearchResultRouteBloc
 
       if (searchRouteResponse.succeeded == true) {
         yield SearchResultRouteSuccessState(
-            searchRouteResponse: searchRouteResponse, value: false);
+            searchRouteResponse: searchRouteResponse, value: false,error: false);
       } else {
         yield SearchResultRouteFailedState();
       }
@@ -81,9 +81,12 @@ class SearchResultRouteBloc
 
       if (addFavouriteResponse.succeeded == true) {
         yield SearchResultRouteSuccessState(
-            searchRouteResponse: event.searchRouteResponse, value: true);
+            searchRouteResponse: event.searchRouteResponse, value: true,error: false);
       } else {
-        yield AddFavouriteRouteFailedState();
+        yield SearchResultRouteSuccessState(
+            searchRouteResponse: event.searchRouteResponse,
+            value: true,
+            error: true);
       }
     }
   }

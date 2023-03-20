@@ -35,7 +35,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
         child: Column(
           children: [
             const CustomToolbar(
-              title: "card_details",
+              title: "smart_card_recharge",
               showOption: false,
             ),
             Container(

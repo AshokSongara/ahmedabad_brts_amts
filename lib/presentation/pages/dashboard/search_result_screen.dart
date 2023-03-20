@@ -65,6 +65,9 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
               if (state.value == true) {
                 showCustomSnackBar("Favourite Route Added", context,
                     isError: false);
+              }else if(state.error == true){
+                showCustomSnackBar("Route Already Added", context,
+                    isError: true);
               }
             }
           },
