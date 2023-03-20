@@ -37,28 +37,32 @@ class RouteDetailScreen extends StatefulWidget {
   final String? endTime;
   final String? startStopSequenceNumber;
   final String? endStopSequenceNumber;
+  final String? startID;
+  final String? endID;
 
-  const RouteDetailScreen(
-      {Key? key,
-      required this.startRouteName,
-      required this.startRouteCode,
-      required this.endRouteName,
-      required this.endRouteCode,
-      required this.routeCode,
-      required this.startTime,
-      required this.interChange,
-      required this.fromHome,
-      required this.originStart,
-      required this.originEnd,
-      required this.serviceType,
-      required this.interChangeName,
-      required this.routeTwo,
-      required this.startRouteTwo,
-      required this.endRouteTwo,
-      required this.endTime,
-        this.startStopSequenceNumber,
-        this.endStopSequenceNumber,})
-      : super(key: key);
+  const RouteDetailScreen({
+    Key? key,
+    required this.startRouteName,
+    required this.startRouteCode,
+    required this.endRouteName,
+    required this.endRouteCode,
+    required this.routeCode,
+    required this.startTime,
+    required this.interChange,
+    required this.fromHome,
+    required this.originStart,
+    required this.originEnd,
+    required this.serviceType,
+    required this.interChangeName,
+    required this.routeTwo,
+    required this.startRouteTwo,
+    required this.endRouteTwo,
+    required this.endTime,
+    this.startStopSequenceNumber,
+    this.endStopSequenceNumber,
+    required this.startID,
+    required this.endID,
+  }) : super(key: key);
 
   @override
   State<RouteDetailScreen> createState() => _RouteDetailScreenState();
@@ -117,7 +121,8 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                           ),
                           Row(
                             children: [
-                              SvgPicture.asset(ImageConstant.iRedTime,color: Theme.of(context).primaryColor),
+                              SvgPicture.asset(ImageConstant.iRedTime,
+                                  color: Theme.of(context).primaryColor),
                               const SizedBox(
                                 width: 5,
                               ),
@@ -143,8 +148,8 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                               SizedBox(
                                   height: 20,
                                   width: 20,
-                                  child:
-                                      SvgPicture.asset(ImageConstant.iRoute,color: Theme.of(context).primaryColor)),
+                                  child: SvgPicture.asset(ImageConstant.iRoute,
+                                      color: Theme.of(context).primaryColor)),
                               const SizedBox(
                                 width: 5,
                               ),
@@ -170,8 +175,10 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                               SizedBox(
                                   height: 20,
                                   width: 20,
-                                  child:
-                                      SvgPicture.asset(ImageConstant.iTicket,color: Theme.of(context).primaryColor,)),
+                                  child: SvgPicture.asset(
+                                    ImageConstant.iTicket,
+                                    color: Theme.of(context).primaryColor,
+                                  )),
                               const SizedBox(
                                 width: 5,
                               ),
@@ -240,7 +247,8 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                             ),
                             Row(
                               children: [
-                                SvgPicture.asset(ImageConstant.iRedTime,color: Theme.of(context).primaryColor),
+                                SvgPicture.asset(ImageConstant.iRedTime,
+                                    color: Theme.of(context).primaryColor),
                                 const SizedBox(
                                   width: 5,
                                 ),
@@ -268,8 +276,9 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                             onPressed: () {
                               Get.toNamed(
                                   RouteHelper.getPassengerDetailsRoute(
-                                      widget.startRouteCode ?? "",
-                                      widget.endRouteCode ?? ""),
+                                      widget.startID ?? "",
+                                      widget.endID ?? "",
+                                      widget.routeCode ?? ""),
                                   arguments: [
                                     widget.startRouteName,
                                     widget.endRouteName,

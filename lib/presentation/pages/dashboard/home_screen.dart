@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.only(
                 top: Dimensions.dp24,
                 left: Dimensions.dp43,
-                right: Dimensions.dp43),
+                right: Dimensions.dp20),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -725,7 +725,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       "",
                                       "",
                                       "",
-                                      "","00:00:00","",""),
+                                      "","00:00:00","","","",""),
                                 );
                               } else if (newFromSelectedStation != null &&
                                   newToSelectedStation != null) {

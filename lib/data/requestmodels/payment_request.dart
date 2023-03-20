@@ -6,15 +6,17 @@ class PaymentRequest {
   String? merchantId;
   String? sourcecompanycode;
   String? destinationcompanycode;
+  String? routeCode;
 
   PaymentRequest(
       {this.sourceStopId,
-        this.destinationStopId,
-        this.discountype,
-        this.txnStatus,
-        this.merchantId,
-        this.sourcecompanycode,
-        this.destinationcompanycode});
+      this.destinationStopId,
+      this.discountype,
+      this.txnStatus,
+      this.merchantId,
+      this.sourcecompanycode,
+      this.destinationcompanycode,
+      this.routeCode});
 
   PaymentRequest.fromJson(Map<String, dynamic> json) {
     sourceStopId = json['sourceStopId'];
@@ -24,6 +26,7 @@ class PaymentRequest {
     merchantId = json['merchantId'];
     sourcecompanycode = json['sourcecompanycode'];
     destinationcompanycode = json['destinationcompanycode'];
+    routeCode = json['routeCode'];
   }
 
   Map<String, dynamic> toJson() {
@@ -35,6 +38,7 @@ class PaymentRequest {
     data['merchantId'] = this.merchantId;
     data['sourcecompanycode'] = this.sourcecompanycode;
     data['destinationcompanycode'] = this.destinationcompanycode;
+    data['routeCode'] = this.routeCode;
     return data;
   }
 }

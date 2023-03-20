@@ -16,10 +16,12 @@ class PassengerDetails extends StatefulWidget {
     Key? key,
     required this.sourceStopId,
     required this.destinationStopId,
+    required this.routeCode,
   }) : super(key: key);
 
   final String? sourceStopId;
   final String? destinationStopId;
+  final String? routeCode;
 
   @override
   _PassengerDetailsState createState() => _PassengerDetailsState();
@@ -107,8 +109,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                             openBottomSheetForPassengers();
                           },
                           child: Container(
-                            padding:
-                            const EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 4, horizontal: 9),
                             decoration: BoxDecoration(
                                 borderRadius: const BorderRadius.all(
@@ -116,17 +117,13 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                     Dimensions.dp5,
                                   ),
                                 ),
-                                border:
-                                Border.all(color: Theme
-                                    .of(context)
-                                    .primaryColor)),
+                                border: Border.all(
+                                    color: Theme.of(context).primaryColor)),
                             child: Text("Add Passenger",
                                 style: satoshiRegular.copyWith(
                                     fontSize: Dimensions.dp10.sp,
                                     fontWeight: FontWeight.w500,
-                                    color: Theme
-                                        .of(context)
-                                        .primaryColor)),
+                                    color: Theme.of(context).primaryColor)),
                           ),
                         )
                       ],
@@ -214,9 +211,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                   margin: const EdgeInsets.all(20),
                   height: 53,
                   child: CustomButton(
-                    color: Theme
-                        .of(context)
-                        .primaryColor,
+                    color: Theme.of(context).primaryColor,
                     text: "Payment",
                     onPressed: () {
                       Get.toNamed(RouteHelper.getPaymentDetailsRoute(
@@ -226,13 +221,10 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                           "",
                           "",
                           "",
-                          ""));
-
+                          "",
+                          widget.routeCode ?? " "));
                     },
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width,
+                    width: MediaQuery.of(context).size.width,
                     style: poppinsMedium.copyWith(
                         color: Colors.white, fontSize: 15.sp),
                     height: 53,
@@ -290,206 +282,191 @@ class _PassengerDetailsState extends State<PassengerDetails> {
         ),
       ),
       builder: (BuildContext context) {
-        return StatefulBuilder(
-            builder: (context, StateSetter setState) {
-              return Container(
-                height: 294,
-                padding: const EdgeInsets.only(top: 22, right: 24, left: 24),
-                child: Column(
+        return StatefulBuilder(builder: (context, StateSetter setState) {
+          return Container(
+            height: 294,
+            padding: const EdgeInsets.only(top: 22, right: 24, left: 24),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Passengers",
-                          style: satoshiRegular.copyWith(
-                              fontSize: Dimensions.dp20.sp,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.darkGray),
-                        ),
-                        Text(
-                          "Cancel",
-                          style: satoshiRegular.copyWith(
-                              fontSize: Dimensions.dp14.sp,
-                              fontWeight: FontWeight.w700,
-                              color: Theme
-                                  .of(context)
-                                  .primaryColor),
-                        ),
-                      ],
+                    Text(
+                      "Passengers",
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp20.sp,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.darkGray),
                     ),
-                    const SizedBox(
-                      height: 19,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Adults",
-                          style: satoshiRegular.copyWith(
-                              fontSize: Dimensions.dp18.sp,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.darkGray),
-                        ),
-                        Row(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                if (adultsCount > 0) {
-                                  adultsCount--;
-                                  setState(() {});
-                                }
-                              },
-                              child: Container(
-                                height: 15,
-                                width: 15,
-                                color: AppColors.lightGrey,
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.remove,
-                                    size: 12,
-                                    color: AppColors.darkGray,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8),
-                              child: Text(
-                                "$adultsCount",
-                                style: satoshiRegular.copyWith(
-                                    fontSize: Dimensions.dp16.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.darkGray),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                // if(adultsCount>0){
-                                adultsCount++;
-                                setState(() {});
-                                // }
-                              },
-                              child: Container(
-                                height: 15,
-                                width: 15,
-                                color: Theme
-                                    .of(context)
-                                    .primaryColor,
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.add,
-                                    size: 12,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 27,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "Kids",
-                          style: satoshiRegular.copyWith(
-                              fontSize: Dimensions.dp18.sp,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.darkGray),
-                        ),
-                        Row(
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                if (kidsCount > 0) {
-                                  kidsCount--;
-                                  setState(() {});
-                                }
-                              },
-                              child: Container(
-                                height: 15,
-                                width: 15,
-                                color: AppColors.lightGrey,
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.remove,
-                                    size: 12,
-                                    color: AppColors.darkGray,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8),
-                              child: Text(
-                                "$kidsCount",
-                                style: satoshiRegular.copyWith(
-                                    fontSize: Dimensions.dp16.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.darkGray),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                kidsCount++;
-                                setState(() {});
-                              },
-                              child: Container(
-                                height: 15,
-                                width: 15,
-                                color: Theme
-                                    .of(context)
-                                    .primaryColor,
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.add,
-                                    size: 12,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Container(
-                      margin:
-                      const EdgeInsets.only(left: Dimensions.dp42,
-                          right: Dimensions.dp42,
-                          top: Dimensions.dp49),
-                      child: CustomButton(
-                        color: Theme
-                            .of(context)
-                            .primaryColor,
-                        text: "Add",
-                        width: MediaQuery
-                            .of(context)
-                            .size
-                            .width,
-                        onPressed: () {
-                          setPassengerData(adultsCount, kidsCount);
-                          Navigator.pop(context);
-                        },
-                        style: satoshiRegular.copyWith(
-                            fontSize: Dimensions.dp18.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white),
-                        height: Dimensions.dp53,
-                      ),
+                    Text(
+                      "Cancel",
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp14.sp,
+                          fontWeight: FontWeight.w700,
+                          color: Theme.of(context).primaryColor),
                     ),
                   ],
                 ),
-              );
-            }
-        );
+                const SizedBox(
+                  height: 19,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Adults",
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp18.sp,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.darkGray),
+                    ),
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            if (adultsCount > 0) {
+                              adultsCount--;
+                              setState(() {});
+                            }
+                          },
+                          child: Container(
+                            height: 15,
+                            width: 15,
+                            color: AppColors.lightGrey,
+                            child: const Center(
+                              child: Icon(
+                                Icons.remove,
+                                size: 12,
+                                color: AppColors.darkGray,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            "$adultsCount",
+                            style: satoshiRegular.copyWith(
+                                fontSize: Dimensions.dp16.sp,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.darkGray),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            // if(adultsCount>0){
+                            adultsCount++;
+                            setState(() {});
+                            // }
+                          },
+                          child: Container(
+                            height: 15,
+                            width: 15,
+                            color: Theme.of(context).primaryColor,
+                            child: const Center(
+                              child: Icon(
+                                Icons.add,
+                                size: 12,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 27,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Kids",
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp18.sp,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.darkGray),
+                    ),
+                    Row(
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            if (kidsCount > 0) {
+                              kidsCount--;
+                              setState(() {});
+                            }
+                          },
+                          child: Container(
+                            height: 15,
+                            width: 15,
+                            color: AppColors.lightGrey,
+                            child: const Center(
+                              child: Icon(
+                                Icons.remove,
+                                size: 12,
+                                color: AppColors.darkGray,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Text(
+                            "$kidsCount",
+                            style: satoshiRegular.copyWith(
+                                fontSize: Dimensions.dp16.sp,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.darkGray),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: () {
+                            kidsCount++;
+                            setState(() {});
+                          },
+                          child: Container(
+                            height: 15,
+                            width: 15,
+                            color: Theme.of(context).primaryColor,
+                            child: const Center(
+                              child: Icon(
+                                Icons.add,
+                                size: 12,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: const EdgeInsets.only(
+                      left: Dimensions.dp42,
+                      right: Dimensions.dp42,
+                      top: Dimensions.dp49),
+                  child: CustomButton(
+                    color: Theme.of(context).primaryColor,
+                    text: "Add",
+                    width: MediaQuery.of(context).size.width,
+                    onPressed: () {
+                      setPassengerData(adultsCount, kidsCount);
+                      Navigator.pop(context);
+                    },
+                    style: satoshiRegular.copyWith(
+                        fontSize: Dimensions.dp18.sp,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white),
+                    height: Dimensions.dp53,
+                  ),
+                ),
+              ],
+            ),
+          );
+        });
       },
     );
   }
@@ -497,8 +474,6 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   setPassengerData(int adultsCount, int kidsCount) {
     _addedKidsCount = kidsCount;
     _addedAdultsCount = adultsCount;
-    setState(() {
-
-    });
+    setState(() {});
   }
 }
