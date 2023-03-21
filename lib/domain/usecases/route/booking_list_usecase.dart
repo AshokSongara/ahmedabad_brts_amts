@@ -11,6 +11,6 @@ class BookingListUseCase implements UseCase<BookingListResponse, Params> {
 
   @override
   Future<BookingListResponse> call(Params params) {
-    return userRepository.getBookingListData();
+    return userRepository.getBookingListData(params.data);
   }
 }

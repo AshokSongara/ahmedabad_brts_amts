@@ -40,6 +40,7 @@ class AppConstant {
   static String qrCodeData = "GenerateQRCode/9902000136200001";
   static String addTransaction = "AddTransaction";
   static String transactionList = "AddTransaction/list";
+  static String transactionBookingList = "AddTransaction/booking";
 
   //SharedPreferences Keys
   static String accessToken = "accessToken";

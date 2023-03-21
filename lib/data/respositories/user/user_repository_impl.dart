@@ -332,9 +332,11 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<BookingListResponse> getBookingListData() async {
+  Future<BookingListResponse> getBookingListData(String data) async {
     Response response =
-    await apiClient.getDataWihHeader(AppConstant.transactionList);
+    await apiClient.getDataWihHeader(data == "home"
+        ? AppConstant.transactionList
+        : AppConstant.transactionBookingList);
     BookingListResponse bookingListResponse =
     BookingListResponse.fromJson(response.body);
 

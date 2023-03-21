@@ -44,5 +44,5 @@ abstract class UserRepository {
   Future<QRCodeResponse> getQRCodeData();
   Future<UserProfileResponse> updateProfile(ProfileRequest body);
   Future<PaymentInitResponseModel> addTransaction(PaymentRequest body);
-  Future<BookingListResponse> getBookingListData();
+  Future<BookingListResponse> getBookingListData(String data);
 }

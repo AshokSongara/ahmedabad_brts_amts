@@ -8,9 +8,10 @@ abstract class BookingListEvent extends Equatable {
 }
 
 class GetBookingListEvent extends BookingListEvent {
-  const GetBookingListEvent();
+  final String from;
+  const GetBookingListEvent({required this.from});
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [from];
 }
 

@@ -44,7 +44,7 @@ class _BookingScreenState extends State<BookingScreen> {
   }
 
   getData() {
-    BlocProvider.of<BookingListBloc>(context).add(const GetBookingListEvent());
+    BlocProvider.of<BookingListBloc>(context).add(GetBookingListEvent(from: widget.from ?? "home"));
   }
 
   @override
