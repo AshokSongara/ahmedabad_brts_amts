@@ -312,14 +312,14 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<PaymentInitResponseModel> addTransaction(PaymentRequest body) async {
     Map data = {
-      "sourceStopId": "60",
-      "destinationStopId": "62",
+      "sourceStopId": body.sourceStopId,
+      "destinationStopId": body.destinationStopId,
       "discountype": "1",
       "txnStatus": "SUCCESS",
       "merchantId": "20230201022556",
       "sourcecompanycode": "1",
       "destinationcompanycode": "103",
-      "routeCode": "1D",
+      "routeCode": body.routeCode,
     };
 
     var bodyData = json.encode(data);
