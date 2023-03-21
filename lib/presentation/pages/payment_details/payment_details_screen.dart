@@ -8,6 +8,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/payment/payment_state.dar
 import 'package:ahmedabad_brts_amts/presentation/pages/payment_details/dashed_line_widget.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
+import 'package:ahmedabad_brts_amts/utils/app_util.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
@@ -568,8 +569,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                                 .darkGray),
                                                   ),
                                                   Text(
-                                                    "₹ ${state.qrCodeResponse.data![0].fareAmt}" ??
-                                                        "",
+                                                    "₹ ${getFare(int.parse(state.qrCodeResponse.data![0].fareAmt ?? "0"))}",
                                                     style:
                                                         satoshiRegular.copyWith(
                                                             fontSize: Dimensions
