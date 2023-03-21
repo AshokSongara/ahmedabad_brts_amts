@@ -275,7 +275,7 @@ class _LoginScreenState extends State<LoginScreen> {
     AppConstant.nameData = prefs.getString(AppConstant.name) ?? "";
     AppConstant.emailData = prefs.getString(AppConstant.email) ?? "";
     AppConstant.lastNameData = prefs.getString(AppConstant.lastName) ?? "";
-    Get.toNamed(RouteHelper.dashboard);
+    Get.offNamed(RouteHelper.dashboard);
   }
 
   clearData() async {
