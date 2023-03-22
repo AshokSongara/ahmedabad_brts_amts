@@ -314,23 +314,34 @@ class _SignupScreenState extends State<SignupScreen> {
                     text: "Sign Up",
                     width: MediaQuery.of(context).size.width,
                     onPressed: () {
-                      if(FocusManager.instance.primaryFocus!.hasFocus){
+                      RegExp regex = RegExp(
+                          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+
+                      if (FocusManager.instance.primaryFocus!.hasFocus) {
                         FocusManager.instance.primaryFocus?.unfocus();
                       }
                       // Get.toNamed(RouteHelper.getMobileNumberRoute());
                       if (_nameController.text.toString().trim().isEmpty) {
                         showCustomSnackBar("Please Enter Name", context);
-                      } else if (_lastNameController.text.trim().toString().isEmpty) {
+                      } else if (_lastNameController.text
+                          .trim()
+                          .toString()
+                          .isEmpty) {
                         showCustomSnackBar("Please LastName", context);
-                      } else if (_emailController.text.trim().toString().isEmpty) {
+                      } else if (_emailController.text
+                          .trim()
+                          .toString()
+                          .isEmpty) {
                         showCustomSnackBar("Please Enter EmailID", context);
                       } else if (!_emailController.text.isValidEmail()) {
                         showCustomSnackBar(
                             "Please Enter Valid EmailID", context);
-                      } else if (_mobileNumberController.text.trim()
+                      } else if (_mobileNumberController.text
+                          .trim()
                           .toString()
                           .isEmpty) {
-                        showCustomSnackBar("Please enter Mobile number", context);
+                        showCustomSnackBar(
+                            "Please enter Mobile number", context);
                       } else if (_mobileNumberController.text.length > 10) {
                         showCustomSnackBar(
                             "Mobile Number should be 10 Digits", context);
@@ -339,6 +350,15 @@ class _SignupScreenState extends State<SignupScreen> {
                             "Mobile Number should be 10 Digits", context);
                       } else if (_passwordController.text.toString().isEmpty) {
                         showCustomSnackBar("Please Enter Password", context);
+                      } else if (_passwordController.text.toString().length <
+                          6) {
+                        showCustomSnackBar(
+                            "Password length should be at least 6 characters",
+                            context);
+                      } else if (!regex.hasMatch(_passwordController.text)) {
+                        showCustomSnackBar(
+                            "Password should contain upper,lower,digit and Special character",
+                            context);
                       } else if (_confirmPasswordController.text
                           .toString()
                           .isEmpty) {

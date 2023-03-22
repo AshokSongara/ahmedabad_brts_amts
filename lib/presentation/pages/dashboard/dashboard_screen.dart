@@ -61,6 +61,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
           },
           child: PageView(
             controller: _pageController,
+            physics: const NeverScrollableScrollPhysics(),
             onPageChanged: (page) {
               setState(() {
                 _pageIndex = page;
@@ -178,8 +179,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void bottomTapped(int index) {
     setState(() {
       _pageIndex = index;
-      _pageController.animateToPage(index,
-          duration: const Duration(milliseconds: 500), curve: Curves.ease);
+      _pageController.jumpToPage(index);
     });
   }
 }
