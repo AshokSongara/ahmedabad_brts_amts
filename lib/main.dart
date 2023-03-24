@@ -4,11 +4,13 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_mod
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
 import 'package:ahmedabad_brts_amts/injection_container.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/contactus/contact_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/discount/discount_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_route_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/forgetpassword/forget_password_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearby_stops/nearby_stops_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/one_day_pass/oneday_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/route_details/route_details_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/near_by_map/near_by_map_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearme/nearme_bloc.dart';
@@ -119,6 +121,12 @@ void main() async {
         ),
         BlocProvider<BookingListBloc>(
           create: (context) => injector<BookingListBloc>(),
+        ),
+        BlocProvider<OneDayBloc>(
+          create: (context) => injector<OneDayBloc>(),
+        ),
+        BlocProvider<DiscountBloc>(
+          create: (context) => injector<DiscountBloc>(),
         ),
       ],
       child: MyApp(),

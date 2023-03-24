@@ -8,9 +8,11 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/add_favourite_response.d
 import 'package:ahmedabad_brts_amts/data/responsemodels/add_route_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/delete_favourite_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/discount_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/eta_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/fare_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/nearme_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/one_day_pass_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/route_details_repsonse.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/route_stoplist_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/search_route_response.dart';
@@ -31,4 +33,6 @@ abstract class RouteRepository {
   Future<RouteStopListResponse> getRouteStopList(RouteDetailsRequest routeDetailsRequest);
   Future<NearbyStopsResponseModel> nearbyStops(String routeCode);
   Future<AddFavouriteResponse> addFavourite(AddFavouriteRequest body);
+  Future<OneDayPassResponse> oneDayPass();
+  Future<DiscountResponse> discount();
 }

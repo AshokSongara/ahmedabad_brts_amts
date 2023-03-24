@@ -7,9 +7,11 @@ import 'package:ahmedabad_brts_amts/domain/usecases/route/add_route_usecase.dart
 import 'package:ahmedabad_brts_amts/domain/usecases/route/add_transaction_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/booking_list_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/delete_route_list_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/route/discount_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/eta_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/fare_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/nearme_route_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/route/oneday_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/route_details_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/route_stoplist_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/search_route_usecase.dart';
@@ -28,11 +30,13 @@ import 'package:ahmedabad_brts_amts/domain/usecases/user/user_update_profile_use
 import 'package:ahmedabad_brts_amts/domain/usecases/user/verify_otp_usecase.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/booking/booking_list_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/contactus/contact_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/discount/discount_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_route_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/feedback/feedback_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearby_stops/nearby_stops_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/one_day_pass/oneday_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/payment/payment_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/route_details/route_details_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/near_by_map/near_by_map_bloc.dart';
@@ -145,6 +149,14 @@ Future<void> init() async {
     () => BookingListBloc(
       bookingListUseCase: injector(),
     ),
+  );injector.registerFactory<OneDayBloc>(
+    () => OneDayBloc(
+      oneDayUseCase: injector(),
+    ),
+  );injector.registerFactory<DiscountBloc>(
+    () => DiscountBloc(
+      discountUseCase: injector(),
+    ),
   );
 
   injector.registerLazySingleton(() => SignupUserUseCase(injector()));
@@ -185,6 +197,8 @@ Future<void> init() async {
   injector.registerLazySingleton(() => AddRouteUseCase(injector()));
   injector.registerLazySingleton(() => RouteDetailsUseCase(injector()));
   injector.registerLazySingleton(() => BookingListUseCase(injector()));
+  injector.registerLazySingleton(() => OneDayUseCase(injector()));
+  injector.registerLazySingleton(() => DiscountUseCase(injector()));
 
   injector.registerLazySingleton<UserRepository>(
     () => UserRepositoryImpl(

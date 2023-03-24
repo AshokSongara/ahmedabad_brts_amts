@@ -41,6 +41,8 @@ class AppConstant {
   static String addTransaction = "AddTransaction";
   static String transactionList = "AddTransaction/list";
   static String transactionBookingList = "AddTransaction/booking";
+  static String fareDiscount = "FareDiscount/Fixrate";
+  static String discountRate = "FareDiscount/DiscountRate";
 
   //SharedPreferences Keys
   static String accessToken = "accessToken";
