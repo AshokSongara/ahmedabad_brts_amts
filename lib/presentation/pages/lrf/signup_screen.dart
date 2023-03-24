@@ -96,7 +96,9 @@ class _SignupScreenState extends State<SignupScreen> {
               Container(
                 margin: const EdgeInsets.only(left: Dimensions.dp25),
                 child: Row(children: [
-                  SvgPicture.asset(ImageConstant.iLeftArrow),
+                  GestureDetector(child: SvgPicture.asset(ImageConstant.iLeftArrow),onTap: (){
+                    Navigator.pop(context);
+                  }),
                   Text(
                     "Sign Up",
                     style: satoshiRegular.copyWith(
