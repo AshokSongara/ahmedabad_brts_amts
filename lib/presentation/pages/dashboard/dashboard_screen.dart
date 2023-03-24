@@ -46,7 +46,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         extendBody: true,
         backgroundColor: Colors.white,
         body: WillPopScope(
-          onWillPop: () {
+          onWillPop: () async {
             DateTime now = DateTime.now();
             if (ctime == null ||
                 now.difference(ctime) > const Duration(seconds: 2)) {
@@ -55,12 +55,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                   content: Text(
                       'Press Back Button Again to Exit'))); //scaffold message, you can show Toast message too.
-              return Future.value(false);
+              return false;
             }
-            return Future.value(true);
+            return true;
           },
           child: PageView(
             controller: _pageController,
+            physics: const NeverScrollableScrollPhysics(),
             onPageChanged: (page) {
               setState(() {
                 _pageIndex = page;
@@ -178,8 +179,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void bottomTapped(int index) {
     setState(() {
       _pageIndex = index;
-      _pageController.animateToPage(index,
-          duration: const Duration(milliseconds: 500), curve: Curves.ease);
+      _pageController.jumpToPage(index);
     });
   }
 }
