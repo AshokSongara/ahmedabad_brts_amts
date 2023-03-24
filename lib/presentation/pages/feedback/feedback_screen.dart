@@ -130,6 +130,39 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                     ),
                   ),
                   getQuestionWidget(
+                      "c) Level of crowding inside the bus?*"),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 22),
+                    child: FeedBackStatusList(
+                      list: list,
+                      selectedIndex: (index) {
+                        feedbackOne = index + 1;
+                      },
+                    ),
+                  ),
+                  getQuestionWidget(
+                      "d) Then information provide at the stop and on the bus?*"),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 22),
+                    child: FeedBackStatusList(
+                      list: list,
+                      selectedIndex: (index) {
+                        feedbackOne = index + 1;
+                      },
+                    ),
+                  ),
+                  getQuestionWidget(
+                      "e) How satisfied are you with the bus journey you made in terms of value for money?*"),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 22),
+                    child: FeedBackStatusList(
+                      list: list,
+                      selectedIndex: (index) {
+                        feedbackOne = index + 1;
+                      },
+                    ),
+                  ),
+                  getQuestionWidget(
                       "3. How satisfied were you with the overall quality of service?"),
                   Padding(
                     padding: const EdgeInsets.only(top: 22),
