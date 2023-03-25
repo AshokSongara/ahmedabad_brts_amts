@@ -23,7 +23,8 @@ class AppConstant {
   static String getStops = "Stop/list/";
   static String getRoutes = "Route/list/";
   static String searchRouteList = "Route/";
-  static String forgetPassword = "User/forgot-password";
+  static String forgetPassword = "User/GenerateOtpForforgot-password";
+  static String changePassword = "User/ChangePassword";
   static String userProfile = "User/user-profile";
   static String updateProfile = "User/userprofile/update";
   static String notifications = "Notification/List";

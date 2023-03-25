@@ -16,6 +16,7 @@ import 'package:ahmedabad_brts_amts/domain/usecases/route/route_details_route_us
 import 'package:ahmedabad_brts_amts/domain/usecases/route/route_stoplist_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/search_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/favourite_route_list_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/user/change_password_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/contactus_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/forget_password_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/home_get_routes_usecase.dart';
@@ -29,6 +30,7 @@ import 'package:ahmedabad_brts_amts/domain/usecases/user/user_profile_usecase.da
 import 'package:ahmedabad_brts_amts/domain/usecases/user/user_update_profile_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/verify_otp_usecase.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/booking/booking_list_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/changePassword/change_password_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/contactus/contact_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/discount/discount_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_route_bloc.dart';
@@ -87,7 +89,8 @@ Future<void> init() async {
   );
 
   injector.registerFactory<VerifyOtpBloc>(
-    () => VerifyOtpBloc(verifyOtpUseCase: injector(),userProfileUseCase: injector()),
+    () => VerifyOtpBloc(
+        verifyOtpUseCase: injector(), userProfileUseCase: injector()),
   );
 
   injector.registerFactory<FeedbackBloc>(
@@ -149,13 +152,19 @@ Future<void> init() async {
     () => BookingListBloc(
       bookingListUseCase: injector(),
     ),
-  );injector.registerFactory<OneDayBloc>(
+  );
+  injector.registerFactory<OneDayBloc>(
     () => OneDayBloc(
       oneDayUseCase: injector(),
     ),
-  );injector.registerFactory<DiscountBloc>(
+  );
+  injector.registerFactory<DiscountBloc>(
     () => DiscountBloc(
       discountUseCase: injector(),
+    ),
+  ); injector.registerFactory<ChangePasswordBloc>(
+    () => ChangePasswordBloc(
+      changePasswordUseCase: injector(),
     ),
   );
 
@@ -199,6 +208,7 @@ Future<void> init() async {
   injector.registerLazySingleton(() => BookingListUseCase(injector()));
   injector.registerLazySingleton(() => OneDayUseCase(injector()));
   injector.registerLazySingleton(() => DiscountUseCase(injector()));
+  injector.registerLazySingleton(() => ChangePasswordUseCase(injector()));
 
   injector.registerLazySingleton<UserRepository>(
     () => UserRepositoryImpl(

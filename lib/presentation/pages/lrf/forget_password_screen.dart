@@ -101,7 +101,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Email",
+                            "Mobile Number",
                             style: satoshiRegular.copyWith(
                                 fontSize: 15.sp,
                                 fontWeight: FontWeight.w500,
@@ -113,12 +113,12 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                             controller: _emailController,
                             focusNode: _emailFocus,
                             nextFocus: _emailFocus,
-                            inputType: TextInputType.emailAddress,
+                            inputType: TextInputType.number,
                             onChanged: () {},
                             onSubmit: () {},
-                            capitalization: TextCapitalization.words,
+                            capitalization: TextCapitalization.none,
                             divider: false,
-                            hintText: "kapil@gmail.com",
+                            hintText: "Enter Mobile Number",
                           ),
                           const SizedBox(
                             height: Dimensions.dp75,
@@ -132,11 +132,12 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                               onPressed: () {
                                 if (_emailController.text.toString().isEmpty) {
                                   showCustomSnackBar(
-                                      "Please Enter EmailID", context);
-                                } else if (!_emailController.text
-                                    .isValidEmail()) {
+                                      "Please Enter Mobile Number", context);
+                                } else if (_emailController.text
+                                    .length > 10 || _emailController.text
+                                    .length < 10) {
                                   showCustomSnackBar(
-                                      "Please Enter Valid EmailID", context);
+                                      "Mobile Number Length Should be 10 Digits", context);
                                 } else {
                                   var request = ForgetPasswordRequest();
                                   request.email = _emailController.text;

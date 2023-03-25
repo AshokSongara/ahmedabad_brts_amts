@@ -32,6 +32,7 @@ abstract class UserRepository {
   Future<FeedbackResponseModel> feedbackSubmit(dynamic body);
   Future<BrtsStopResponseModel> getStop(dynamic body);
   Future<ForgetPasswordResponse> forgetPassword(dynamic body);
+  Future<ForgetPasswordResponse> changePassword(dynamic body);
   Box<BrtsStopResponseModel> getLocalBrtsStopData();
   Box<BrtsStopResponseModel> getLocalAmtsStopData();
   Future<BrtsRoutesResponseModel> getRoutes(body);

@@ -237,7 +237,7 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<ForgetPasswordResponse> forgetPassword(body) async {
     Map data = {
-      'email': body.email ?? "",
+      'phoneNumber': body.email ?? "",
     };
 
     var bodyData = json.encode(data);
@@ -341,5 +341,22 @@ class UserRepositoryImpl implements UserRepository {
     BookingListResponse.fromJson(response.body);
 
     return bookingListResponse;
+  }
+
+  @override
+  Future<ForgetPasswordResponse> changePassword(body) async {
+    Map data = {
+      'otp': body.otp ?? "",
+      'phoneNumber': body.number ?? "",
+      'password': body.password ?? "",
+    };
+
+    var bodyData = json.encode(data);
+
+    Response response =
+        await apiClient.postData(AppConstant.changePassword, bodyData);
+    ForgetPasswordResponse forgetPasswordResponse =
+    ForgetPasswordResponse.fromJson(response.body);
+    return forgetPasswordResponse;
   }
 }
