@@ -93,7 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Row(children: [
                         GestureDetector(
                             onTap: () {
-                              Navigator.of(context).pop();
+                              Get.back();
                             },
                             child: SvgPicture.asset(ImageConstant.iLeftArrow)),
                         Text(

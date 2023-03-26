@@ -26,7 +26,7 @@ class ForgetPasswordScreen extends StatefulWidget {
 }
 
 class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
-  final _emailController = TextEditingController();
+  final _phoneNumber = TextEditingController();
   final FocusNode _emailFocus = FocusNode();
 
   @override
@@ -41,7 +41,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
               Loader.show(context);
             } else if (state is ForgetPasswordSuccessState) {
               Loader.hide();
-              Get.toNamed(RouteHelper.resetPassword);
+              Get.toNamed(RouteHelper.getResetPasswordRoute(_phoneNumber.text));
             } else if (state is ForgetPasswordFailedState) {
               Loader.hide();
               showCustomSnackBar(state.errorMessage, context, isError: true);
@@ -110,7 +110,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                           CustomTextField(
                             textStyle: satoshiRegular.copyWith(
                                 color: AppColors.darkGray),
-                            controller: _emailController,
+                            controller: _phoneNumber,
                             focusNode: _emailFocus,
                             nextFocus: _emailFocus,
                             inputType: TextInputType.number,
@@ -130,17 +130,17 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                               text: "Forget Password",
                               width: MediaQuery.of(context).size.width,
                               onPressed: () {
-                                if (_emailController.text.toString().isEmpty) {
+                                if (_phoneNumber.text.toString().isEmpty) {
                                   showCustomSnackBar(
                                       "Please Enter Mobile Number", context);
-                                } else if (_emailController.text
-                                    .length > 10 || _emailController.text
+                                } else if (_phoneNumber.text
+                                    .length > 10 || _phoneNumber.text
                                     .length < 10) {
                                   showCustomSnackBar(
                                       "Mobile Number Length Should be 10 Digits", context);
                                 } else {
                                   var request = ForgetPasswordRequest();
-                                  request.email = _emailController.text;
+                                  request.email = _phoneNumber.text;
                                   BlocProvider.of<ForgetPasswordBloc>(context)
                                       .add(
                                     GetForgetPasswordEvent(

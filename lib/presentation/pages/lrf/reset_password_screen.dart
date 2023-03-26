@@ -7,6 +7,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/changePassword/change_pas
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_text_field.dart';
+import 'package:ahmedabad_brts_amts/presentation/widgets/base/password_text_field.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
@@ -44,7 +45,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
               Loader.show(context);
             } else if (state is ChangePasswordSuccessState) {
               Loader.hide();
-              Get.offAll(RouteHelper.login);
+              Get.offNamedUntil(RouteHelper.login,(route) => false);
             } else if (state is ChangePasswordFailedState) {
               Loader.hide();
               showCustomSnackBar(state.errorMessage, context, isError: true);
@@ -133,16 +134,17 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.darkGray),
                           ),
-                          CustomTextField(
+                          PasswordTextField(
+                            isPassword: true,
                             textStyle: satoshiRegular.copyWith(
                                 color: AppColors.darkGray),
                             controller: _passwordController,
                             focusNode: _passwordFocus,
                             nextFocus: _passwordFocus,
-                            inputType: TextInputType.text,
+                            inputType: TextInputType.name,
                             onChanged: () {},
                             onSubmit: () {},
-                            capitalization: TextCapitalization.none,
+                            capitalization: TextCapitalization.words,
                             divider: false,
                             hintText: "Enter Password",
                           ),
@@ -156,6 +158,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               text: "Change Password",
                               width: MediaQuery.of(context).size.width,
                               onPressed: () {
+                                RegExp regex = RegExp(
+                                    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
                                 if (_otpController.text.toString().isEmpty) {
                                   showCustomSnackBar(
                                       "Please Otp", context);
@@ -164,13 +168,24 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                     .length < 6) {
                                   showCustomSnackBar(
                                       "Otp Length Should be 6 Digits", context);
-                                }  if (_passwordController.text.toString().isEmpty) {
+                                } else if (_passwordController.text.toString().isEmpty) {
+                                  showCustomSnackBar("Please Enter Password", context);
+                                } else if (_passwordController.text.toString().length <
+                                    6) {
+                                  showCustomSnackBar(
+                                      "Password length should be at least 6 characters",
+                                      context);
+                                } else if (!regex.hasMatch(_passwordController.text)) {
+                                  showCustomSnackBar(
+                                      "Password should contain upper,lower,digit and Special character",
+                                      context);
+                                } else if (_passwordController.text.toString().isEmpty) {
                                   showCustomSnackBar(
                                       "Please Enter Password'", context);
                                 } else {
                                   var request = ChangePasswordRequest();
                                   request.number = widget.number;
-                                  request.password = _otpController.text;
+                                  request.password = _passwordController.text;
                                   request.otp = _otpController.text;
                                   BlocProvider.of<ChangePasswordBloc>(context)
                                       .add(
