@@ -67,15 +67,15 @@ class RouteDetailsBloc extends Bloc<RouteDetailsEvent, RouteDetailsState> {
               fareResponse: fareResponse,
               etaResponse: etaResponse,
               routeStopListResponse: routeStopListResponse,
-              routeDetailsResponse1: routeDetailsRepsonse);
+              routeDetailsResponse1: routeDetailsRepsonse,
+              startStopId: routeDetailsRequest.startCode ?? "",
+              endStopId: routeDetailsRequest.endCode ?? "");
         } else {
           yield const RouteDetailsFailedState(
               errorMessage: "Something Went Wrong");
         }
       } else {
-
         if (event.request.routeTwo!.isNotEmpty) {
-
           RouteDetailsRepsonse routeDetailsRepsonse =
               await routeDetailsUseCase(Params(data: event.request));
 
@@ -105,13 +105,14 @@ class RouteDetailsBloc extends Bloc<RouteDetailsEvent, RouteDetailsState> {
                 fareResponse: fareResponse,
                 etaResponse: etaResponse,
                 routeStopListResponse: routeStopListResponse,
-                routeDetailsResponse1: routeDetailsRepsonse1);
+                routeDetailsResponse1: routeDetailsRepsonse1,
+                endStopId: "",
+                startStopId: "");
           } else {
             yield const RouteDetailsFailedState(
                 errorMessage: "Something Went Wrong");
           }
         } else {
-
           RouteDetailsRepsonse routeDetailsRepsonse =
               await routeDetailsUseCase(Params(data: event.request));
 
@@ -130,7 +131,9 @@ class RouteDetailsBloc extends Bloc<RouteDetailsEvent, RouteDetailsState> {
                 fareResponse: fareResponse,
                 etaResponse: etaResponse,
                 routeStopListResponse: routeStopListResponse,
-                routeDetailsResponse1: routeDetailsRepsonse);
+                routeDetailsResponse1: routeDetailsRepsonse,
+                startStopId: "",
+                endStopId: "");
           } else {
             yield const RouteDetailsFailedState(
                 errorMessage: "Something Went Wrong");

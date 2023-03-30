@@ -21,16 +21,28 @@ class RouteDetailsSuccessState extends RouteDetailsState {
   final FareResponse fareResponse;
   final ETAResponse etaResponse;
   final RouteStopListResponse routeStopListResponse;
+  final String startStopId;
+  final String endStopId;
 
   const RouteDetailsSuccessState(
       {required this.routeDetailsResponse,
       required this.routeDetailsResponse1,
       required this.fareResponse,
       required this.etaResponse,
-      required this.routeStopListResponse});
+      required this.routeStopListResponse,
+      required this.startStopId,
+      required this.endStopId});
 
   @override
-  List<Object> get props => [routeDetailsResponse,routeDetailsResponse1, fareResponse, etaResponse,routeStopListResponse];
+  List<Object> get props => [
+        routeDetailsResponse,
+        routeDetailsResponse1,
+        fareResponse,
+        etaResponse,
+        routeStopListResponse,
+        startStopId,
+        endStopId
+      ];
 }
 
 class RouteDetailsFailedState extends RouteDetailsState {

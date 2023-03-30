@@ -276,9 +276,12 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                             onPressed: () {
                               Get.toNamed(
                                   RouteHelper.getPassengerDetailsRoute(
-                                      widget.startID ?? "",
-                                      widget.endID ?? "",
-                                      widget.routeCode ?? ""),
+                                      widget.fromHome == "Yes"
+                                          ? state.startStopId
+                                          : widget.startRouteCode ?? "",
+                                      widget.fromHome == "Yes"
+                                          ? state.endStopId
+                                          : widget.endRouteCode ?? "",widget.routeCode ?? "",widget.serviceType ?? ""),
                                   arguments: [
                                     widget.startRouteName,
                                     widget.endRouteName,

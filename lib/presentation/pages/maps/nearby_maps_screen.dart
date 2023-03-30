@@ -88,7 +88,7 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
                   mapController: controller,
                   options: MapOptions(
                     center: latLng.LatLng(23.033863,72.585022),
-                    zoom: 9.2,
+                    zoom: 15,
                   ),
                   children: [
                     TileLayer(
@@ -142,7 +142,7 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
                               color: AppColors.darkGray),
                         ),
                         trailing: Text(
-                            "${getDistanceInMeters(nearMeResponse?.data?[index].distance.toString() ?? "")} Mtr",
+                            "${getDistanceInMeters(nearMeResponse?.data?[index].distance.toString() ?? "")}",
                             style: satoshiRegular.copyWith(
                                 fontSize: 19.sp,
                                 fontWeight: FontWeight.w500,

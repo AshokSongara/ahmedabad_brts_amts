@@ -261,7 +261,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           text: "SignUp",
                           width: MediaQuery.of(context).size.width,
                           onPressed: () {
-                            Get.offNamed(RouteHelper.signup);
+                            Get.offNamed(RouteHelper.getSignUpRoute("profile"));
                           },
                           style: poppinsMedium.copyWith(
                               color: Colors.white, fontSize: 15.sp),

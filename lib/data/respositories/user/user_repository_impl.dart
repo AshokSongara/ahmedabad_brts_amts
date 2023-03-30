@@ -314,11 +314,11 @@ class UserRepositoryImpl implements UserRepository {
     Map data = {
       "sourceStopId": body.sourceStopId,
       "destinationStopId": body.destinationStopId,
-      "discountype": "1",
-      "txnStatus": "SUCCESS",
-      "merchantId": "20230201022556",
-      "sourcecompanycode": "1",
-      "destinationcompanycode": "103",
+      "discountype": body.discountype,
+      "txnStatus": body.txnStatus,
+      "merchantId": body.merchantId,
+      "sourcecompanycode": body.serviceType == "BRTS" ?  "0102" : "0103",
+      "destinationcompanycode": body.serviceType == "BRTS" ?  "0102" : "0103",
       "routeCode": body.routeCode,
     };
 

@@ -1,7 +1,7 @@
 class PaymentInitResponseModel {
   PaymentInitResponseModel({
-      this.data, 
-      this.succeeded,});
+    this.data,
+    this.succeeded,});
 
   PaymentInitResponseModel.fromJson(dynamic json) {
     if (json['data'] != null) {
@@ -35,7 +35,10 @@ class Data {
     this.destinationStopId,
     this.discountAmt,
     this.fareAmt,
-    this.qrCode,});
+    this.qrCode,
+    this.sourceStopName,
+    this.destinationStopName,
+  });
 
   Data.fromJson(dynamic json) {
     transactionStatus = json['transactionStatus'];
@@ -47,6 +50,8 @@ class Data {
     discountAmt = json['discountAmt'];
     fareAmt = json['fareAmt'];
     qrCode = json['qrCode'];
+    sourceStopName = json['sourceStopName'];
+    destinationStopName = json['destinationStopName'];
   }
   String? transactionStatus;
   String? ticketNo;
@@ -57,6 +62,8 @@ class Data {
   String? discountAmt;
   String? fareAmt;
   String? qrCode;
+  String? sourceStopName;
+  String? destinationStopName;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -69,6 +76,8 @@ class Data {
     map['discountAmt'] = discountAmt;
     map['fareAmt'] = fareAmt;
     map['qrCode'] = qrCode;
+    map['sourceStopName'] = sourceStopName;
+    map['destinationStopName'] = destinationStopName;
     return map;
   }
 

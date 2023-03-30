@@ -28,7 +28,8 @@ class PaymentDetailsScreen extends StatefulWidget {
       required this.merchantId,
       required this.sourcecompanycode,
       required this.destinationcompanycode,
-      required this.routeCode})
+      required this.routeCode,
+      required this.serviceType})
       : super(key: key);
 
   final String? sourceStopId;
@@ -39,6 +40,7 @@ class PaymentDetailsScreen extends StatefulWidget {
   final String? sourcecompanycode;
   final String? destinationcompanycode;
   final String? routeCode;
+  final String? serviceType;
 
   @override
   _PaymentDetailsScreenState createState() => _PaymentDetailsScreenState();
@@ -56,14 +58,15 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
 
   getData() {
     var paymentRequest = PaymentRequest(
-      sourceStopId: widget.sourceStopId,
-      destinationStopId: widget.destinationStopId,
-      discountype: "1",
-      txnStatus: "SUCCESS",
-      merchantId: "20230201022556",
-      sourcecompanycode: "102",
-      destinationcompanycode: "103",
-      routeCode: widget.routeCode
+        sourceStopId: widget.sourceStopId,
+        destinationStopId: widget.destinationStopId,
+        discountype: widget.discountype,
+        txnStatus: "SUCCESS",
+        merchantId: "20230201022556",
+        sourcecompanycode: "102",
+        destinationcompanycode: "103",
+        routeCode: widget.routeCode,
+      serviceType: widget.serviceType,
     );
 
     BlocProvider.of<PaymentBloc>(context).add(
@@ -298,7 +301,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                             children: [
                                               Text(
                                                 state.qrCodeResponse.data![0]
-                                                        .sourceStopId ??
+                                                        .sourceStopName ??
                                                     "",
                                                 style: satoshiRegular.copyWith(
                                                     fontSize:
@@ -310,7 +313,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                   ImageConstant.iArrowRight),
                                               Text(
                                                 state.qrCodeResponse.data![0]
-                                                        .destinationStopId ??
+                                                        .destinationStopName ??
                                                     "",
                                                 style: satoshiRegular.copyWith(
                                                     fontSize:
@@ -660,8 +663,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                     color: AppColors.darkGray),
                                               ),
                                               Text(
-                                                "₹ ${state.qrCodeResponse.data![0].fareAmt}" ??
-                                                    "",
+                                                "₹ ${getFare(int.parse(state.qrCodeResponse.data![0].fareAmt ?? "0"))}",
                                                 style: satoshiRegular.copyWith(
                                                     fontSize:
                                                         Dimensions.dp14.sp,

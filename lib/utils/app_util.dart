@@ -33,7 +33,7 @@ String getDateTime(String dateTimeData) {
 
 String getDistanceInMeters(String distance){
   double convertedDistance = double.parse((double.parse(distance)).toStringAsFixed(2));
-  return "${convertedDistance} Mtrs";
+  return "${convertedDistance} Kms";
 }
 
 String toMinutes(String dateData){

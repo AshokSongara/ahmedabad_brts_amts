@@ -187,11 +187,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                   ListTile(
-                    leading: SvgPicture.asset(
-                      ImageConstant.iRoute,
-                      color: Colors.white,
-                      height: Dimensions.dp20,
-                      width: Dimensions.dp20,
+                    leading:Container(
+                      height: Dimensions.dp28,
+                      width: Dimensions.dp28,
+                      child: const Icon(Icons.near_me),
                     ),
                     title: Text(
                       AppLocalizations.of(context)?.translate("near_me") ?? "",
@@ -300,11 +299,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                   ListTile(
-                    leading: SvgPicture.asset(
-                      ImageConstant.iLangauge,
-                      color: Colors.white,
-                      height: Dimensions.dp20,
-                      width: Dimensions.dp20,
+                    leading: Container(
+                      height: Dimensions.dp28,
+                      width: Dimensions.dp28,
+                      child: const Icon(Icons.language_sharp),
                     ),
                     title: Text(
                       AppLocalizations.of(context)

@@ -65,7 +65,7 @@ class RouteHelper {
 
   static String getLoginRoute() => login;
 
-  static String getSignUpRoute() => signup;
+  static String getSignUpRoute(String type) => '$signup?type=$type';
 
   static String getMobileNumberRoute() => mobileNumber;
 
@@ -102,8 +102,8 @@ class RouteHelper {
       '$routeDetails?startRouteName=$startRouteName&startRouteCode=$startRouteCode&endRouteName=$endRouteName&endRouteCode=$endRouteCode&routeCode=$routeCode&startTime=$startTime&interChange=$interChange&fromHome=$fromHome&originStart=$originStart&originEnd=$originEnd&serviceType=$serviceType&interChangeName=$interChangeName&routeTwo=$routeTwo&startRouteTwo=$startRouteTwo&endRouteTwo=$endRouteTwo&endTime$endTime&startStopSequenceNumber=$startStopSequenceNumber&endStopSequenceNumber=$endStopSequenceNumber&startID=$startID&endID=$endID';
 
   static String getPassengerDetailsRoute(
-          String sourceStopId, String destinationStopId, String routeCode) =>
-      '$passengerDetails?sourceStopId=$sourceStopId&destinationStopId=$destinationStopId&routeCode=$routeCode';
+          String sourceStopId, String destinationStopId, String routeCode,String serviceType) =>
+      '$passengerDetails?sourceStopId=$sourceStopId&destinationStopId=$destinationStopId&routeCode=$routeCode&serviceType=$serviceType';
 
   static String getCardDetailsRoute() => cardDetails;
 
@@ -127,8 +127,8 @@ class RouteHelper {
           String merchantId,
           String sourcecompanycode,
           String destinationcompanycode,
-          String routeCode) =>
-      '$payment?sourceStopId=$sourceStopId&destinationStopId=$destinationStopId&discountype=$discountype&txnStatus=$txnStatus&merchantId=$merchantId&sourcecompanycode=$sourcecompanycode&destinationcompanycode=$destinationcompanycode&routeCode=$routeCode';
+          String routeCode,String serviceType) =>
+      '$payment?sourceStopId=$sourceStopId&destinationStopId=$destinationStopId&discountype=$discountype&txnStatus=$txnStatus&merchantId=$merchantId&sourcecompanycode=$sourcecompanycode&destinationcompanycode=$destinationcompanycode&routeCode=$routeCode&serviceType=$serviceType';
 
   static String getBookingRoute(String from) => '$booking?from=$from';
 
@@ -161,7 +161,11 @@ class RouteHelper {
     GetPage(name: initial, page: () => const SplashScreen()),
     GetPage(name: splash, page: () => const SplashScreen()),
     GetPage(name: login, page: () => const LoginScreen()),
-    GetPage(name: signup, page: () => const SignupScreen()),
+    GetPage(
+        name: signup,
+        page: () => SignupScreen(
+          type: Get.parameters['type'],
+        )),
     GetPage(name: mobileNumber, page: () => const MobileNumberScreen()),
     GetPage(name: oneDayPassRoute, page: () => const OneDayPassScreen()),
     GetPage(name: contactUs, page: () => const ContactUsScreen()),
@@ -227,6 +231,7 @@ class RouteHelper {
               sourceStopId: Get.parameters['sourceStopId'],
               destinationStopId: Get.parameters['destinationStopId'],
               routeCode: Get.parameters['routeCode'],
+          serviceType: Get.parameters['serviceType'],
             )),
     GetPage(name: cardDetails, page: () => const CardDetailsScreen()),
     GetPage(
@@ -248,6 +253,7 @@ class RouteHelper {
               sourcecompanycode: Get.parameters['sourcecompanycode'],
               destinationcompanycode: Get.parameters['destinationcompanycode'],
               routeCode: Get.parameters['routeCode'],
+          serviceType: Get.parameters['serviceType'],
             )),
     GetPage(
         name: booking,

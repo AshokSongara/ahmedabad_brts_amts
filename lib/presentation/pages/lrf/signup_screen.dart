@@ -15,6 +15,7 @@ import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,7 +24,9 @@ import 'package:get/get.dart';
 import '../../../core/loader/overylay_loader.dart';
 
 class SignupScreen extends StatefulWidget {
-  const SignupScreen({Key? key}) : super(key: key);
+  final String? type;
+
+  const SignupScreen({Key? key, required this.type}) : super(key: key);
 
   @override
   State<SignupScreen> createState() => _SignupScreenState();
@@ -97,7 +100,13 @@ class _SignupScreenState extends State<SignupScreen> {
                 margin: const EdgeInsets.only(left: Dimensions.dp25),
                 child: Row(children: [
                   GestureDetector(child: SvgPicture.asset(ImageConstant.iLeftArrow),onTap: (){
-                    Navigator.pop(context);
+                    {
+                      if (widget.type == "profile") {
+                        SystemNavigator.pop();
+                      } else {
+                        Get.back();
+                      }
+                    }
                   }),
                   Text(
                     "Sign Up",
