@@ -21,19 +21,21 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
       UserProfileResponse userProfileResponse =
           await userUpdateProfileUseCase(Params(data: event.profileRequest));
       if (userProfileResponse.succeeded == true) {
-        saveMemberID(userProfileResponse);
+        saveMemberID(event.profileRequest.firstName ?? "",
+            event.profileRequest.lastName ?? "");
         yield UserProfileSuccessState(userProfileResponse: userProfileResponse);
       } else {
-        yield const UserProfileFailedState(errorMessage: "Something Went Wrong");
+        yield const UserProfileFailedState(
+            errorMessage: "Something Went Wrong");
       }
     }
   }
 
-  saveMemberID(UserProfileResponse userProfileResponse) async {
+  saveMemberID(String fName, String lName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(
-        AppConstant.name, userProfileResponse.data?.firstName ?? "");
-    prefs.setString(
-        AppConstant.lastName, userProfileResponse.data?.lastName ?? "");
+    prefs.setString(AppConstant.name, fName ?? "");
+    prefs.setString(AppConstant.lastName, lName ?? "");
+    AppConstant.nameData = fName;
+    AppConstant.lastNameData = lName;
   }
 }

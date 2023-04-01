@@ -78,7 +78,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       if (state is UserProfileLoadingState) {
                         Loader.show(context);
                       } else if (state is UserProfileSuccessState) {
-                        AppConstant.nameData = _nameController.text.toString();
                         Loader.hide();
                       } else if (state is UserProfileFailedState) {
                         Loader.hide();

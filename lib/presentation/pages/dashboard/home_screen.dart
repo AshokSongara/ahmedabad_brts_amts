@@ -343,6 +343,27 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   ),
+                  Visibility(
+                    visible: AppConstant.nameData.isEmpty,
+                    child: ListTile(
+                      leading: SvgPicture.asset(
+                        ImageConstant.iSignOut,
+                        color: Colors.white,
+                        height: Dimensions.dp28,
+                        width: Dimensions.dp28,
+                      ),
+                      title: Text(
+                        "Login",
+                        style: satoshiRegular.copyWith(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white),
+                      ),
+                      onTap: () async {
+                        Get.toNamed(RouteHelper.getSplashRoute());
+                      },
+                    ),
+                  ),
                   const SizedBox(
                     height: Dimensions.dp50,
                   ),
