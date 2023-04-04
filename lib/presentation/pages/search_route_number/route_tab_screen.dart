@@ -341,4 +341,10 @@ class _RouteTabScreenState extends State<RouteTabScreen>
     //   ),
     // ));
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    Loader.hide();
+  }
 }

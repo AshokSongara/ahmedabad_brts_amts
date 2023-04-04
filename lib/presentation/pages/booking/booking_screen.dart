@@ -311,4 +311,9 @@ class _BookingScreenState extends State<BookingScreen> {
       ),
     );
   }
+  @override
+  void dispose() {
+    super.dispose();
+    Loader.hide();
+  }
 }

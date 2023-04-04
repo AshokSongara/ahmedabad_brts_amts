@@ -210,6 +210,12 @@ class _NearByScreenState extends State<NearByScreen> {
     );
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    Loader.hide();
+  }
+
   void _getNearByRoutes() async {
     Location location = Location();
     PermissionStatus permissionGranted;

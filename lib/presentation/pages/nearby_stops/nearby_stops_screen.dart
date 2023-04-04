@@ -96,4 +96,10 @@ class _NearbyStopsScreenState extends State<NearbyStopsScreen> {
           ),
         )));
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    Loader.hide();
+  }
 }

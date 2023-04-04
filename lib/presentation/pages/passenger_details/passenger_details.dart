@@ -234,6 +234,12 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     );
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    Loader.hide();
+  }
+
   Widget getSourceDestination(String title, String schedule) {
     return Expanded(
       flex: 2,

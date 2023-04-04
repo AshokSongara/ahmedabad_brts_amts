@@ -712,6 +712,11 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
       ),
     );
   }
+  @override
+  void dispose() {
+    super.dispose();
+    Loader.hide();
+  }
 }
 
 class LocalSliderModel {

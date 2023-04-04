@@ -108,12 +108,15 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<FeedbackResponseModel> feedbackSubmit(body) async {
     Map data = {
-      "routeId": body.routeId,
+      "routeNumber": body.routeId,
       "waiting": body.waiting,
       "comfort": body.comfort,
       "crowding": body.crowding,
       "serviceQuality": body.serviceQuality,
       "journey": body.journey,
+      "assistance": body.journey,
+      "paymentMode": body.journey,
+      "suggestion": body.journey,
     };
 
     var bodyData = json.encode(data);

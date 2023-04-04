@@ -1,8 +1,10 @@
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
+import 'package:ahmedabad_brts_amts/localization/app_localizations.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_list_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_list_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_route_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
@@ -98,11 +100,37 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
               showCustomSnackBar("Something Went Wrong Try again..!", context,
                   isError: false);
             }
-            return Container();
+            return Container(
+              child: Center(
+                child: Container(
+                  height: 53,
+                  margin: const EdgeInsets.all(50),
+                  child: CustomButton(
+                    color: Theme.of(context).primaryColor,
+                    text: AppLocalizations.of(context)
+                            ?.translate("go_to_login") ??
+                        "",
+                    width: MediaQuery.of(context).size.width,
+                    onPressed: () {
+                      Get.offNamed(RouteHelper.splash);
+                    },
+                    style: poppinsMedium.copyWith(
+                        color: Colors.white, fontSize: 15.sp),
+                    height: 53,
+                  ),
+                ),
+              ),
+            );
           },
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    Loader.hide();
   }
 
   Widget getMyRoutesWidget(Data model) {

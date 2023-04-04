@@ -854,6 +854,12 @@ class _HomeScreenState extends State<HomeScreen> {
         }));
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    Loader.hide();
+  }
+
   BrtsStopResponseModel? getSortedData(Data? dataAdd, Data? dataRemove) {
     if (dataRemove != null) {
       operationBrtsStopResponseModel?.data?.remove(dataRemove);

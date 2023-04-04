@@ -130,4 +130,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
       ),
     );
   }
+  @override
+  void dispose() {
+    super.dispose();
+    Loader.hide();
+  }
 }

@@ -306,4 +306,10 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
           }),
         ));
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    Loader.hide();
+  }
 }

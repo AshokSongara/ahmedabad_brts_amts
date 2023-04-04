@@ -52,6 +52,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     errorController!.close();
     super.dispose();
     _timer.cancel();
+    Loader.hide();
   }
 
   void _startTimer() {

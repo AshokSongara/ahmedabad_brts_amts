@@ -217,6 +217,12 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
     );
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    Loader.hide();
+  }
+
   Widget getQuestionWidget(String question) {
     return Padding(
       padding: const EdgeInsets.only(top: 22),

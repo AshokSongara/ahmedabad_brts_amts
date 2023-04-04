@@ -412,5 +412,6 @@ class _SignupScreenState extends State<SignupScreen> {
   void dispose() {
     super.dispose();
     genderValue?.close();
+    Loader.hide();
   }
 }

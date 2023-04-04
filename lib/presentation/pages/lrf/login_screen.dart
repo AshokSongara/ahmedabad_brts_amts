@@ -267,6 +267,12 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+    Loader.hide();
+  }
+
   saveMemberID(String? token, String? email) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(AppConstant.accessToken, token ?? "");

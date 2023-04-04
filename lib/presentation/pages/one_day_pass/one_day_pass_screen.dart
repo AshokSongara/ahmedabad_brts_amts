@@ -185,4 +185,10 @@ class _OneDayPassScreenState extends State<OneDayPassScreen> {
       ),
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    Loader.hide();
+  }
 }

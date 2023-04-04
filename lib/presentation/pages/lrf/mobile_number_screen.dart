@@ -37,6 +37,7 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
   void dispose() {
     super.dispose();
     _mobileController.dispose();
+    Loader.hide();
   }
 
   @override
@@ -210,6 +211,8 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
       ),
     );
   }
+
+
 
   _onKeyboardTap(String value) {
     if (_mobileController.text.length < 10) {

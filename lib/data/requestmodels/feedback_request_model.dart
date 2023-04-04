@@ -8,13 +8,17 @@
 
 class FeedbackRequestModel {
   FeedbackRequestModel({
-      String? routeId, 
-      int? waiting, 
-      int? comfort, 
-      int? crowding, 
-      int? serviceQuality, 
-      String? journey, 
-      int? userId,}){
+    String? routeId,
+    int? waiting,
+    int? comfort,
+    int? crowding,
+    int? serviceQuality,
+    String? journey,
+    int? userId,
+    int? assistance,
+    int? paymentMode,
+    int? suggestion,
+  }) {
     _routeId = routeId;
     _waiting = waiting;
     _comfort = comfort;
@@ -22,7 +26,10 @@ class FeedbackRequestModel {
     _serviceQuality = serviceQuality;
     _journey = journey;
     _userId = userId;
-}
+    _assistance = assistance;
+    _paymentMode = paymentMode;
+    _suggestion = suggestion;
+  }
 
   FeedbackRequestModel.fromJson(dynamic json) {
     _routeId = json['routeId'];
@@ -32,7 +39,11 @@ class FeedbackRequestModel {
     _serviceQuality = json['serviceQuality'];
     _journey = json['journey'];
     _userId = json['userId'];
+    _assistance = json['assistance'];
+    _paymentMode = json['paymentMode'];
+    _suggestion = json['suggestion'];
   }
+
   String? _routeId;
   int? _waiting;
   int? _comfort;
@@ -40,28 +51,54 @@ class FeedbackRequestModel {
   int? _serviceQuality;
   String? _journey;
   int? _userId;
-FeedbackRequestModel copyWith({  String? routeId,
-  int? waiting,
-  int? comfort,
-  int? crowding,
-  int? serviceQuality,
-  String? journey,
-  int? userId,
-}) => FeedbackRequestModel(  routeId: routeId ?? _routeId,
-  waiting: waiting ?? _waiting,
-  comfort: comfort ?? _comfort,
-  crowding: crowding ?? _crowding,
-  serviceQuality: serviceQuality ?? _serviceQuality,
-  journey: journey ?? _journey,
-  userId: userId ?? _userId,
-);
+  int? _assistance;
+  int? _paymentMode;
+  int? _suggestion;
+
+  FeedbackRequestModel copyWith({
+    String? routeId,
+    int? waiting,
+    int? comfort,
+    int? crowding,
+    int? serviceQuality,
+    String? journey,
+    int? userId,
+    int? assistance,
+    int? paymentMode,
+    int? suggestion,
+  }) =>
+      FeedbackRequestModel(
+        routeId: routeId ?? _routeId,
+        waiting: waiting ?? _waiting,
+        comfort: comfort ?? _comfort,
+        crowding: crowding ?? _crowding,
+        serviceQuality: serviceQuality ?? _serviceQuality,
+        journey: journey ?? _journey,
+        userId: userId ?? _userId,
+        assistance: userId ?? _assistance,
+        paymentMode: userId ?? _paymentMode,
+        suggestion: userId ?? _suggestion,
+      );
+
   String? get routeId => _routeId;
+
   int? get waiting => _waiting;
+
   int? get comfort => _comfort;
+
   int? get crowding => _crowding;
+
   int? get serviceQuality => _serviceQuality;
+
   String? get journey => _journey;
+
   int? get userId => _userId;
+
+  int? get assistance => _assistance;
+
+  int? get paymentMode => _paymentMode;
+
+  int? get suggestion => _suggestion;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -72,7 +109,9 @@ FeedbackRequestModel copyWith({  String? routeId,
     map['serviceQuality'] = _serviceQuality;
     map['journey'] = _journey;
     map['userId'] = _userId;
+    map['assistance'] = _assistance;
+    map['paymentMode'] = _paymentMode;
+    map['suggestion'] = _suggestion;
     return map;
   }
-
 }

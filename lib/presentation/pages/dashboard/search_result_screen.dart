@@ -39,6 +39,7 @@ class SearchResultScreen extends StatefulWidget {
 }
 
 class _SearchResultScreenState extends State<SearchResultScreen> {
+
   @override
   void initState() {
     super.initState();
@@ -208,5 +209,11 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    Loader.hide();
   }
 }
