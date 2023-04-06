@@ -16,6 +16,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import '../../../utils/app_constants.dart';
 import '../../widgets/base/order_tracker.dart';
 
 class RouteDetailScreen extends StatefulWidget {
@@ -274,6 +275,8 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                             text: "Book Tickets",
                             width: MediaQuery.of(context).size.width / 2,
                             onPressed: () {
+                              AppConstant.nameData.isEmpty ?
+                              Get.toNamed(RouteHelper.getSplashRoute()) :
                               Get.toNamed(
                                   RouteHelper.getPassengerDetailsRoute(
                                       widget.fromHome == "Yes"
