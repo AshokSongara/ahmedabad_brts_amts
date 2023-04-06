@@ -58,14 +58,14 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
 
   getData() {
     var paymentRequest = PaymentRequest(
-        sourceStopId: widget.sourceStopId,
-        destinationStopId: widget.destinationStopId,
-        discountype: widget.discountype,
-        txnStatus: "SUCCESS",
-        merchantId: "20230201022556",
-        sourcecompanycode: "102",
-        destinationcompanycode: "103",
-        routeCode: widget.routeCode,
+      sourceStopId: widget.sourceStopId,
+      destinationStopId: widget.destinationStopId,
+      discountype: widget.discountype,
+      txnStatus: "SUCCESS",
+      merchantId: "20230201022556",
+      sourcecompanycode: "102",
+      destinationcompanycode: "103",
+      routeCode: widget.routeCode,
       serviceType: widget.serviceType,
     );
 
@@ -258,8 +258,8 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                 ),
                                 child: Column(
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.only(
+                                    const Padding(
+                                      padding: EdgeInsets.only(
                                           left: Dimensions.dp8,
                                           right: Dimensions.dp8),
                                       child: DashLineView(
@@ -299,27 +299,48 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
-                                              Text(
-                                                state.qrCodeResponse.data![0]
-                                                        .sourceStopName ??
-                                                    "",
-                                                style: satoshiRegular.copyWith(
-                                                    fontSize:
-                                                        Dimensions.dp16.sp,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.darkGray),
+                                              Expanded(
+                                                child: Text(
+                                                  state.qrCodeResponse.data![0]
+                                                          .sourceStopName ??
+                                                      "",
+                                                  style:
+                                                      satoshiRegular.copyWith(
+                                                          fontSize: Dimensions
+                                                              .dp16.sp,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: AppColors
+                                                              .darkGray,
+                                                          overflow: TextOverflow
+                                                              .ellipsis),
+                                                ),
                                               ),
                                               SvgPicture.asset(
                                                   ImageConstant.iArrowRight),
-                                              Text(
-                                                state.qrCodeResponse.data![0]
-                                                        .destinationStopName ??
-                                                    "",
-                                                style: satoshiRegular.copyWith(
-                                                    fontSize:
-                                                        Dimensions.dp16.sp,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.darkGray),
+                                              Expanded(
+                                                child: Align(
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                  child: Text(
+                                                    state
+                                                            .qrCodeResponse
+                                                            .data![0]
+                                                            .destinationStopName ??
+                                                        "",
+                                                    style: satoshiRegular
+                                                        .copyWith(
+                                                            fontSize: Dimensions
+                                                                .dp16.sp,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: AppColors
+                                                                .darkGray,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis),
+                                                  ),
+                                                ),
                                               ),
                                             ],
                                           ),
@@ -712,6 +733,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
       ),
     );
   }
+
   @override
   void dispose() {
     super.dispose();
