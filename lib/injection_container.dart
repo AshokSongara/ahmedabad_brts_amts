@@ -12,6 +12,7 @@ import 'package:ahmedabad_brts_amts/domain/usecases/route/eta_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/fare_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/nearme_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/oneday_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/route/payment_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/route_details_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/route_stoplist_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/search_route_usecase.dart';
@@ -146,6 +147,7 @@ Future<void> init() async {
   injector.registerFactory<PaymentBloc>(
     () => PaymentBloc(
       addTransactionUseCase: injector(),
+      paymentUseCase: injector()
     ),
   );
   injector.registerFactory<BookingListBloc>(
@@ -209,6 +211,7 @@ Future<void> init() async {
   injector.registerLazySingleton(() => OneDayUseCase(injector()));
   injector.registerLazySingleton(() => DiscountUseCase(injector()));
   injector.registerLazySingleton(() => ChangePasswordUseCase(injector()));
+  injector.registerLazySingleton(() => PaymentUseCase(injector()));
 
   injector.registerLazySingleton<UserRepository>(
     () => UserRepositoryImpl(

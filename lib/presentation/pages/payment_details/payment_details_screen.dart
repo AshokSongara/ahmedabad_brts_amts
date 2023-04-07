@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/payment_request.dart';
+import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/payment/payment_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/payment/payment_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/payment/payment_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/payment_details/dashed_line_widget.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/payment_webview/payment_webview_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/app_util.dart';
@@ -17,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 
 class PaymentDetailsScreen extends StatefulWidget {
   const PaymentDetailsScreen(
@@ -57,6 +60,24 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
   }
 
   getData() {
+    var paymentRequest = PaymentRequest(
+      sourceStopId: widget.sourceStopId,
+      destinationStopId: widget.destinationStopId,
+      discountype: widget.discountype,
+      txnStatus: "SUCCESS",
+      merchantId: "20230201022556",
+      sourcecompanycode: "102",
+      destinationcompanycode: "103",
+      routeCode: widget.routeCode,
+      serviceType: widget.serviceType,
+    );
+
+    BlocProvider.of<PaymentBloc>(context).add(
+      GetPaymentUrlEvent(paymentRequest: paymentRequest),
+    );
+  }
+
+  getPaymentData() {
     var paymentRequest = PaymentRequest(
       sourceStopId: widget.sourceStopId,
       destinationStopId: widget.destinationStopId,
@@ -116,9 +137,18 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
               child: SingleChildScrollView(
                 child: BlocConsumer<PaymentBloc, PaymentState>(
                   listener: (context, state) {
-                    if (state is PaymentLoadingState) {
+                    if (state is PaymentUrlLoadingState) {
+                      Loader.show(context);
+                    } else if (state is PaymentUrlSuccessState) {
+                      Loader.hide();
+
+                      navigateToWebview(
+                          state.qrCodeResponse.data?.paymentURL ?? "");
+                    } else if (state is PaymentLoadingState) {
                       Loader.show(context);
                     } else if (state is PaymentSuccessState) {
+                      Loader.hide();
+                    } else if (state is PaymentFailedState) {
                       Loader.hide();
                     }
                   },
@@ -189,7 +219,8 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                 viewportFraction: 1,
                                                 enlargeFactor: 0.3,
                                               ),
-                                              items: state.qrCodeResponse.data
+                                              items: state
+                                                  .paymentInitResponseModel.data
                                                   ?.map((i) => Builder(
                                                           builder: (context) {
                                                         return Column(
@@ -301,7 +332,9 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                             children: [
                                               Expanded(
                                                 child: Text(
-                                                  state.qrCodeResponse.data![0]
+                                                  state
+                                                          .paymentInitResponseModel
+                                                          .data![0]
                                                           .sourceStopName ??
                                                       "",
                                                   style:
@@ -324,7 +357,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                       Alignment.centerRight,
                                                   child: Text(
                                                     state
-                                                            .qrCodeResponse
+                                                            .paymentInitResponseModel
                                                             .data![0]
                                                             .destinationStopName ??
                                                         "",
@@ -421,8 +454,8 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                 ],
                                               ),
                                               Text(
-                                                state.qrCodeResponse.data![0]
-                                                        .ticketNo ??
+                                                state.paymentInitResponseModel
+                                                        .data![0].ticketNo ??
                                                     "",
                                                 style: satoshiSmall.copyWith(
                                                     fontWeight: FontWeight.w700,
@@ -476,7 +509,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                                     .darkGray),
                                                       ),
                                                       Text(
-                                                        state.qrCodeResponse
+                                                        state.paymentInitResponseModel
                                                                 .data?.length
                                                                 .toString() ??
                                                             "1",
@@ -545,8 +578,8 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                                 .darkGray),
                                                   ),
                                                   Text(
-                                                    state.qrCodeResponse.data
-                                                            ?.length
+                                                    state.paymentInitResponseModel
+                                                            .data?.length
                                                             .toString() ??
                                                         "1",
                                                     style:
@@ -593,7 +626,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                                 .darkGray),
                                                   ),
                                                   Text(
-                                                    "₹ ${getFare(int.parse(state.qrCodeResponse.data![0].fareAmt ?? "0"))}",
+                                                    "₹ ${getFare(int.parse(state.paymentInitResponseModel.data![0].fareAmt ?? "0"))}",
                                                     style:
                                                         satoshiRegular.copyWith(
                                                             fontSize: Dimensions
@@ -684,7 +717,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                     color: AppColors.darkGray),
                                               ),
                                               Text(
-                                                "₹ ${getFare(int.parse(state.qrCodeResponse.data![0].fareAmt ?? "0"))}",
+                                                "₹ ${getFare(int.parse(state.paymentInitResponseModel.data![0].fareAmt ?? "0"))}",
                                                 style: satoshiRegular.copyWith(
                                                     fontSize:
                                                         Dimensions.dp14.sp,
@@ -718,7 +751,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                           ),
                         ],
                       );
-                    } else if (state is PaymentFailedState) {
+                    } else if (state is PaymentUrlFailedState) {
                       return Container(
                         child: const Text("Error"),
                       );
@@ -738,6 +771,17 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
   void dispose() {
     super.dispose();
     Loader.hide();
+  }
+
+  Future<void> navigateToWebview(url) async {
+    String Data = await Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => WebViewScreen(url: url)));
+
+    print("#####WEBVIEW${Data}");
+
+    if (Data.isNotEmpty) {
+      getPaymentData();
+    }
   }
 }
 

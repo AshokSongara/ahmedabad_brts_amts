@@ -83,7 +83,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
               child: Column(
                 children: [
                   CustomToolbar(
-                    title: "Passenger Details",
+                    title: "passenger_details",
                     showOption: false,
                   ),
                   Container(

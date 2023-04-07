@@ -7,8 +7,6 @@ class ApiChecker {
     if (response.statusCode == 401) {
       Loader.hide();
       Get.offAllNamed(RouteHelper.getLoginRoute());
-    } else {
-
-    }
+    } else {}
   }
 }

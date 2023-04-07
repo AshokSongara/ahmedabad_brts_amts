@@ -2,6 +2,7 @@ import 'package:ahmedabad_brts_amts/presentation/pages/booking/booking_screen.da
 import 'package:ahmedabad_brts_amts/presentation/pages/card_details/card_detail_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/contact_us/contact_us_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/dashboard_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/payment_webview/payment_webview_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/route_details/route_details_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/feedback/feedback_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/language/choose_language_screen.dart';
@@ -58,6 +59,7 @@ class RouteHelper {
   static const String transitMap = '/transitMap';
   static const String routeSearchTab = '/route_search_tab';
   static const String nearByStops = '/near_by_stops';
+  static const String paymentWebview = '/paymentWebview';
 
   static String getInitialRoute() => initial;
 
@@ -73,6 +75,9 @@ class RouteHelper {
       '$enterCode?mobile=$mobileNumber';
 
   static String getDashboardRoute() => dashboard;
+
+  static String getpaymentWebviewRoute(String url) =>
+      '$paymentWebview?url=$url';
 
   static String getSearchResultRoute(String startRoute, String endRoute,
           String startRouteName, String endRouteName, String serviceType) =>
@@ -101,8 +106,8 @@ class RouteHelper {
           String? endID) =>
       '$routeDetails?startRouteName=$startRouteName&startRouteCode=$startRouteCode&endRouteName=$endRouteName&endRouteCode=$endRouteCode&routeCode=$routeCode&startTime=$startTime&interChange=$interChange&fromHome=$fromHome&originStart=$originStart&originEnd=$originEnd&serviceType=$serviceType&interChangeName=$interChangeName&routeTwo=$routeTwo&startRouteTwo=$startRouteTwo&endRouteTwo=$endRouteTwo&endTime$endTime&startStopSequenceNumber=$startStopSequenceNumber&endStopSequenceNumber=$endStopSequenceNumber&startID=$startID&endID=$endID';
 
-  static String getPassengerDetailsRoute(
-          String sourceStopId, String destinationStopId, String routeCode,String serviceType) =>
+  static String getPassengerDetailsRoute(String sourceStopId,
+          String destinationStopId, String routeCode, String serviceType) =>
       '$passengerDetails?sourceStopId=$sourceStopId&destinationStopId=$destinationStopId&routeCode=$routeCode&serviceType=$serviceType';
 
   static String getCardDetailsRoute() => cardDetails;
@@ -127,14 +132,16 @@ class RouteHelper {
           String merchantId,
           String sourcecompanycode,
           String destinationcompanycode,
-          String routeCode,String serviceType) =>
+          String routeCode,
+          String serviceType) =>
       '$payment?sourceStopId=$sourceStopId&destinationStopId=$destinationStopId&discountype=$discountype&txnStatus=$txnStatus&merchantId=$merchantId&sourcecompanycode=$sourcecompanycode&destinationcompanycode=$destinationcompanycode&routeCode=$routeCode&serviceType=$serviceType';
 
   static String getBookingRoute(String from) => '$booking?from=$from';
 
   static String getForgetPasswordRoute() => forgetPassword;
 
-  static String getResetPasswordRoute(String number) => '$resetPassword?number=$number';
+  static String getResetPasswordRoute(String number) =>
+      '$resetPassword?number=$number';
 
   static String getSearchStopScreenRoute(String selectedLanguage) =>
       '$searchStopScreen?selectedLanguage=$selectedLanguage';
@@ -158,14 +165,17 @@ class RouteHelper {
       '$routeSearchTab?title=$title&routeCode=$routeCode';
 
   static List<GetPage> routes = [
+    GetPage(name: paymentWebview, page: () =>  WebViewScreen(
+      url: Get.parameters['url'],
+    )),
     GetPage(name: initial, page: () => const SplashScreen()),
     GetPage(name: splash, page: () => const SplashScreen()),
     GetPage(name: login, page: () => const LoginScreen()),
     GetPage(
         name: signup,
         page: () => SignupScreen(
-          type: Get.parameters['type'],
-        )),
+              type: Get.parameters['type'],
+            )),
     GetPage(name: mobileNumber, page: () => const MobileNumberScreen()),
     GetPage(name: oneDayPassRoute, page: () => const OneDayPassScreen()),
     GetPage(name: contactUs, page: () => const ContactUsScreen()),
@@ -231,7 +241,7 @@ class RouteHelper {
               sourceStopId: Get.parameters['sourceStopId'],
               destinationStopId: Get.parameters['destinationStopId'],
               routeCode: Get.parameters['routeCode'],
-          serviceType: Get.parameters['serviceType'],
+              serviceType: Get.parameters['serviceType'],
             )),
     GetPage(name: cardDetails, page: () => const CardDetailsScreen()),
     GetPage(
@@ -253,7 +263,7 @@ class RouteHelper {
               sourcecompanycode: Get.parameters['sourcecompanycode'],
               destinationcompanycode: Get.parameters['destinationcompanycode'],
               routeCode: Get.parameters['routeCode'],
-          serviceType: Get.parameters['serviceType'],
+              serviceType: Get.parameters['serviceType'],
             )),
     GetPage(
         name: booking,
@@ -261,9 +271,11 @@ class RouteHelper {
               from: Get.parameters['from'],
             )),
     GetPage(name: forgetPassword, page: () => const ForgetPasswordScreen()),
-    GetPage(name: resetPassword, page: () => ResetPasswordScreen(
-      number: Get.parameters['number'],
-    )),
+    GetPage(
+        name: resetPassword,
+        page: () => ResetPasswordScreen(
+              number: Get.parameters['number'],
+            )),
     GetPage(name: changeLanguage, page: () => const ChooseLanguage()),
     GetPage(
         name: nearbyMap,

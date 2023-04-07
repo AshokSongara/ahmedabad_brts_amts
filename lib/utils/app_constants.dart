@@ -44,6 +44,7 @@ class AppConstant {
   static String transactionBookingList = "AddTransaction/booking";
   static String fareDiscount = "FareDiscount/Fixrate";
   static String discountRate = "FareDiscount/DiscountRate";
+  static String fiservPG = "FiservPG";
 
   //SharedPreferences Keys
   static String accessToken = "accessToken";

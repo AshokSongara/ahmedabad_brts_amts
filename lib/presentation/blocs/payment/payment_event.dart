@@ -9,6 +9,15 @@ abstract class PaymentEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class GetPaymentUrlEvent extends PaymentEvent {
+  final PaymentRequest paymentRequest;
+
+  const GetPaymentUrlEvent({required this.paymentRequest});
+
+  @override
+  List<Object> get props => [paymentRequest];
+}
+
 class GetQRCodeEvent extends PaymentEvent {
   final PaymentRequest paymentRequest;
 
