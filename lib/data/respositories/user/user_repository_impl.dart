@@ -18,6 +18,7 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/mobile_number_otp_respon
 import 'package:ahmedabad_brts_amts/data/responsemodels/notification_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/payment_URL_Response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/qr_code_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/ticket_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/user_profile_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/verify_otp_response.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dart';
@@ -321,8 +322,8 @@ class UserRepositoryImpl implements UserRepository {
       "discountype": body.discountype,
       "txnStatus": body.txnStatus,
       "merchantId": body.merchantId,
-      "sourcecompanycode": body.serviceType == "BRTS" ?  "0102" : "0103",
-      "destinationcompanycode": body.serviceType == "BRTS" ?  "0102" : "0103",
+      "sourcecompanycode": body.serviceType == "BRTS" ? "0102" : "0103",
+      "destinationcompanycode": body.serviceType == "BRTS" ? "0102" : "0103",
       "routeCode": body.routeCode,
     };
 
@@ -331,18 +332,17 @@ class UserRepositoryImpl implements UserRepository {
     Response response = await apiClient.postDataWithHeader(
         AppConstant.addTransaction, bodyData);
     PaymentInitResponseModel loginResponse =
-    PaymentInitResponseModel.fromJson(response.body);
+        PaymentInitResponseModel.fromJson(response.body);
     return loginResponse;
   }
 
   @override
   Future<BookingListResponse> getBookingListData(String data) async {
-    Response response =
-    await apiClient.getDataWihHeader(data == "home"
+    Response response = await apiClient.getDataWihHeader(data == "home"
         ? AppConstant.transactionList
         : AppConstant.transactionBookingList);
     BookingListResponse bookingListResponse =
-    BookingListResponse.fromJson(response.body);
+        BookingListResponse.fromJson(response.body);
 
     return bookingListResponse;
   }
@@ -360,22 +360,38 @@ class UserRepositoryImpl implements UserRepository {
     Response response =
         await apiClient.postData(AppConstant.changePassword, bodyData);
     ForgetPasswordResponse forgetPasswordResponse =
-    ForgetPasswordResponse.fromJson(response.body);
+        ForgetPasswordResponse.fromJson(response.body);
     return forgetPasswordResponse;
   }
 
   @override
   Future<PaymentURLResponse> getPaymentUrl(PaymentRequest body) async {
     Map payload = {
-      "amount": "20",
+      "startStopCode": body.sourceStopId,
+      "endStopCode": body.destinationStopId,
+      "discountype": body.discountype,
+      "routeType": body.serviceType == "BRTS" ? 1 : 2,
+      "routeCode": body.routeCode,
     };
 
     var bodyData = json.encode(payload);
 
-    Response response = await apiClient.postDataWithHeader(
-        AppConstant.fiservPG, bodyData);
+    Response response =
+        await apiClient.postDataWithHeader(AppConstant.fiservPG, bodyData);
     PaymentURLResponse paymentURLResponse =
-    PaymentURLResponse.fromJson(response.body);
+        PaymentURLResponse.fromJson(response.body);
     return paymentURLResponse;
+  }
+
+  @override
+  Future<TicketResponse> ticketData(String data) async {
+    Map payload = {"ticketNumber": data};
+
+    var bodyData = json.encode(payload);
+
+    Response response = await apiClient.postDataWithHeader(
+        AppConstant.transactionTicket, bodyData);
+    TicketResponse loginResponse = TicketResponse.fromJson(response.body);
+    return loginResponse;
   }
 }

@@ -53,7 +53,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
 
-
     Future.delayed(const Duration(milliseconds: 100), () {
       ThemeService().switchTheme(isAmts);
     });

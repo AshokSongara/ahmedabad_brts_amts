@@ -54,15 +54,15 @@ class _WebViewScreenState extends State<WebViewScreen> {
               "http://103.69.196.78:8082/SessionResponse?merchantId=470000012117828")) {
             print("###Parse HTML");
 
-            Future.delayed(Duration(seconds: 2), () async {
-              String html = await _controller
+            Future.delayed(const Duration(seconds: 5), () async {
+              String htmlContent = await _controller
                   .evaluateJavascript("document.documentElement.innerHTML");
 
-              List<String>? list = html.split(' ');
+             //  List<String>? list = html.split(' ');
+             //
+             // print("#####Data${list[422]}");
 
-             print("#####Data${list[422]}");
-
-              Navigator.pop(context, list[422]);
+              Navigator.pop(context, htmlContent);
 
             });
           }

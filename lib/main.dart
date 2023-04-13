@@ -20,6 +20,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/notification/notification
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/stop_search/stop_search_details_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/ticket/ticket_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/user_profile/user_profile_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/splash_screen.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
@@ -131,6 +132,9 @@ void main() async {
         ),
         BlocProvider<ChangePasswordBloc>(
           create: (context) => injector<ChangePasswordBloc>(),
+        ),
+        BlocProvider<TicketBloc>(
+          create: (context) => injector<TicketBloc>(),
         ),
       ],
       child: MyApp(),

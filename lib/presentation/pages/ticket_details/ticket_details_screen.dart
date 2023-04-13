@@ -1,13 +1,11 @@
 import 'dart:convert';
 
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
-import 'package:ahmedabad_brts_amts/data/requestmodels/payment_request.dart';
-import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
-import 'package:ahmedabad_brts_amts/presentation/blocs/payment/payment_bloc.dart';
-import 'package:ahmedabad_brts_amts/presentation/blocs/payment/payment_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/payment/payment_state.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/ticket/ticket_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/ticket/ticket_event.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/ticket/ticket_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/payment_details/dashed_line_widget.dart';
-import 'package:ahmedabad_brts_amts/presentation/pages/payment_webview/payment_webview_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/app_util.dart';
@@ -19,37 +17,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 
-class PaymentDetailsScreen extends StatefulWidget {
-  const PaymentDetailsScreen(
+class TicketDetailsScreen extends StatefulWidget {
+  const TicketDetailsScreen(
       {Key? key,
-      required this.sourceStopId,
-      required this.destinationStopId,
-      required this.discountype,
-      required this.txnStatus,
-      required this.merchantId,
-      required this.sourcecompanycode,
-      required this.destinationcompanycode,
-      required this.routeCode,
-      required this.serviceType})
+      required this.ticketNumber,})
       : super(key: key);
 
-  final String? sourceStopId;
-  final String? destinationStopId;
-  final String? discountype;
-  final String? txnStatus;
-  final String? merchantId;
-  final String? sourcecompanycode;
-  final String? destinationcompanycode;
-  final String? routeCode;
-  final String? serviceType;
+  final String? ticketNumber;
 
   @override
-  _PaymentDetailsScreenState createState() => _PaymentDetailsScreenState();
+  _TicketDetailsScreenState createState() => _TicketDetailsScreenState();
 }
 
-class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
+class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
   List<LocalSliderModel> modelList = [];
   CarouselController carouselController = CarouselController();
 
@@ -60,38 +41,8 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
   }
 
   getData() {
-    var paymentRequest = PaymentRequest(
-      sourceStopId: widget.sourceStopId,
-      destinationStopId: widget.destinationStopId,
-      discountype: widget.discountype,
-      txnStatus: "SUCCESS",
-      merchantId: "20230201022556",
-      sourcecompanycode: "102",
-      destinationcompanycode: "103",
-      routeCode: widget.routeCode,
-      serviceType: widget.serviceType,
-    );
-
-    BlocProvider.of<PaymentBloc>(context).add(
-      GetPaymentUrlEvent(paymentRequest: paymentRequest),
-    );
-  }
-
-  getPaymentData() {
-    var paymentRequest = PaymentRequest(
-      sourceStopId: widget.sourceStopId,
-      destinationStopId: widget.destinationStopId,
-      discountype: widget.discountype,
-      txnStatus: "SUCCESS",
-      merchantId: "20230201022556",
-      sourcecompanycode: "102",
-      destinationcompanycode: "103",
-      routeCode: widget.routeCode,
-      serviceType: widget.serviceType,
-    );
-
-    BlocProvider.of<PaymentBloc>(context).add(
-      GetQRCodeEvent(paymentRequest: paymentRequest),
+    BlocProvider.of<TicketBloc>(context).add(
+      GetTicketEvent(ticketNumber: widget.ticketNumber ?? ""),
     );
   }
 
@@ -135,25 +86,18 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: BlocConsumer<PaymentBloc, PaymentState>(
+                child: BlocConsumer<TicketBloc, TicketState>(
                   listener: (context, state) {
-                    if (state is PaymentUrlLoadingState) {
+                     if (state is TicketLoadingState) {
                       Loader.show(context);
-                    } else if (state is PaymentUrlSuccessState) {
+                    } else if (state is TicketSuccessState) {
                       Loader.hide();
-
-                      navigateToWebview(
-                          state.qrCodeResponse.data?.paymentURL ?? "");
-                    } else if (state is PaymentLoadingState) {
-                      Loader.show(context);
-                    } else if (state is PaymentSuccessState) {
-                      Loader.hide();
-                    } else if (state is PaymentFailedState) {
+                    } else if (state is TicketFailedState) {
                       Loader.hide();
                     }
                   },
                   builder: (context, state) {
-                    if (state is PaymentSuccessState) {
+                    if (state is TicketSuccessState) {
                       return Column(
                         children: [
                           const Padding(
@@ -227,10 +171,10 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                           children: [
                                                             Image.memory(
                                                                 base64Decode(
-                                                                    i.qrCode ??
+                                                                    i.qrCodeString ??
                                                                         "")),
                                                             Text(
-                                                              i.ticketNo ?? "",
+                                                              i.ticketNumber ?? "",
                                                               textAlign:
                                                                   TextAlign
                                                                       .center,
@@ -455,7 +399,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                               ),
                                               Text(
                                                 state.paymentInitResponseModel
-                                                        .data![0].ticketNo ??
+                                                        .data![0].ticketNumber ??
                                                     "",
                                                 style: satoshiSmall.copyWith(
                                                     fontWeight: FontWeight.w700,
@@ -626,7 +570,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                                 .darkGray),
                                                   ),
                                                   Text(
-                                                    "₹ ${getFare(int.parse(state.paymentInitResponseModel.data![0].fareAmt ?? "0"))}",
+                                                    "₹ ${getFare(int.parse(state.paymentInitResponseModel.data![0].tripFare.toString() ?? "0"))}",
                                                     style:
                                                         satoshiRegular.copyWith(
                                                             fontSize: Dimensions
@@ -717,7 +661,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                     color: AppColors.darkGray),
                                               ),
                                               Text(
-                                                "₹ ${getFare(int.parse(state.paymentInitResponseModel.data![0].fareAmt ?? "0"))}",
+                                                "₹ ${getFare(int.parse(state.paymentInitResponseModel.data![0].tripFare.toString() ?? "0"))}",
                                                 style: satoshiRegular.copyWith(
                                                     fontSize:
                                                         Dimensions.dp14.sp,
@@ -771,49 +715,6 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
   void dispose() {
     super.dispose();
     Loader.hide();
-  }
-
-  Future<void> navigateToWebview(url) async {
-    String data = await Navigator.of(context)
-        .push(MaterialPageRoute(builder: (context) => WebViewScreen(url: url)));
-
-    print("#####WEBVIEW${data}");
-    List<String>? list = data.split(' ');
-
-    print("#####TransactionID${list[54]}");
-    print("#####TransactionID${list[54].substring(26,43)}");
-
-    print("#####Transaction Amount${list[60]}");
-    print("#####Transaction Amount${list[60].substring(24,29)}");
-
-    print("#####Status${list[66]}");
-    print("#####Status${list[66].substring(24,32)}");
-
-    print("#####Transaction Type${list[71]}");
-    print("#####Transaction Type${list[71].substring(24,29)}");
-
-    print("#####Transaction status code${list[84]}");
-    print("#####Transaction status code${list[84].substring(24,28)}");
-
-    print("#####Transaction date${list[90]}");
-    print("#####Transaction date${list[90].substring(25,list[90].length)}");
-
-    print("#####Transaction currency${list[138]}");
-    print("#####Transaction currency${list[138].substring(25,28)}");
-
-    print("#####Transaction amount${list[102]}");
-    print("#####Transaction amount${list[102].substring(25,29)}");
-
-    print("#####payment method${list[114]}");
-    print("#####payment method${list[114].substring(25,35)}");
-
-    print("#####card sheme${list[132]}");
-    print("#####card sheme${list[132].substring(25,31)}");
-
-
-    if (data.isNotEmpty) {
-      getPaymentData();
-    }
   }
 }
 

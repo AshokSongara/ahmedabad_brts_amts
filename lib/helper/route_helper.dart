@@ -22,6 +22,7 @@ import 'package:ahmedabad_brts_amts/presentation/pages/payment_details/payment_d
 import 'package:ahmedabad_brts_amts/presentation/pages/search_route/search_route_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/search_route_number/search_route_number_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/search_stop/search_stop_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/ticket_details/ticket_details_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/transitmap/transitmap_screen.dart';
 import 'package:get/get.dart';
 import '../presentation/pages/dashboard/search_result_screen.dart';
@@ -60,6 +61,7 @@ class RouteHelper {
   static const String routeSearchTab = '/route_search_tab';
   static const String nearByStops = '/near_by_stops';
   static const String paymentWebview = '/paymentWebview';
+  static const String ticket = '/ticket';
 
   static String getInitialRoute() => initial;
 
@@ -164,10 +166,20 @@ class RouteHelper {
   static String getRouteSearchTab(String title, String routeCode) =>
       '$routeSearchTab?title=$title&routeCode=$routeCode';
 
+  static String getRouteTicket(String ticketNumber) =>
+      '$ticket?ticketNumber=$ticketNumber';
+
   static List<GetPage> routes = [
-    GetPage(name: paymentWebview, page: () =>  WebViewScreen(
-      url: Get.parameters['url'],
-    )),
+    GetPage(
+        name: paymentWebview,
+        page: () => WebViewScreen(
+              url: Get.parameters['url'],
+            )),
+    GetPage(
+        name: ticket,
+        page: () => TicketDetailsScreen(
+              ticketNumber: Get.parameters['ticketNumber'],
+            )),
     GetPage(name: initial, page: () => const SplashScreen()),
     GetPage(name: splash, page: () => const SplashScreen()),
     GetPage(name: login, page: () => const LoginScreen()),
