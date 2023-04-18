@@ -159,7 +159,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                               width: MediaQuery.of(context).size.width,
                               onPressed: () {
                                 RegExp regex = RegExp(
-                                    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+                                    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$');
                                 if (_otpController.text.toString().isEmpty) {
                                   showCustomSnackBar(
                                       "Please Otp", context);

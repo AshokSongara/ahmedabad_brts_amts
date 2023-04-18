@@ -326,7 +326,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     width: MediaQuery.of(context).size.width,
                     onPressed: () {
                       RegExp regex = RegExp(
-                          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+                          r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$');
 
                       if (FocusManager.instance.primaryFocus!.hasFocus) {
                         FocusManager.instance.primaryFocus?.unfocus();
