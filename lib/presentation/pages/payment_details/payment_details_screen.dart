@@ -21,6 +21,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
+import 'full_screen_qr_screen.dart';
+
 class PaymentDetailsScreen extends StatefulWidget {
   const PaymentDetailsScreen(
       {Key? key,
@@ -56,6 +58,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
   @override
   void initState() {
     super.initState();
+    disableScreenshot();
     getData();
   }
 
@@ -215,7 +218,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                               options: CarouselOptions(
                                                 scrollPhysics:
                                                     const NeverScrollableScrollPhysics(),
-                                                height: 200.0,
+                                                height: 210.0,
                                                 viewportFraction: 1,
                                                 enlargeFactor: 0.3,
                                               ),
@@ -225,10 +228,21 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                           builder: (context) {
                                                         return Column(
                                                           children: [
-                                                            Image.memory(
-                                                                base64Decode(
-                                                                    i.qrCode ??
-                                                                        "")),
+                                                            GestureDetector(
+                                                              child: Image.memory(
+                                                                  base64Decode(
+                                                                      i.qrCode ??
+                                                                          "")),
+                                                              onTap: () =>
+                                                                  Navigator
+                                                                      .push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          FullScreenQr(qrCode: i.qrCode ?? ""),
+                                                                    ),
+                                                                  ),
+                                                            ),
                                                             Text(
                                                               i.ticketNo ?? "",
                                                               textAlign:
@@ -533,7 +547,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                   Column(
                                                     children: [
                                                       Text(
-                                                        "Kids",
+                                                        "Child",
                                                         style: satoshiRegular
                                                             .copyWith(
                                                                 fontSize:
@@ -770,6 +784,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
   @override
   void dispose() {
     super.dispose();
+    disposeDisableScreenshot();
     Loader.hide();
   }
 

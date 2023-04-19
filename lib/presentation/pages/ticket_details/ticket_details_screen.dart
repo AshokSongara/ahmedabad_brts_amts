@@ -18,6 +18,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../payment_details/full_screen_qr_screen.dart';
+
 class TicketDetailsScreen extends StatefulWidget {
   const TicketDetailsScreen(
       {Key? key,
@@ -37,6 +39,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
   @override
   void initState() {
     super.initState();
+    disableScreenshot();
     getData();
   }
 
@@ -169,10 +172,21 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                           builder: (context) {
                                                         return Column(
                                                           children: [
-                                                            Image.memory(
-                                                                base64Decode(
-                                                                    i.qrCodeString ??
-                                                                        "")),
+                                                            GestureDetector(
+                                                              child: Image.memory(
+                                                                  base64Decode(
+                                                                      i.qrCodeString ??
+                                                                          "")),
+                                                              onTap: () =>
+                                                                  Navigator
+                                                                      .push(
+                                                                    context,
+                                                                    MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          FullScreenQr(qrCode: i.qrCodeString ?? ""),
+                                                                    ),
+                                                                  ),
+                                                            ),
                                                             Text(
                                                               i.ticketNumber ?? "",
                                                               textAlign:
@@ -477,7 +491,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                   Column(
                                                     children: [
                                                       Text(
-                                                        "Kids",
+                                                        "Child",
                                                         style: satoshiRegular
                                                             .copyWith(
                                                                 fontSize:
@@ -714,6 +728,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
   @override
   void dispose() {
     super.dispose();
+    disposeDisableScreenshot();
     Loader.hide();
   }
 }

@@ -9,8 +9,10 @@ class SourceDestinationWidget extends StatefulWidget {
   final String svgImageFile;
   final String title;
   final Widget contentTitle;
-  final String content;
-  const SourceDestinationWidget({Key? key,required this.svgImageFile,required this.contentTitle,required this.content,required this.title}) : super(key: key);
+  //final String content;
+  const SourceDestinationWidget({Key? key,required this.svgImageFile,required this.contentTitle,
+   // required this.content,
+    required this.title}) : super(key: key);
 
   @override
   _SourceDestinationWidgetState createState() => _SourceDestinationWidgetState();
@@ -58,15 +60,15 @@ class _SourceDestinationWidgetState extends State<SourceDestinationWidget> {
                           MainAxisAlignment.start,
                           children: [
                             widget.contentTitle,
-                            Text(
-                              widget.content,
-                              overflow: TextOverflow.fade,
-                              maxLines: 1,
-                              style: satoshiRegular.copyWith(
-                                  fontSize: Dimensions.dp12.sp,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.darkGray),
-                            ),
+                            // Text(
+                            //   widget.content,
+                            //   overflow: TextOverflow.fade,
+                            //   maxLines: 1,
+                            //   style: satoshiRegular.copyWith(
+                            //       fontSize: Dimensions.dp12.sp,
+                            //       fontWeight: FontWeight.w400,
+                            //       color: AppColors.darkGray),
+                            // ),
                           ],
                         ),
                       )
