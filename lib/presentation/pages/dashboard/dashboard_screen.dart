@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../maps/nearby_maps_screen.dart';
+
 class DashboardScreen extends StatefulWidget {
   DashboardScreen({Key? key, required this.pageIndex}) : super(key: key);
 
@@ -71,7 +73,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
               HomeScreen(),
               BookingScreen(from: "menu"),
               NotificationScreen(from: "menu"),
-              ProfileScreen(from: "menu")
+              NearByMapsScreen(from: "menu")
+            //  ProfileScreen(from: "menu")
             ],
           ),
         ),
@@ -152,19 +155,30 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             ),
                       label: "Notification",
                     ),
+                    // BottomNavigationBarItem(
+                    //     icon: _pageIndex == 3
+                    //         ? const Padding(
+                    //             padding: EdgeInsets.all(4.0),
+                    //             child: ImageIcon(
+                    //                 AssetImage(ImageConstant.iProfile)),
+                    //           )
+                    //         : const Padding(
+                    //             padding: EdgeInsets.all(4.0),
+                    //             child: ImageIcon(
+                    //                 AssetImage(ImageConstant.iProfile)),
+                    //           ),
+                    //     label: "Profile")
                     BottomNavigationBarItem(
                         icon: _pageIndex == 3
                             ? const Padding(
-                                padding: EdgeInsets.all(4.0),
-                                child: ImageIcon(
-                                    AssetImage(ImageConstant.iProfile)),
-                              )
+                          padding: EdgeInsets.all(4.0),
+                          child: Icon(Icons.near_me),
+                        )
                             : const Padding(
-                                padding: EdgeInsets.all(4.0),
-                                child: ImageIcon(
-                                    AssetImage(ImageConstant.iProfile)),
-                              ),
-                        label: "Profile")
+                          padding: EdgeInsets.all(4.0),
+                          child: Icon(Icons.near_me),
+                        ),
+                        label: "Near me")
                   ],
                   onTap: (index) {
                     bottomTapped(index);

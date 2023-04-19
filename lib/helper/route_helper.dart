@@ -25,6 +25,7 @@ import 'package:ahmedabad_brts_amts/presentation/pages/search_stop/search_stop_s
 import 'package:ahmedabad_brts_amts/presentation/pages/ticket_details/ticket_details_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/transitmap/transitmap_screen.dart';
 import 'package:get/get.dart';
+import '../presentation/pages/dashboard/profile_screen.dart';
 import '../presentation/pages/dashboard/search_result_screen.dart';
 import '../presentation/pages/lrf/splash_screen.dart';
 import '../presentation/pages/nearby_stops/nearby_stops_screen.dart';
@@ -34,6 +35,7 @@ class RouteHelper {
   static const String initial = '/';
   static const String splash = '/splash';
   static const String login = '/login';
+  static const String profile = '/profile';
   static const String signup = '/signup';
   static const String mobileNumber = '/mobileNumber';
   static const String enterCode = '/enterCode';
@@ -68,6 +70,9 @@ class RouteHelper {
   static String getSplashRoute() => splash;
 
   static String getLoginRoute() => login;
+
+  static String getProfileRoute() => profile;
+
 
   static String getSignUpRoute(String type) => '$signup?type=$type';
 
@@ -183,6 +188,7 @@ class RouteHelper {
     GetPage(name: initial, page: () => const SplashScreen()),
     GetPage(name: splash, page: () => const SplashScreen()),
     GetPage(name: login, page: () => const LoginScreen()),
+    GetPage(name: profile, page: () => const ProfileScreen(),),
     GetPage(
         name: signup,
         page: () => SignupScreen(

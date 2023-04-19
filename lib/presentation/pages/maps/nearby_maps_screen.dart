@@ -21,8 +21,8 @@ import 'package:latlong2/latlong.dart' as latLng;
 
 class NearByMapsScreen extends StatefulWidget {
   final String? stopType;
-
-  const NearByMapsScreen({Key? key,required this.stopType}) : super(key: key);
+  final String? from;
+  const NearByMapsScreen({Key? key, this.stopType, this.from}) : super(key: key);
 
   @override
   State<NearByMapsScreen> createState() => _NearByMapsScreenState();
@@ -78,9 +78,10 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
         return SafeArea(
           child: Column(
             children: [
-              const CustomToolbar(
+               CustomToolbar(
                 title: "near_me",
                 showOption: false,
+                back: widget.from == "home" ? true : false,
               ),
               Expanded(
                 flex: 1,

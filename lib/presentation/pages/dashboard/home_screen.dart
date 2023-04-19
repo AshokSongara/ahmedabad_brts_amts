@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/core/theme/theme_service.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/routes_request_model.dart';
@@ -9,6 +11,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dar
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/language/language_cubit.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/maps/nearby_maps_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/source_destination_widget.dart';
@@ -23,6 +26,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../data/responseModels/quick_link_internal_model.dart';
@@ -39,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool isAmts = false;
   List<QuickLinkInternalModel> quickLinkList = [];
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  double fontSize = Dimensions.dp18.sp;
+  double fontSize = Dimensions.dp16.sp;
   BrtsRoutesResponseModel? brtsRoutesResponseModel;
   BrtsStopResponseModel? operationBrtsStopResponseModel;
   RouteData? routeData;
@@ -107,35 +111,42 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: SvgPicture.asset(ImageConstant.iClose)),
                   Padding(
                     padding: const EdgeInsets.only(top: Dimensions.dp35),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          radius: Dimensions.dp22,
-                          backgroundColor: AppColors.profileBackgroundGrey,
-                          child: ClipOval(
-                            child: Image.asset(
-                              ImageConstant.iAvatar,
-                              height: Dimensions.dp41,
-                              width: Dimensions.dp38,
+                    child: GestureDetector(
+
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            radius: Dimensions.dp22,
+                            backgroundColor: AppColors.profileBackgroundGrey,
+                            child: ClipOval(
+                              child: Image.asset(
+                                ImageConstant.iAvatar,
+                                height: Dimensions.dp41,
+                                width: Dimensions.dp38,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(
-                          width: Dimensions.dp14,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              AppConstant.nameData.isEmpty ? "Guest User" : AppConstant.nameData,
-                              style: satoshiRegular.copyWith(
-                                  fontSize: Dimensions.dp19,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ],
+                          const SizedBox(
+                            width: Dimensions.dp14,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                AppConstant.nameData.isEmpty ? "Guest User" : AppConstant.nameData,
+                                style: satoshiRegular.copyWith(
+                                    fontSize: Dimensions.dp19,
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      onTap: (){
+                        AppConstant.IsLoggedIn.isNotEmpty ? Get.toNamed(RouteHelper.profile) :  Get.toNamed(RouteHelper.splash);
+
+                      },
                     ),
                   ),
                   const SizedBox(
@@ -199,7 +210,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     onTap: () {
-                      Get.toNamed(RouteHelper.getNearByMapScreenRoute(isAmts ? "2" : "1"));
+                     // Get.toNamed(RouteHelper.getNearByMapScreenRoute(isAmts ? "2" : "1"));
+                     Get.to( NearByMapsScreen(from: "home", stopType: isAmts ? "2" : "1",));
                     },
                   ),
                   ListTile(
@@ -275,7 +287,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     onTap: () {
-                      Navigator.pop(context);
+                      if (Platform.isAndroid) {
+                        Share.share("Playstore link");
+                      } else if (Platform.isIOS) {
+                        Share.share("Appstore Link");
+                      }
+
                     },
                   ),
                   ListTile(
@@ -579,11 +596,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: [
                               SourceDestinationWidget(
                                   title: "From",
-                                  content: isAmts
-                                      ? "Ahmedabad Municipal Transport Service"
-                                      : "Bus Rapid Transit System (BRTS)",
+                                  // content: isAmts
+                                  //     ? "Ahmedabad Municipal Transport Service"
+                                  //     : "Bus Rapid Transit System (BRTS)",
                                   contentTitle: SizedBox(
-                                    height: 28,
+                                    height: 42,
                                     child: GestureDetector(
                                       onTap: () async {
                                         setState(() {
@@ -626,11 +643,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 alignment: Alignment.bottomCenter,
                                 child: SourceDestinationWidget(
                                     title: "To",
-                                    content: isAmts
-                                        ? "Ahmedabad Municipal Transport Service"
-                                        : "Bus Rapid Transit System (BRTS)",
+                                    // content: isAmts
+                                    //     ? "Ahmedabad Municipal Transport Service"
+                                    //     : "Bus Rapid Transit System (BRTS)",
                                     contentTitle: SizedBox(
-                                      height: 28,
+                                      height: 42,
                                       child: GestureDetector(
                                         onTap: () async {
                                           setState(() {
