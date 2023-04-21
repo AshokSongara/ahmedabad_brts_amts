@@ -58,7 +58,7 @@ class _BookingScreenState extends State<BookingScreen> {
         child: Column(
           children: [
             CustomToolbar(
-              title: widget.from == "homes" ? "transaction_history" : "booking",
+              title: widget.from == "home" ? "transaction_history" : "booking",
               showOption: false,
               back: widget.from == "home" ? true : false,
             ),

@@ -173,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     onTap: () {
-                      Get.toNamed(RouteHelper.getBookingRoute("homes"));
+                      Get.toNamed(RouteHelper.getBookingRoute("home"));
                     },
                   ),
                   ListTile(

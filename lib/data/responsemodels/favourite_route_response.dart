@@ -43,9 +43,9 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     startStopId = json['startStopId'];
-    startStop = json['startStop'];
+    startStop = json['startStopName'];
     endStopId = json['endStopId'];
-    endStop = json['endStop'];
+    endStop = json['endStopName'];
     favouriteRoute = json['favouriteRoute'];
   }
 
@@ -53,9 +53,9 @@ class Data {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = id;
     data['startStopId'] = startStopId;
-    data['startStop'] = startStop;
+    data['startStopName'] = startStop;
     data['endStopId'] = endStopId;
-    data['endStop'] = endStop;
+    data['endStopName'] = endStop;
     data['favouriteRoute'] = favouriteRoute;
     return data;
   }
