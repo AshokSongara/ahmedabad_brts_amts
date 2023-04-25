@@ -897,7 +897,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Get.toNamed(RouteHelper.getMyRouteScreen());
         } else if (model.title == "near_me") {
           // Get.toNamed(RouteHelper.getNearByRoute());
-          Get.toNamed(RouteHelper.getNearByMapScreenRoute(isAmts ? "2" : "1"));
+          Get.to( NearByMapsScreen(from: "home", stopType: isAmts ? "2" : "1",));
         } else if (model.title == "smartrecharge") {
           Get.toNamed(RouteHelper.getCardDetailsRoute());
         } else if (model.title == "transitmap") {
