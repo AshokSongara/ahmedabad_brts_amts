@@ -151,7 +151,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             controller: _passwordController,
                             focusNode: _passwordFocus,
                             nextFocus: _passwordFocus,
-                            inputType: TextInputType.name,
+                            //inputType: TextInputType.name,
                             onChanged: () {},
                             onSubmit: () {},
                             capitalization: TextCapitalization.words,

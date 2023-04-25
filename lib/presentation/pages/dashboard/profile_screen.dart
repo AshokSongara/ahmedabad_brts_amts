@@ -21,9 +21,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final String? from;
+  //final String? from;
 
-  const ProfileScreen({Key? key,  this.from}) : super(key: key);
+  const ProfileScreen({Key? key,
+    //this.from
+  }) : super(key: key);
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
@@ -93,7 +95,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           CustomToolbar(
                             title: "profile",
                             showOption: false,
-                            back: widget.from == "home" ? true : false,
+                           // back: widget.from == "home" ? true : false,
                           ),
                           const SizedBox(height: Dimensions.dp25),
                           CircleAvatar(
