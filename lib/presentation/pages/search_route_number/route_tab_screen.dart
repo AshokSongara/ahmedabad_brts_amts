@@ -57,6 +57,7 @@ class _RouteTabScreenState extends State<RouteTabScreen>
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(height: 20,),
                 CustomToolbar(
                   title: widget.title,
                   showOption: false,
@@ -184,20 +185,20 @@ class _RouteTabScreenState extends State<RouteTabScreen>
                     ],
                   ),
                 ),
-                Container(
-                  margin: EdgeInsets.all(20),
-                  child: CustomButton(
-                    text: "Buy Ticket",
-                    width: MediaQuery.of(context).size.width,
-                    onPressed: () {},
-                    style: satoshiRegular.copyWith(
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.white),
-                    height: Dimensions.dp53,
-                    color: Theme.of(context).primaryColor,
-                  ),
-                ),
+                // Container(
+                //   margin: EdgeInsets.all(20),
+                //   child: CustomButton(
+                //     text: "Buy Ticket",
+                //     width: MediaQuery.of(context).size.width,
+                //     onPressed: () {},
+                //     style: satoshiRegular.copyWith(
+                //         fontSize: 20.sp,
+                //         fontWeight: FontWeight.w700,
+                //         color: Colors.white),
+                //     height: Dimensions.dp53,
+                //     color: Theme.of(context).primaryColor,
+                //   ),
+                // ),
               ],
             );
           }

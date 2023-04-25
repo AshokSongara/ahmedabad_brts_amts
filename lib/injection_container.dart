@@ -1,4 +1,5 @@
 import 'package:ahmedabad_brts_amts/api/api_client.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/favourite_routes_response_list.dart';
 import 'package:ahmedabad_brts_amts/data/respositories/routes/route_repository_impl.dart';
 import 'package:ahmedabad_brts_amts/data/respositories/user/user_repository_impl.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/routes/routes_repository.dart';
@@ -10,11 +11,13 @@ import 'package:ahmedabad_brts_amts/domain/usecases/route/delete_route_list_usec
 import 'package:ahmedabad_brts_amts/domain/usecases/route/discount_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/eta_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/fare_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/route/favourite_route_list_data_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/nearme_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/oneday_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/payment_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/route_details_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/route_stoplist_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/route/routes_on_map_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/search_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/favourite_route_list_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/ticket_usecase.dart';
@@ -36,6 +39,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/changePassword/change_pas
 import 'package:ahmedabad_brts_amts/presentation/blocs/contactus/contact_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/discount/discount_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_route_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list_data/favourite_route_data_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/feedback/feedback_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
@@ -60,6 +64,7 @@ import 'domain/usecases/nearby_stops_usecase.dart';
 import 'domain/usecases/route/add_favourite_usecase.dart';
 import 'domain/usecases/user/feddback_usecase.dart';
 import 'presentation/blocs/forgetpassword/forget_password_bloc.dart';
+import 'presentation/blocs/map_route_code/routes_on_map_bloc.dart';
 import 'presentation/blocs/notification/notification_bloc.dart';
 import 'presentation/blocs/search_route/search_route_bloc.dart';
 
@@ -176,6 +181,18 @@ Future<void> init() async {
     ),
   );
 
+  injector.registerFactory<FavouriteRouteListDataBloc>(
+        () => FavouriteRouteListDataBloc(
+      favouriteRouteListUseCase: injector(),
+    ),
+  );
+
+  injector.registerFactory<RoutesOnMapBloc>(
+        () => RoutesOnMapBloc(
+      routeOnMapUseCase: injector(),
+    ),
+  );
+
   injector.registerLazySingleton(() => SignupUserUseCase(injector()));
   injector.registerLazySingleton(() => QRUserUseCase(injector()));
   injector.registerLazySingleton(() => FareUseCase(injector()));
@@ -219,6 +236,10 @@ Future<void> init() async {
   injector.registerLazySingleton(() => ChangePasswordUseCase(injector()));
   injector.registerLazySingleton(() => PaymentUseCase(injector()));
   injector.registerLazySingleton(() => TicketUseCase(injector()));
+
+  //injector.registerLazySingleton(() => FavouriteRouteListUseCase(injector()));
+  injector.registerLazySingleton(() => RouteOnMapUseCase(injector()));
+  injector.registerLazySingleton(() => FavouriteRouteListDataUseCase(injector()));
 
   injector.registerLazySingleton<UserRepository>(
     () => UserRepositoryImpl(

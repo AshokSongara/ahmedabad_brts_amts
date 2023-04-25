@@ -26,16 +26,16 @@ import 'full_screen_qr_screen.dart';
 class PaymentDetailsScreen extends StatefulWidget {
   const PaymentDetailsScreen(
       {Key? key,
-        required this.sourceStopId,
-        required this.destinationStopId,
-        required this.discountype,
-        required this.txnStatus,
-        required this.merchantId,
-        required this.sourcecompanycode,
-        required this.destinationcompanycode,
-        required this.routeCode,
-        required this.serviceType,
-        required this.type})
+      required this.sourceStopId,
+      required this.destinationStopId,
+      required this.discountype,
+      required this.txnStatus,
+      required this.merchantId,
+      required this.sourcecompanycode,
+      required this.destinationcompanycode,
+      required this.routeCode,
+      required this.serviceType,
+      required this.type})
       : super(key: key);
 
   final String? sourceStopId;
@@ -66,14 +66,15 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
 
   getData() {
     var paymentRequest = PaymentRequest(
-      sourceStopId: widget.sourceStopId,
-      destinationStopId: widget.destinationStopId,
-      discountype: widget.discountype,
-      txnStatus: "SUCCESS",
-      merchantId: "20230201022556",
-      sourcecompanycode: "102",
-      destinationcompanycode: "103",
-    );
+        sourceStopId: widget.sourceStopId,
+        destinationStopId: widget.destinationStopId,
+        discountype: widget.discountype,
+        txnStatus: "SUCCESS",
+        merchantId: "20230201022556",
+        sourcecompanycode: "102",
+        destinationcompanycode: "103",
+        routeCode: widget.routeCode,
+        serviceType: widget.serviceType);
 
     BlocProvider.of<PaymentBloc>(context).add(
       GetPaymentUrlEvent(paymentRequest: paymentRequest),
@@ -194,35 +195,39 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                               child: Column(
                                                 children: [
                                                   GestureDetector(
-                                                    child: Image.memory(base64Decode(
-                                                        state.paymentInitResponseModel.data![0].qrCode ??
+                                                    child: Image.memory(
+                                                        base64Decode(state
+                                                                .paymentInitResponseModel
+                                                                .data![0]
+                                                                .qrCode ??
                                                             "")),
-                                                    onTap: () =>
-                                                        Navigator
-                                                            .push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                            builder:
-                                                                (context) =>
-                                                                FullScreenQr(qrCode: state.paymentInitResponseModel.data![0].qrCode ?? ""),
-                                                          ),
-                                                        ),
+                                                    onTap: () => Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            FullScreenQr(
+                                                                qrCode: state
+                                                                        .paymentInitResponseModel
+                                                                        .data![
+                                                                            0]
+                                                                        .qrCode ??
+                                                                    ""),
+                                                      ),
+                                                    ),
                                                   ),
                                                   Text(
-                                                    state.paymentInitResponseModel.data![0].ticketNo ??
+                                                    state.paymentInitResponseModel
+                                                            .data![0].ticketNo ??
                                                         "",
-                                                    textAlign:
-                                                    TextAlign
-                                                        .center,
-                                                    style: satoshiRegular.copyWith(
-                                                        fontSize: Dimensions
-                                                            .dp12
-                                                            .sp,
-                                                        fontWeight:
-                                                        FontWeight
-                                                            .w500,
-                                                        color: AppColors
-                                                            .darkGray),
+                                                    textAlign: TextAlign.center,
+                                                    style:
+                                                        satoshiRegular.copyWith(
+                                                            fontSize: Dimensions
+                                                                .dp12.sp,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: AppColors
+                                                                .darkGray),
                                                   ),
                                                 ],
                                               )),
@@ -284,7 +289,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                 textAlign: TextAlign.center,
                                                 style: satoshiRegular.copyWith(
                                                     fontSize:
-                                                    Dimensions.dp12.sp,
+                                                        Dimensions.dp12.sp,
                                                     fontWeight: FontWeight.w400,
                                                     color: AppColors.darkGray),
                                               ),
@@ -294,27 +299,27 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                             ),
                                             Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Expanded(
                                                   child: Text(
                                                     state
-                                                        .paymentInitResponseModel
-                                                        .data![0]
-                                                        .sourceStopName ??
+                                                            .paymentInitResponseModel
+                                                            .data![0]
+                                                            .sourceStopName ??
                                                         "",
                                                     style: satoshiRegular
                                                         .copyWith(
-                                                        fontSize: Dimensions
-                                                            .dp16.sp,
-                                                        fontWeight:
-                                                        FontWeight.w500,
-                                                        color: AppColors
-                                                            .darkGray,
-                                                        overflow:
-                                                        TextOverflow
-                                                            .ellipsis),
+                                                            fontSize: Dimensions
+                                                                .dp16.sp,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color: AppColors
+                                                                .darkGray,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis),
                                                   ),
                                                 ),
                                                 SvgPicture.asset(
@@ -322,26 +327,26 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                 Expanded(
                                                   child: Align(
                                                     alignment:
-                                                    Alignment.centerRight,
+                                                        Alignment.centerRight,
                                                     child: Text(
                                                       state
-                                                          .paymentInitResponseModel
-                                                          .data![0]
-                                                          .destinationStopName ??
+                                                              .paymentInitResponseModel
+                                                              .data![0]
+                                                              .destinationStopName ??
                                                           "",
                                                       style: satoshiRegular
                                                           .copyWith(
-                                                          fontSize:
-                                                          Dimensions
-                                                              .dp16.sp,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .w500,
-                                                          color: AppColors
-                                                              .darkGray,
-                                                          overflow:
-                                                          TextOverflow
-                                                              .ellipsis),
+                                                              fontSize:
+                                                                  Dimensions
+                                                                      .dp16.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: AppColors
+                                                                  .darkGray,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis),
                                                     ),
                                                   ),
                                                 ),
@@ -352,30 +357,30 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                             ),
                                             Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Text(
                                                   "Route Number",
                                                   style:
-                                                  satoshiRegular.copyWith(
-                                                      fontSize: Dimensions
-                                                          .dp12.sp,
-                                                      fontWeight:
-                                                      FontWeight.w500,
-                                                      color: AppColors
-                                                          .lightGray),
+                                                      satoshiRegular.copyWith(
+                                                          fontSize: Dimensions
+                                                              .dp12.sp,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: AppColors
+                                                              .lightGray),
                                                 ),
                                                 Text(
                                                   "Ticket Number",
                                                   style:
-                                                  satoshiRegular.copyWith(
-                                                      fontSize: Dimensions
-                                                          .dp12.sp,
-                                                      fontWeight:
-                                                      FontWeight.w500,
-                                                      color: AppColors
-                                                          .lightGray),
+                                                      satoshiRegular.copyWith(
+                                                          fontSize: Dimensions
+                                                              .dp12.sp,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: AppColors
+                                                              .lightGray),
                                                 ),
                                               ],
                                             ),
@@ -384,8 +389,8 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                             ),
                                             Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Row(
                                                   children: [
@@ -398,21 +403,21 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                     ),
                                                     Text(
                                                       state
-                                                          .paymentInitResponseModel
-                                                          .data![0]
-                                                          .routeCode
-                                                          ?.replaceAll(
-                                                          "[", "")
-                                                          .replaceAll(
-                                                          "]", "") ??
+                                                              .paymentInitResponseModel
+                                                              .data![0]
+                                                              .routeCode
+                                                              ?.replaceAll(
+                                                                  "[", "")
+                                                              .replaceAll(
+                                                                  "]", "") ??
                                                           "",
                                                       style:
-                                                      satoshiSmall.copyWith(
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .w700,
-                                                          color: AppColors
-                                                              .darkGray),
+                                                          satoshiSmall.copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                              color: AppColors
+                                                                  .darkGray),
                                                     ),
                                                     const SizedBox(
                                                       width: Dimensions.dp8,
@@ -424,13 +429,13 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                 ),
                                                 Text(
                                                   state.paymentInitResponseModel
-                                                      .data![0].ticketNo ??
+                                                          .data![0].ticketNo ??
                                                       "",
                                                   style: satoshiSmall.copyWith(
                                                       fontWeight:
-                                                      FontWeight.w700,
+                                                          FontWeight.w700,
                                                       color:
-                                                      AppColors.darkGray),
+                                                          AppColors.darkGray),
                                                 ),
                                               ],
                                             ),
@@ -450,7 +455,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                 "Passenger",
                                                 style: satoshiRegular.copyWith(
                                                     fontSize:
-                                                    Dimensions.dp12.sp,
+                                                        Dimensions.dp12.sp,
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors.lightGray),
                                               ),
@@ -460,8 +465,8 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                             ),
                                             Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Row(
                                                   children: [
@@ -471,32 +476,32 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                           "Adults",
                                                           style: satoshiRegular
                                                               .copyWith(
-                                                              fontSize:
-                                                              Dimensions
-                                                                  .dp12
-                                                                  .sp,
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .w700,
-                                                              color: AppColors
-                                                                  .darkGray),
+                                                                  fontSize:
+                                                                      Dimensions
+                                                                          .dp12
+                                                                          .sp,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700,
+                                                                  color: AppColors
+                                                                      .darkGray),
                                                         ),
                                                         Text(
                                                           state.paymentInitResponseModel
-                                                              .data?.length
-                                                              .toString() ??
+                                                                  .data?.length
+                                                                  .toString() ??
                                                               "1",
                                                           style: satoshiRegular
                                                               .copyWith(
-                                                              fontSize:
-                                                              Dimensions
-                                                                  .dp16
-                                                                  .sp,
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .w400,
-                                                              color: AppColors
-                                                                  .darkGray),
+                                                                  fontSize:
+                                                                      Dimensions
+                                                                          .dp16
+                                                                          .sp,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: AppColors
+                                                                      .darkGray),
                                                         ),
                                                       ],
                                                     ),
@@ -509,29 +514,29 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                           "Kids",
                                                           style: satoshiRegular
                                                               .copyWith(
-                                                              fontSize:
-                                                              Dimensions
-                                                                  .dp12
-                                                                  .sp,
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .w700,
-                                                              color: AppColors
-                                                                  .darkGray),
+                                                                  fontSize:
+                                                                      Dimensions
+                                                                          .dp12
+                                                                          .sp,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w700,
+                                                                  color: AppColors
+                                                                      .darkGray),
                                                         ),
                                                         Text(
                                                           "0",
                                                           style: satoshiRegular
                                                               .copyWith(
-                                                              fontSize:
-                                                              Dimensions
-                                                                  .dp16
-                                                                  .sp,
-                                                              fontWeight:
-                                                              FontWeight
-                                                                  .w400,
-                                                              color: AppColors
-                                                                  .darkGray),
+                                                                  fontSize:
+                                                                      Dimensions
+                                                                          .dp16
+                                                                          .sp,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400,
+                                                                  color: AppColors
+                                                                      .darkGray),
                                                         ),
                                                       ],
                                                     ),
@@ -543,30 +548,30 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                       "Total",
                                                       style: satoshiRegular
                                                           .copyWith(
-                                                          fontSize:
-                                                          Dimensions
-                                                              .dp12.sp,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .w700,
-                                                          color: AppColors
-                                                              .darkGray),
+                                                              fontSize:
+                                                                  Dimensions
+                                                                      .dp12.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w700,
+                                                              color: AppColors
+                                                                  .darkGray),
                                                     ),
                                                     Text(
                                                       state.paymentInitResponseModel
-                                                          .data?.length
-                                                          .toString() ??
+                                                              .data?.length
+                                                              .toString() ??
                                                           "1",
                                                       style: satoshiRegular
                                                           .copyWith(
-                                                          fontSize:
-                                                          Dimensions
-                                                              .dp16.sp,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .w400,
-                                                          color: AppColors
-                                                              .darkGray),
+                                                              fontSize:
+                                                                  Dimensions
+                                                                      .dp16.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w400,
+                                                              color: AppColors
+                                                                  .darkGray),
                                                     ),
                                                   ],
                                                 ),
@@ -586,106 +591,106 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                               children: [
                                                 Row(
                                                   mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
+                                                      CrossAxisAlignment.center,
                                                   children: [
                                                     Text(
                                                       "Total Fare",
                                                       style: satoshiRegular
                                                           .copyWith(
-                                                          fontSize:
-                                                          Dimensions
-                                                              .dp14.sp,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .w500,
-                                                          color: AppColors
-                                                              .darkGray),
+                                                              fontSize:
+                                                                  Dimensions
+                                                                      .dp14.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: AppColors
+                                                                  .darkGray),
                                                     ),
                                                     Text(
                                                       "₹ ${getFare(int.parse(state.paymentInitResponseModel.data![0].fareAmt ?? "0"))}",
                                                       style: satoshiRegular
                                                           .copyWith(
-                                                          fontSize:
-                                                          Dimensions
-                                                              .dp14.sp,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .w500,
-                                                          color: AppColors
-                                                              .darkGray),
+                                                              fontSize:
+                                                                  Dimensions
+                                                                      .dp14.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: AppColors
+                                                                  .darkGray),
                                                     ),
                                                   ],
                                                 ),
                                                 Row(
                                                   mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
+                                                      CrossAxisAlignment.center,
                                                   children: [
                                                     Text(
                                                       "GST Amount",
                                                       style: satoshiRegular
                                                           .copyWith(
-                                                          fontSize:
-                                                          Dimensions
-                                                              .dp14.sp,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .w500,
-                                                          color: AppColors
-                                                              .darkGray),
+                                                              fontSize:
+                                                                  Dimensions
+                                                                      .dp14.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: AppColors
+                                                                  .darkGray),
                                                     ),
                                                     Text(
                                                       "₹ 0.00",
                                                       style: satoshiRegular
                                                           .copyWith(
-                                                          fontSize:
-                                                          Dimensions
-                                                              .dp14.sp,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .w500,
-                                                          color: AppColors
-                                                              .darkGray),
+                                                              fontSize:
+                                                                  Dimensions
+                                                                      .dp14.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: AppColors
+                                                                  .darkGray),
                                                     ),
                                                   ],
                                                 ),
                                                 Row(
                                                   mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
+                                                      CrossAxisAlignment.center,
                                                   children: [
                                                     Text(
                                                       "Free cancellation charge",
                                                       style: satoshiRegular
                                                           .copyWith(
-                                                          fontSize:
-                                                          Dimensions
-                                                              .dp14.sp,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .w500,
-                                                          color: AppColors
-                                                              .darkGray),
+                                                              fontSize:
+                                                                  Dimensions
+                                                                      .dp14.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: AppColors
+                                                                  .darkGray),
                                                     ),
                                                     Text(
                                                       "₹ 0.00",
                                                       style: satoshiRegular
                                                           .copyWith(
-                                                          fontSize:
-                                                          Dimensions
-                                                              .dp14.sp,
-                                                          fontWeight:
-                                                          FontWeight
-                                                              .w500,
-                                                          color: AppColors
-                                                              .darkGray),
+                                                              fontSize:
+                                                                  Dimensions
+                                                                      .dp14.sp,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                              color: AppColors
+                                                                  .darkGray),
                                                     ),
                                                   ],
                                                 ),
@@ -693,32 +698,32 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                             ),
                                             Row(
                                               mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               crossAxisAlignment:
-                                              CrossAxisAlignment.center,
+                                                  CrossAxisAlignment.center,
                                               children: [
                                                 Text(
                                                   "Net Payable",
                                                   style:
-                                                  satoshiRegular.copyWith(
-                                                      fontSize: Dimensions
-                                                          .dp14.sp,
-                                                      fontWeight:
-                                                      FontWeight.w700,
-                                                      color: AppColors
-                                                          .darkGray),
+                                                      satoshiRegular.copyWith(
+                                                          fontSize: Dimensions
+                                                              .dp14.sp,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          color: AppColors
+                                                              .darkGray),
                                                 ),
                                                 Text(
                                                   "₹ ${getFare(int.parse(state.paymentInitResponseModel.data![0].fareAmt ?? "0"))}",
                                                   style:
-                                                  satoshiRegular.copyWith(
-                                                      fontSize: Dimensions
-                                                          .dp14.sp,
-                                                      fontWeight:
-                                                      FontWeight.w700,
-                                                      color: AppColors
-                                                          .primaryColor),
+                                                      satoshiRegular.copyWith(
+                                                          fontSize: Dimensions
+                                                              .dp14.sp,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          color: AppColors
+                                                              .primaryColor),
                                                 ),
                                               ],
                                             ),
@@ -776,9 +781,9 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
 
     if (data == null) {
       Navigator.of(context).pop();
-    } else if(data.length < 5000){
+    } else if (data.length < 5000) {
       Get.toNamed(RouteHelper.transactionStatus);
-    }else {
+    } else {
       print("#####WEBVIEW${data}");
       List<String>? list = data.split(' ');
       //
@@ -816,18 +821,18 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
         var paymentRequest = PaymentRequest(
             sourceStopId: widget.sourceStopId,
             destinationStopId:
-            widget.type!.isEmpty ? "PASS" : widget.destinationStopId,
+                widget.type!.isEmpty ? "PASS" : widget.destinationStopId,
             discountype: widget.discountype,
             txnStatus: "SUCCESS",
             merchantId: "470000012117828",
             sourcecompanycode: "102",
             destinationcompanycode: "103",
-            fpTransactionId: list![54].substring(27, 43),
+            fpTransactionId: list[54].substring(27, 43),
             routeCode: widget.routeCode,
             externalTxnId: list[127].substring(25, 36),
             merchantTxnId: list[108].substring(26, 61),
             transactionDateTime:
-            "${list[90].substring(25, list[90].length)}T${list[91].substring(0, 12)}");
+                "${list[90].substring(25, list[90].length)}T${list[91].substring(0, 12)}");
 
         BlocProvider.of<PaymentBloc>(context).add(
           GetQRCodeEvent(paymentRequest: paymentRequest),

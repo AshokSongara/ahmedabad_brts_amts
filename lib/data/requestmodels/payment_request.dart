@@ -44,6 +44,7 @@ class PaymentRequest {
     transactionDateTime = json['transactionDateTime'];
     routeCode = json['routeCode'];
     serviceType = json['serviceType'];
+
   }
 
   Map<String, dynamic> toJson() {

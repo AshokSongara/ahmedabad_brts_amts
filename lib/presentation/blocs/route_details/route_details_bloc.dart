@@ -74,7 +74,8 @@ class RouteDetailsBloc extends Bloc<RouteDetailsEvent, RouteDetailsState> {
           yield const RouteDetailsFailedState(
               errorMessage: "Something Went Wrong");
         }
-      } else {
+      }
+      else {
         if (event.request.routeTwo!.isNotEmpty) {
           RouteDetailsRepsonse routeDetailsRepsonse =
               await routeDetailsUseCase(Params(data: event.request));
@@ -113,6 +114,7 @@ class RouteDetailsBloc extends Bloc<RouteDetailsEvent, RouteDetailsState> {
                 errorMessage: "Something Went Wrong");
           }
         } else {
+
           RouteDetailsRepsonse routeDetailsRepsonse =
               await routeDetailsUseCase(Params(data: event.request));
 

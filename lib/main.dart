@@ -7,9 +7,11 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/changePassword/change_pas
 import 'package:ahmedabad_brts_amts/presentation/blocs/contactus/contact_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/discount/discount_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_route_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list_data/favourite_route_data_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/forgetpassword/forget_password_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/map_route_code/routes_on_map_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/nearby_stops/nearby_stops_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/one_day_pass/oneday_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/route_details/route_details_bloc.dart';
@@ -135,6 +137,12 @@ void main() async {
         ),
         BlocProvider<TicketBloc>(
           create: (context) => injector<TicketBloc>(),
+        ),
+        BlocProvider<RoutesOnMapBloc>(
+          create: (context) => injector<RoutesOnMapBloc>(),
+        ),
+        BlocProvider<FavouriteRouteListDataBloc>(
+          create: (context) => injector<FavouriteRouteListDataBloc>(),
         ),
       ],
       child: MyApp(),

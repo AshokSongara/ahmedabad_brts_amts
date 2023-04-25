@@ -36,8 +36,8 @@ class Data {
     this.arrivalTime,});
 
   Data.fromJson(dynamic json) {
-    routeId = json['routeId'];
-    routeShortName = json['routeShortName'];
+    routeId = json['routeCode'];
+    routeShortName = json['routeName'];
     routeLongName = json['routeLongName'];
     routeColor = json['routeColor'];
     routeTextColor = json['routeTextColor'];
@@ -54,8 +54,8 @@ class Data {
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['routeId'] = routeId;
-    map['routeShortName'] = routeShortName;
+    map['routeCode'] = routeId;
+    map['routeName'] = routeShortName;
     map['routeLongName'] = routeLongName;
     map['routeColor'] = routeColor;
     map['routeTextColor'] = routeTextColor;

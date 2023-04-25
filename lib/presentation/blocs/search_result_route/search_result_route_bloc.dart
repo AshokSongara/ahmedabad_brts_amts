@@ -32,44 +32,49 @@ class SearchResultRouteBloc
       SearchRouteResponse searchRouteResponse = await searchResultRouteUseCase(
           Params(data: event.searchRouteRequest));
 
-      for (int i = 0; i < searchRouteResponse.data!.length; i++) {
-        RouteDetailsRequest routeDetailsRequest = RouteDetailsRequest();
+      // for (int i = 0; i < searchRouteResponse.data!.length; i++) {
+      RouteDetailsRequest routeDetailsRequest = RouteDetailsRequest();
 
-        routeDetailsRequest.routeCode =
-            searchRouteResponse.data![i].routeDetails![0].routeCode ?? "";
+      routeDetailsRequest.routeCode =
+          searchRouteResponse.data![0].routeDetails![0].routeCode ?? "";
 
-        if (searchRouteResponse.data![i].interChanges!.isNotEmpty) {
-          routeDetailsRequest.startCode =
-              searchRouteResponse.data![i].routeDetails![0].startStopCode;
-          routeDetailsRequest.endCode = searchRouteResponse
-              .data![i]
-              .routeDetails![
-                  searchRouteResponse.data![i].routeDetails!.length - 1]
-              .endStopCode;
-        } else {
-          routeDetailsRequest.startCode = searchRouteResponse
-              .data![i].routeDetails![0].startStopCode
-              .toString();
-          routeDetailsRequest.endCode = searchRouteResponse
-              .data![i].routeDetails![0].endStopCode
-              .toString();
-        }
-
-        routeDetailsRequest.originStart = event.searchRouteRequest.startCode;
-
-        routeDetailsRequest.originEnd = event.searchRouteRequest.endCode;
-
-        routeDetailsRequest.serviceType = event.searchRouteRequest.serviceType;
-
-        FareResponse fareResponse =
-            await fareUseCase(Params(data: routeDetailsRequest));
-
-        searchRouteResponse.data![i].fare = fareResponse.data!.adult;
+      if (searchRouteResponse.data![0].interChanges!.isNotEmpty) {
+        routeDetailsRequest.startCode =
+            searchRouteResponse.data![0].routeDetails![0].startStopCode;
+        routeDetailsRequest.endCode = searchRouteResponse
+            .data![0]
+            .routeDetails![
+                searchRouteResponse.data![0].routeDetails!.length - 1]
+            .endStopCode;
+      } else {
+        routeDetailsRequest.startCode = searchRouteResponse
+            .data![0].routeDetails![0].startStopCode
+            .toString();
+        routeDetailsRequest.endCode = searchRouteResponse
+            .data![0].routeDetails![0].endStopCode
+            .toString();
       }
+
+      routeDetailsRequest.originStart = event.searchRouteRequest.startCode;
+
+      routeDetailsRequest.originEnd = event.searchRouteRequest.endCode;
+
+      routeDetailsRequest.serviceType = event.searchRouteRequest.serviceType;
+
+      FareResponse fareResponse =
+          await fareUseCase(Params(data: routeDetailsRequest));
+
+      //searchRouteResponse.data![i].fare = fareResponse.data!.adult;
+      searchRouteResponse.data?.forEach((element) {
+        element.fare = fareResponse.data!.adult;
+      });
+      //   }
 
       if (searchRouteResponse.succeeded == true) {
         yield SearchResultRouteSuccessState(
-            searchRouteResponse: searchRouteResponse, value: false,error: false);
+            searchRouteResponse: searchRouteResponse,
+            value: false,
+            error: false);
       } else {
         yield SearchResultRouteFailedState();
       }
@@ -81,7 +86,9 @@ class SearchResultRouteBloc
 
       if (addFavouriteResponse.succeeded == true) {
         yield SearchResultRouteSuccessState(
-            searchRouteResponse: event.searchRouteResponse, value: true,error: false);
+            searchRouteResponse: event.searchRouteResponse,
+            value: true,
+            error: false);
       } else {
         yield SearchResultRouteSuccessState(
             searchRouteResponse: event.searchRouteResponse,
