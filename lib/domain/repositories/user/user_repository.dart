@@ -10,6 +10,7 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_mod
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/contactus_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/favourite_route_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/favourite_routes_response_list.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/feedback_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/forget_password_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/login_response.dart';
@@ -50,4 +51,5 @@ abstract class UserRepository {
   Future<BookingListResponse> getBookingListData(String data);
   Future<TicketResponse> ticketData(String data);
   Future<PaymentURLResponse> getPaymentUrl(PaymentRequest body);
+  Future<FavouriteRoutesResponseList> getFavouriteRouteData();
 }

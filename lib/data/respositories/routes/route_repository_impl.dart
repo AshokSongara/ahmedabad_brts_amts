@@ -18,6 +18,7 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/nearme_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/one_day_pass_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/route_details_repsonse.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/route_stoplist_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/routes_on_map_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/search_route_response.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/routes/routes_repository.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
@@ -192,6 +193,28 @@ class RouteRepositoryImpl implements RouteRepository {
     try {} on Exception catch (exception) {
     } catch (error) {}
     return discountResponse;
+  }
+
+  @override
+  Future<AddFavouriteResponse> addFavouriteRouteCode(
+      AddRouteRequest routeCode) async {
+    Response response = await apiClient.postDataWithHeader(
+        AppConstant.favouriteRoute + routeCode.routeID.toString() ?? "", "");
+    AddFavouriteResponse addFavouriteResponse =
+    AddFavouriteResponse.fromJson(response.body);
+
+    try {} on Exception catch (exception) {
+    } catch (error) {}
+    return addFavouriteResponse;
+  }
+
+  @override
+  Future<RoutesOnMapResponse> routesOnMap(String body) async {
+    Response response =
+    await apiClient.getData("Route/stopcoordinates/" + body);
+    RoutesOnMapResponse deleteFavouriteResponse =
+    RoutesOnMapResponse.fromJson(response.body);
+    return deleteFavouriteResponse;
   }
 
 }

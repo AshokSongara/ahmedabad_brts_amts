@@ -13,13 +13,15 @@ class CustomToolbar extends StatelessWidget {
       this.showOption = true,
         this.actionWidget,
         this.showFavourite = false,
-      this.back = true})
+      this.back = true,
+        this.type = "Normal"})
       : super(key: key);
   final String title;
   final bool showOption;
   final bool showFavourite;
   final bool back;
   final Widget? actionWidget;
+  final String? type;
 
   @override
   Widget build(BuildContext context) {

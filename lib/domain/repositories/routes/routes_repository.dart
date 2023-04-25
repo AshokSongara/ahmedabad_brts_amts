@@ -15,6 +15,7 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/nearme_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/one_day_pass_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/route_details_repsonse.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/route_stoplist_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/routes_on_map_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/search_route_response.dart';
 import 'package:hive/hive.dart';
 
@@ -35,4 +36,6 @@ abstract class RouteRepository {
   Future<AddFavouriteResponse> addFavourite(AddFavouriteRequest body);
   Future<OneDayPassResponse> oneDayPass();
   Future<DiscountResponse> discount();
+  Future<AddFavouriteResponse> addFavouriteRouteCode(AddRouteRequest routeCode);
+  Future<RoutesOnMapResponse> routesOnMap(String body);
 }

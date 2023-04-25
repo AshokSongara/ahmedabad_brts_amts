@@ -11,6 +11,7 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_mod
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/contactus_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/favourite_route_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/favourite_routes_response_list.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/feedback_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/forget_password_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/login_response.dart';
@@ -393,5 +394,15 @@ class UserRepositoryImpl implements UserRepository {
         AppConstant.transactionTicket, bodyData);
     TicketResponse loginResponse = TicketResponse.fromJson(response.body);
     return loginResponse;
+  }
+
+  @override
+  Future<FavouriteRoutesResponseList> getFavouriteRouteData() async {
+    Response response =
+    await apiClient.getDataWihHeader(AppConstant.favouriteRouteListData);
+    FavouriteRoutesResponseList favouriteRouteResponse =
+    FavouriteRoutesResponseList.fromJson(response.body);
+
+    return favouriteRouteResponse;
   }
 }

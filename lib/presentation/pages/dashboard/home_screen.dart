@@ -229,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     onTap: () {
-                      Get.toNamed(RouteHelper.getMyRouteScreen());
+                      Get.toNamed(RouteHelper.getMyRoutesTabScreenRoute());
                     },
                   ),
                   if (!isAmts)
@@ -801,7 +801,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   "",
                               width: MediaQuery.of(context).size.width,
                               onPressed: () {
-                                Get.toNamed(RouteHelper.getoneDayPassRoute());
+                                newFromSelectedStation != null ?
+                                Get.toNamed(RouteHelper.getoneDayPassRoute(newFromSelectedStation!.stationCode ?? "")) :
+                                showCustomSnackBar(
+                                    "Please Select Source",
+                                    context,
+                                    isError: true);
                               },
                               style: satoshiRegular.copyWith(
                                   fontSize: 20.sp,
@@ -894,7 +899,7 @@ class _HomeScreenState extends State<HomeScreen> {
         if (model.title == "feedback") {
           Get.toNamed(RouteHelper.getFeedbackRoute());
         } else if (model.title == "myroutes") {
-          Get.toNamed(RouteHelper.getMyRouteScreen());
+          Get.toNamed(RouteHelper.getMyRoutesTabScreenRoute());
         } else if (model.title == "near_me") {
           // Get.toNamed(RouteHelper.getNearByRoute());
           Get.toNamed(RouteHelper.getNearByMapScreenRoute(isAmts ? "2" : "1"));

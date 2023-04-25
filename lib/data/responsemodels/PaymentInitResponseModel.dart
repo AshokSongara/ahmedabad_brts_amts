@@ -52,6 +52,7 @@ class Data {
     qrCode = json['qrCode'];
     sourceStopName = json['sourceStopName'];
     destinationStopName = json['destinationStopName'];
+    routeCode = json['routeCode'];
   }
   String? transactionStatus;
   String? ticketNo;
@@ -64,6 +65,7 @@ class Data {
   String? qrCode;
   String? sourceStopName;
   String? destinationStopName;
+  String? routeCode;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -78,6 +80,7 @@ class Data {
     map['qrCode'] = qrCode;
     map['sourceStopName'] = sourceStopName;
     map['destinationStopName'] = destinationStopName;
+    map['routeCode'] = routeCode;
     return map;
   }
 

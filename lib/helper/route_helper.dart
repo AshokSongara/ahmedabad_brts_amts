@@ -2,6 +2,9 @@ import 'package:ahmedabad_brts_amts/presentation/pages/booking/booking_screen.da
 import 'package:ahmedabad_brts_amts/presentation/pages/card_details/card_detail_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/contact_us/contact_us_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/dashboard_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/failed_transaction/failes_transaction_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/maps/polyline_page.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/my_routes/my_routes_tab_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/payment_webview/payment_webview_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/route_details/route_details_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/feedback/feedback_screen.dart';
@@ -64,6 +67,9 @@ class RouteHelper {
   static const String nearByStops = '/near_by_stops';
   static const String paymentWebview = '/paymentWebview';
   static const String ticket = '/ticket';
+  static const String myRoutesTabScreen = '/myRoutesTabScreen';
+  static const String polyLinePage = '/polyLinePage';
+  static const String transactionStatus = '/transactionStatus';
 
   static String getInitialRoute() => initial;
 
@@ -72,7 +78,6 @@ class RouteHelper {
   static String getLoginRoute() => login;
 
   static String getProfileRoute() => profile;
-
 
   static String getSignUpRoute(String type) => '$signup?type=$type';
 
@@ -127,7 +132,8 @@ class RouteHelper {
 
   static String getSearchRoute() => searchRoute;
 
-  static String getoneDayPassRoute() => oneDayPassRoute;
+  static String getoneDayPassRoute(String sourceStationID) =>
+      "$oneDayPassRoute?sourceStationID=$sourceStationID";
 
   static String getContactUsRoute() => contactUs;
 
@@ -174,6 +180,13 @@ class RouteHelper {
   static String getRouteTicket(String ticketNumber) =>
       '$ticket?ticketNumber=$ticketNumber';
 
+  static String getTransactionStatusRoute() => transactionStatus;
+
+  static String getPolyLinePageRoute(String routeCode) =>
+      '$polyLinePage?routeCode=$routeCode';
+
+  static String getMyRoutesTabScreenRoute() => myRoutesTabScreen;
+
   static List<GetPage> routes = [
     GetPage(
         name: paymentWebview,
@@ -188,14 +201,29 @@ class RouteHelper {
     GetPage(name: initial, page: () => const SplashScreen()),
     GetPage(name: splash, page: () => const SplashScreen()),
     GetPage(name: login, page: () => const LoginScreen()),
-    GetPage(name: profile, page: () => const ProfileScreen(),),
+    GetPage(
+      name: profile,
+      page: () => const ProfileScreen(),
+    ),
+    GetPage(
+        name: polyLinePage,
+        page: () => PolylinePage(
+              routeCode: Get.parameters['routeCode'],
+            )),
+    GetPage(name: myRoutesTabScreen, page: () => const MyRoutesTabScreen()),
+    GetPage(
+        name: transactionStatus, page: () => const FailedTransactionScreen()),
     GetPage(
         name: signup,
         page: () => SignupScreen(
               type: Get.parameters['type'],
             )),
     GetPage(name: mobileNumber, page: () => const MobileNumberScreen()),
-    GetPage(name: oneDayPassRoute, page: () => const OneDayPassScreen()),
+    GetPage(
+        name: oneDayPassRoute,
+        page: () => OneDayPassScreen(
+              sourceStationID: Get.parameters['sourceStationID'],
+            )),
     GetPage(name: contactUs, page: () => const ContactUsScreen()),
     GetPage(
         name: searchStopScreen,
@@ -282,6 +310,7 @@ class RouteHelper {
               destinationcompanycode: Get.parameters['destinationcompanycode'],
               routeCode: Get.parameters['routeCode'],
               serviceType: Get.parameters['serviceType'],
+              type: Get.parameters['type'],
             )),
     GetPage(
         name: booking,

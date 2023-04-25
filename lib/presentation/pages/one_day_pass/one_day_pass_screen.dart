@@ -1,6 +1,9 @@
+import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
+import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/one_day_pass_response.dart';
@@ -25,7 +28,9 @@ class LocalModel {
 }
 
 class OneDayPassScreen extends StatefulWidget {
-  const OneDayPassScreen({Key? key}) : super(key: key);
+  final String? sourceStationID;
+
+  const OneDayPassScreen({Key? key,required this.sourceStationID}) : super(key: key);
 
   @override
   _OneDayPassScreenState createState() => _OneDayPassScreenState();
@@ -161,7 +166,16 @@ class _OneDayPassScreenState extends State<OneDayPassScreen> {
                             child: CustomButton(
                               text: "Proceed To Payment",
                               width: MediaQuery.of(context).size.width,
-                              onPressed: () {},
+                              onPressed: () {
+                                if (data == null) {
+                                  showCustomSnackBar(
+                                      "Please Select Ticket", context,
+                                      isError: true);
+                                } else {
+                                  getPaymentUrl(
+                                      data!.discountTypeCode.toString() ?? "");
+                                }
+                              },
                               style: satoshiRegular.copyWith(
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w700,
@@ -184,6 +198,11 @@ class _OneDayPassScreenState extends State<OneDayPassScreen> {
         ),
       ),
     );
+  }
+
+  getPaymentUrl(String discountType) {
+    Get.toNamed(RouteHelper.getPaymentDetailsRoute(widget.sourceStationID ?? "",
+        "PASS" ?? "", data!.discountTypeCode ?? "", "", "", "", "", "" ?? "",""));
   }
 
   @override

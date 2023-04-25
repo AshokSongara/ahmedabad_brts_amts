@@ -59,6 +59,7 @@ class ImageConstant {
   static const String iLangauge = 'assets/images/ic_language.svg';
   static const String iStop = 'assets/images/ic_stop.svg';
   static const String iAMTS = 'assets/images/ic_amts.png';
+  static const String failed = 'assets/images/failed.svg';
 
   //Temp Images
   static const String iAvatar = 'assets/images/img_avatar.png';
