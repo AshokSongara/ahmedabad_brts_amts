@@ -414,7 +414,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                   Column(
                                                     children: [
                                                       Text(
-                                                        "Kids",
+                                                        "Child",
                                                         style: satoshiRegular
                                                             .copyWith(
                                                             fontSize:
