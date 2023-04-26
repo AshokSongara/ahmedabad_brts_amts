@@ -4,6 +4,7 @@ import 'package:ahmedabad_brts_amts/data/respositories/routes/route_repository_i
 import 'package:ahmedabad_brts_amts/data/respositories/user/user_repository_impl.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/routes/routes_repository.dart';
 import 'package:ahmedabad_brts_amts/domain/repositories/user/user_repository.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/add_route_stoplist_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/add_route_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/add_transaction_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/booking_list_usecase.dart';
@@ -236,6 +237,7 @@ Future<void> init() async {
   injector.registerLazySingleton(() => ChangePasswordUseCase(injector()));
   injector.registerLazySingleton(() => PaymentUseCase(injector()));
   injector.registerLazySingleton(() => TicketUseCase(injector()));
+  injector.registerLazySingleton(() => AddRouteStopListUseCase(injector()));
 
   //injector.registerLazySingleton(() => FavouriteRouteListUseCase(injector()));
   injector.registerLazySingleton(() => RouteOnMapUseCase(injector()));
@@ -255,6 +257,6 @@ Future<void> init() async {
   );
   injector.registerLazySingleton(() => NearByStopsUseCase(injector()));
   injector.registerFactory<StopSearchDetailsBloc>(
-    () => StopSearchDetailsBloc(routeStopListUseCase: injector()),
+    () => StopSearchDetailsBloc(routeStopListUseCase: injector(),addRouteStopListUseCase: injector()),
   );
 }

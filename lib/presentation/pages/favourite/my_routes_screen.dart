@@ -84,8 +84,8 @@ class _MyRoutesScreenTwoState extends State<MyRoutesScreenTwo> {
               );
             } else if (state is FavouriteRouteFailedState) {
               Loader.hide();
-              showCustomSnackBar("Something Went Wrong Try again..!", context,
-                  isError: false);
+              // showCustomSnackBar("Something Went Wrong Try again..!", context,
+              //     isError: false);
             }
             return Container();
           },

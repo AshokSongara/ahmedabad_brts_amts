@@ -72,11 +72,7 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
             if (state is FavouriteRouteSuccessState) {
               return Column(
                 children: [
-                  // const SizedBox(height: Dimensions.dp25),
-                  const CustomToolbar(
-                    title: "myroutes",
-                    showOption: false,
-                  ),
+                  const SizedBox(height: Dimensions.dp25),
                   Expanded(
                     child: state.favouriteRouteResponse.data!.isNotEmpty
                         ? ListView.builder(
@@ -169,82 +165,60 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
               children: [
                 Row(
                   children: [
-                    // Container(
-                    //   width: MediaQuery.of(context).size.width / 2,
-                    //   child: Text(
-                    //     model.favouriteRoute ?? "",
-                    //     style: satoshiRegular.copyWith(
-                    //         fontSize: Dimensions.dp16.sp,
-                    //         fontWeight: FontWeight.w500,
-                    //         color: AppColors.darkGray),
-                    //     overflow: TextOverflow.ellipsis,
-                    //   ),
-                    // ),
-                    Row(
+                    Column(
                       children: [
-                        Row(
-                          children: [
-                            Column(
-                              children: [
-                                Container(
-                                  height: 15,
-                                  width: 15,
-                                  decoration: BoxDecoration(
-                                      color: AppColors.primaryColor,
-                                      borderRadius: BorderRadius.circular(50)),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  height: 25,
-                                  width: 2,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  height: 15,
-                                  width: 15,
-                                  decoration: BoxDecoration(
-                                      color: AppColors.primaryColor,
-                                      borderRadius: BorderRadius.circular(50)),
-                                ),
-                              ],
-                            ),
-                          ],
+                        Container(
+                          height: 15,
+                          width: 15,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.circular(50)),
                         ),
                         SizedBox(
-                          width: 20,
+                          height: 5,
                         ),
-                        Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  model.startStop!,
-                                  maxLines: 2,
-                                  style: satoshiRegularSmallDark,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                SizedBox(
-                                  height: 25,
-                                ),
-                                Container(
-                                  width: 250,
-                                  child: Text(
-                                    model.endStop!,
-                                    maxLines: 2,
-                                    style: satoshiRegularSmallDark,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ],
-                            )
-                          ],
-                        )
+                        Container(
+                          height: 25,
+                          width: 2,
+                          color: Colors.black,
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          height: 15,
+                          width: 15,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).primaryColor,
+                              borderRadius: BorderRadius.circular(50)),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  width: 20,
+                ),
+                Row(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          model.startStop!,
+                          maxLines: 2,
+                          style: satoshiRegularSmallDark,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                        Text(
+                          model.endStop!,
+                          maxLines: 2,
+                          style: satoshiRegularSmallDark,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ],
                     )
                   ],

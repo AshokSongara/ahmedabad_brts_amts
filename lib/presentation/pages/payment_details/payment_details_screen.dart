@@ -95,7 +95,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
           child: Column(
             children: [
               CustomToolbar(
-                title: "Payment Details",
+                title: "payment_details",
                 type: "Payment",
                 showOption: false,
                 actionWidget: Container(
@@ -116,11 +116,6 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                       const SizedBox(
                         width: Dimensions.dp4,
                       ),
-                      // Text("10:10 mins",
-                      //     style: satoshiRegular.copyWith(
-                      //         fontSize: Dimensions.dp10.sp,
-                      //         fontWeight: FontWeight.w500,
-                      //         color: AppColors.primaryColor)),
                     ],
                   ),
                 ),
@@ -786,36 +781,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
     } else {
       print("#####WEBVIEW${data}");
       List<String>? list = data.split(' ');
-      //
-      print("#####TransactionID${list[54]}");
-      print("#####TransactionID${list[54].substring(26, 43)}");
 
-      print("#####Transaction Amount${list[60]}");
-      print("#####Transaction Amount${list[60].substring(24, 29)}");
-
-      print("#####Status${list[66]}");
-      print("#####Status${list[66].substring(24, 32)}");
-
-      print("#####Transaction Type${list[71]}");
-      print("#####Transaction Type${list[71].substring(24, 29)}");
-
-      print("#####Transaction status code${list[84]}");
-      print("#####Transaction status code${list[84].substring(24, 28)}");
-
-      print("#####Transaction date${list[90]}");
-      print("#####Transaction date${list[90].substring(25, list[90].length)}");
-
-      print("#####Transaction currency${list[138]}");
-      print("#####Transaction currency${list[138].substring(25, 28)}");
-
-      print("#####Transaction amount${list[102]}");
-      print("#####Transaction amount${list[102].substring(25, 29)}");
-
-      print("#####payment method${list[114]}");
-      print("#####payment method${list[114].substring(25, 35)}");
-
-      print("#####card sheme${list[132]}");
-      print("#####card sheme${list[132].substring(25, 31)}");
 
       if (data.isNotEmpty) {
         var paymentRequest = PaymentRequest(

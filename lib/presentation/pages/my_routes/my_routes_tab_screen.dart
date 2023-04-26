@@ -27,12 +27,12 @@ class _MyRoutesTabScreenState extends State<MyRoutesTabScreen> with SingleTicker
         backgroundColor: AppColors.appBackground,
         body: Column(
           children: [
-            CustomToolbar(
-              title: "Favourites",
+            const CustomToolbar(
+              title: "myroutes",
               showOption: false,
             ),
             Container(
-              color: AppColors.primaryColor,
+              color: Theme.of(context).primaryColor,
               child: TabBar(
                 controller: _tabController,
                 labelPadding: EdgeInsets.zero, // this one make 0
@@ -49,9 +49,9 @@ class _MyRoutesTabScreenState extends State<MyRoutesTabScreen> with SingleTicker
             Expanded(
               flex: 3,
               child: TabBarView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 controller: _tabController,
-                children: [
+                children: const [
                   MyRoutesScreen(),
                   MyRoutesScreenTwo(),
                 ],
