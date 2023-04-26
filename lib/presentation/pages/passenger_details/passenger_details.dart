@@ -173,7 +173,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                                 "",
                                                 "",
                                                 widget.routeCode ?? "",
-                                                widget.serviceType ?? ""));
+                                                widget.serviceType ?? "","Payment"));
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(

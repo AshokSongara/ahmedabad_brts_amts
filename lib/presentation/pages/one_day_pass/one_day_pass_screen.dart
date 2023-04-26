@@ -202,7 +202,7 @@ class _OneDayPassScreenState extends State<OneDayPassScreen> {
 
   getPaymentUrl(String discountType) {
     Get.toNamed(RouteHelper.getPaymentDetailsRoute(widget.sourceStationID ?? "",
-        "PASS" ?? "", data!.discountTypeCode ?? "", "", "", "", "", "" ?? "",""));
+        "PASS" ?? "", data!.discountTypeCode ?? "", "", "", "", "", "" ?? "","",""));
   }
 
   @override

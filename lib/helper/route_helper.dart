@@ -146,8 +146,9 @@ class RouteHelper {
           String sourcecompanycode,
           String destinationcompanycode,
           String routeCode,
-          String serviceType) =>
-      '$payment?sourceStopId=$sourceStopId&destinationStopId=$destinationStopId&discountype=$discountype&txnStatus=$txnStatus&merchantId=$merchantId&sourcecompanycode=$sourcecompanycode&destinationcompanycode=$destinationcompanycode&routeCode=$routeCode&serviceType=$serviceType';
+          String serviceType,
+      String type) =>
+      '$payment?sourceStopId=$sourceStopId&destinationStopId=$destinationStopId&discountype=$discountype&txnStatus=$txnStatus&merchantId=$merchantId&sourcecompanycode=$sourcecompanycode&destinationcompanycode=$destinationcompanycode&routeCode=$routeCode&serviceType=$serviceType&type=$type';
 
   static String getBookingRoute(String from) => '$booking?from=$from';
 
