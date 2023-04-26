@@ -23,7 +23,7 @@ import '../payment_details/full_screen_qr_screen.dart';
 class TicketDetailsScreen extends StatefulWidget {
   const TicketDetailsScreen(
       {Key? key,
-      required this.ticketNumber,})
+        required this.ticketNumber,})
       : super(key: key);
 
   final String? ticketNumber;
@@ -58,40 +58,14 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
           children: [
             // const SizedBox(height: Dimensions.dp25),
             CustomToolbar(
-              title: "Payment Details",
+              title: "payment_details",
               showOption: false,
-              actionWidget: Container(
-                padding: const EdgeInsets.all(Dimensions.dp3),
-                decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(
-                        Dimensions.dp5,
-                      ),
-                    ),
-                    border: Border.all(color: AppColors.primaryColor)),
-                child: Row(
-                  children: [
-                    SvgPicture.asset(
-                      ImageConstant.iRedTime,
-                      color: AppColors.primaryColor,
-                    ),
-                    const SizedBox(
-                      width: Dimensions.dp4,
-                    ),
-                    Text("10:10 mins",
-                        style: satoshiRegular.copyWith(
-                            fontSize: Dimensions.dp10.sp,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.primaryColor)),
-                  ],
-                ),
-              ),
             ),
             Expanded(
               child: SingleChildScrollView(
                 child: BlocConsumer<TicketBloc, TicketState>(
                   listener: (context, state) {
-                     if (state is TicketLoadingState) {
+                    if (state is TicketLoadingState) {
                       Loader.show(context);
                     } else if (state is TicketSuccessState) {
                       Loader.hide();
@@ -145,81 +119,43 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                     Row(
                                       children: [
                                         Expanded(
-                                            flex: 1,
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                carouselController
-                                                    .previousPage();
-                                              },
-                                              child: SvgPicture.asset(
-                                                  ImageConstant.iLeftArrow),
-                                            )),
-                                        Expanded(
                                             flex: 2,
-                                            child: CarouselSlider(
-                                              carouselController:
-                                                  carouselController,
-                                              options: CarouselOptions(
-                                                scrollPhysics:
-                                                    const NeverScrollableScrollPhysics(),
-                                                height: 200.0,
-                                                viewportFraction: 1,
-                                                enlargeFactor: 0.3,
-                                              ),
-                                              items: state
-                                                  .paymentInitResponseModel.data
-                                                  ?.map((i) => Builder(
-                                                          builder: (context) {
-                                                        return Column(
-                                                          children: [
-                                                            GestureDetector(
-                                                              child: Image.memory(
-                                                                  base64Decode(
-                                                                      i.qrCodeString ??
-                                                                          "")),
-                                                              onTap: () =>
-                                                                  Navigator
-                                                                      .push(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                      builder: (context) =>
-                                                                          FullScreenQr(qrCode: i.qrCodeString ?? ""),
-                                                                    ),
-                                                                  ),
-                                                            ),
-                                                            Text(
-                                                              i.ticketNumber ?? "",
-                                                              textAlign:
-                                                                  TextAlign
-                                                                      .center,
-                                                              style: satoshiRegular.copyWith(
-                                                                  fontSize:
-                                                                      Dimensions
-                                                                          .dp12
-                                                                          .sp,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  color: AppColors
-                                                                      .darkGray),
-                                                            ),
-                                                          ],
-                                                        );
-                                                      }))
-                                                  .toList(),
+                                            child: Column(
+                                              children: [
+                                                GestureDetector(
+                                                  child: Image.memory(
+                                                      base64Decode(
+                                                          state.paymentInitResponseModel.data![0].qrCodeString ??
+                                                              "")),
+                                                  onTap: () =>
+                                                      Navigator
+                                                          .push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              FullScreenQr(qrCode: state.paymentInitResponseModel.data![0].qrCodeString ?? ""),
+                                                        ),
+                                                      ),
+                                                ),
+                                                Text(
+                                                  state.paymentInitResponseModel.data![0].ticketNumber ?? "",
+                                                  textAlign:
+                                                  TextAlign
+                                                      .center,
+                                                  style: satoshiRegular.copyWith(
+                                                      fontSize:
+                                                      Dimensions
+                                                          .dp12
+                                                          .sp,
+                                                      fontWeight:
+                                                      FontWeight
+                                                          .w500,
+                                                      color: AppColors
+                                                          .darkGray),
+                                                ),
+                                              ],
                                             )),
-                                        Expanded(
-                                            flex: 1,
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                carouselController.nextPage();
-                                              },
-                                              child: RotatedBox(
-                                                  quarterTurns: 2,
-                                                  child: SvgPicture.asset(
-                                                    ImageConstant.iLeftArrow,
-                                                  )),
-                                            )),
+
                                       ],
                                     ),
                                     const SizedBox(
@@ -247,8 +183,8 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                 ),
                                 child: Column(
                                   children: [
-                                    const Padding(
-                                      padding: EdgeInsets.only(
+                                    Padding(
+                                      padding: const EdgeInsets.only(
                                           left: Dimensions.dp8,
                                           right: Dimensions.dp8),
                                       child: DashLineView(
@@ -286,25 +222,25 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                           ),
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                             children: [
                                               Expanded(
                                                 child: Text(
                                                   state
-                                                          .paymentInitResponseModel
-                                                          .data![0]
-                                                          .sourceStopName ??
+                                                      .paymentInitResponseModel
+                                                      .data![0]
+                                                      .sourceStopName ??
                                                       "",
                                                   style:
-                                                      satoshiRegular.copyWith(
-                                                          fontSize: Dimensions
-                                                              .dp16.sp,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: AppColors
-                                                              .darkGray,
-                                                          overflow: TextOverflow
-                                                              .ellipsis),
+                                                  satoshiRegular.copyWith(
+                                                      fontSize: Dimensions
+                                                          .dp16.sp,
+                                                      fontWeight:
+                                                      FontWeight.w500,
+                                                      color: AppColors
+                                                          .darkGray,
+                                                      overflow: TextOverflow
+                                                          .ellipsis),
                                                 ),
                                               ),
                                               SvgPicture.asset(
@@ -312,24 +248,24 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                               Expanded(
                                                 child: Align(
                                                   alignment:
-                                                      Alignment.centerRight,
+                                                  Alignment.centerRight,
                                                   child: Text(
                                                     state
-                                                            .paymentInitResponseModel
-                                                            .data![0]
-                                                            .destinationStopName ??
+                                                        .paymentInitResponseModel
+                                                        .data![0]
+                                                        .destinationStopName ??
                                                         "",
                                                     style: satoshiRegular
                                                         .copyWith(
-                                                            fontSize: Dimensions
-                                                                .dp16.sp,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color: AppColors
-                                                                .darkGray,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis),
+                                                        fontSize: Dimensions
+                                                            .dp16.sp,
+                                                        fontWeight:
+                                                        FontWeight.w500,
+                                                        color: AppColors
+                                                            .darkGray,
+                                                        overflow:
+                                                        TextOverflow
+                                                            .ellipsis),
                                                   ),
                                                 ),
                                               ),
@@ -340,13 +276,13 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                           ),
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
                                                 "Route Number",
                                                 style: satoshiRegular.copyWith(
                                                     fontSize:
-                                                        Dimensions.dp12.sp,
+                                                    Dimensions.dp12.sp,
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors.lightGray),
                                               ),
@@ -354,7 +290,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                 "Ticket Number",
                                                 style: satoshiRegular.copyWith(
                                                     fontSize:
-                                                        Dimensions.dp12.sp,
+                                                    Dimensions.dp12.sp,
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors.lightGray),
                                               ),
@@ -365,7 +301,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                           ),
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                             children: [
                                               Row(
                                                 children: [
@@ -377,13 +313,15 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                     width: Dimensions.dp3,
                                                   ),
                                                   Text(
-                                                    "4U",
+                                                    state.paymentInitResponseModel
+                                                        .data![0].routeCode?.replaceAll("[", "").replaceAll("]", "") ??
+                                                        "",
                                                     style:
-                                                        satoshiSmall.copyWith(
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            color: AppColors
-                                                                .darkGray),
+                                                    satoshiSmall.copyWith(
+                                                        fontWeight:
+                                                        FontWeight.w700,
+                                                        color: AppColors
+                                                            .darkGray),
                                                   ),
                                                   const SizedBox(
                                                     width: Dimensions.dp8,
@@ -393,27 +331,12 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                   const SizedBox(
                                                     width: Dimensions.dp8,
                                                   ),
-                                                  SvgPicture.asset(
-                                                    ImageConstant.iRedBus,
-                                                    color: AppColors.darkGray,
-                                                  ),
-                                                  const SizedBox(
-                                                    width: Dimensions.dp4,
-                                                  ),
-                                                  Text(
-                                                    "15D",
-                                                    style:
-                                                        satoshiSmall.copyWith(
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            color: AppColors
-                                                                .darkGray),
-                                                  ),
+
                                                 ],
                                               ),
                                               Text(
                                                 state.paymentInitResponseModel
-                                                        .data![0].ticketNumber ??
+                                                    .data![0].ticketNumber ??
                                                     "",
                                                 style: satoshiSmall.copyWith(
                                                     fontWeight: FontWeight.w700,
@@ -446,7 +369,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                           ),
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                             children: [
                                               Row(
                                                 children: [
@@ -456,32 +379,32 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                         "Adults",
                                                         style: satoshiRegular
                                                             .copyWith(
-                                                                fontSize:
-                                                                    Dimensions
-                                                                        .dp12
-                                                                        .sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                                color: AppColors
-                                                                    .darkGray),
+                                                            fontSize:
+                                                            Dimensions
+                                                                .dp12
+                                                                .sp,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w700,
+                                                            color: AppColors
+                                                                .darkGray),
                                                       ),
                                                       Text(
                                                         state.paymentInitResponseModel
-                                                                .data?.length
-                                                                .toString() ??
+                                                            .data?.length
+                                                            .toString() ??
                                                             "1",
                                                         style: satoshiRegular
                                                             .copyWith(
-                                                                fontSize:
-                                                                    Dimensions
-                                                                        .dp16
-                                                                        .sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: AppColors
-                                                                    .darkGray),
+                                                            fontSize:
+                                                            Dimensions
+                                                                .dp16
+                                                                .sp,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w400,
+                                                            color: AppColors
+                                                                .darkGray),
                                                       ),
                                                     ],
                                                   ),
@@ -491,32 +414,32 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                   Column(
                                                     children: [
                                                       Text(
-                                                        "Child",
+                                                        "Kids",
                                                         style: satoshiRegular
                                                             .copyWith(
-                                                                fontSize:
-                                                                    Dimensions
-                                                                        .dp12
-                                                                        .sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w700,
-                                                                color: AppColors
-                                                                    .darkGray),
+                                                            fontSize:
+                                                            Dimensions
+                                                                .dp12
+                                                                .sp,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w700,
+                                                            color: AppColors
+                                                                .darkGray),
                                                       ),
                                                       Text(
                                                         "0",
                                                         style: satoshiRegular
                                                             .copyWith(
-                                                                fontSize:
-                                                                    Dimensions
-                                                                        .dp16
-                                                                        .sp,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400,
-                                                                color: AppColors
-                                                                    .darkGray),
+                                                            fontSize:
+                                                            Dimensions
+                                                                .dp16
+                                                                .sp,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .w400,
+                                                            color: AppColors
+                                                                .darkGray),
                                                       ),
                                                     ],
                                                   ),
@@ -527,27 +450,27 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                   Text(
                                                     "Total",
                                                     style:
-                                                        satoshiRegular.copyWith(
-                                                            fontSize: Dimensions
-                                                                .dp12.sp,
-                                                            fontWeight:
-                                                                FontWeight.w700,
-                                                            color: AppColors
-                                                                .darkGray),
+                                                    satoshiRegular.copyWith(
+                                                        fontSize: Dimensions
+                                                            .dp12.sp,
+                                                        fontWeight:
+                                                        FontWeight.w700,
+                                                        color: AppColors
+                                                            .darkGray),
                                                   ),
                                                   Text(
                                                     state.paymentInitResponseModel
-                                                            .data?.length
-                                                            .toString() ??
+                                                        .data?.length
+                                                        .toString() ??
                                                         "1",
                                                     style:
-                                                        satoshiRegular.copyWith(
-                                                            fontSize: Dimensions
-                                                                .dp16.sp,
-                                                            fontWeight:
-                                                                FontWeight.w400,
-                                                            color: AppColors
-                                                                .darkGray),
+                                                    satoshiRegular.copyWith(
+                                                        fontSize: Dimensions
+                                                            .dp16.sp,
+                                                        fontWeight:
+                                                        FontWeight.w400,
+                                                        color: AppColors
+                                                            .darkGray),
                                                   ),
                                                 ],
                                               ),
@@ -567,94 +490,94 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                             children: [
                                               Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                MainAxisAlignment
+                                                    .spaceBetween,
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
+                                                CrossAxisAlignment.center,
                                                 children: [
                                                   Text(
                                                     "Total Fare",
                                                     style:
-                                                        satoshiRegular.copyWith(
-                                                            fontSize: Dimensions
-                                                                .dp14.sp,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color: AppColors
-                                                                .darkGray),
+                                                    satoshiRegular.copyWith(
+                                                        fontSize: Dimensions
+                                                            .dp14.sp,
+                                                        fontWeight:
+                                                        FontWeight.w500,
+                                                        color: AppColors
+                                                            .darkGray),
                                                   ),
                                                   Text(
                                                     "₹ ${getFare(int.parse(state.paymentInitResponseModel.data![0].tripFare.toString() ?? "0"))}",
                                                     style:
-                                                        satoshiRegular.copyWith(
-                                                            fontSize: Dimensions
-                                                                .dp14.sp,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color: AppColors
-                                                                .darkGray),
+                                                    satoshiRegular.copyWith(
+                                                        fontSize: Dimensions
+                                                            .dp14.sp,
+                                                        fontWeight:
+                                                        FontWeight.w500,
+                                                        color: AppColors
+                                                            .darkGray),
                                                   ),
                                                 ],
                                               ),
                                               Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                MainAxisAlignment
+                                                    .spaceBetween,
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
+                                                CrossAxisAlignment.center,
                                                 children: [
                                                   Text(
                                                     "GST Amount",
                                                     style:
-                                                        satoshiRegular.copyWith(
-                                                            fontSize: Dimensions
-                                                                .dp14.sp,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color: AppColors
-                                                                .darkGray),
+                                                    satoshiRegular.copyWith(
+                                                        fontSize: Dimensions
+                                                            .dp14.sp,
+                                                        fontWeight:
+                                                        FontWeight.w500,
+                                                        color: AppColors
+                                                            .darkGray),
                                                   ),
                                                   Text(
                                                     "₹ 0.00",
                                                     style:
-                                                        satoshiRegular.copyWith(
-                                                            fontSize: Dimensions
-                                                                .dp14.sp,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color: AppColors
-                                                                .darkGray),
+                                                    satoshiRegular.copyWith(
+                                                        fontSize: Dimensions
+                                                            .dp14.sp,
+                                                        fontWeight:
+                                                        FontWeight.w500,
+                                                        color: AppColors
+                                                            .darkGray),
                                                   ),
                                                 ],
                                               ),
                                               Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                MainAxisAlignment
+                                                    .spaceBetween,
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
+                                                CrossAxisAlignment.center,
                                                 children: [
                                                   Text(
                                                     "Free cancellation charge",
                                                     style:
-                                                        satoshiRegular.copyWith(
-                                                            fontSize: Dimensions
-                                                                .dp14.sp,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color: AppColors
-                                                                .darkGray),
+                                                    satoshiRegular.copyWith(
+                                                        fontSize: Dimensions
+                                                            .dp14.sp,
+                                                        fontWeight:
+                                                        FontWeight.w500,
+                                                        color: AppColors
+                                                            .darkGray),
                                                   ),
                                                   Text(
                                                     "₹ 0.00",
                                                     style:
-                                                        satoshiRegular.copyWith(
-                                                            fontSize: Dimensions
-                                                                .dp14.sp,
-                                                            fontWeight:
-                                                                FontWeight.w500,
-                                                            color: AppColors
-                                                                .darkGray),
+                                                    satoshiRegular.copyWith(
+                                                        fontSize: Dimensions
+                                                            .dp14.sp,
+                                                        fontWeight:
+                                                        FontWeight.w500,
+                                                        color: AppColors
+                                                            .darkGray),
                                                   ),
                                                 ],
                                               ),
@@ -662,15 +585,15 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                           ),
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            MainAxisAlignment.spaceBetween,
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.center,
+                                            CrossAxisAlignment.center,
                                             children: [
                                               Text(
                                                 "Net Payable",
                                                 style: satoshiRegular.copyWith(
                                                     fontSize:
-                                                        Dimensions.dp14.sp,
+                                                    Dimensions.dp14.sp,
                                                     fontWeight: FontWeight.w700,
                                                     color: AppColors.darkGray),
                                               ),
@@ -678,10 +601,10 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                 "₹ ${getFare(int.parse(state.paymentInitResponseModel.data![0].tripFare.toString() ?? "0"))}",
                                                 style: satoshiRegular.copyWith(
                                                     fontSize:
-                                                        Dimensions.dp14.sp,
+                                                    Dimensions.dp14.sp,
                                                     fontWeight: FontWeight.w700,
                                                     color:
-                                                        AppColors.primaryColor),
+                                                    AppColors.primaryColor),
                                               ),
                                             ],
                                           ),

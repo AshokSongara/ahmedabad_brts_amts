@@ -46,7 +46,7 @@ class AppConstant {
   static String discountRate = "FareDiscount/DiscountRate";
   static String fiservPG = "FiservPG";
   static String transactionTicket = "AddTransaction/Ticket";
-  static String favouriteRoute = "Favourite/Route/";
+  static String favouriteRoute = "Favourite/routeCode/";
   static String favouriteRouteListData = "Favourite/GetAllFavouritebyRoute";
 
   //SharedPreferences Keys

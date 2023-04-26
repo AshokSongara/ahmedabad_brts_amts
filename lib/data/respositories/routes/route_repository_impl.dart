@@ -198,8 +198,10 @@ class RouteRepositoryImpl implements RouteRepository {
   @override
   Future<AddFavouriteResponse> addFavouriteRouteCode(
       AddRouteRequest routeCode) async {
+
+    //Favourite/routeCode/{routeCode}/routeType/{routeType}
     Response response = await apiClient.postDataWithHeader(
-        AppConstant.favouriteRoute + routeCode.routeID.toString() ?? "", "");
+        "${AppConstant.favouriteRoute}${routeCode.routeID}/routeType/${routeCode.isAmts ? "2" : "1"}", "");
     AddFavouriteResponse addFavouriteResponse =
     AddFavouriteResponse.fromJson(response.body);
 
@@ -211,7 +213,7 @@ class RouteRepositoryImpl implements RouteRepository {
   @override
   Future<RoutesOnMapResponse> routesOnMap(String body) async {
     Response response =
-    await apiClient.getData("Route/stopcoordinates/" + body);
+    await apiClient.getData("Route/stopcoordinates/$body");
     RoutesOnMapResponse deleteFavouriteResponse =
     RoutesOnMapResponse.fromJson(response.body);
     return deleteFavouriteResponse;
