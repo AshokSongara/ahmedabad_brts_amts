@@ -832,7 +832,8 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
             externalTxnId: list[127].substring(25, 36),
             merchantTxnId: list[108].substring(26, 61),
             transactionDateTime:
-                "${list[90].substring(25, list[90].length)}T${list[91].substring(0, 12)}");
+                "${list[90].substring(25, list[90].length)}T${list[91].substring(0, 12)}",
+        serviceType: widget.serviceType);
 
         BlocProvider.of<PaymentBloc>(context).add(
           GetQRCodeEvent(paymentRequest: paymentRequest),

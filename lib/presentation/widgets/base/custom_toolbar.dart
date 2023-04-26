@@ -1,3 +1,4 @@
+import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/localization/app_localizations.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
@@ -34,7 +35,15 @@ class CustomToolbar extends StatelessWidget {
         children: [
           GestureDetector(
               onTap: () {
-                Get.back();
+                if (type == "Payment") {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(RouteHelper.dashboard, (Route<dynamic> route) => false);
+                }else if (type == "Passenger") {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(RouteHelper.dashboard, (Route<dynamic> route) => false);
+                }else{
+                  Get.back();
+                }
               },
               child: Visibility(
                   visible: back,
