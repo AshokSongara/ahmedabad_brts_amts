@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
-import 'package:ahmedabad_brts_amts/data/responsemodels/nearme_response.dart';
 import 'package:latlong2/latlong.dart' as latLng;
 import 'package:ahmedabad_brts_amts/data/responsemodels/routes_on_map_response.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/map_route_code/routes_on_map_bloc.dart';
@@ -52,6 +51,7 @@ class _PolylinePageState extends State<PolylinePage> {
           nearMeResponse = state.routesOnMapResponse;
           if (nearMeResponse != null) {
             for (int i = 0; i < nearMeResponse!.data!.length; i++) {
+
               points.add(LatLng(double.parse(nearMeResponse!.data![i].stopLatitude ?? "") ?? 0.0,
                   double.parse(nearMeResponse!.data![i].stopLongitude ?? "") ?? 0.0));
               markers.add(Marker(
@@ -110,14 +110,14 @@ class _PolylinePageState extends State<PolylinePage> {
                 body: Column(
                   children: [
                     CustomToolbar(
-                      title: "Near You",
+                      title: "near_you",
                       showOption: false,
                     ),
                     Flexible(
                       child: FlutterMap(
                         options: MapOptions(
                           center:
-                          LatLng(points[0].latitude, points[0].longitude),
+                          LatLng(points.isEmpty ? 0.0 :  points[0].latitude, points.isEmpty ? 0.0 : points[0].longitude),
                           zoom: 14.2,
                           onTap: (tapPosition, point) {
                             setState(() {});

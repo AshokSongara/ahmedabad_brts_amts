@@ -28,13 +28,15 @@ class Data {
   int? id;
   String? routeId;
   String? routeLongName;
+  String? routeCode;
 
-  Data({this.id, this.routeId, this.routeLongName});
+  Data({this.id, this.routeId, this.routeLongName,this.routeCode});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     routeId = json['routeId'];
     routeLongName = json['routeLongName'];
+    routeCode = json['routeCode'];
   }
 
   Map<String, dynamic> toJson() {
@@ -42,6 +44,7 @@ class Data {
     data['id'] = this.id;
     data['routeId'] = this.routeId;
     data['routeLongName'] = this.routeLongName;
+    data['routeCode'] = this.routeCode;
     return data;
   }
 }

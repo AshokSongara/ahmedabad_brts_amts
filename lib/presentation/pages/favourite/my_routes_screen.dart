@@ -103,7 +103,7 @@ class _MyRoutesScreenTwoState extends State<MyRoutesScreenTwo> {
   Widget getMyRoutesWidget(Data model) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(RouteHelper.getPolyLinePageRoute(model.routeId ?? ""));
+        Get.toNamed(RouteHelper.getPolyLinePageRoute(model.routeCode ?? ""));
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 19),
