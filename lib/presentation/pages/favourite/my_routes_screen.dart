@@ -137,7 +137,7 @@ class _MyRoutesScreenTwoState extends State<MyRoutesScreenTwo> {
                           height: 15,
                           width: 15,
                           decoration: BoxDecoration(
-                              color: AppColors.primaryColor,
+                              color: Theme.of(context).primaryColor,
                               borderRadius: BorderRadius.circular(50)),
                         ),
                         SizedBox(
@@ -155,7 +155,7 @@ class _MyRoutesScreenTwoState extends State<MyRoutesScreenTwo> {
                           height: 15,
                           width: 15,
                           decoration: BoxDecoration(
-                              color: AppColors.primaryColor,
+                              color:Theme.of(context).primaryColor,
                               borderRadius: BorderRadius.circular(50)),
                         ),
                       ],

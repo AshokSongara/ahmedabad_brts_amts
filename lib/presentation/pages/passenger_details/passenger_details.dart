@@ -186,12 +186,12 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                               ),
                                             ),
                                             border: Border.all(
-                                                color: AppColors.primaryColor)),
+                                                color: Theme.of(context).primaryColor)),
                                         child: Text("Book Ticket",
                                             style: satoshiRegular.copyWith(
                                                 fontSize: Dimensions.dp15.sp,
                                                 fontWeight: FontWeight.w500,
-                                                color: AppColors.primaryColor)),
+                                                color: Theme.of(context).primaryColor)),
                                       ),
                                     )
                                   ],

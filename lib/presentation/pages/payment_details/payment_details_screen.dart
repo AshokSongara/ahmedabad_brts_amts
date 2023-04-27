@@ -106,12 +106,12 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                           Dimensions.dp5,
                         ),
                       ),
-                      border: Border.all(color: AppColors.primaryColor)),
+                      border: Border.all(color: Theme.of(context).primaryColor)),
                   child: Row(
                     children: [
                       SvgPicture.asset(
                         ImageConstant.iRedTime,
-                        color: AppColors.primaryColor,
+                        color: Theme.of(context).primaryColor,
                       ),
                       const SizedBox(
                         width: Dimensions.dp4,

@@ -22,43 +22,42 @@ class _MyRoutesTabScreenState extends State<MyRoutesTabScreen> with SingleTicker
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.appBackground,
-        body: Column(
-          children: [
-            const CustomToolbar(
-              title: "myroutes",
-              showOption: false,
+    return Scaffold(
+      backgroundColor: AppColors.appBackground,
+      body: Column(
+        children: [
+          SizedBox(height: 50,),
+          const CustomToolbar(
+            title: "myroutes",
+            showOption: false,
+          ),
+          Container(
+            color: Theme.of(context).primaryColor,
+            child: TabBar(
+              controller: _tabController,
+              labelPadding: EdgeInsets.zero, // this one make 0
+              unselectedLabelColor: Colors.grey,
+              labelColor: Colors.white,
+              indicatorWeight: 2,
+              indicatorColor: Colors.green[100],
+              tabs: const [
+                Tab( text: "Trips"),
+                Tab( text: "Routes")
+              ],
             ),
-            Container(
-              color: Theme.of(context).primaryColor,
-              child: TabBar(
-                controller: _tabController,
-                labelPadding: EdgeInsets.zero, // this one make 0
-                unselectedLabelColor: Colors.grey,
-                labelColor: Colors.white,
-                indicatorWeight: 2,
-                indicatorColor: Colors.green[100],
-                tabs: const [
-                  Tab( text: "Trips"),
-                  Tab( text: "Routes")
-                ],
-              ),
+          ),
+          Expanded(
+            flex: 3,
+            child: TabBarView(
+              physics: const BouncingScrollPhysics(),
+              controller: _tabController,
+              children: const [
+                MyRoutesScreen(),
+                MyRoutesScreenTwo(),
+              ],
             ),
-            Expanded(
-              flex: 3,
-              child: TabBarView(
-                physics: const BouncingScrollPhysics(),
-                controller: _tabController,
-                children: const [
-                  MyRoutesScreen(),
-                  MyRoutesScreenTwo(),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

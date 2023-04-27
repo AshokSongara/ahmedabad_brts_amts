@@ -42,6 +42,7 @@
   "change_langauge": "Change Langauge",
   "signout": "Signout",
   "route_detail": "Route Details",
-  "transit_map": "Transit Map"
+  "transit_map": "Transit Map",
+  "home" : "Home"
 
 }

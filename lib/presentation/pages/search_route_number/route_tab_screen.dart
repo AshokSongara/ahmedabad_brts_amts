@@ -81,7 +81,7 @@ class _RouteTabScreenState extends State<RouteTabScreen>
                     showFavourite: false,
                   ),
                   Container(
-                    color: AppColors.primaryColor,
+                    color: Theme.of(context).primaryColor,
                     height: Dimensions.dp60.h,
                     width: MediaQuery.of(context).size.width,
                     padding: const EdgeInsets.only(
@@ -120,8 +120,8 @@ class _RouteTabScreenState extends State<RouteTabScreen>
                   Container(
                     decoration: const BoxDecoration(color: Colors.white),
                     child: TabBar(
-                      labelColor: AppColors.primaryColor,
-                      indicatorColor: AppColors.primaryColor,
+                      labelColor: Theme.of(context).primaryColor,
+                      indicatorColor: Theme.of(context).primaryColor,
                       indicatorWeight: 4.0,
                       unselectedLabelColor: AppColors.lightGray,
                       labelStyle:

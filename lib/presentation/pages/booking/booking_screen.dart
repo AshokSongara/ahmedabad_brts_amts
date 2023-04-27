@@ -202,7 +202,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                       children: [
                                         SvgPicture.asset(
                                           ImageConstant.iRoute,
-                                          color: AppColors.primaryColor,
+                                          color: Theme.of(context).primaryColor,
                                           height: Dimensions.dp16,
                                           width: Dimensions.dp16,
                                         ),

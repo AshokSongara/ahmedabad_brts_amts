@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../localization/app_localizations.dart';
 import '../maps/nearby_maps_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -125,7 +126,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               padding: EdgeInsets.all(4.0),
                               child: ImageIcon(AssetImage(ImageConstant.iHome)),
                             ),
-                      label: "Home",
+                      label: AppLocalizations.of(context)?.translate("home") ?? "",
                     ),
                     BottomNavigationBarItem(
                       icon: _pageIndex == 1
@@ -139,7 +140,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               child:
                                   ImageIcon(AssetImage(ImageConstant.iBooking)),
                             ),
-                      label: "Booking",
+                      label: AppLocalizations.of(context)?.translate("booking") ?? "",
                     ),
                     BottomNavigationBarItem(
                       icon: _pageIndex == 2
@@ -153,7 +154,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               child: ImageIcon(
                                   AssetImage(ImageConstant.iNotification)),
                             ),
-                      label: "Notification",
+                      label:AppLocalizations.of(context)?.translate("notification") ?? "",
                     ),
                     // BottomNavigationBarItem(
                     //     icon: _pageIndex == 3
@@ -178,7 +179,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           padding: EdgeInsets.all(4.0),
                           child: Icon(Icons.near_me),
                         ),
-                        label: "Near me")
+                        label: AppLocalizations.of(context)?.translate("near_me") ?? "")
                   ],
                   onTap: (index) {
                     bottomTapped(index);

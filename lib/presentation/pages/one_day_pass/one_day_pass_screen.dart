@@ -126,7 +126,7 @@ class _OneDayPassScreenState extends State<OneDayPassScreen> {
                                         data = value;
                                       });
                                     },
-                                    activeColor: AppColors.primaryColor,
+                                    activeColor: Theme.of(context).primaryColor,
                                     title: Row(
                                       mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
