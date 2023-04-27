@@ -483,9 +483,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                         ),
                                                         Text(
                                                           state.paymentInitResponseModel
-                                                                  .data?.length
-                                                                  .toString() ??
-                                                              "1",
+                                                              .data![0].ticketType! == "Adult" ? "1" : "0",
                                                           style: satoshiRegular
                                                               .copyWith(
                                                                   fontSize:
@@ -506,7 +504,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                     Column(
                                                       children: [
                                                         Text(
-                                                          "Kids",
+                                                          "Child",
                                                           style: satoshiRegular
                                                               .copyWith(
                                                                   fontSize:
@@ -520,7 +518,8 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                                       .darkGray),
                                                         ),
                                                         Text(
-                                                          "0",
+                                                          state.paymentInitResponseModel
+                                                              .data![0].ticketType! == "Child" ? "1" : "0",
                                                           style: satoshiRegular
                                                               .copyWith(
                                                                   fontSize:
@@ -776,9 +775,11 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
 
     if (data == null) {
       Navigator.of(context).pop();
-    } else if (data.length < 5000) {
-      Get.toNamed(RouteHelper.transactionStatus);
-    } else {
+    }
+    // else if (data.length < 5000) {
+    //   Get.toNamed(RouteHelper.transactionStatus);
+    // }
+    else {
       print("#####WEBVIEW${data}");
       List<String>? list = data.split(' ');
 

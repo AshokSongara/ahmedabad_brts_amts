@@ -161,7 +161,7 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+             // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
@@ -199,29 +199,33 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
                 SizedBox(
                   width: 20,
                 ),
-                Row(
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          model.startStop!,
-                          maxLines: 2,
-                          style: satoshiRegularSmallDark,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        SizedBox(
-                          height: 25,
-                        ),
-                        Text(
-                          model.endStop!,
-                          maxLines: 2,
-                          style: satoshiRegularSmallDark,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ],
-                    )
-                  ],
+                Container(
+                  width: 250,
+                  child: Row(
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                        children: [
+                          Text(
+                            model.startStop!,
+                            maxLines: 2,
+                            style: satoshiRegularSmallDark,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(
+                            height: 25,
+                          ),
+                          Text(
+                            model.endStop!,
+                            maxLines: 2,
+                            style: satoshiRegularSmallDark,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
                 InkWell(
                     onTap: () {
