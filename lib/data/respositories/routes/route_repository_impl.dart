@@ -126,7 +126,7 @@ class RouteRepositoryImpl implements RouteRepository {
       return fareResponse;
     } else {
       Response response = await apiClient.getDataWihHeader(
-          "Fare/AMTS/${routeDetailsRequest.routeCode?.replaceAll("/", "%2F")}/startStop/${routeDetailsRequest.startCode}/endStop/${routeDetailsRequest.endCode}");
+          "Fare/AMTS/${routeDetailsRequest.routeCode?.replaceAll("/", "-")}/startStop/${routeDetailsRequest.startCode}/endStop/${routeDetailsRequest.endCode}");
       fareResponse = FareResponse.fromJson(response.body);
       return fareResponse;
     }

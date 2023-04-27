@@ -32,50 +32,66 @@ class SearchResultRouteBloc
       SearchRouteResponse searchRouteResponse = await searchResultRouteUseCase(
           Params(data: event.searchRouteRequest));
 
-      // for (int i = 0; i < searchRouteResponse.data!.length; i++) {
-      RouteDetailsRequest routeDetailsRequest = RouteDetailsRequest();
-
-      routeDetailsRequest.routeCode =
-          searchRouteResponse.data![0].routeDetails![0].routeCode ?? "";
-
-      if (searchRouteResponse.data![0].interChanges!.isNotEmpty) {
-        routeDetailsRequest.startCode =
-            searchRouteResponse.data![0].routeDetails![0].startStopCode;
-        routeDetailsRequest.endCode = searchRouteResponse
-            .data![0]
-            .routeDetails![
-                searchRouteResponse.data![0].routeDetails!.length - 1]
-            .endStopCode;
-      } else {
-        routeDetailsRequest.startCode = searchRouteResponse
-            .data![0].routeDetails![0].startStopCode
-            .toString();
-        routeDetailsRequest.endCode = searchRouteResponse
-            .data![0].routeDetails![0].endStopCode
-            .toString();
-      }
-
-      routeDetailsRequest.originStart = event.searchRouteRequest.startCode;
-
-      routeDetailsRequest.originEnd = event.searchRouteRequest.endCode;
-
-      routeDetailsRequest.serviceType = event.searchRouteRequest.serviceType;
-
-      FareResponse fareResponse =
-          await fareUseCase(Params(data: routeDetailsRequest));
-
-      //searchRouteResponse.data![i].fare = fareResponse.data!.adult;
-
-      searchRouteResponse.data?.forEach((element) {
-        if (fareResponse.data != null) {
-          element.fare = fareResponse.data!.adult;
-        } else {
-          element.fare = 0;
-        }
-      });
-      //   }
-
       if (searchRouteResponse.succeeded == true) {
+        if (searchRouteResponse.data!.isNotEmpty &&
+            searchRouteResponse.succeeded == true) {
+          RouteDetailsRequest routeDetailsRequest = RouteDetailsRequest();
+
+          routeDetailsRequest.routeCode =
+              searchRouteResponse.data![0].routeDetails![0].routeCode ?? "";
+
+          if (event.searchRouteRequest.serviceType == "BRTS") {
+            if (searchRouteResponse.data![0].interChanges!.isNotEmpty) {
+              routeDetailsRequest.startCode =
+                  searchRouteResponse.data![0].routeDetails![0].startStopCode;
+              routeDetailsRequest.endCode = searchRouteResponse
+                  .data![0]
+                  .routeDetails![
+                      searchRouteResponse.data![0].routeDetails!.length - 1]
+                  .endStopCode;
+            } else {
+              routeDetailsRequest.startCode = searchRouteResponse
+                  .data![0].routeDetails![0].startStopCode
+                  .toString();
+              routeDetailsRequest.endCode = searchRouteResponse
+                  .data![0].routeDetails![0].endStopCode
+                  .toString();
+            }
+          } else {
+            if (searchRouteResponse.data![0].interChanges!.isNotEmpty) {
+              routeDetailsRequest.startCode =
+                  searchRouteResponse.data![0].routeDetails![0].startStopCode;
+              routeDetailsRequest.endCode = searchRouteResponse
+                  .data![0].routeDetails![0].endStopCode;
+            } else {
+              routeDetailsRequest.startCode = searchRouteResponse
+                  .data![0].routeDetails![0].startStopCode
+                  .toString();
+              routeDetailsRequest.endCode = searchRouteResponse
+                  .data![0].routeDetails![0].endStopCode
+                  .toString();
+            }
+          }
+
+          routeDetailsRequest.originStart = event.searchRouteRequest.startCode;
+
+          routeDetailsRequest.originEnd = event.searchRouteRequest.endCode;
+
+          routeDetailsRequest.serviceType =
+              event.searchRouteRequest.serviceType;
+
+          FareResponse fareResponse =
+              await fareUseCase(Params(data: routeDetailsRequest));
+
+          searchRouteResponse.data?.forEach((element) {
+            if (fareResponse.data != null) {
+              element.fare = fareResponse.data!.adult;
+            } else {
+              element.fare = 0;
+            }
+          });
+        }
+
         yield SearchResultRouteSuccessState(
             searchRouteResponse: searchRouteResponse,
             value: false,
