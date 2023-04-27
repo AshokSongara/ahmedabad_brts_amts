@@ -29,7 +29,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Payment Details')),
+      appBar: AppBar(title: const Text('Payment Details',)),
       body: WebView(
         initialUrl: widget.url ?? "",
         javascriptMode: JavascriptMode.unrestricted,
@@ -54,7 +54,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
               "http://103.69.196.78:8082/SessionResponse?merchantId=470000012117828")) {
             print("###Parse HTML");
 
-            Future.delayed(const Duration(seconds: 8), () async {
+            Future.delayed(const Duration(seconds: 5), () async {
               String htmlContent = await _controller
                   .evaluateJavascript("document.documentElement.innerHTML");
 

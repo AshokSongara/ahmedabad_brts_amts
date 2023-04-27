@@ -65,8 +65,13 @@ class SearchResultRouteBloc
           await fareUseCase(Params(data: routeDetailsRequest));
 
       //searchRouteResponse.data![i].fare = fareResponse.data!.adult;
+
       searchRouteResponse.data?.forEach((element) {
-        element.fare = fareResponse.data!.adult;
+        if (fareResponse.data != null) {
+          element.fare = fareResponse.data!.adult;
+        } else {
+          element.fare = 0;
+        }
       });
       //   }
 

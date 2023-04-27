@@ -325,7 +325,11 @@ class UserRepositoryImpl implements UserRepository {
       "merchantId": body.merchantId,
       "sourcecompanycode": body.serviceType == "BRTS" ? "0102" : "0103",
       "destinationcompanycode": body.serviceType == "BRTS" ? "0102" : "0103",
-      "routeCode": body.routeCode,
+      "fpTransactionId": body.fpTransactionId,
+      "merchantTxnId": body.merchantTxnId,
+      "externalTxnId": body.externalTxnId,
+      "transactionDateTime": body.transactionDateTime,
+      "routeCode": body.routeCode!.isEmpty ? "NA" : body.routeCode
     };
 
     var bodyData = json.encode(data);
