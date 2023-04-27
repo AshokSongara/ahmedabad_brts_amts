@@ -54,7 +54,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
               "http://103.69.196.78:8082/SessionResponse?merchantId=470000012117828")) {
             print("###Parse HTML");
 
-            Future.delayed(const Duration(seconds: 5), () async {
+            Future.delayed(const Duration(seconds: 8), () async {
               String htmlContent = await _controller
                   .evaluateJavascript("document.documentElement.innerHTML");
 
