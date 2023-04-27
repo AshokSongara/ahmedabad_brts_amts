@@ -229,7 +229,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     onTap: () {
-                      Get.toNamed(RouteHelper.getMyRoutesTabScreenRoute());
+                      Get.toNamed(RouteHelper.getMyRoutesTabScreenRoute(!isAmts ? "BRTS" : "AMTS"));
                     },
                   ),
                   if (!isAmts)
@@ -899,7 +899,7 @@ class _HomeScreenState extends State<HomeScreen> {
         if (model.title == "feedback") {
           Get.toNamed(RouteHelper.getFeedbackRoute());
         } else if (model.title == "myroutes") {
-          Get.toNamed(RouteHelper.getMyRoutesTabScreenRoute());
+          Get.toNamed(RouteHelper.getMyRoutesTabScreenRoute(!isAmts ? "BRTS" : "AMTS"));
         } else if (model.title == "near_me") {
           // Get.toNamed(RouteHelper.getNearByRoute());
           Get.to( NearByMapsScreen(from: "home", stopType: isAmts ? "2" : "1",));

@@ -5,7 +5,8 @@ import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dar
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 
 class MyRoutesTabScreen extends StatefulWidget {
-  const MyRoutesTabScreen({Key? key}) : super(key: key);
+  final String serviceType;
+  const MyRoutesTabScreen({Key? key,required this.serviceType}) : super(key: key);
 
   @override
   State<MyRoutesTabScreen> createState() => _MyRoutesTabScreenState();
@@ -51,9 +52,9 @@ class _MyRoutesTabScreenState extends State<MyRoutesTabScreen> with SingleTicker
             child: TabBarView(
               physics: const BouncingScrollPhysics(),
               controller: _tabController,
-              children: const [
-                MyRoutesScreen(),
-                MyRoutesScreenTwo(),
+              children:  [
+                MyRoutesScreen(serviceType: widget.serviceType ?? ""),
+                const MyRoutesScreenTwo(),
               ],
             ),
           ),
