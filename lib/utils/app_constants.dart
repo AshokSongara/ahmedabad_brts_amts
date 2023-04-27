@@ -47,7 +47,7 @@ class AppConstant {
   static String fiservPG = "FiservPG";
   static String transactionTicket = "AddTransaction/Ticket";
   static String favouriteRoute = "Favourite/routeCode/";
-  static String favouriteRouteListData = "Favourite/GetAllFavouritebyRoute";
+  static String favouriteRouteListData = "Favourite/GetByRoute";
 
   //SharedPreferences Keys
   static String accessToken = "accessToken";

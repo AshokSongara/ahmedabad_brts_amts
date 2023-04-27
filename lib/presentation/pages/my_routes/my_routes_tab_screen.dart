@@ -54,7 +54,7 @@ class _MyRoutesTabScreenState extends State<MyRoutesTabScreen> with SingleTicker
               controller: _tabController,
               children:  [
                 MyRoutesScreen(serviceType: widget.serviceType ?? ""),
-                const MyRoutesScreenTwo(),
+                MyRoutesScreenTwo(serviceType: widget.serviceType ?? ""),
               ],
             ),
           ),

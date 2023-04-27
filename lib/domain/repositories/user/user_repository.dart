@@ -51,5 +51,5 @@ abstract class UserRepository {
   Future<BookingListResponse> getBookingListData(String data);
   Future<TicketResponse> ticketData(String data);
   Future<PaymentURLResponse> getPaymentUrl(PaymentRequest body);
-  Future<FavouriteRoutesResponseList> getFavouriteRouteData();
+  Future<FavouriteRoutesResponseList> getFavouriteRouteData(String serviceType);
 }

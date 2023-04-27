@@ -23,7 +23,7 @@ class FavouriteRouteListDataBloc
     if (event is GetFavouriteRouteListEvent) {
       yield FavouriteRouteLoadingState();
       favouriteRouteResponse =
-          await favouriteRouteListUseCase( Params(data: ""));
+          await favouriteRouteListUseCase( Params(data: event.serviceType));
       if (favouriteRouteResponse?.succeeded == true) {
         yield FavouriteRouteSuccessState(
             favouriteRouteResponse: favouriteRouteResponse!);

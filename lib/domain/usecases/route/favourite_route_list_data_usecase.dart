@@ -13,6 +13,6 @@ class FavouriteRouteListDataUseCase implements UseCase<FavouriteRoutesResponseLi
 
   @override
   Future<FavouriteRoutesResponseList> call(Params params) {
-    return userRepository.getFavouriteRouteData();
+    return userRepository.getFavouriteRouteData(params.data);
   }
 }

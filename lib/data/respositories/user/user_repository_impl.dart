@@ -401,9 +401,9 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<FavouriteRoutesResponseList> getFavouriteRouteData() async {
+  Future<FavouriteRoutesResponseList> getFavouriteRouteData(String serviceType) async {
     Response response =
-    await apiClient.getDataWihHeader(AppConstant.favouriteRouteListData);
+    await apiClient.getDataWihHeader(AppConstant.favouriteRouteListData+serviceType);
     FavouriteRoutesResponseList favouriteRouteResponse =
     FavouriteRoutesResponseList.fromJson(response.body);
 

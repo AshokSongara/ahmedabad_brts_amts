@@ -108,7 +108,9 @@ class _RouteTabScreenState extends State<RouteTabScreen>
                             BlocProvider.of<StopSearchDetailsBloc>(context).add(
                               AddFavouriteRouteEvent(
                                   request: request,
-                                  routeStopListResponse: response),
+                                  routeStopListResponse: response
+
+                              ),
                             );
                           },
                           child: SvgPicture.asset(ImageConstant.iEmptyFavorite,

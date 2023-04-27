@@ -4,6 +4,7 @@ class AddRouteRequest {
   String? routeID;
   BrtsRoutesResponseModel model;
   bool isAmts;
+  String? serviceType;
 
-  AddRouteRequest({this.routeID,required this.model,required this.isAmts});
+  AddRouteRequest({this.routeID,required this.model,required this.isAmts, this.serviceType});
 }

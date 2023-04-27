@@ -8,8 +8,10 @@ abstract class FavouriteRouteListDataEvent extends Equatable {
 }
 
 class GetFavouriteRouteListEvent extends FavouriteRouteListDataEvent {
-  const GetFavouriteRouteListEvent();
+  const GetFavouriteRouteListEvent({required this.serviceType});
+  final String serviceType;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [serviceType];
+
 }

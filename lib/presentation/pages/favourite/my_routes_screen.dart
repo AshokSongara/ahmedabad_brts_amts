@@ -17,7 +17,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../data/responsemodels/favourite_routes_response_list.dart';
 
 class MyRoutesScreenTwo extends StatefulWidget {
-  const MyRoutesScreenTwo({Key? key}) : super(key: key);
+  const MyRoutesScreenTwo({Key? key, required this.serviceType}) : super(key: key);
+  final String serviceType;
 
   @override
   _MyRoutesScreenTwoState createState() => _MyRoutesScreenTwoState();
@@ -42,7 +43,7 @@ class _MyRoutesScreenTwoState extends State<MyRoutesScreenTwo> {
 
   getData() {
     BlocProvider.of<FavouriteRouteListDataBloc>(context)
-        .add(const GetFavouriteRouteListEvent());
+        .add( GetFavouriteRouteListEvent(serviceType: widget.serviceType));
   }
 
   @override
