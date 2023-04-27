@@ -27,7 +27,7 @@ class FavouriteRouteListBloc
     if (event is GetFavouriteRouteListEvent) {
       yield FavouriteRouteLoadingState();
       FavouriteRouteResponse favouriteRouteResponse =
-          await favouriteRouteListUseCase(const Params(data: ""));
+          await favouriteRouteListUseCase(Params(data: event.serviceType));
       if (favouriteRouteResponse.succeeded == true) {
         yield FavouriteRouteSuccessState(
             favouriteRouteResponse: favouriteRouteResponse);

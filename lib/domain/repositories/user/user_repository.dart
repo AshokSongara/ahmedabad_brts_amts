@@ -44,7 +44,7 @@ abstract class UserRepository {
   Future<UserProfileResponse> getProfileData();
   Future<NotificationResponse> getNotificationsData();
   Future<ContactUsResponse> getContactDetails();
-  Future<FavouriteRouteResponse> getFavouriteRouteListData();
+  Future<FavouriteRouteResponse> getFavouriteRouteListData(String serviceType);
   Future<QRCodeResponse> getQRCodeData();
   Future<UserProfileResponse> updateProfile(ProfileRequest body);
   Future<PaymentInitResponseModel> addTransaction(PaymentRequest body);

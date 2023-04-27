@@ -108,6 +108,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                           var request = AddFavouriteRequest(
                             startStop: widget.startRoute ?? "",
                             endStop: widget.endRoute ?? "",
+                            serviceType: widget.serviceType
                           );
 
                           SearchRouteResponse response = SearchRouteResponse();

@@ -128,7 +128,7 @@ class RouteHelper {
 
   static String getFeedbackRoute() => feedback;
 
-  static String getMyRouteScreen() => myRoute;
+  static String getMyRouteScreen(String serviceType) => '$myRoute?serviceType=$serviceType';
 
   static String getSearchRoute() => searchRoute;
 
@@ -186,7 +186,7 @@ class RouteHelper {
   static String getPolyLinePageRoute(String routeCode) =>
       '$polyLinePage?routeCode=$routeCode';
 
-  static String getMyRoutesTabScreenRoute() => myRoutesTabScreen;
+  static String getMyRoutesTabScreenRoute(String serviceType) => '$myRoutesTabScreen?serviceType=$serviceType';
 
   static List<GetPage> routes = [
     GetPage(
@@ -211,7 +211,7 @@ class RouteHelper {
         page: () => PolylinePage(
               routeCode: Get.parameters['routeCode'],
             )),
-    GetPage(name: myRoutesTabScreen, page: () => const MyRoutesTabScreen()),
+    GetPage(name: myRoutesTabScreen, page: () => MyRoutesTabScreen(serviceType: Get.parameters['serviceType'] ?? "",)),
     GetPage(
         name: transactionStatus, page: () => const FailedTransactionScreen()),
     GetPage(
@@ -297,7 +297,7 @@ class RouteHelper {
               stopType: Get.parameters['stopType'],
             )),
     GetPage(name: feedback, page: () => const FeedBackScreen()),
-    GetPage(name: myRoute, page: () => const MyRoutesScreen()),
+    GetPage(name: myRoute, page: () => MyRoutesScreen(serviceType: Get.parameters['serviceType'] ?? "",)),
     GetPage(name: searchRoute, page: () => const SearchRouteNumberScreen()),
     GetPage(
         name: payment,

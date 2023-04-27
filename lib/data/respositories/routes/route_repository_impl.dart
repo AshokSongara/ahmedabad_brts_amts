@@ -167,7 +167,7 @@ class RouteRepositoryImpl implements RouteRepository {
     var bodyData = json.encode(data);
 
     Response response = await apiClient.postDataWithHeader(
-        "Favourite/start/${body.startStop}/end/${body.endStop}", bodyData);
+        "Favourite/${body.serviceType}/start/${body.startStop}/end/${body.endStop}", bodyData);
     AddFavouriteResponse addFavouriteResponse =
     AddFavouriteResponse.fromJson(response.body);
     return addFavouriteResponse;
@@ -199,7 +199,6 @@ class RouteRepositoryImpl implements RouteRepository {
   Future<AddFavouriteResponse> addFavouriteRouteCode(
       AddRouteRequest routeCode) async {
 
-    //Favourite/routeCode/{routeCode}/routeType/{routeType}
     Response response = await apiClient.postDataWithHeader(
         "${AppConstant.favouriteRoute}${routeCode.routeID}/routeType/${routeCode.isAmts ? "2" : "1"}", "");
     AddFavouriteResponse addFavouriteResponse =

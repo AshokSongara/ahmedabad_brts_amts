@@ -6,7 +6,6 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_route_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
-import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
@@ -22,7 +21,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../../data/responsemodels/favourite_route_response.dart';
 
 class MyRoutesScreen extends StatefulWidget {
-  const MyRoutesScreen({Key? key}) : super(key: key);
+  final String serviceType;
+
+  const MyRoutesScreen({Key? key,required this.serviceType}) : super(key: key);
 
   @override
   _MyRoutesScreenState createState() => _MyRoutesScreenState();
@@ -47,7 +48,7 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
 
   getData() {
     BlocProvider.of<FavouriteRouteListBloc>(context)
-        .add(const GetFavouriteRouteListEvent());
+        .add(GetFavouriteRouteListEvent(serviceType: widget.serviceType));
   }
 
   @override

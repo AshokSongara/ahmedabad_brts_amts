@@ -28,7 +28,7 @@ class AppConstant {
   static String userProfile = "User/user-profile";
   static String updateProfile = "User/userprofile/update";
   static String notifications = "Notification/List";
-  static String favouriteRouteList = "Favourite/List";
+  static String favouriteRouteList = "Favourite/GetByStop/";
   static String deleteFavouriteRoute = "Favourite/Delete/";
   static String addFavouriteRoute = "Favourite/";
   static String refreshToken = "User/refresh-token";
