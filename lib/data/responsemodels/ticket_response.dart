@@ -30,8 +30,8 @@ class Data {
   String? orderId;
   Null? sourceCompanyCode;
   Null? destinationCompanyCode;
-  Null? sourceStopId;
-  Null? sourceStopName;
+  String? sourceStopId;
+  String? sourceStopName;
   String? destinationStopId;
   String? destinationStopName;
   Null? sourceStopNameGujarati;
@@ -49,6 +49,7 @@ class Data {
   Null? agency;
   Null? type;
   int? userId;
+  String? ticketType;
 
   Data(
       {this.ticketNumber,
@@ -74,7 +75,8 @@ class Data {
       this.isExpired,
       this.agency,
       this.type,
-      this.userId});
+      this.userId,
+      this.ticketType});
 
   Data.fromJson(Map<String, dynamic> json) {
     ticketNumber = json['ticketNumber'];
@@ -101,6 +103,7 @@ class Data {
     agency = json['agency'];
     type = json['type'];
     userId = json['userId'];
+    ticketType = json['ticketType'];
   }
 
   Map<String, dynamic> toJson() {
@@ -129,6 +132,7 @@ class Data {
     data['agency'] = this.agency;
     data['type'] = this.type;
     data['userId'] = this.userId;
+    data['ticketType'] = this.ticketType;
     return data;
   }
 }

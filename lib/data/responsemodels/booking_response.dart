@@ -35,6 +35,9 @@ class Data {
   String? sourceStopName;
   String? destinationStopId;
   String? destinationStopName;
+  String? ticketExpiry;
+  bool? ticketIsActive;
+
 
   Data(
       {this.ticketNo,
@@ -46,7 +49,9 @@ class Data {
         this.sourceStopId,
         this.sourceStopName,
         this.destinationStopId,
-        this.destinationStopName});
+        this.destinationStopName,
+        this.ticketExpiry,
+        this.ticketIsActive});
 
   Data.fromJson(Map<String, dynamic> json) {
     ticketNo = json['ticketNo'];
@@ -59,6 +64,8 @@ class Data {
     sourceStopName = json['sourceStopName'];
     destinationStopId = json['destinationStopId'];
     destinationStopName = json['destinationStopName'];
+    ticketExpiry = json['ticketExpiry'];
+    ticketIsActive = json['ticketIsActive'];
   }
 
   Map<String, dynamic> toJson() {
@@ -73,6 +80,8 @@ class Data {
     data['sourceStopName'] = this.sourceStopName;
     data['destinationStopId'] = this.destinationStopId;
     data['destinationStopName'] = this.destinationStopName;
+    data['ticketExpiry'] = this.ticketExpiry;
+    data['ticketIsActive'] = this.ticketIsActive;
     return data;
   }
 }

@@ -391,9 +391,8 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                       ),
                                                       Text(
                                                         state.paymentInitResponseModel
-                                                            .data?.length
-                                                            .toString() ??
-                                                            "1",
+                                                            .data![0].ticketType! == "Adult" ? "1" : "0"
+                                                             ,
                                                         style: satoshiRegular
                                                             .copyWith(
                                                             fontSize:
@@ -428,7 +427,8 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                                 .darkGray),
                                                       ),
                                                       Text(
-                                                        "0",
+                                                      state.paymentInitResponseModel
+                                                          .data![0].ticketType! == "Child" ? "1" : "0",
                                                         style: satoshiRegular
                                                             .copyWith(
                                                             fontSize:
