@@ -74,7 +74,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               HomeScreen(),
               BookingScreen(from: "menu"),
               NotificationScreen(from: "menu"),
-              NearByMapsScreen(from: "menu")
+              NearByMapsScreen(from: "menu",stopType: "BRTS",)
             //  ProfileScreen(from: "menu")
             ],
           ),

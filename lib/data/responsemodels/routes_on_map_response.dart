@@ -42,7 +42,7 @@ class Data {
     sequenceNumber = json['sequenceNumber'];
     stopCode = json['stopCode'];
     stopName = json['stopName'];
-    stopLatitude = json['stopLatitude'];
+    stopLatitude = json['stopLalitude'];
     stopLongitude = json['stopLongitude'];
   }
 

@@ -151,7 +151,8 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
                         onTap: () {
                           Get.toNamed(RouteHelper.getNearByStops(
                               nearMeResponse?.data?[index].stopName ?? "",
-                              nearMeResponse?.data?[index].stopCode??""));
+                              nearMeResponse?.data?[index].stopCode??"",
+                          widget.stopType ?? ""));
 
                           // controller.goToLocation(GeoPoint(
                           //     latitude:

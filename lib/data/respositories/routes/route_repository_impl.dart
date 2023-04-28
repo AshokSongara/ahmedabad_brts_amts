@@ -200,7 +200,7 @@ class RouteRepositoryImpl implements RouteRepository {
       AddRouteRequest routeCode) async {
 
     Response response = await apiClient.postDataWithHeader(
-        "${AppConstant.favouriteRoute}${routeCode.routeID}/routeType/${routeCode.isAmts ? "2" : "1"}${routeCode.serviceType}", "");
+        "${AppConstant.favouriteRoute}${routeCode.routeID}/routeType/${routeCode.isAmts ? "AMTS" : "BRTS"}", "");
     AddFavouriteResponse addFavouriteResponse =
     AddFavouriteResponse.fromJson(response.body);
 

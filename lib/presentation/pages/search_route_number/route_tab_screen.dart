@@ -27,8 +27,9 @@ import '../../blocs/stop_search/stop_search_state.dart';
 class RouteTabScreen extends StatefulWidget {
   final String title;
   final String routeCode;
+  final String serviceType;
 
-  const RouteTabScreen({Key? key, required this.title, required this.routeCode})
+  const RouteTabScreen({Key? key, required this.title, required this.routeCode,required this.serviceType})
       : super(key: key);
 
   @override
@@ -43,7 +44,7 @@ class _RouteTabScreenState extends State<RouteTabScreen>
   void initState() {
     super.initState();
     _controller = TabController(length: 1, vsync: this);
-    var request = RouteDetailsRequest(routeCode: widget.routeCode);
+    var request = RouteDetailsRequest(routeCode: widget.routeCode,serviceType: widget.serviceType);
 
     BlocProvider.of<StopSearchDetailsBloc>(context).add(
       GetStopSearchDetailsEvent(request: request),

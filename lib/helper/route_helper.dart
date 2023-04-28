@@ -172,11 +172,11 @@ class RouteHelper {
 
   static String getTransitMapScreenRoute() => transitMap;
 
-  static String getNearByStops(String title, String routeCode) =>
-      '$nearByStops?title=$title&routeCode=$routeCode';
+  static String getNearByStops(String title, String routeCode,String serviceType) =>
+      '$nearByStops?title=$title&routeCode=$routeCode&serviceType=$serviceType';
 
-  static String getRouteSearchTab(String title, String routeCode) =>
-      '$routeSearchTab?title=$title&routeCode=$routeCode';
+  static String getRouteSearchTab(String title, String routeCode,String serviceType) =>
+      '$routeSearchTab?title=$title&routeCode=$routeCode&serviceType=$serviceType';
 
   static String getRouteTicket(String ticketNumber) =>
       '$ticket?ticketNumber=$ticketNumber';
@@ -336,12 +336,14 @@ class RouteHelper {
         page: () => RouteTabScreen(
               title: Get.parameters['title'] ?? "",
               routeCode: Get.parameters['routeCode'] ?? "",
+          serviceType: Get.parameters['serviceType'] ?? "",
             )),
     GetPage(
         name: nearByStops,
         page: () => NearbyStopsScreen(
               title: Get.parameters['title'] ?? "",
               routeCode: Get.parameters['routeCode'] ?? "",
+          serviceType: Get.parameters['serviceType'] ?? "",
             )),
   ];
 }

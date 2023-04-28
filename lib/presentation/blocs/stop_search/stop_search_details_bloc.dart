@@ -50,7 +50,7 @@ class StopSearchDetailsBloc
             error: false);
       } else {
         yield StopSearchSuccessState(
-            value: true,
+            value: false,
             error: true,
             routeStopListResponse: event.routeStopListResponse);
       }
