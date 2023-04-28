@@ -17,7 +17,7 @@ class FeedbackRequestModel {
     int? userId,
     int? assistance,
     int? paymentMode,
-    int? suggestion,
+    String? suggestion,
   }) {
     _routeId = routeId;
     _waiting = waiting;
@@ -53,7 +53,7 @@ class FeedbackRequestModel {
   int? _userId;
   int? _assistance;
   int? _paymentMode;
-  int? _suggestion;
+  String? _suggestion;
 
   FeedbackRequestModel copyWith({
     String? routeId,
@@ -65,7 +65,7 @@ class FeedbackRequestModel {
     int? userId,
     int? assistance,
     int? paymentMode,
-    int? suggestion,
+    String? suggestion,
   }) =>
       FeedbackRequestModel(
         routeId: routeId ?? _routeId,
@@ -77,7 +77,7 @@ class FeedbackRequestModel {
         userId: userId ?? _userId,
         assistance: userId ?? _assistance,
         paymentMode: userId ?? _paymentMode,
-        suggestion: userId ?? _suggestion,
+        suggestion: suggestion ?? _suggestion,
       );
 
   String? get routeId => _routeId;
@@ -98,7 +98,7 @@ class FeedbackRequestModel {
 
   int? get paymentMode => _paymentMode;
 
-  int? get suggestion => _suggestion;
+  String? get suggestion => _suggestion;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

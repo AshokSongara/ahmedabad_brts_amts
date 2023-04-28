@@ -3,6 +3,7 @@ import 'package:ahmedabad_brts_amts/data/requestmodels/feedback_request_model.da
 import 'package:ahmedabad_brts_amts/presentation/blocs/feedback/feedback_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/feedback/feedback_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/feedback/feedback_state.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/feedback/widgets/feedback_payment_mode_list.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/feedback/widgets/feedback_status_list.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
@@ -27,10 +28,13 @@ class FeedBackScreen extends StatefulWidget {
 class _FeedBackScreenState extends State<FeedBackScreen> {
   int selectedIndex = 0;
   final List<FeedBackStatusListItem> list = [];
+  final List<FeedBackStatusListItem> list2 = [];
   final _routeController = TextEditingController();
+  final _suggestionController = TextEditingController();
   int feedbackOne = 0;
   int feedbackTwo = 0;
   int feedbackThree = 0;
+  int feedbackFour = 0;
 
   @override
   void initState() {
@@ -43,6 +47,9 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
         FeedBackStatusListItem("Dissatisfied", ImageConstant.iDissatisfied));
     list.add(FeedBackStatusListItem(
         "Very Dissatisfied", ImageConstant.iVeryDissatisfied));
+    list2.add(FeedBackStatusListItem("Cash", ImageConstant.iMostSatisfied));
+    list2.add(FeedBackStatusListItem("SmartCard", ImageConstant.iMostSatisfied));
+    list2.add(FeedBackStatusListItem("Mobile app", ImageConstant.iMostSatisfied));
   }
 
   @override
@@ -162,8 +169,20 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                       },
                     ),
                   ),
+
                   getQuestionWidget(
-                      "3. How satisfied were you with the overall quality of service?"),
+                      "3. How did you pay the fare?"),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 22),
+                    child: FeedbackPaymentModeList(
+                      list2: list2,
+                      selectedIndex: (index) {
+                        feedbackFour = index + 1;
+                      },
+                    ),
+                  ),
+                  getQuestionWidget(
+                      "4. How satisfied were you with the overall quality of service?"),
                   Padding(
                     padding: const EdgeInsets.only(top: 22),
                     child: FeedBackStatusList(
@@ -171,6 +190,39 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                       selectedIndex: (index) {
                         feedbackThree = index + 1;
                       },
+                    ),
+                  ),
+                  getQuestionWidget(
+                      "5. What would help you to use public transport more often? Please share your suggestions."),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 18),
+                    child: TextField(
+                      controller: _suggestionController,
+                      style: satoshiRegular.copyWith(
+                          fontSize: Dimensions.dp16.sp,
+                          fontWeight: FontWeight.w300,
+                          color: AppColors.darkGray),
+                      textAlign: TextAlign.start,
+                      keyboardType: TextInputType.text,
+                      onChanged: (value) {},
+                      decoration: InputDecoration(
+                        border: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: AppColors.lightGray)),
+                        focusedBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: AppColors.lightGray)),
+                        enabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: AppColors.lightGray)),
+                        errorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor)),
+                        disabledBorder: const UnderlineInputBorder(
+                            borderSide: BorderSide(color: AppColors.lightGray)),
+                        hintText: "Write your suggestion here...",
+                        hintStyle: satoshiRegular.copyWith(
+                            fontSize: Dimensions.dp16.sp,
+                            fontWeight: FontWeight.w300,
+                            color: AppColors.lightGray),
+                      ),
                     ),
                   ),
                   Container(
@@ -196,6 +248,9 @@ class _FeedBackScreenState extends State<FeedBackScreen> {
                                 crowding: feedbackThree,
                                 serviceQuality: feedbackThree,
                                 journey: "AtoB",
+                                paymentMode: feedbackFour,
+                                suggestion: _suggestionController.text.isEmpty ? "" : _suggestionController.text
+
                               ),
                             ),
                           );
