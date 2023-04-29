@@ -76,10 +76,25 @@ class _RouteTabScreenState extends State<RouteTabScreen>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CustomToolbar(
-                    title: widget.title,
-                    showOption: false,
-                    showFavourite: false,
+                  Container(
+                    margin:
+                    const EdgeInsets.only(left: Dimensions.dp15, right: Dimensions.dp20),
+                    padding:
+                    const EdgeInsets.only(top: Dimensions.dp10, bottom: Dimensions.dp10),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        GestureDetector(child: SvgPicture.asset(ImageConstant.iLeftArrow),
+                          onTap: (){Get.back();},
+                        ),
+                        Text(widget.title,
+                          style: screenTitle
+                          ),
+                        SizedBox(width: 0,)
+
+
+                      ],
+                    ),
                   ),
                   Container(
                     color: Theme.of(context).primaryColor,
