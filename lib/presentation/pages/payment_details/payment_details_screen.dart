@@ -211,6 +211,14 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                     ),
                                                   ),
                                                   Text(
+                                                    "Click on QR code to expand",
+                                                    textAlign: TextAlign.center,
+                                                    style: satoshiRegular.copyWith(
+                                                        fontSize: Dimensions.dp12.sp,
+                                                        fontWeight: FontWeight.w500,
+                                                        color: AppColors.lightGray),),
+                                                  SizedBox(height: 5,),
+                                                  Text(
                                                     state.paymentInitResponseModel
                                                             .data![0].ticketNo ??
                                                         "",
