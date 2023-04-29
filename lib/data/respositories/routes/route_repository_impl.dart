@@ -146,7 +146,7 @@ class RouteRepositoryImpl implements RouteRepository {
   Future<RouteStopListResponse> getRouteStopList(
       RouteDetailsRequest routeDetailsRequest) async {
     Response response = await apiClient
-        .getData("${AppConstant.stopLists}${routeDetailsRequest.routeCode}");
+        .getData("${AppConstant.stopLists}${routeDetailsRequest.routeCode!.replaceAll("/", "%2F")}");
     RouteStopListResponse routeStopListResponse =
         RouteStopListResponse.fromJson(response.body);
     return routeStopListResponse;

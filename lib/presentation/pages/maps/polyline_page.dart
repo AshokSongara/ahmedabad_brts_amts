@@ -31,7 +31,7 @@ class _PolylinePageState extends State<PolylinePage> {
   @override
   void initState() {
     super.initState();
-    _getNearByRoutes(widget.routeCode ?? "");
+    _getNearByRoutes(widget.routeCode!.replaceAll("/", "%2F") ?? "");
   }
 
   @override
