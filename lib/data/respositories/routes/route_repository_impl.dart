@@ -109,7 +109,7 @@ class RouteRepositoryImpl implements RouteRepository {
       RouteDetailsRequest routeDetailsRequest) async {
     print("###### Route/${routeDetailsRequest.routeCode}/stops/from/${routeDetailsRequest.fromHome == "Yes" ? routeDetailsRequest.startCode : routeDetailsRequest.startStopSequenceNumber}/to/${routeDetailsRequest.fromHome == "Yes" ? routeDetailsRequest.endCode : routeDetailsRequest.endStopSequenceNumber}");
     Response response = await apiClient.getData(
-        "Route/${routeDetailsRequest.routeCode}/stops/from/${routeDetailsRequest.fromHome == "Yes" ? routeDetailsRequest.startCode : routeDetailsRequest.startStopSequenceNumber}/to/${routeDetailsRequest.fromHome == "Yes" ? routeDetailsRequest.endCode : routeDetailsRequest.endStopSequenceNumber}");
+        "Route/${routeDetailsRequest.routeCode!.replaceAll("/", "%2F")}/stops/from/${routeDetailsRequest.fromHome == "Yes" ? routeDetailsRequest.startCode : routeDetailsRequest.startStopSequenceNumber}/to/${routeDetailsRequest.fromHome == "Yes" ? routeDetailsRequest.endCode : routeDetailsRequest.endStopSequenceNumber}");
     RouteDetailsRepsonse routeDetailsRepsonse =
         RouteDetailsRepsonse.fromJson(response.body);
     return routeDetailsRepsonse;
@@ -126,7 +126,7 @@ class RouteRepositoryImpl implements RouteRepository {
       return fareResponse;
     } else {
       Response response = await apiClient.getDataWihHeader(
-          "Fare/AMTS/${routeDetailsRequest.routeCode?.replaceAll("/", "-")}/startStop/${routeDetailsRequest.startCode}/endStop/${routeDetailsRequest.endCode}");
+          "Fare/AMTS/${routeDetailsRequest.routeCode?.replaceAll("/", "%2F")}/startStop/${routeDetailsRequest.startCode}/endStop/${routeDetailsRequest.endCode}");
       fareResponse = FareResponse.fromJson(response.body);
       return fareResponse;
     }
@@ -136,10 +136,8 @@ class RouteRepositoryImpl implements RouteRepository {
   Future<ETAResponse> getETADetails(
       RouteDetailsRequest routeDetailsRequest) async {
 
-    print("##### eta/${routeDetailsRequest.routeCode}/${routeDetailsRequest.originStart}");
-
     Response response = await apiClient.getDataWihHeader(
-        "eta/${routeDetailsRequest.routeCode}/${routeDetailsRequest.originStart}");
+        "eta/${routeDetailsRequest.routeCode!.replaceAll("/", "%2F")}/${routeDetailsRequest.originStart}");
     ETAResponse etaResponse = ETAResponse.fromJson(response.body);
     return etaResponse;
   }
@@ -200,7 +198,7 @@ class RouteRepositoryImpl implements RouteRepository {
       AddRouteRequest routeCode) async {
 
     Response response = await apiClient.postDataWithHeader(
-        "${AppConstant.favouriteRoute}${routeCode.routeID}/routeType/${routeCode.isAmts ? "AMTS" : "BRTS"}", "");
+        "${AppConstant.favouriteRoute}${routeCode.routeID!.replaceAll("/", "%2F")}/routeType/${routeCode.isAmts ? "AMTS" : "BRTS"}", "");
     AddFavouriteResponse addFavouriteResponse =
     AddFavouriteResponse.fromJson(response.body);
 
