@@ -324,7 +324,7 @@ class UserRepositoryImpl implements UserRepository {
       "txnStatus": body.txnStatus,
       "merchantId": body.merchantId,
       "sourcecompanycode": body.serviceType == "BRTS" ? "0102" : "0103",
-      "destinationcompanycode": body.serviceType == "BRTS" ? "0102" : "0103",
+      //"destinationcompanycode": body.serviceType == "BRTS" ? "0102" : "0103",
       "fpTransactionId": body.fpTransactionId,
       "merchantTxnId": body.merchantTxnId,
       "externalTxnId": body.externalTxnId,

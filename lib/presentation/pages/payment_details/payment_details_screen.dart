@@ -56,6 +56,7 @@ class PaymentDetailsScreen extends StatefulWidget {
 class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
   List<LocalSliderModel> modelList = [];
   CarouselController carouselController = CarouselController();
+  String status = "";
 
   @override
   void initState() {
@@ -133,7 +134,11 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                             state.qrCodeResponse.data?.paymentURL ?? "");
                       } else if (state is PaymentLoadingState) {
                         Loader.show(context);
-                      } else if (state is PaymentSuccessState) {
+                      }else if (state is PaymentSuccessState) {
+                        if (status == "FAILED") {
+                          Loader.hide();
+                          Get.toNamed(RouteHelper.transactionStatus);
+                        }
                         Loader.hide();
                       } else if (state is PaymentFailedState) {
                         Loader.hide();
@@ -783,31 +788,53 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
 
     if (data == null) {
       Navigator.of(context).pop();
-    }
-    // else if (data.length < 5000) {
-    //   Get.toNamed(RouteHelper.transactionStatus);
-    // }
-    else {
+    } else if (data.length < 5000) {
+      status = "FAILED";
       print("#####WEBVIEW${data}");
       List<String>? list = data.split(' ');
-
 
       if (data.isNotEmpty) {
         var paymentRequest = PaymentRequest(
             sourceStopId: widget.sourceStopId,
             destinationStopId:
-                widget.type!.isEmpty ? "PASS" : widget.destinationStopId,
+            widget.type!.isEmpty ? "PASS" : widget.destinationStopId,
+            discountype: status == "FAILED" ? "0" : widget.discountype,
+            txnStatus: status,
+            merchantId: "470000012117828",
+            sourcecompanycode: "102",
+            destinationcompanycode: "103",
+            fpTransactionId: list[54].substring(27, 43),
+            routeCode: widget.routeCode,
+            externalTxnId: "",
+            merchantTxnId: "",
+            transactionDateTime: DateTime.now().toString(),
+            serviceType: widget.serviceType);
+
+        BlocProvider.of<PaymentBloc>(context).add(
+          GetQRCodeEvent(paymentRequest: paymentRequest),
+        );
+      }
+    } else {
+      status = "SUCCESS";
+      print("#####WEBVIEW${data}");
+      List<String>? list = data.split(' ');
+
+      if (data.isNotEmpty) {
+        var paymentRequest = PaymentRequest(
+            sourceStopId: widget.sourceStopId,
+            destinationStopId:
+            widget.type!.isEmpty ? "PASS" : widget.destinationStopId,
             discountype: widget.discountype,
-            txnStatus: "SUCCESS",
+            txnStatus: status,
             merchantId: "470000012117828",
             sourcecompanycode: "102",
             destinationcompanycode: "103",
             fpTransactionId: list[54].substring(27, 43),
             routeCode: widget.routeCode,
             externalTxnId: list[127].substring(25, 36),
-            merchantTxnId: list[108].substring(26, 61),
+            merchantTxnId: list[108].substring(18, 61),
             transactionDateTime:
-                "${list[90].substring(25, list[90].length)}T${list[91].substring(0, 12)}",
+            "${list[90].substring(25, list[90].length)}T${list[91].substring(0, 12)}",
         serviceType: widget.serviceType);
 
         BlocProvider.of<PaymentBloc>(context).add(
