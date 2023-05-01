@@ -83,7 +83,7 @@ class RouteDetailsBloc extends Bloc<RouteDetailsEvent, RouteDetailsState> {
           RouteDetailsRequest req = RouteDetailsRequest();
 
           req.startCode = event.request.startRouteTwo;
-          req.endCode = event.request.endRouteTwo;
+          req.endCode = event.request.serviceType == "AMTS" ? event.request.originEnd :event.request.endRouteTwo;
           req.routeCode = event.request.routeTwo;
           req.startStopSequenceNumber = event.request.startRouteTwo;
           req.endStopSequenceNumber = event.request.endRouteTwo;
