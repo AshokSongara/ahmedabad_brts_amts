@@ -50,7 +50,9 @@ class _SearchRouteScreenState extends State<SearchRouteScreen> {
             listener: (context, state) {
               if(state is SearchRouteAddFavFailureState){
                 showCustomSnackBar(state.message,context);
-              }else if(state is SearchRouteAddFavState){}
+              }else if(state is SearchRouteAddFavState){
+                showCustomSnackBar("Favourite Added...!", context,isError: false);
+              }
             },
             builder: (context, state) {
               return Column(

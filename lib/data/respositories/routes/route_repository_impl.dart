@@ -77,9 +77,6 @@ class RouteRepositoryImpl implements RouteRepository {
   @override
   Future<AddRouteResponse> addRoute(AddRouteRequest body) async {
     Map data = {};
-    // BrtsRoutesResponseModel? model = isAmts
-    //     ? getLocalAmtsRoutesData().get("key")
-    //     : getLocalBrtsRoutesData().get("key");
     var bodyData = json.encode(data);
 
     Response response = await apiClient.postDataWithHeader(

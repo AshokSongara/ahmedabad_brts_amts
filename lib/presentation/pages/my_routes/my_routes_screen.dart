@@ -73,7 +73,6 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
             if (state is FavouriteRouteSuccessState) {
               return Column(
                 children: [
-                  //const SizedBox(height: Dimensions.dp25),
                   Expanded(
                     child: state.favouriteRouteResponse.data!.isNotEmpty
                         ? ListView.builder(

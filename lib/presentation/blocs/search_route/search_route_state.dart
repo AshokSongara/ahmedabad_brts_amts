@@ -1,3 +1,4 @@
+import 'package:ahmedabad_brts_amts/data/responsemodels/add_favourite_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/add_route_response.dart';
 
 abstract class SearchRouteState {}
@@ -6,7 +7,7 @@ class SearchRouteInitialState extends SearchRouteState {}
 class SearchRouteRemoveFavState extends SearchRouteState {}
 
 class SearchRouteAddFavState extends SearchRouteState {
-  AddRouteResponse response;
+  AddFavouriteResponse response;
 
   SearchRouteAddFavState({required this.response});
 }
