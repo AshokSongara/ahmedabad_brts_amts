@@ -91,7 +91,7 @@ class RouteDetailsBloc extends Bloc<RouteDetailsEvent, RouteDetailsState> {
           RouteDetailsRepsonse routeDetailsRepsonse1 =
               await routeDetailsUseCase(Params(data: req));
 
-          event.request.endCode = event.request.originEnd;
+          event.request.endCode = event.request.serviceType == "AMTS" ? event.request.originEnd : event.request.endCode;
           FareResponse fareResponse =
               await fareUseCase(Params(data: event.request));
 
