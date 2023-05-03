@@ -200,7 +200,7 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
                   width: 20,
                 ),
                 Container(
-                  width: 250,
+                  width: 215,
                   child: Row(
                     children: [
                       Column(

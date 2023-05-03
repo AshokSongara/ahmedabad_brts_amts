@@ -40,6 +40,9 @@ class SearchResultScreen extends StatefulWidget {
 
 class _SearchResultScreenState extends State<SearchResultScreen> {
 
+  String? favouriteStart;
+  String? favouriteEnd;
+
   @override
   void initState() {
     super.initState();
@@ -62,6 +65,10 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
           listener: (context, state) {
             if (state is SearchResultRouteSuccessState) {
               Loader.hide();
+              if(state.searchRouteResponse.data!.isNotEmpty){
+                favouriteStart = state.searchRouteResponse.data![0].routeDetails![0].startStopCode!;
+                favouriteEnd = state.searchRouteResponse.data![0].routeDetails![state.searchRouteResponse.data![0].routeDetails!.length - 1 ].endStopCode;
+              }
               print("#####${state.value}");
               if (state.value == true) {
                 showCustomSnackBar("Favourite Route Added", context,
@@ -106,8 +113,8 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                         ),
                         onTap: () {
                           var request = AddFavouriteRequest(
-                            startStop: widget.startRoute ?? "",
-                            endStop: widget.endRoute ?? "",
+                            startStop: favouriteStart ?? "",
+                            endStop: favouriteEnd ?? "",
                             serviceType: widget.serviceType
                           );
 

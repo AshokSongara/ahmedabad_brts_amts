@@ -284,7 +284,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                                           : widget.startRouteCode ?? "",
                                       widget.fromHome == "Yes"
                                           ? state.endStopId
-                                          : widget.endRouteCode ?? "",widget.routeCode ?? "",widget.serviceType ?? ""),
+                                          : widget.serviceType == "BRTS" ? widget.endRouteCode ?? "" : widget.originEnd ?? "" ,widget.routeCode ?? "",widget.serviceType ?? ""),
                                   arguments: [
                                     widget.startRouteName,
                                     widget.endRouteName,
