@@ -1,4 +1,5 @@
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
+import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -60,7 +61,7 @@ class _BookingScreenState extends State<BookingScreen> {
             CustomToolbar(
               title: widget.from == "home" ? "transaction_history" : "booking",
               showOption: false,
-              back: widget.from == "home" ? true : false,
+             // back: widget.from == "home" ? true : false,
             ),
             BlocBuilder<BookingListBloc, BookingListState>(
               builder: (context, state) {
@@ -86,12 +87,17 @@ class _BookingScreenState extends State<BookingScreen> {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: (){
+                                state.bookingListResponse.data![index].txnStatus == "SUCCESS" ?
                                 Get.toNamed(RouteHelper.getRouteTicket(state
                                     .bookingListResponse
                                     .data![index]
                                     .ticketNo
                                     .toString() ??
-                                    ""));
+                                    "") ):
+                                    showCustomSnackBar(
+                                    "Failed Transaction... !",
+                                    context,
+                                    isError: true);
                               },
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
@@ -140,6 +146,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                             ),
                                           ],
                                         ),
+                                        state.bookingListResponse.data![index].txnStatus == "SUCCESS" ?
                                         SizedBox(
                                           width: 100,
                                           child: Text(
@@ -150,6 +157,17 @@ class _BookingScreenState extends State<BookingScreen> {
                                                 fontWeight: FontWeight.w500,
                                                 color: AppColors.black),
                                           ),
+                                        ) :
+                                        SizedBox(
+                                          width: 100,
+                                          child: Text(
+                                            "Transaction \nFailed",
+                                            textAlign: TextAlign.center,
+                                            style: satoshiRegular.copyWith(
+                                                fontSize: Dimensions.dp15,
+                                                fontWeight: FontWeight.w700,
+                                                color: Colors.red),
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -159,6 +177,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
+                                        state.bookingListResponse.data![index].txnStatus == "SUCCESS" ?
                                         Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
@@ -179,7 +198,8 @@ class _BookingScreenState extends State<BookingScreen> {
                                                   color: AppColors.black),
                                             ),
                                           ],
-                                        ),
+                                        ) :
+                                        Container(),
                                         SizedBox(
                                           width: 100,
                                           child: Text(
@@ -232,6 +252,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                           ],
                                         ),
                                         // Spacer(),
+                                        state.bookingListResponse.data![index].txnStatus == "SUCCESS" ?
                                         SizedBox(
                                           width: 100,
                                           child: Text(
@@ -242,7 +263,8 @@ class _BookingScreenState extends State<BookingScreen> {
                                                 fontWeight: FontWeight.w400,
                                                 color: state.bookingListResponse.data![index].ticketIsActive! ? Colors.green : Colors.red),
                                           ),
-                                        ),
+                                        ) :
+                                        Container(),
                                       ],
                                     ),
 

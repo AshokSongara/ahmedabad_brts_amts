@@ -4,10 +4,12 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/login_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/user_profile_response.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/login_user_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/user_profile_usecase.dart';
+import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_state.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:bloc/bloc.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
@@ -35,6 +37,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       } else {
         yield LoginFailedState(
             errorMessage: loginResponse.error?.title ?? "Something Went Wrong");
+         if(loginResponse.error?.title == "Email Not Registered"){
+           Get.toNamed(RouteHelper.signup);
+         }
       }
     }
   }

@@ -137,7 +137,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                           ),
                         ],
                       ),
-                      Column(
+                      widget.interChange == "0" ? Container() : Column(
                         children: [
                           Text(
                             "Interchange",

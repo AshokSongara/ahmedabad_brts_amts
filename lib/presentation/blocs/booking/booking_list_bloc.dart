@@ -19,7 +19,7 @@ class BookingListBloc extends Bloc<BookingListEvent, BookingListState> {
     if (event is GetBookingListEvent) {
       yield BookingListLoadingState();
       BookingListResponse bookingListResponse =
-          await bookingListUseCase(Params(data: ""));
+          await bookingListUseCase(Params(data: event.from));
       if (bookingListResponse.succeeded == true) {
         yield BookingListSuccessState(bookingListResponse: bookingListResponse);
       } else {

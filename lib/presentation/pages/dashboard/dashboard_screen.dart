@@ -79,116 +79,117 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ],
           ),
         ),
-        bottomNavigationBar: Theme(
-          data: Theme.of(context).copyWith(
-              canvasColor: Theme.of(context).primaryColor,
-              primaryColor: Theme.of(context).primaryColor,
-              textTheme: Theme.of(context)
-                  .textTheme
-                  .copyWith(caption: const TextStyle(color: Colors.white30))),
-          child: Container(
-            decoration: const BoxDecoration(
-              color: Colors.transparent,
-              backgroundBlendMode: BlendMode.clear,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(30),
-                topRight: Radius.circular(30),
-              ),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black38, spreadRadius: 0, blurRadius: 10),
-              ],
-            ),
-            height: MediaQuery.of(context).size.height * 0.085,
-            child: Wrap(
-              children: [
-                BottomNavigationBar(
-                  currentIndex: _pageIndex,
-                  selectedItemColor: Colors.white,
-                  unselectedItemColor: Colors.white,
-                  type: BottomNavigationBarType.fixed,
-                  unselectedLabelStyle: satoshiRegular.copyWith(
-                      fontWeight: FontWeight.w400,
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 13.sp),
-                  selectedLabelStyle: satoshiRegular.copyWith(
-                      fontWeight: FontWeight.w400,
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 13.sp),
-                  items: [
-                    BottomNavigationBarItem(
-                      icon: _pageIndex == 0
-                          ? const Padding(
-                              padding: EdgeInsets.all(4.0),
-                              child: ImageIcon(AssetImage(ImageConstant.iHome)),
-                            )
-                          : const Padding(
-                              padding: EdgeInsets.all(4.0),
-                              child: ImageIcon(AssetImage(ImageConstant.iHome)),
-                            ),
-                      label: AppLocalizations.of(context)?.translate("home") ?? "",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: _pageIndex == 1
-                          ? const Padding(
-                              padding: EdgeInsets.all(4.0),
-                              child:
-                                  ImageIcon(AssetImage(ImageConstant.iBooking)),
-                            )
-                          : const Padding(
-                              padding: EdgeInsets.all(4.0),
-                              child:
-                                  ImageIcon(AssetImage(ImageConstant.iBooking)),
-                            ),
-                      label: AppLocalizations.of(context)?.translate("booking") ?? "",
-                    ),
-                    BottomNavigationBarItem(
-                      icon: _pageIndex == 2
-                          ? const Padding(
-                              padding: EdgeInsets.all(4.0),
-                              child: ImageIcon(
-                                  AssetImage(ImageConstant.iNotification)),
-                            )
-                          : const Padding(
-                              padding: EdgeInsets.all(4.0),
-                              child: ImageIcon(
-                                  AssetImage(ImageConstant.iNotification)),
-                            ),
-                      label:AppLocalizations.of(context)?.translate("notification") ?? "",
-                    ),
-                    // BottomNavigationBarItem(
-                    //     icon: _pageIndex == 3
-                    //         ? const Padding(
-                    //             padding: EdgeInsets.all(4.0),
-                    //             child: ImageIcon(
-                    //                 AssetImage(ImageConstant.iProfile)),
-                    //           )
-                    //         : const Padding(
-                    //             padding: EdgeInsets.all(4.0),
-                    //             child: ImageIcon(
-                    //                 AssetImage(ImageConstant.iProfile)),
-                    //           ),
-                    //     label: "Profile")
-                    BottomNavigationBarItem(
-                        icon: _pageIndex == 3
-                            ? const Padding(
-                          padding: EdgeInsets.all(4.0),
-                          child: Icon(Icons.near_me),
-                        )
-                            : const Padding(
-                          padding: EdgeInsets.all(4.0),
-                          child: Icon(Icons.near_me),
-                        ),
-                        label: AppLocalizations.of(context)?.translate("near_me") ?? "")
-                  ],
-                  onTap: (index) {
-                    bottomTapped(index);
-                  },
-                ),
-              ],
-            ),
-          ),
-        ));
+        // bottomNavigationBar: Theme(
+        //   data: Theme.of(context).copyWith(
+        //       canvasColor: Theme.of(context).primaryColor,
+        //       primaryColor: Theme.of(context).primaryColor,
+        //       textTheme: Theme.of(context)
+        //           .textTheme
+        //           .copyWith(caption: const TextStyle(color: Colors.white30))),
+        //   child: Container(
+        //     decoration: const BoxDecoration(
+        //       color: Colors.transparent,
+        //       backgroundBlendMode: BlendMode.clear,
+        //       borderRadius: BorderRadius.only(
+        //         topLeft: Radius.circular(30),
+        //         topRight: Radius.circular(30),
+        //       ),
+        //       boxShadow: [
+        //         BoxShadow(
+        //             color: Colors.black38, spreadRadius: 0, blurRadius: 10),
+        //       ],
+        //     ),
+        //     height: MediaQuery.of(context).size.height * 0.085,
+        //     child: Wrap(
+        //       children: [
+        //         BottomNavigationBar(
+        //           currentIndex: _pageIndex,
+        //           selectedItemColor: Colors.white,
+        //           unselectedItemColor: Colors.white,
+        //           type: BottomNavigationBarType.fixed,
+        //           unselectedLabelStyle: satoshiRegular.copyWith(
+        //               fontWeight: FontWeight.w400,
+        //               color: Theme.of(context).primaryColor,
+        //               fontSize: 13.sp),
+        //           selectedLabelStyle: satoshiRegular.copyWith(
+        //               fontWeight: FontWeight.w400,
+        //               color: Theme.of(context).primaryColor,
+        //               fontSize: 13.sp),
+        //           items: [
+        //             BottomNavigationBarItem(
+        //               icon: _pageIndex == 0
+        //                   ? const Padding(
+        //                       padding: EdgeInsets.all(4.0),
+        //                       child: ImageIcon(AssetImage(ImageConstant.iHome)),
+        //                     )
+        //                   : const Padding(
+        //                       padding: EdgeInsets.all(4.0),
+        //                       child: ImageIcon(AssetImage(ImageConstant.iHome)),
+        //                     ),
+        //               label: AppLocalizations.of(context)?.translate("home") ?? "",
+        //             ),
+        //             BottomNavigationBarItem(
+        //               icon: _pageIndex == 1
+        //                   ? const Padding(
+        //                       padding: EdgeInsets.all(4.0),
+        //                       child:
+        //                           ImageIcon(AssetImage(ImageConstant.iBooking)),
+        //                     )
+        //                   : const Padding(
+        //                       padding: EdgeInsets.all(4.0),
+        //                       child:
+        //                           ImageIcon(AssetImage(ImageConstant.iBooking)),
+        //                     ),
+        //               label: AppLocalizations.of(context)?.translate("booking") ?? "",
+        //             ),
+        //             BottomNavigationBarItem(
+        //               icon: _pageIndex == 2
+        //                   ? const Padding(
+        //                       padding: EdgeInsets.all(4.0),
+        //                       child: ImageIcon(
+        //                           AssetImage(ImageConstant.iNotification)),
+        //                     )
+        //                   : const Padding(
+        //                       padding: EdgeInsets.all(4.0),
+        //                       child: ImageIcon(
+        //                           AssetImage(ImageConstant.iNotification)),
+        //                     ),
+        //               label:AppLocalizations.of(context)?.translate("notification") ?? "",
+        //             ),
+        //             // BottomNavigationBarItem(
+        //             //     icon: _pageIndex == 3
+        //             //         ? const Padding(
+        //             //             padding: EdgeInsets.all(4.0),
+        //             //             child: ImageIcon(
+        //             //                 AssetImage(ImageConstant.iProfile)),
+        //             //           )
+        //             //         : const Padding(
+        //             //             padding: EdgeInsets.all(4.0),
+        //             //             child: ImageIcon(
+        //             //                 AssetImage(ImageConstant.iProfile)),
+        //             //           ),
+        //             //     label: "Profile")
+        //             BottomNavigationBarItem(
+        //                 icon: _pageIndex == 3
+        //                     ? const Padding(
+        //                   padding: EdgeInsets.all(4.0),
+        //                   child: Icon(Icons.near_me),
+        //                 )
+        //                     : const Padding(
+        //                   padding: EdgeInsets.all(4.0),
+        //                   child: Icon(Icons.near_me),
+        //                 ),
+        //                 label: AppLocalizations.of(context)?.translate("near_me") ?? "")
+        //           ],
+        //           onTap: (index) {
+        //             bottomTapped(index);
+        //           },
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // )
+    );
   }
 
   void bottomTapped(int index) {

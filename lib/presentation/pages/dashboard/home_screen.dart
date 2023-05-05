@@ -12,6 +12,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.da
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/language/language_cubit.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/maps/nearby_maps_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/notification/notification_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/source_destination_widget.dart';
@@ -499,6 +500,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   const Spacer(),
+                  GestureDetector(
+                    onTap: (){
+                      Get.to(NotificationScreen(from: "home"));
+                    },
+                    child: ImageIcon(AssetImage(ImageConstant.iNotification),
+                        color: Theme.of(context).primaryColor),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
                   Container(
                       margin: const EdgeInsets.only(right: Dimensions.dp20),
                       child: InkWell(
@@ -899,7 +910,10 @@ class _HomeScreenState extends State<HomeScreen> {
         if (model.title == "feedback") {
           Get.toNamed(RouteHelper.getFeedbackRoute());
         } else if (model.title == "myroutes") {
-          Get.toNamed(RouteHelper.getMyRoutesTabScreenRoute(!isAmts ? "BRTS" : "AMTS"));
+          Get.toNamed(
+              RouteHelper.getMyRoutesTabScreenRoute(!isAmts ? "BRTS" : "AMTS"));
+        } else if (model.title == "mticket") {
+          Get.toNamed(RouteHelper.getBookingRoute("menu"));
         } else if (model.title == "near_me") {
           // Get.toNamed(RouteHelper.getNearByRoute());
           Get.to( NearByMapsScreen(from: "home", stopType: isAmts ? "2" : "1",));

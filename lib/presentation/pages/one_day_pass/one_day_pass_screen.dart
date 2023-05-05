@@ -134,6 +134,7 @@ class _OneDayPassScreenState extends State<OneDayPassScreen> {
                                         Expanded(
                                           child: Text(
                                             state.oneDayPassResponse.data![index].catPassSubCateName ?? "",
+                                            maxLines: 2,
                                             style: satoshiRegular.copyWith(
                                               overflow: TextOverflow.ellipsis,
                                                 fontSize: 15.sp,
@@ -142,6 +143,7 @@ class _OneDayPassScreenState extends State<OneDayPassScreen> {
                                                     .black),
                                           ),
                                         ),
+                                        SizedBox(width: 10,),
                                         Text(
                                           getFare(int.parse(state.oneDayPassResponse.data![index].passFare.toString())),
                                           style: satoshiRegular.copyWith(
