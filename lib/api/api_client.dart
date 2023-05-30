@@ -22,6 +22,7 @@ class ApiClient extends GetxService {
   ApiClient({required this.appBaseUrl, required this.sharedPreferences}) {
     token = sharedPreferences.getString(AppConstant.accessToken);
     updateHeader(token ?? "");
+    print(token);
   }
 
   void updateHeader(String token) {

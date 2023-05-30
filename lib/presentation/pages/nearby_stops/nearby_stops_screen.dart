@@ -15,11 +15,12 @@ import '../../blocs/nearby_stops/nearby_stops_state.dart';
 
 class NearbyStopsScreen extends StatefulWidget {
   const NearbyStopsScreen(
-      {Key? key, required this.title, required this.routeCode,required this.serviceType})
+      {Key? key, required this.title, required this.routeCode,required this.serviceType, required this.from})
       : super(key: key);
   final String title;
   final String routeCode;
   final String serviceType;
+  final String from;
 
   @override
   State<NearbyStopsScreen> createState() => _NearbyStopsScreenState();
@@ -80,7 +81,7 @@ class _NearbyStopsScreenState extends State<NearbyStopsScreen> {
                               Get.toNamed(RouteHelper.getRouteSearchTab(
                                   widget.title,
                                   state.model.data?[index].routeId ?? "",
-                              widget.serviceType));
+                              widget.serviceType, widget.from ?? ""));
                             },
                             title: Text(
                               state.model.data?[index].routeId ?? "",

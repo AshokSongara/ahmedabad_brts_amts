@@ -1,4 +1,6 @@
 import 'package:ahmedabad_brts_amts/api/api_client.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/favourite_routes_response_list.dart';
 import 'package:ahmedabad_brts_amts/data/respositories/routes/route_repository_impl.dart';
 import 'package:ahmedabad_brts_amts/data/respositories/user/user_repository_impl.dart';
@@ -23,6 +25,10 @@ import 'package:ahmedabad_brts_amts/domain/usecases/route/search_route_usecase.d
 import 'package:ahmedabad_brts_amts/domain/usecases/route/favourite_route_list_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/route/ticket_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/change_password_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/user/complaint_history_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/user/complaint_routes_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/user/complaint_usecase.dart';
+import 'package:ahmedabad_brts_amts/domain/usecases/user/complaint_user_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/contactus_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/forget_password_usecase.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/home_get_routes_usecase.dart';
@@ -37,6 +43,8 @@ import 'package:ahmedabad_brts_amts/domain/usecases/user/user_update_profile_use
 import 'package:ahmedabad_brts_amts/domain/usecases/user/verify_otp_usecase.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/booking/booking_list_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/changePassword/change_password_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/complaint/complaint_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/complaint_history/complaint_history_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/contactus/contact_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/discount/discount_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list/favourite_route_bloc.dart';
@@ -67,6 +75,7 @@ import 'domain/usecases/user/feddback_usecase.dart';
 import 'presentation/blocs/forgetpassword/forget_password_bloc.dart';
 import 'presentation/blocs/map_route_code/routes_on_map_bloc.dart';
 import 'presentation/blocs/notification/notification_bloc.dart';
+import 'presentation/blocs/onTapFav/ontap_fav_bloc.dart';
 import 'presentation/blocs/search_route/search_route_bloc.dart';
 
 final injector = GetIt.instance;
@@ -161,6 +170,11 @@ Future<void> init() async {
       bookingListUseCase: injector(),
     ),
   );
+  injector.registerFactory<ComplaintHistoryBloc>(
+        () => ComplaintHistoryBloc(
+      complaintHistoryUseCase: injector(),
+    ),
+  );
   injector.registerFactory<OneDayBloc>(
     () => OneDayBloc(
       oneDayUseCase: injector(),
@@ -184,7 +198,7 @@ Future<void> init() async {
 
   injector.registerFactory<FavouriteRouteListDataBloc>(
         () => FavouriteRouteListDataBloc(
-      favouriteRouteListUseCase: injector(),
+      favouriteRouteListUseCase: injector(), deleteRouteListUseCase: injector(),
     ),
   );
 
@@ -192,6 +206,9 @@ Future<void> init() async {
         () => RoutesOnMapBloc(
       routeOnMapUseCase: injector(),
     ),
+  );
+  injector.registerFactory<ComplaintBloc>(
+        () => ComplaintBloc(injector(), injector(), injector(),injector()),
   );
 
   injector.registerLazySingleton(() => SignupUserUseCase(injector()));
@@ -232,12 +249,21 @@ Future<void> init() async {
   injector.registerLazySingleton(() => AddRouteUseCase(injector()));
   injector.registerLazySingleton(() => RouteDetailsUseCase(injector()));
   injector.registerLazySingleton(() => BookingListUseCase(injector()));
+  injector.registerLazySingleton(() => ComplaintHistoryUseCase(injector()));
   injector.registerLazySingleton(() => OneDayUseCase(injector()));
   injector.registerLazySingleton(() => DiscountUseCase(injector()));
   injector.registerLazySingleton(() => ChangePasswordUseCase(injector()));
   injector.registerLazySingleton(() => PaymentUseCase(injector()));
   injector.registerLazySingleton(() => TicketUseCase(injector()));
   injector.registerLazySingleton(() => AddRouteStopListUseCase(injector()));
+
+  injector.registerLazySingleton(() => ComplaintGetStopUseCase(injector()));
+  injector.registerLazySingleton(() => ComplaintGetRoutesUseCase(injector()));
+  injector.registerLazySingleton(() => ComplaintUserUseCase(injector()));
+
+  injector.registerLazySingleton<BrtsStopResponseModel>(() => BrtsStopResponseModel());
+  injector.registerLazySingleton<BrtsRoutesResponseModel>(() => BrtsRoutesResponseModel());
+
 
   //injector.registerLazySingleton(() => FavouriteRouteListUseCase(injector()));
   injector.registerLazySingleton(() => RouteOnMapUseCase(injector()));
@@ -259,4 +285,7 @@ Future<void> init() async {
   injector.registerFactory<StopSearchDetailsBloc>(
     () => StopSearchDetailsBloc(routeStopListUseCase: injector(),addRouteStopListUseCase: injector()),
   );
+  injector.registerFactory<OnTapFavDetailsBloc>(
+          () => OnTapFavDetailsBloc(
+          routeStopListUseCase: injector(), addRouteStopListUseCase: injector()));
 }

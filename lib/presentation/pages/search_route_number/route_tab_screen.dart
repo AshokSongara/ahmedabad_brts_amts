@@ -28,8 +28,9 @@ class RouteTabScreen extends StatefulWidget {
   final String title;
   final String routeCode;
   final String serviceType;
+  final String from;
 
-  const RouteTabScreen({Key? key, required this.title, required this.routeCode,required this.serviceType})
+  const RouteTabScreen({Key? key, required this.title, required this.routeCode,required this.serviceType, required this.from})
       : super(key: key);
 
   @override
@@ -175,7 +176,7 @@ class _RouteTabScreenState extends State<RouteTabScreen>
                                               .data?[index].stopName,
                                           stationCode: state.routeStopListResponse
                                               .data?[index].stopCode)));
-                                  Get.close(4);
+                                  widget.from == "drawer" ?Get.close(4) : Get.close(3);
                                 },
                                 child: TimelineTile(
                                   indicatorStyle: const IndicatorStyle(

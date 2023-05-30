@@ -11,6 +11,8 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dar
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/language/language_cubit.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/complaint/complaint_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/complaint_history/complaint_history_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/maps/nearby_maps_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/notification/notification_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
@@ -83,6 +85,10 @@ class _HomeScreenState extends State<HomeScreen> {
     if (!isAmts) {
       quickLinkList
           .add(QuickLinkInternalModel("transitmap", ImageConstant.iMap));
+    }
+    else{
+      quickLinkList
+          .add(QuickLinkInternalModel("complaint", ImageConstant.iComplaint));
     }
     quickLinkList.add(QuickLinkInternalModel("feedback", ImageConstant.iChat));
   }
@@ -189,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ?.translate("smart_card_recharge") ??
                           "",
                       style: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp14,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
@@ -201,18 +207,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     leading:Container(
                       height: Dimensions.dp28,
                       width: Dimensions.dp28,
-                      child: const Icon(Icons.near_me),
+                      child: const Icon(Icons.near_me, color: Colors.white,),
                     ),
                     title: Text(
                       AppLocalizations.of(context)?.translate("near_me") ?? "",
                       style: satoshiRegular.copyWith(
-                          fontSize: Dimensions.dp14,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
                           color: Colors.white),
                     ),
                     onTap: () {
                      // Get.toNamed(RouteHelper.getNearByMapScreenRoute(isAmts ? "2" : "1"));
-                     Get.to( NearByMapsScreen(from: "home", stopType: isAmts ? "2" : "1",));
+                     Get.to( NearByMapsScreen(from: "drawer", stopType: isAmts ? "2" : "1",));
                     },
                   ),
                   ListTile(
@@ -230,7 +236,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     onTap: () {
-                      Get.toNamed(RouteHelper.getMyRoutesTabScreenRoute(!isAmts ? "BRTS" : "AMTS"));
+
+                      Get.toNamed(RouteHelper.getMyRoutesTabScreenRoute(!isAmts ? "BRTS" : "AMTS", "drawer"));
+                      setState(() {
+                        routeData = null;
+
+                      });
                     },
                   ),
                   if (!isAmts)
@@ -269,6 +280,42 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     onTap: () {
                       Get.toNamed(RouteHelper.getFeedbackRoute());
+                    },
+                  ),
+                  ListTile(
+                    leading: Image.asset(
+                      ImageConstant.iComplaint,
+                      height: Dimensions.dp20,
+                      width: Dimensions.dp20,
+                      color: Colors.white,
+                    ),
+                    title: Text(
+                      AppLocalizations.of(context)?.translate("complaint") ?? "",
+                      style: satoshiRegular.copyWith(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
+                    onTap: () {
+                      Get.to(ComplaintScreen(stopType: isAmts,));
+                    },
+                  ),
+                  ListTile(
+                    leading: Image.asset(
+                      ImageConstant.iComplaint,
+                      height: Dimensions.dp20,
+                      width: Dimensions.dp20,
+                      color: Colors.white,
+                    ),
+                    title: Text(
+                      AppLocalizations.of(context)?.translate("complaint_history") ?? "",
+                      style: satoshiRegular.copyWith(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
+                    onTap: () {
+                      Get.to(ComplaintHistoryScreen());
                     },
                   ),
                   ListTile(
@@ -319,7 +366,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     leading: Container(
                       height: Dimensions.dp28,
                       width: Dimensions.dp28,
-                      child: const Icon(Icons.language_sharp),
+                      child: const Icon(Icons.language_sharp, color: Colors.white,),
                     ),
                     title: Text(
                       AppLocalizations.of(context)
@@ -397,6 +444,10 @@ class _HomeScreenState extends State<HomeScreen> {
           if (state is SourceSelectionFromMapScreenState) {
             newFromSelectedStation = state.data;
           }
+          if (state is SourceSelectionFromFavScreenState) {
+            newFromSelectedStation = state.data;
+          }
+
           if (state is RoutesResponseState) {
             brtsRoutesResponseModel = state.model;
             Loader.hide();
@@ -537,7 +588,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     onTap: () async {
                       routeData = await Get.toNamed(
                               RouteHelper.getSearchRouteScreenRoute(
-                                  selectedLanguage ?? ""),
+                                  selectedLanguage ?? "", ""),
                               arguments: [brtsRoutesResponseModel, isAmts])
                           as RouteData;
                       setState(() {});
@@ -748,49 +799,59 @@ class _HomeScreenState extends State<HomeScreen> {
                                 "",
                             width: MediaQuery.of(context).size.width,
                             onPressed: () async{
-                              if (routeData != null) {
-                                Get.toNamed(
-                                  RouteHelper.getRouteDetailsRoute(
-                                      routeData?.routeName
-                                              ?.split("-")[0]
-                                              .trim() ??
-                                          "",
-                                      routeData?.customerRouteCode ?? "",
-                                      routeData?.routeName
-                                              ?.split("-")[1]
-                                              .trim() ??
-                                          "",
-                                      routeData?.customerRouteCode ?? "",
-                                      routeData?.routeCode ?? "",
-                                      "",
-                                      "0",
-                                      "Yes",
-                                      "",
-                                      "",
-                                      isAmts ? "AMTS" : "BRTS",
-                                      "",
-                                      "",
-                                      "",
-                                      "","00:00:00","","","",""),
-                                );
-                              } else if (newFromSelectedStation != null &&
-                                  newToSelectedStation != null) {
-                                Get.toNamed(RouteHelper.getSearchResultRoute(
-                                    newFromSelectedStation?.stationCode
-                                            .toString() ??
-                                        "",
-                                    newToSelectedStation?.stationCode
-                                            .toString() ??
-                                        "",
-                                    newFromSelectedStation?.stopName ?? "",
-                                    newToSelectedStation?.stopName ?? "",
-                                    isAmts ? "AMTS" : "BRTS"));
-                              } else {
+                              if(newFromSelectedStation != null && newFromSelectedStation?.stationCode == newToSelectedStation?.stationCode){
                                 showCustomSnackBar(
-                                    "Please Select Source & Destination Station",
+                                    "Please Select Different Source & Destination Station",
                                     context,
                                     isError: true);
                               }
+                              else{
+                                if (routeData != null) {
+                                  Get.toNamed(
+                                    RouteHelper.getRouteDetailsRoute(
+                                        routeData?.routeName
+                                            ?.split("-")[0]
+                                            .trim() ??
+                                            "",
+                                        routeData?.customerRouteCode ?? "",
+                                        routeData?.routeName
+                                            ?.split("-")[1]
+                                            .trim() ??
+                                            "",
+                                        routeData?.customerRouteCode ?? "",
+                                        routeData?.routeCode ?? "",
+                                        "",
+                                        "0",
+                                        "Yes",
+                                        "",
+                                        "",
+                                        isAmts ? "AMTS" : "BRTS",
+                                        "",
+                                        "",
+                                        "",
+                                        "","00:00:00","","","",""),
+                                  );
+                                } else if (newFromSelectedStation != null &&
+                                    newToSelectedStation != null) {
+                                  Get.toNamed(RouteHelper.getSearchResultRoute(
+                                      newFromSelectedStation?.stationCode
+                                          .toString() ??
+                                          "",
+                                      newToSelectedStation?.stationCode
+                                          .toString() ??
+                                          "",
+                                      newFromSelectedStation?.stopName ?? "",
+                                      newToSelectedStation?.stopName ?? "",
+                                      isAmts ? "AMTS" : "BRTS"));
+                                } else {
+                                  showCustomSnackBar(
+                                      "Please Select Source & Destination Station",
+                                      context,
+                                      isError: true);
+                                }
+                              }
+
+
                             },
                             style: satoshiRegular.copyWith(
                                 fontSize: 20.sp,
@@ -845,11 +906,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
               Container(
-                height: 200,
-                margin: const EdgeInsets.only(
-                    left: Dimensions.dp20,
-                    right: Dimensions.dp30,
-                    top: Dimensions.dp16),
+                height: 230.sp,
+                margin:  EdgeInsets.only(
+                    left: Dimensions.dp20.sp,
+                    right: Dimensions.dp30.sp,
+                    top: Dimensions.dp16.sp),
                 decoration: const BoxDecoration(
                     color: Colors.white,
                     boxShadow: [
@@ -862,15 +923,15 @@ class _HomeScreenState extends State<HomeScreen> {
                         BorderRadius.all(Radius.circular(Dimensions.dp16))),
                 child: Container(
                   width: MediaQuery.of(context).size.width,
-                  padding: const EdgeInsets.all(Dimensions.dp20),
+                  padding:  EdgeInsets.all(Dimensions.dp20.sp),
                   child: GridView.builder(
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: quickLinkList.length,
                     gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
+                         SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
-                            crossAxisSpacing: Dimensions.dp10,
-                            childAspectRatio: 1 / 0.8,
+                            crossAxisSpacing: Dimensions.dp10.sp,
+                            childAspectRatio: 1 / 0.9,
                             mainAxisSpacing: 10),
                     itemBuilder: (BuildContext context, int index) {
                       return getGridItemWidget(quickLinkList[index]);
@@ -911,7 +972,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Get.toNamed(RouteHelper.getFeedbackRoute());
         } else if (model.title == "myroutes") {
           Get.toNamed(
-              RouteHelper.getMyRoutesTabScreenRoute(!isAmts ? "BRTS" : "AMTS"));
+              RouteHelper.getMyRoutesTabScreenRoute(!isAmts ? "BRTS" : "AMTS", "home"));
         } else if (model.title == "mticket") {
           Get.toNamed(RouteHelper.getBookingRoute("menu"));
         } else if (model.title == "near_me") {
@@ -919,6 +980,9 @@ class _HomeScreenState extends State<HomeScreen> {
           Get.to( NearByMapsScreen(from: "home", stopType: isAmts ? "2" : "1",));
         } else if (model.title == "smartrecharge") {
           Get.toNamed(RouteHelper.getCardDetailsRoute());
+        } else if (model.title == "complaint") {
+          Get.to(ComplaintScreen(stopType: isAmts,));
+
         } else if (model.title == "transitmap") {
           Get.toNamed(RouteHelper.getTransitMapScreenRoute());
         }
@@ -927,18 +991,18 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           SvgPicture.asset(
             model.imagePath,
-            height: Dimensions.dp35,
-            width: Dimensions.dp35,
+            height: Dimensions.dp35.sp,
+            width: Dimensions.dp35.sp,
             color: Theme.of(context).primaryColor,
           ),
-          const SizedBox(
-            height: Dimensions.dp4,
+           SizedBox(
+            height: Dimensions.dp4.sp,
           ),
           Text(
             AppLocalizations.of(context)?.translate(model.title) ?? "",
             textAlign: TextAlign.center,
             style: satoshiRegular.copyWith(
-                fontSize: Dimensions.dp14.sp,
+                fontSize: Dimensions.dp12.sp,
                 fontWeight: FontWeight.w500,
                 color: AppColors.darkGray),
           )

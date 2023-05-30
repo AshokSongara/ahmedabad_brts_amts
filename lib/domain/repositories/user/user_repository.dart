@@ -8,6 +8,7 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/PaymentInitResponseModel
 import 'package:ahmedabad_brts_amts/data/responsemodels/booking_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/complaint_history_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/contactus_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/favourite_route_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/favourite_routes_response_list.dart';
@@ -21,7 +22,10 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/qr_code_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/ticket_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/user_profile_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/verify_otp_response.dart';
+
 import 'package:hive/hive.dart';
+
+import '../../../data/responsemodels/complaint_response.dart';
 
 abstract class UserRepository {
   Future<SignUpResponse> signupUser(SignupRequest body);
@@ -49,7 +53,10 @@ abstract class UserRepository {
   Future<UserProfileResponse> updateProfile(ProfileRequest body);
   Future<PaymentInitResponseModel> addTransaction(PaymentRequest body);
   Future<BookingListResponse> getBookingListData(String data);
+  Future<ComplaintHistoryResponse> getComplaintHistoryData(String data);
   Future<TicketResponse> ticketData(String data);
   Future<PaymentURLResponse> getPaymentUrl(PaymentRequest body);
   Future<FavouriteRoutesResponseList> getFavouriteRouteData(String serviceType);
+  Future<ComplaintResponseModel> complaintUser(dynamic body);
+
 }

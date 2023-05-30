@@ -15,3 +15,13 @@ class GetFavouriteRouteListEvent extends FavouriteRouteListDataEvent {
   List<Object> get props => [serviceType];
 
 }
+
+class DeleteFavouriteRouteListEvent extends FavouriteRouteListDataEvent {
+  final String routeId;
+
+  const DeleteFavouriteRouteListEvent({required this.routeId});
+
+  @override
+  List<Object> get props => [];
+}
+

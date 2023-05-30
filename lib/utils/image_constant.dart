@@ -1,6 +1,9 @@
 class ImageConstant {
   static const String iBus = 'assets/images/ic_bus.svg';
   static const String iCombineLogo = 'assets/images/ic_combine_app_logo.png';
+  static const String iDisconnected = 'assets/images/ic_disconnected.png';
+  static const String iComplaint = 'assets/images/ic_complaint.png';
+  static const String iRightArrow = 'assets/images/ic_right_arrow_map.png';
   static const String iMail = 'assets/images/ic_mail.svg';
   static const String iMobile = 'assets/images/ic_mobile.svg';
   static const String iUser = 'assets/images/ic_user.svg';

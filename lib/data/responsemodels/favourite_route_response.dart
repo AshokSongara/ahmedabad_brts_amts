@@ -31,6 +31,8 @@ class Data {
   String? endStopId;
   String? endStop;
   String? favouriteRoute;
+  String? startStopStationCode;
+  String? endStopStationCode;
 
   Data(
       {this.id,
@@ -38,25 +40,31 @@ class Data {
         this.startStop,
         this.endStopId,
         this.endStop,
-        this.favouriteRoute});
+        this.favouriteRoute,
+      this.startStopStationCode,
+      this.endStopStationCode});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    startStopId = json['startStopId'];
+    startStopId = json['startStopCode'];
     startStop = json['startStopName'];
-    endStopId = json['endStopId'];
+    endStopId = json['endStopCode'];
     endStop = json['endStopName'];
     favouriteRoute = json['favouriteRoute'];
+    startStopStationCode = json['startStopStationCode'];
+    endStopStationCode = json['endStopStationCode'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = id;
-    data['startStopId'] = startStopId;
+    data['startStopCode'] = startStopId;
     data['startStopName'] = startStop;
-    data['endStopId'] = endStopId;
+    data['endStopCode'] = endStopId;
     data['endStopName'] = endStop;
     data['favouriteRoute'] = favouriteRoute;
+    data['startStopStationCode'] = startStopStationCode;
+    data['endStopStationCode'] = endStopStationCode;
     return data;
   }
 }

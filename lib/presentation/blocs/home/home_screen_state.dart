@@ -21,4 +21,15 @@ class RoutesResponseState extends HomeState{
 class SourceSelectionFromMapScreenState extends HomeState{
   final Data data;
   const SourceSelectionFromMapScreenState(this.data);
+
+  @override
+  List<Object> get props => [data];
+}
+
+class SourceSelectionFromFavScreenState extends HomeState{
+  final Data data;
+  const SourceSelectionFromFavScreenState(this.data);
+
+  @override
+  List<Object> get props => [data];
 }

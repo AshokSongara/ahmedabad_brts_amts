@@ -43,6 +43,8 @@
   "signout": "Signout",
   "route_detail": "Route Details",
   "transit_map": "Transit Map",
-  "home" : "Home"
+  "home" : "Home",
+  "complaint" : "Complaint",
+  "complaint_history" : "Complaint History"
 
 }

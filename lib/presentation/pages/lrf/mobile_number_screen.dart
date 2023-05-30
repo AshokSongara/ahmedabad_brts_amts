@@ -68,26 +68,33 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
             ),
             BlocConsumer<MobileNumberLoginBloc, MobileNumberLoginState>(
                 listener: (BuildContext context, state) {
-              if (state is MobileNumberLoginSuccessState) {
-                Loader.hide();
-                Get.toNamed(RouteHelper.getEnterCodeRoute(
-                    _mobileController.text.toString()));
-              } else if (state is MobileNumberLoginErrorState) {
-                Loader.hide();
-                debugPrint("Api Call Error");
-              } else if (state is MobileNumberLoadingState) {
-                Loader.show(context);
-              } else if (state is MobileNumberValidationErrorState) {
-                Loader.hide();
-                showCustomSnackBar("Please enter valid Mobile number",context,isError: true);
-                debugPrint("Validation Error");
-                showCustomSnackBar("Please enter valid Mobile number",context,isError: true);
-              } else if (state is MobileNumberLoginErrorState) {
-                Loader.hide();
-                showCustomSnackBar("User Not Registred", context,
-                    isError: true);
-              }
-            }, builder: (context, state) {
+                  if (state is MobileNumberLoginSuccessState) {
+                    Loader.hide();
+                    Get.toNamed(RouteHelper.getEnterCodeRoute(
+                        _mobileController.text.toString()));
+                  } else if (state is MobileNumberLoginErrorState) {
+                    Loader.hide();
+                    showCustomSnackBar("User Not Registred", context,
+                        isError: true);
+                    Get.toNamed(RouteHelper.signup);
+                    debugPrint("Api Call Error");
+                  } else if (state is MobileNumberLoadingState) {
+                    Loader.show(context);
+                  } else if (state is MobileNumberValidationErrorState) {
+                    Loader.hide();
+                    showCustomSnackBar(
+                        "Please enter valid Mobile number", context,
+                        isError: true);
+                    debugPrint("Validation Error");
+                    showCustomSnackBar(
+                        "Please enter valid Mobile number", context,
+                        isError: true);
+                  } else if (state is MobileNumberLoginErrorState) {
+                    Loader.hide();
+                    showCustomSnackBar("User Not Registred", context,
+                        isError: true);
+                  }
+                }, builder: (context, state) {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -137,7 +144,7 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                         prefixText: '+91 | ',
                         counterText: "",
                         prefixStyle:
-                            satoshiRegular.copyWith(color: AppColors.darkGray),
+                        satoshiRegular.copyWith(color: AppColors.darkGray),
                         filled: true,
                         fillColor: Colors.white,
                         hintText: "Enter Mobile Number",
@@ -174,10 +181,11 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                     onKeyboardTap: _onKeyboardTap,
                     textColor: AppColors.darkGray,
                     rightButtonFn: () {
-                      setState(() {
-                        _mobileController.text = _mobileController.text
-                            .substring(0, _mobileController.text.length - 1);
-                      });
+                      onBackspacePressed();
+                      // setState(() {
+                      //   _mobileController.text = _mobileController.text
+                      //       .substring(0, _mobileController.text.length - 1);
+                      // });
                     },
                     rightIcon: Icon(
                       Icons.backspace,
@@ -212,12 +220,49 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
     );
   }
 
+  void onBackspacePressed() {
+    final text = _mobileController.text;
+    final selection = _mobileController.selection;
+
+    if (selection.start > 0) {
+      final newSelection = selection.copyWith(
+        baseOffset: selection.start - 1,
+        extentOffset: selection.start - 1,
+      );
+
+      final newText = text.substring(0, selection.start - 1) + text.substring(selection.end);
+
+      setState(() {
+        _mobileController.value = _mobileController.value.copyWith(
+          text: newText,
+          selection: newSelection,
+        );
+      });
+    }
+  }
+
 
 
   _onKeyboardTap(String value) {
     if (_mobileController.text.length < 10) {
+      final text = _mobileController.text;
+      final selection = _mobileController.selection;
+
+      final newText = text.replaceRange(
+        selection.start,
+        selection.end,
+        value,
+      );
+
+      final newSelection = TextSelection.collapsed(
+        offset: selection.start + value.length,
+      );
+
       setState(() {
-        _mobileController.text = _mobileController.text + value;
+        _mobileController.value = TextEditingValue(
+          text: newText,
+          selection: newSelection,
+        );
       });
     }
   }

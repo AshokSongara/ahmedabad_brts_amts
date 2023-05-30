@@ -3,22 +3,26 @@ import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list_data/favourite_list_data_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list_data/favourite_list_data_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/favourite_list_data/favourite_route_data_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/favourite/ontap_fav_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
+import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../data/responsemodels/favourite_routes_response_list.dart';
 
 class MyRoutesScreenTwo extends StatefulWidget {
-  const MyRoutesScreenTwo({Key? key, required this.serviceType}) : super(key: key);
+  const MyRoutesScreenTwo({Key? key, required this.serviceType, required this.from}) : super(key: key);
   final String serviceType;
+  final String from;
 
   @override
   _MyRoutesScreenTwoState createState() => _MyRoutesScreenTwoState();
@@ -54,7 +58,12 @@ class _MyRoutesScreenTwoState extends State<MyRoutesScreenTwo> {
         child:
             BlocConsumer<FavouriteRouteListDataBloc, FavouriteRouteListState>(
           listener: (context, state) {
-            if (state is FavouriteRouteLoadingState) {
+            if (state is FavouriteDeleteRouteListSuccessState) {
+              Loader.hide();
+              showCustomSnackBar("Favourite Route is Deleted", context,
+                  isError: false);
+              getData();
+            } else  if (state is FavouriteRouteLoadingState) {
               Loader.show(context);
             } else {
               Loader.hide();
@@ -104,7 +113,8 @@ class _MyRoutesScreenTwoState extends State<MyRoutesScreenTwo> {
   Widget getMyRoutesWidget(Data model) {
     return GestureDetector(
       onTap: () {
-        Get.toNamed(RouteHelper.getPolyLinePageRoute(model.routeCode ?? ""));
+        Get.to(OnTapFavScreen(title: model.routeLongName!, routeCode: model.routeCode!, serviceType: widget.serviceType, from: widget.from,));
+        //Get.toNamed(RouteHelper.getPolyLinePageRoute(model.routeCode ?? ""));
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 19),
@@ -174,6 +184,19 @@ class _MyRoutesScreenTwoState extends State<MyRoutesScreenTwo> {
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
+                InkWell(
+                    onTap: () {
+                      BlocProvider.of<FavouriteRouteListDataBloc>(context).add(
+                          DeleteFavouriteRouteListEvent(
+                              routeId: model.id.toString()));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SvgPicture.asset(
+                        ImageConstant.iFavorite,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    )),
               ],
             ),
           ],

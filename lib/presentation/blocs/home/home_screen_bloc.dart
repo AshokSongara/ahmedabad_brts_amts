@@ -23,6 +23,9 @@ class HomeScreenBloc extends Bloc<HomeEvent,HomeState>{
     else if(event is SourceSelectionFromMapScreenEvent){
       yield SourceSelectionFromMapScreenState(event.data);
     }
+    else if(event is SourceSelectionFromFavScreenEvent){
+      yield SourceSelectionFromFavScreenState(event.data);
+    }
     if(event is GetAvailableRoutesEvent){
       // yield HomeLoadingState();
       var data = await homeGetRoutesUseCase.call(Params(data: event.model));

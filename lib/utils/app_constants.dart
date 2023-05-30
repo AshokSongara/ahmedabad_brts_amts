@@ -48,6 +48,7 @@ class AppConstant {
   static String transactionTicket = "AddTransaction/Ticket";
   static String favouriteRoute = "Favourite/routeCode/";
   static String favouriteRouteListData = "Favourite/GetByRoute/";
+  static String complaint = "Complaint";
 
   //SharedPreferences Keys
   static String accessToken = "accessToken";

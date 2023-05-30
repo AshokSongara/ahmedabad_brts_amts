@@ -133,11 +133,12 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
     return GestureDetector(
       onTap: () {
         Get.toNamed(RouteHelper.getSearchResultRoute(
-            model.startStopId.toString(),
-            model.endStopId.toString(),
+            model.startStopStationCode.toString(),
+            model.endStopStationCode.toString(),
             model.startStop?.toString() ?? "",
             model.endStop?.toString() ?? "",
-            ""));
+            widget.serviceType
+            ));
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 19, vertical: 19),
@@ -200,27 +201,32 @@ class _MyRoutesScreenState extends State<MyRoutesScreen> {
                   width: 20,
                 ),
                 Container(
-                  width: 215,
+                  width: 160,
                   child: Row(
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-
                         children: [
-                          Text(
-                            model.startStop!,
-                            maxLines: 2,
-                            style: satoshiRegularSmallDark,
-                            overflow: TextOverflow.ellipsis,
+                          Container(
+                            child: Text(
+                              model.startStop!,
+                              maxLines: 3,
+                              style: satoshiRegularSmallDark,
+                              //overflow: TextOverflow.ellipsis,
+                            ),
+                            width: 160,
                           ),
                           SizedBox(
                             height: 25,
                           ),
-                          Text(
-                            model.endStop!,
-                            maxLines: 2,
-                            style: satoshiRegularSmallDark,
-                            overflow: TextOverflow.ellipsis,
+                          Container(
+                            width: 160,
+                            child: Text(
+                              model.endStop!,
+                              maxLines: 3,
+                              style: satoshiRegularSmallDark,
+                              // overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ],
                       )

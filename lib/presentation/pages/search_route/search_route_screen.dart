@@ -17,9 +17,10 @@ import '../../blocs/search_route/search_route_event.dart';
 import '../../widgets/base/custom_snackbar.dart';
 
 class SearchRouteScreen extends StatefulWidget {
-  const SearchRouteScreen({Key? key, required this.selectedLanguage})
+  const SearchRouteScreen({Key? key, required this.selectedLanguage, this.from})
       : super(key: key);
   final String? selectedLanguage;
+  final String? from;
 
   @override
   _SearchRouteScreenState createState() => _SearchRouteScreenState();
@@ -164,7 +165,9 @@ class _SearchRouteScreenState extends State<SearchRouteScreen> {
                                                 .copyWith(fontSize: 22.sp),
                                           ),
                                           const Spacer(),
-                                          InkWell(
+
+                                         widget.from == "c" ?  Spacer() :
+                                         InkWell(
                                             onTap: () {
                                               localBrtsStopList[index].setFav(
                                                   !localBrtsStopList[index]

@@ -160,8 +160,8 @@ class RouteHelper {
   static String getSearchStopScreenRoute(String selectedLanguage) =>
       '$searchStopScreen?selectedLanguage=$selectedLanguage';
 
-  static String getSearchRouteScreenRoute(String selectedLanguage) =>
-      '$searchRouteScreen?selectedLanguage=$selectedLanguage';
+  static String getSearchRouteScreenRoute(String selectedLanguage, String from) =>
+      '$searchRouteScreen?selectedLanguage=$selectedLanguage&from=$from';
 
   static String getNearBySearchStopScreenRoute() => nearBySearchStopScreen;
 
@@ -172,11 +172,11 @@ class RouteHelper {
 
   static String getTransitMapScreenRoute() => transitMap;
 
-  static String getNearByStops(String title, String routeCode,String serviceType) =>
-      '$nearByStops?title=$title&routeCode=$routeCode&serviceType=$serviceType';
+  static String getNearByStops(String title, String routeCode,String serviceType, String from) =>
+      '$nearByStops?title=$title&routeCode=$routeCode&serviceType=$serviceType&from=$from';
 
-  static String getRouteSearchTab(String title, String routeCode,String serviceType) =>
-      '$routeSearchTab?title=$title&routeCode=$routeCode&serviceType=$serviceType';
+  static String getRouteSearchTab(String title, String routeCode,String serviceType, String from) =>
+      '$routeSearchTab?title=$title&routeCode=$routeCode&serviceType=$serviceType&from=$from';
 
   static String getRouteTicket(String ticketNumber) =>
       '$ticket?ticketNumber=$ticketNumber';
@@ -186,7 +186,7 @@ class RouteHelper {
   static String getPolyLinePageRoute(String routeCode) =>
       '$polyLinePage?routeCode=$routeCode';
 
-  static String getMyRoutesTabScreenRoute(String serviceType) => '$myRoutesTabScreen?serviceType=$serviceType';
+  static String getMyRoutesTabScreenRoute(String serviceType, String from) => '$myRoutesTabScreen?serviceType=$serviceType&from=$from';
 
   static List<GetPage> routes = [
     GetPage(
@@ -211,7 +211,7 @@ class RouteHelper {
         page: () => PolylinePage(
               routeCode: Get.parameters['routeCode'],
             )),
-    GetPage(name: myRoutesTabScreen, page: () => MyRoutesTabScreen(serviceType: Get.parameters['serviceType'] ?? "",)),
+    GetPage(name: myRoutesTabScreen, page: () => MyRoutesTabScreen(serviceType: Get.parameters['serviceType'] ?? "", from: Get.parameters['from'] ?? "",)),
     GetPage(
         name: transactionStatus, page: () => const FailedTransactionScreen()),
     GetPage(
@@ -237,6 +237,7 @@ class RouteHelper {
         name: searchRouteScreen,
         page: () => SearchRouteScreen(
               selectedLanguage: Get.parameters['selectedLanguage'],
+              from: Get.parameters['from'],
             )),
     GetPage(
         name: enterCode,
@@ -337,6 +338,7 @@ class RouteHelper {
               title: Get.parameters['title'] ?? "",
               routeCode: Get.parameters['routeCode'] ?? "",
           serviceType: Get.parameters['serviceType'] ?? "",
+          from: Get.parameters['from'] ?? "",
             )),
     GetPage(
         name: nearByStops,
@@ -344,6 +346,7 @@ class RouteHelper {
               title: Get.parameters['title'] ?? "",
               routeCode: Get.parameters['routeCode'] ?? "",
           serviceType: Get.parameters['serviceType'] ?? "",
+          from: Get.parameters['from'] ?? "",
             )),
   ];
 }

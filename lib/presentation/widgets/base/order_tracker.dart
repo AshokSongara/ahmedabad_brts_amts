@@ -4,6 +4,7 @@ import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class OrderTracker extends StatefulWidget {
@@ -76,10 +77,13 @@ class _OrderTrackerState extends State<OrderTracker> {
                 width: 20,
               ),
               Expanded(
-                child: Text(
-                  widget.startRouteTitle,
-                  style: satoshiRegularSmallDark,
-                  overflow: TextOverflow.ellipsis,
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Text(
+                    widget.startRouteTitle,
+                    maxLines: 1,
+                    style: satoshiRegularSmallDark,
+                  ),
                 ),
               ),
             ],
@@ -108,8 +112,9 @@ class _OrderTrackerState extends State<OrderTracker> {
               ),
               SizedBox(
                 height: widget.orderTitleAndDateList != null &&
-                        widget.orderTitleAndDateList!.isNotEmpty && showList
-                    ? widget.orderTitleAndDateList!.length * 30
+                    widget.orderTitleAndDateList!.isNotEmpty &&
+                    showList
+                    ? widget.orderTitleAndDateList!.length * 42.sp
                     : 100,
                 child: Stack(
                   children: [
@@ -118,74 +123,82 @@ class _OrderTrackerState extends State<OrderTracker> {
                       child: SizedBox(
                         width: 2,
                         height: widget.orderTitleAndDateList != null &&
-                                widget.orderTitleAndDateList!.isNotEmpty && showList
-                            ? widget.orderTitleAndDateList!.length * 30
+                            widget.orderTitleAndDateList!.isNotEmpty &&
+                            showList
+                            ? widget.orderTitleAndDateList!.length * 42.sp
                             : 100,
                         child: LinearProgressIndicator(
                           backgroundColor:
-                              widget.inActiveColor ?? Colors.grey[300],
+                          widget.inActiveColor ?? Colors.grey[300],
                           color: AppColors.darkGray,
                         ),
                       ),
                     ),
                     SizedBox(
                         height: showList
-                            ? widget.orderTitleAndDateList!.length * 30
+                            ? widget.orderTitleAndDateList!.length * 42.sp
                             : 100,
                         width: MediaQuery.of(context).size.width / 2,
                         child: showList
                             ? ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),
-                                padding: EdgeInsets.zero,
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    margin: const EdgeInsets.only(
-                                        top: 5, bottom: 5),
-                                    child: Row(
-                                      children: [
-                                        SizedBox(
-                                          height: 15,
-                                          width: 15,
-                                          child: SvgPicture.asset(
-                                              ImageConstant.iStop),
-                                        ),
-                                        const SizedBox(
-                                          width: 20,
-                                        ),
-                                        Expanded(
-                                          child: Text(
-                                            widget.orderTitleAndDateList?[index]
-                                                    .stopName ??
-                                                "",
-                                            style: satoshiRegularSmallDark,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                      ],
+                            itemExtent: 42.sp,
+                            padding: EdgeInsets.zero,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                margin: const EdgeInsets.only(
+                                    top: 5, bottom: 5),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      height: 15,
+                                      width: 15,
+                                      child: SvgPicture.asset(
+                                          ImageConstant.iStop),
                                     ),
-                                  );
-                                },
-                                itemCount: widget.orderTitleAndDateList !=
-                                            null &&
-                                        widget.orderTitleAndDateList!.isNotEmpty
-                                    ? widget.orderTitleAndDateList!.length
-                                    : 0)
-                            : GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    showList = true;
-                                  });
-                                },
-                                child: Center(
-                                  child: Text(
-                                    "${widget.orderTitleAndDateList?.length.toString()}+",
-                                    style: satoshiSmall.copyWith(
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 16,
-                                        color: Theme.of(context).primaryColor),
-                                  ),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    Expanded(
+                                      child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: Text(
+                                          widget.orderTitleAndDateList?[index]
+                                              .stopName ??
+                                              "",
+                                          maxLines: 1,
+                                          style: satoshiRegularSmallDark,
+
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ))
+                              );
+                            },
+                            itemCount: widget.orderTitleAndDateList !=
+                                null &&
+                                widget.orderTitleAndDateList!.isNotEmpty
+                                ? widget.orderTitleAndDateList!.length
+                                : 0)
+                            : GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              showList = true;
+                            });
+                          },
+                          child: Center(
+                            child: Text(
+                              widget.orderTitleAndDateList?.length != null
+                                  ? "${widget.orderTitleAndDateList?.length.toString()}+"
+                                  : "0+",
+                              style: satoshiSmall.copyWith(
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                  color: Theme.of(context).primaryColor),
+                            ),
+                          ),
+                        ))
                   ],
                 ),
               ),
@@ -212,10 +225,12 @@ class _OrderTrackerState extends State<OrderTracker> {
                   width: 20,
                 ),
                 Expanded(
-                  child: Text(
-                    widget.interChangeName ?? widget.endRouteTitle,
-                    style: satoshiRegularSmallDark,
-                    overflow: TextOverflow.ellipsis,
+                  child: SingleChildScrollView(
+                    child: Text(
+                      widget.interChangeName ?? widget.endRouteTitle,
+                      style: satoshiRegularSmallDark.copyWith(fontWeight: FontWeight.w900),
+                      // maxLines: 1,
+                    ),
                   ),
                 ),
               ],
@@ -238,6 +253,7 @@ class _OrderTrackerState extends State<OrderTracker> {
                     Expanded(
                       child: Text(
                         widget.routeCodeTwo ?? "",
+                        maxLines: 1,
                         style: satoshiSmall.copyWith(
                             fontWeight: FontWeight.w700,
                             color: Theme.of(context).primaryColor),
@@ -247,8 +263,9 @@ class _OrderTrackerState extends State<OrderTracker> {
                 ),
                 SizedBox(
                   height: widget.orderTitleAndDateList2 != null &&
-                      widget.orderTitleAndDateList2!.isNotEmpty && showList
-                      ? widget.orderTitleAndDateList2!.length * 30
+                      widget.orderTitleAndDateList2!.isNotEmpty &&
+                      showList
+                      ? widget.orderTitleAndDateList2!.length * 42.sp
                       : 100,
                   child: Stack(
                     children: [
@@ -257,76 +274,80 @@ class _OrderTrackerState extends State<OrderTracker> {
                         child: SizedBox(
                           width: 2,
                           height: widget.orderTitleAndDateList2 != null &&
-                                  widget.orderTitleAndDateList2!.isNotEmpty && showList
-                              ? widget.orderTitleAndDateList2!.length * 40
+                              widget.orderTitleAndDateList2!.isNotEmpty &&
+                              showList
+                              ? widget.orderTitleAndDateList2!.length * 42.sp
                               : 100,
                           child: LinearProgressIndicator(
                             backgroundColor:
-                                widget.inActiveColor ?? Colors.grey[300],
+                            widget.inActiveColor ?? Colors.grey[300],
                             color: AppColors.darkGray,
                           ),
                         ),
                       ),
                       SizedBox(
-                          height: widget.orderTitleAndDateList2!.length * 40,
+                          height: widget.orderTitleAndDateList2!.length * 42.sp,
                           width: MediaQuery.of(context).size.width / 2,
                           child: showList
                               ? ListView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                                  padding: EdgeInsets.zero,
-                                  itemBuilder: (context, index) {
-                                    return Container(
-                                      margin: const EdgeInsets.only(
-                                          top: 5, bottom: 5),
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                            height: 15,
-                                            width: 15,
-                                            child: SvgPicture.asset(
-                                                ImageConstant.iStop),
-                                          ),
-                                          const SizedBox(
-                                            width: 20,
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              widget
-                                                      .orderTitleAndDateList2?[
-                                                          index]
-                                                      .stopName ??
-                                                  "",
-                                              style: satoshiRegularSmallDark,
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ),
-                                        ],
+                              physics: const NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.zero,
+                              itemExtent: 42.sp,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  margin: const EdgeInsets.only(
+                                      top: 5, bottom: 5),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        height: 15,
+                                        width: 15,
+                                        child: SvgPicture.asset(
+                                            ImageConstant.iStop),
                                       ),
-                                    );
-                                  },
-                                  itemCount: widget.orderTitleAndDateList2 !=
-                                              null &&
-                                          widget.orderTitleAndDateList2!
-                                              .isNotEmpty
-                                      ? widget.orderTitleAndDateList2!.length
-                                      : 0)
-                              : GestureDetector(
-                                  onTap: () {
-                                    setState(() {
-                                      showList = true;
-                                    });
-                                  },
-                                  child: Center(
-                                    child: Text(
-                                      "${widget.orderTitleAndDateList2?.length.toString()}+",
-                                      style: satoshiSmall.copyWith(
-                                          fontWeight: FontWeight.w700,
-                                          fontSize: 16,
-                                          color:
-                                              Theme.of(context).primaryColor),
-                                    ),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      Expanded(
+                                        child: SingleChildScrollView(
+                                          scrollDirection: Axis.horizontal,
+                                          child: Text(
+                                            widget
+                                                .orderTitleAndDateList2?[
+                                            index]
+                                                .stopName ??
+                                                "",
+                                            maxLines: 1,
+                                            style: satoshiRegularSmallDark,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ))
+                                );
+                              },
+                              itemCount: widget.orderTitleAndDateList2 !=
+                                  null &&
+                                  widget.orderTitleAndDateList2!
+                                      .isNotEmpty
+                                  ? widget.orderTitleAndDateList2!.length
+                                  : 0)
+                              : GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                showList = true;
+                              });
+                            },
+                            child: Center(
+                              child: Text(
+                                "${widget.orderTitleAndDateList2?.length.toString()}+",
+                                style: satoshiSmall.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 16,
+                                    color: Theme.of(context).primaryColor),
+                              ),
+                            ),
+                          ))
                     ],
                   ),
                 ),
@@ -352,10 +373,12 @@ class _OrderTrackerState extends State<OrderTracker> {
                 width: 20,
               ),
               Expanded(
-                child: Text(
-                  widget.endRouteTitle,
-                  style: satoshiRegularSmallDark,
-                  overflow: TextOverflow.ellipsis,
+                child: SingleChildScrollView(
+                  child: Text(
+                    widget.endRouteTitle,
+                    style: satoshiRegularSmallDark,
+                    maxLines: 1,
+                  ),
                 ),
               ),
             ],

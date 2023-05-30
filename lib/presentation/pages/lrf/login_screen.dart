@@ -132,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             onSubmit: () {},
                             capitalization: TextCapitalization.none,
                             divider: false,
-                            hintText: "kapil@gmail.com",
+                            hintText: "abcxyz@gmail.com",
                           ),
                           const SizedBox(
                             height: Dimensions.dp20,
@@ -168,6 +168,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               text: "Login",
                               width: MediaQuery.of(context).size.width,
                               onPressed: () {
+                                FocusScopeNode currentFocus = FocusScope.of(context);
+
+                                if (!currentFocus.hasPrimaryFocus) {
+                                  currentFocus.unfocus();
+                                }
                                 if (_emailController.text.toString().isEmpty) {
                                   showCustomSnackBar(
                                       "Please Enter EmailID", context);

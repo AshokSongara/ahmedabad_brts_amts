@@ -81,7 +81,7 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
                CustomToolbar(
                 title: "near_me",
                 showOption: false,
-                back: widget.from == "home" ? true : false,
+                back:  true,
               ),
               Expanded(
                 flex: 1,
@@ -152,7 +152,8 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
                           Get.toNamed(RouteHelper.getNearByStops(
                               nearMeResponse?.data?[index].stopName ?? "",
                               nearMeResponse?.data?[index].stopCode??"",
-                          widget.stopType ?? ""));
+                          widget.stopType ?? "",
+                          widget.from ?? ""));
 
                           // controller.goToLocation(GeoPoint(
                           //     latitude:

@@ -103,7 +103,7 @@ class SearchResultItem extends StatelessWidget {
                             ),
                             Container(
                               height: 2,
-                              width: 40,
+                              width: 37,
                               color: AppColors.grayD0D0D0,
                             ),
                             Container(
@@ -116,7 +116,7 @@ class SearchResultItem extends StatelessWidget {
                             ),
                             Container(
                               height: 2,
-                              width: 40,
+                              width: 37,
                               color: AppColors.grayD0D0D0,
                             ),
                             Container(

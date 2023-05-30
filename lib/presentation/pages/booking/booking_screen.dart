@@ -79,7 +79,7 @@ class _BookingScreenState extends State<BookingScreen> {
                           color: AppColors.darkGray),
                     ));
                   } else {
-                    return Expanded(
+                    return  Expanded(
                       child: ListView.builder(
                           padding: EdgeInsets.zero,
                           shrinkWrap: true,
@@ -94,20 +94,20 @@ class _BookingScreenState extends State<BookingScreen> {
                                     .ticketNo
                                     .toString() ??
                                     "") ):
-                                    showCustomSnackBar(
+                                showCustomSnackBar(
                                     "Failed Transaction... !",
                                     context,
                                     isError: true);
                               },
                               child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: Dimensions.dp16,
-                                    vertical: Dimensions.dp26),
-                                margin: const EdgeInsets.only(
-                                    left: Dimensions.dp16,
-                                    right: Dimensions.dp16,
-                                    top: Dimensions.dp10),
-                                decoration: const BoxDecoration(
+                                padding:  EdgeInsets.symmetric(
+                                    horizontal: Dimensions.dp20.sp,
+                                    vertical: Dimensions.dp26.sp),
+                                margin:  EdgeInsets.only(
+                                    left: Dimensions.dp16.sp,
+                                    right: Dimensions.dp16.sp,
+                                    top: Dimensions.dp10.sp),
+                                decoration:  BoxDecoration(
                                   color: Colors.white,
                                   boxShadow: [
                                     BoxShadow(
@@ -116,7 +116,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                     ),
                                   ],
                                   borderRadius: BorderRadius.all(
-                                    Radius.circular(Dimensions.dp10),
+                                    Radius.circular(Dimensions.dp10.sp),
                                   ),
                                 ),
                                 child: Column(
@@ -125,46 +125,49 @@ class _BookingScreenState extends State<BookingScreen> {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "TXN Date and Time",
-                                              textAlign: TextAlign.center,
-                                              style: satoshiRegular.copyWith(
-                                                  fontSize: Dimensions.dp15,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: AppColors.black),
-                                            ),
-                                            Text(
-                                              toDateTime(state.bookingListResponse.data![index].transactionDatetime ?? ""),
-                                              textAlign: TextAlign.center,
-                                              style: satoshiRegular.copyWith(
-                                                  fontSize: Dimensions.dp14,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: AppColors.black),
-                                            ),
-                                          ],
+                                        Container(
+                                          //width: 160.sp,
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "TXN Date and Time",
+                                                textAlign: TextAlign.center,
+                                                style: satoshiRegular.copyWith(
+                                                    fontSize: Dimensions.dp15.sp,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: AppColors.black),
+                                              ),
+                                              Text(
+                                                toDateTime(state.bookingListResponse.data![index].transactionDatetime ?? ""),
+                                                textAlign: TextAlign.center,
+                                                style: satoshiRegular.copyWith(
+                                                    fontSize: Dimensions.dp14.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: AppColors.black),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                         state.bookingListResponse.data![index].txnStatus == "SUCCESS" ?
                                         SizedBox(
-                                          width: 100,
+                                          //width: 100.sp,
                                           child: Text(
                                             "Payment \nReceived",
                                             textAlign: TextAlign.center,
                                             style: satoshiRegular.copyWith(
-                                                fontSize: Dimensions.dp15,
+                                                fontSize: Dimensions.dp15.sp,
                                                 fontWeight: FontWeight.w500,
                                                 color: AppColors.black),
                                           ),
                                         ) :
                                         SizedBox(
-                                          width: 100,
+                                          //  width: 100.sp,
                                           child: Text(
-                                            "Transaction \nFailed",
+                                            "Transaction\nFailed",
                                             textAlign: TextAlign.center,
                                             style: satoshiRegular.copyWith(
-                                                fontSize: Dimensions.dp15,
+                                                fontSize: Dimensions.dp15.sp,
                                                 fontWeight: FontWeight.w700,
                                                 color: Colors.red),
                                           ),
@@ -178,30 +181,33 @@ class _BookingScreenState extends State<BookingScreen> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         state.bookingListResponse.data![index].txnStatus == "SUCCESS" ?
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "EXP Date and Time",
-                                              textAlign: TextAlign.center,
-                                              style: satoshiRegular.copyWith(
-                                                  fontSize: Dimensions.dp15,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: AppColors.black),
-                                            ),
-                                            Text(
-                                              toDateTime(state.bookingListResponse.data![index].ticketExpiry ?? ""),
-                                              textAlign: TextAlign.center,
-                                              style: satoshiRegular.copyWith(
-                                                  fontSize: Dimensions.dp14,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: AppColors.black),
-                                            ),
-                                          ],
+                                        Container(
+                                          // width : 160.sp,
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "EXP Date and Time",
+                                                textAlign: TextAlign.center,
+                                                style: satoshiRegular.copyWith(
+                                                    fontSize: Dimensions.dp15.sp,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: AppColors.black),
+                                              ),
+                                              Text(
+                                                toDateTime(state.bookingListResponse.data![index].ticketExpiry ?? ""),
+                                                textAlign: TextAlign.center,
+                                                style: satoshiRegular.copyWith(
+                                                    fontSize: Dimensions.dp14.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: AppColors.black),
+                                              ),
+                                            ],
+                                          ),
                                         ) :
                                         Container(),
                                         SizedBox(
-                                          width: 100,
+                                          // width: 100.sp,
                                           child: Text(
                                             "₹ ${getFare(int.parse(state.bookingListResponse.data![index].fareAmt.toString()))}",
                                             textAlign: TextAlign.center,
@@ -230,36 +236,39 @@ class _BookingScreenState extends State<BookingScreen> {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Order ID ",
-                                              textAlign: TextAlign.center,
-                                              style: satoshiRegular.copyWith(
-                                                  fontSize: Dimensions.dp15,
-                                                  fontWeight: FontWeight.w700,
-                                                  color: AppColors.black),
-                                            ),
-                                            Text(
-                                              state.bookingListResponse.data![index].transactionNo ?? "",
-                                              textAlign: TextAlign.center,
-                                              style: satoshiRegular.copyWith(
-                                                  fontSize: Dimensions.dp14,
-                                                  fontWeight: FontWeight.w400,
-                                                  color: AppColors.black),
-                                            ),
-                                          ],
+                                        Container(
+                                          // width : 185.sp,
+                                          child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Order ID ",
+                                                textAlign: TextAlign.center,
+                                                style: satoshiRegular.copyWith(
+                                                    fontSize: Dimensions.dp15.sp,
+                                                    fontWeight: FontWeight.w700,
+                                                    color: AppColors.black),
+                                              ),
+                                              Text(
+                                                state.bookingListResponse.data![index].transactionNo ?? "",
+                                                textAlign: TextAlign.center,
+                                                style: satoshiRegular.copyWith(
+                                                    fontSize: Dimensions.dp14.sp,
+                                                    fontWeight: FontWeight.w400,
+                                                    color: AppColors.black),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                         // Spacer(),
                                         state.bookingListResponse.data![index].txnStatus == "SUCCESS" ?
                                         SizedBox(
-                                          width: 100,
+                                          // width: 100.sp,
                                           child: Text(
                                             state.bookingListResponse.data![index].ticketIsActive! ?  "Active" : "Expired",
                                             textAlign: TextAlign.center,
                                             style: satoshiRegular.copyWith(
-                                                fontSize: Dimensions.dp16,
+                                                fontSize: Dimensions.dp16.sp,
                                                 fontWeight: FontWeight.w400,
                                                 color: state.bookingListResponse.data![index].ticketIsActive! ? Colors.green : Colors.red),
                                           ),
@@ -284,11 +293,11 @@ class _BookingScreenState extends State<BookingScreen> {
                                         SvgPicture.asset(
                                           ImageConstant.iRoute,
                                           color: AppColors.primaryColor,
-                                          height: Dimensions.dp16,
-                                          width: Dimensions.dp16,
+                                          height: Dimensions.dp16.sp,
+                                          width: Dimensions.dp16.sp,
                                         ),
-                                        const SizedBox(
-                                          width: 5,
+                                        SizedBox(
+                                          width: 5.w,
                                         ),
                                         Expanded(
                                           child: RichText(
@@ -299,24 +308,28 @@ class _BookingScreenState extends State<BookingScreen> {
                                                     style: satoshiRegular.copyWith(
                                                         overflow: TextOverflow.ellipsis,
                                                         color: AppColors.darkGray,
-                                                        fontSize: Dimensions.dp14,
+                                                        fontSize: Dimensions.dp14.sp,
                                                         fontWeight:
                                                         FontWeight.w700)),
+                                              //  state.bookingListResponse.data![index].journeyType == "NORMAL" ?
                                                 TextSpan(
                                                     text: " TO ",
                                                     style: satoshiRegular.copyWith(
                                                         color: AppColors.primaryColor,
-                                                        fontSize: Dimensions.dp14,
+                                                        fontSize: Dimensions.dp14.sp,
                                                         fontWeight:
                                                         FontWeight.w700)),
+                                                //    : TextSpan(),
+                                              //  state.bookingListResponse.data![index].journeyType == "NORMAL" ?
                                                 TextSpan(
                                                     text: state.bookingListResponse.data![index].destinationStopName ?? "",
                                                     style: satoshiRegular.copyWith(
                                                         overflow: TextOverflow.ellipsis,
                                                         color: AppColors.darkGray,
-                                                        fontSize: Dimensions.dp14,
+                                                        fontSize: Dimensions.dp14.sp,
                                                         fontWeight:
-                                                        FontWeight.w700)),
+                                                        FontWeight.w700))
+                                                    //: TextSpan(),
                                               ],
                                             ),
                                           ),

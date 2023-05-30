@@ -29,14 +29,16 @@ class Data {
   String? stopCode;
   String? stopName;
   String? routeName;
+  String? stationCode;
 
-  Data({this.sequenceNumber, this.stopCode, this.stopName, this.routeName});
+  Data({this.sequenceNumber, this.stopCode, this.stopName, this.routeName, this.stationCode});
 
   Data.fromJson(Map<String, dynamic> json) {
     sequenceNumber = json['sequenceNumber'];
     stopCode = json['stopCode'];
     stopName = json['stopName'];
     routeName = json['routeName'];
+    stationCode = json['stationCode'];
   }
 
   Map<String, dynamic> toJson() {
@@ -45,6 +47,7 @@ class Data {
     data['stopCode'] = stopCode;
     data['stopName'] = stopName;
     data['routeName'] = routeName;
+    data['stationCode'] = stationCode;
     return data;
   }
 }

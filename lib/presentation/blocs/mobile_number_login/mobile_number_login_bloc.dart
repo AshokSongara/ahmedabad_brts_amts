@@ -1,8 +1,11 @@
 import 'package:ahmedabad_brts_amts/data/requestmodels/mobile_number_otp_request_param.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/mobile_number_otp_response_entity.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/user/mobile_number_login_usecase.dart';
+import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobile_number_login_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/mobile_number_login/mobile_number_login_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 
 class MobileNumberLoginBloc
     extends Bloc<MobileNumberLoginEvent, MobileNumberLoginState> {
@@ -20,7 +23,7 @@ class MobileNumberLoginBloc
       } else {
         final response = await useCase
             .call(MobileNumberOtpRequestParam(phoneNumber: event.phoneNumber));
-        if (response.statusCode == true) {
+        if (response.succeeded == true) {
           yield MobileNumberLoginSuccessState();
         } else {
           yield MobileNumberLoginErrorState();

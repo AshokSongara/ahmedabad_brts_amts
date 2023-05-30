@@ -6,7 +6,8 @@ import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 
 class MyRoutesTabScreen extends StatefulWidget {
   final String serviceType;
-  const MyRoutesTabScreen({Key? key,required this.serviceType}) : super(key: key);
+  final String from;
+  const MyRoutesTabScreen({Key? key,required this.serviceType, required this.from}) : super(key: key);
 
   @override
   State<MyRoutesTabScreen> createState() => _MyRoutesTabScreenState();
@@ -54,7 +55,7 @@ class _MyRoutesTabScreenState extends State<MyRoutesTabScreen> with SingleTicker
               controller: _tabController,
               children:  [
                 MyRoutesScreen(serviceType: widget.serviceType ?? ""),
-                MyRoutesScreenTwo(serviceType: widget.serviceType ?? ""),
+                MyRoutesScreenTwo(serviceType: widget.serviceType ?? "", from: widget.from,),
               ],
             ),
           ),

@@ -141,7 +141,7 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                             controller: _passwordController,
                             focusNode: _passwordFocus,
                             nextFocus: _passwordFocus,
-                            inputType: TextInputType.name,
+                           // inputType: TextInputType.text,
                             onChanged: () {},
                             onSubmit: () {},
                             capitalization: TextCapitalization.words,
@@ -192,6 +192,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                     GetChangePasswordEvent(
                                         changePasswordRequest: request),
                                   );
+                                  showCustomSnackBar(
+                                      "Password changed successfully", context,isError: false);
                                 }
                               },
                               style: poppinsMedium.copyWith(

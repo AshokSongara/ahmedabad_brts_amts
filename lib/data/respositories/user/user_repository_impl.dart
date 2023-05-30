@@ -9,6 +9,8 @@ import 'package:ahmedabad_brts_amts/data/responsemodels/PaymentInitResponseModel
 import 'package:ahmedabad_brts_amts/data/responsemodels/booking_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/complaint_history_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/complaint_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/contactus_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/favourite_route_response.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/favourite_routes_response_list.dart';
@@ -130,6 +132,32 @@ class UserRepositoryImpl implements UserRepository {
         FeedbackResponseModel.fromJson(response.body);
 
     return feedbackResponseModel;
+  }
+
+  @override
+  Future<ComplaintResponseModel> complaintUser(body) async {
+    Map data = {
+      "title": body.title,
+      "date": body.date,
+      "time": body.time,
+      "category": body.category,
+      "subCategory": body.subCategory,
+      "busNo": body.busNo,
+      "stationId": body.stationId,
+      "route": body.route,
+      "landmark": body.landmark,
+      "description": body.description,
+      "mobile": body.mobile,
+    };
+
+    var bodyData = json.encode(data);
+
+    Response response = await apiClient.postDataWithHeader(
+        AppConstant.complaint, bodyData);
+    ComplaintResponseModel complaintResponseModel =
+    ComplaintResponseModel.fromJson(response.body);
+
+    return complaintResponseModel;
   }
 
   /// NOTE: FOR BRTS & AMTS
@@ -350,6 +378,15 @@ class UserRepositoryImpl implements UserRepository {
         BookingListResponse.fromJson(response.body);
 
     return bookingListResponse;
+  }
+
+  @override
+  Future<ComplaintHistoryResponse> getComplaintHistoryData(String data) async {
+    Response response = await apiClient.getDataWihHeader("${AppConstant.complaint}/list");
+    ComplaintHistoryResponse complaintHistoryResponse =
+    ComplaintHistoryResponse.fromJson(response.body);
+
+    return complaintHistoryResponse;
   }
 
   @override

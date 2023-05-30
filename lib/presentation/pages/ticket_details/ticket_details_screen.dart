@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 import '../payment_details/full_screen_qr_screen.dart';
 
@@ -504,6 +505,76 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                 CrossAxisAlignment.center,
                                                 children: [
                                                   Text(
+                                                    "Transaction Date",
+                                                    style:
+                                                    satoshiRegular.copyWith(
+                                                        fontSize: Dimensions
+                                                            .dp14.sp,
+                                                        fontWeight:
+                                                        FontWeight.w500,
+                                                        color: AppColors
+                                                            .darkGray),
+                                                  ),
+                                                  Text(
+                                                    formatDate(state.paymentInitResponseModel.data![0].transactionDatetime!),
+                                                    style:
+                                                    satoshiRegular.copyWith(
+                                                        fontSize: Dimensions
+                                                            .dp14.sp,
+                                                        fontWeight:
+                                                        FontWeight.w500,
+                                                        color: AppColors
+                                                            .darkGray),
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment
+                                                    .spaceBetween,
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    "Transaction Time",
+                                                    style:
+                                                    satoshiRegular.copyWith(
+                                                        fontSize: Dimensions
+                                                            .dp14.sp,
+                                                        fontWeight:
+                                                        FontWeight.w500,
+                                                        color: AppColors
+                                                            .darkGray),
+                                                  ),
+                                                  Text(
+                                                    formatTime(state.paymentInitResponseModel.data![0].transactionDatetime!),
+                                                    style:
+                                                    satoshiRegular.copyWith(
+                                                        fontSize: Dimensions
+                                                            .dp14.sp,
+                                                        fontWeight:
+                                                        FontWeight.w500,
+                                                        color: AppColors
+                                                            .darkGray),
+                                                  ),
+                                                ],
+                                              ),
+                                              const SizedBox(
+                                                height: Dimensions.dp15,
+                                              ),
+                                              const Divider(
+                                                height: 1,
+                                                color: AppColors.lightGray,
+                                              ),
+                                              SizedBox(height:10.sp),
+                                              Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment
+                                                    .spaceBetween,
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                                children: [
+                                                  Text(
                                                     "Total Fare",
                                                     style:
                                                     satoshiRegular.copyWith(
@@ -669,4 +740,16 @@ class LocalSliderModel {
   String passengerRank;
 
   LocalSliderModel(this.path, this.passengerRank);
+}
+
+String formatDate(String timestamp) {
+  DateTime dateTime = DateTime.parse(timestamp);
+  String formattedDate = DateFormat('dd/MM/yy').format(dateTime);
+  return formattedDate;
+}
+
+String formatTime(String timestamp) {
+  DateTime dateTime = DateTime.parse(timestamp);
+  String formattedDate = DateFormat('hh:mm:ss').format(dateTime);
+  return formattedDate;
 }

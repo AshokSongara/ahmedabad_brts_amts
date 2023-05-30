@@ -146,7 +146,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   onSubmit: () {},
                                   capitalization: TextCapitalization.words,
                                   divider: false,
-                                  hintText: "Kapil",
+                                  hintText: "abc",
                                 ),
                                 const SizedBox(
                                   height: Dimensions.dp20,
@@ -169,7 +169,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   onSubmit: () {},
                                   capitalization: TextCapitalization.words,
                                   divider: false,
-                                  hintText: "Shah",
+                                  hintText: "xyz",
                                 ),
                                 const SizedBox(
                                   height: Dimensions.dp20,
@@ -193,8 +193,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   onSubmit: () {},
                                   capitalization: TextCapitalization.words,
                                   divider: false,
-                                  hintText: "kapil@gmail.com",
+                                  hintText: "abcxyz@gmail.com",
                                 ),
+
                                 const SizedBox(
                                   height: Dimensions.dp20,
                                 ),

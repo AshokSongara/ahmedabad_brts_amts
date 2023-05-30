@@ -25,4 +25,14 @@ class GetAvailableRoutesEvent extends HomeEvent {
 class SourceSelectionFromMapScreenEvent extends HomeEvent{
   final Data data;
   const SourceSelectionFromMapScreenEvent(this.data);
+  @override
+  List<Object> get props => [data];
+}
+
+class SourceSelectionFromFavScreenEvent extends HomeEvent{
+  final Data data;
+  const SourceSelectionFromFavScreenEvent(this.data);
+
+  @override
+  List<Object> get props => [data];
 }
