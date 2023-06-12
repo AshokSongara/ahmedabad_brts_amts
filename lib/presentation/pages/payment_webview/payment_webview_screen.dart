@@ -51,7 +51,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
         onPageStarted: (String url) {
           print("onPageStarted${url}");
           if (url.contains(
-              "http://103.69.196.78:8082/SessionResponse?merchantId=470000012117828")) {
+              "http://125.17.144.58:8081/SessionResponse?merchantId=470000012117828")) {
             print("###Parse HTML");
 
             Future.delayed(const Duration(seconds: 5), () async {

@@ -33,3 +33,11 @@ class SourceSelectionFromFavScreenState extends HomeState{
   @override
   List<Object> get props => [data];
 }
+
+class SourceSelectionFromSearchBusRouteScreenState extends HomeState{
+  final Data data;
+  const SourceSelectionFromSearchBusRouteScreenState(this.data);
+
+  @override
+  List<Object> get props => [data];
+}

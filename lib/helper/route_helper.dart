@@ -157,8 +157,8 @@ class RouteHelper {
   static String getResetPasswordRoute(String number) =>
       '$resetPassword?number=$number';
 
-  static String getSearchStopScreenRoute(String selectedLanguage) =>
-      '$searchStopScreen?selectedLanguage=$selectedLanguage';
+  static String getSearchStopScreenRoute(String selectedLanguage, String stopType) =>
+      '$searchStopScreen?selectedLanguage=$selectedLanguage&stopType=$stopType';
 
   static String getSearchRouteScreenRoute(String selectedLanguage, String from) =>
       '$searchRouteScreen?selectedLanguage=$selectedLanguage&from=$from';
@@ -229,7 +229,8 @@ class RouteHelper {
     GetPage(
         name: searchStopScreen,
         page: () => SearchStopScreen(
-            selectedLanguage: Get.parameters['selectedLanguage'] ?? "")),
+            selectedLanguage: Get.parameters['selectedLanguage'] ?? "",
+            stopType: Get.parameters['stopType'] ?? "")),
     GetPage(
         name: nearBySearchStopScreen,
         page: () => const NearBySearchStopScreen()),

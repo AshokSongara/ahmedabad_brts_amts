@@ -51,14 +51,25 @@ class _PolylinePageState extends State<PolylinePage> {
           nearMeResponse = state.routesOnMapResponse;
           if (nearMeResponse != null) {
             for (int i = 0; i < nearMeResponse!.data!.length; i++) {
+              final String stopLatitude = nearMeResponse!.data![i].latlong![2] ?? "";
+              final String stopLongitude = nearMeResponse!.data![i].latlong![3] ?? "";
 
-              points.add(LatLng(double.parse(nearMeResponse!.data![i].stopLatitude ?? "") ?? 0.0,
-                  double.parse(nearMeResponse!.data![i].stopLongitude ?? "") ?? 0.0));
+              print("Latitude at index $i: $stopLatitude");
+              print("Longitude at index $i: $stopLongitude");
+
+              final double latitude = double.tryParse(stopLatitude.replaceAll(')', '') ?? "") ?? 0.0;
+              final double longitude = double.tryParse(stopLongitude.replaceAll(')', '') ?? "") ?? 0.0;
+
+              print("Parsed Latitude at index $i: $latitude");
+              print("Parsed Longitude at index $i: $longitude");
+
+              points.add(LatLng(latitude, longitude));
+
               markers.add(Marker(
                 width: 80.0,
                 height: 80.0,
-                point: latLng.LatLng(double.parse(nearMeResponse!.data![i].stopLatitude ?? "") ?? 0,
-                  double.parse(nearMeResponse!.data![i].stopLongitude ?? "") ?? 0),
+                point: latLng.LatLng(latitude,
+                    longitude),
                 builder: (ctx) =>
                     Tooltip(
                       triggerMode: TooltipTriggerMode.tap,

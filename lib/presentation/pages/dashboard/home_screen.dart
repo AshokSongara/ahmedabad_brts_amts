@@ -15,6 +15,7 @@ import 'package:ahmedabad_brts_amts/presentation/pages/complaint/complaint_scree
 import 'package:ahmedabad_brts_amts/presentation/pages/complaint_history/complaint_history_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/maps/nearby_maps_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/notification/notification_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/tnc/terms_and_conditions_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/source_destination_widget.dart';
@@ -297,12 +298,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: Colors.white),
                     ),
                     onTap: () {
-                      Get.to(ComplaintScreen(stopType: isAmts,));
+                      Get.to(ComplaintScreen(stopType: isAmts ? "AMTS" : "BRTS",));
                     },
                   ),
                   ListTile(
                     leading: Image.asset(
-                      ImageConstant.iComplaint,
+                      ImageConstant.iComplaintHistory,
                       height: Dimensions.dp20,
                       width: Dimensions.dp20,
                       color: Colors.white,
@@ -341,6 +342,24 @@ class _HomeScreenState extends State<HomeScreen> {
                         Share.share("Appstore Link");
                       }
 
+                    },
+                  ),
+                  ListTile(
+                    leading: Image.asset(
+                      ImageConstant.iTnc,
+                      height: Dimensions.dp20,
+                      width: Dimensions.dp20,
+                      color: Colors.white,
+                    ),
+                    title: Text(
+                      AppLocalizations.of(context)?.translate("tnc") ?? "",
+                      style: satoshiRegular.copyWith(
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white),
+                    ),
+                    onTap: () {
+                      Get.to(TermsAndConditionScreen());
                     },
                   ),
                   ListTile(
@@ -445,6 +464,9 @@ class _HomeScreenState extends State<HomeScreen> {
             newFromSelectedStation = state.data;
           }
           if (state is SourceSelectionFromFavScreenState) {
+            newFromSelectedStation = state.data;
+          }
+          if (state is SourceSelectionFromSearchBusRouteScreenState) {
             newFromSelectedStation = state.data;
           }
 
@@ -674,26 +696,38 @@ class _HomeScreenState extends State<HomeScreen> {
                                         newFromSelectedStation = await Get.toNamed(
                                             RouteHelper
                                                 .getSearchStopScreenRoute(
-                                                    selectedLanguage ?? ""),
+                                                    selectedLanguage ?? "", isAmts ? "AMTS" : "BRTS" ),
                                             arguments: getSortedData(
                                                 oldToSelectedStation,
                                                 newToSelectedStation)) as Data;
                                         setState(() {});
                                       },
                                       child: Text(
-                                          routeData != null
-                                              ? routeData?.routeName
-                                                      ?.split("-")[0] ??
-                                                  AppLocalizations.of(context)
-                                                      ?.translate(
-                                                          "selectsource") ??
-                                                  ""
+                                          selectedLanguage == "gu" ? routeData != null
+                                              ? routeData?.routeNameGujarati
+                                              ?.split("-")[0] ??
+                                              AppLocalizations.of(context)
+                                                  ?.translate(
+                                                  "selectsource") ??
+                                              ""
                                               : newFromSelectedStation
-                                                      ?.stopName ??
-                                                  AppLocalizations.of(context)
-                                                      ?.translate(
-                                                          "selectsource") ??
-                                                  "",
+                                              ?.stopNameGujarati ??
+                                              AppLocalizations.of(context)
+                                                  ?.translate(
+                                                  "selectsource") ??
+                                              "" : routeData != null
+                                              ? routeData?.routeName
+                                              ?.split("-")[0] ??
+                                              AppLocalizations.of(context)
+                                                  ?.translate(
+                                                  "selectsource") ??
+                                              ""
+                                              : newFromSelectedStation
+                                              ?.stopName ??
+                                              AppLocalizations.of(context)
+                                                  ?.translate(
+                                                  "selectsource") ??
+                                              "",
                                           style: satoshiRegular.copyWith(
                                               fontSize: fontSize,
                                               fontWeight: FontWeight.w700,
@@ -720,7 +754,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           newToSelectedStation = await Get.toNamed(
                                                   RouteHelper
                                                       .getSearchStopScreenRoute(
-                                                          selectedLanguage ?? ""),
+                                                          selectedLanguage ?? "", isAmts ? "AMTS" : "BRTS"),
                                                   arguments: getSortedData(
                                                       oldFromSelectedStation,
                                                       newFromSelectedStation))
@@ -728,19 +762,31 @@ class _HomeScreenState extends State<HomeScreen> {
                                           setState(() {});
                                         },
                                         child: Text(
-                                            routeData != null
-                                                ? routeData?.routeName
-                                                        ?.split("-")[1] ??
-                                                    AppLocalizations.of(context)
-                                                        ?.translate(
-                                                            "selectdestination") ??
-                                                    ""
-                                                : newToSelectedStation
-                                                        ?.stopName ??
-                                                    AppLocalizations.of(context)
-                                                        ?.translate(
-                                                            "selectdestination") ??
-                                                    "",
+                                           selectedLanguage == "gu" ?  routeData != null
+                                               ? routeData?.routeNameGujarati
+                                               ?.split("-")[1] ??
+                                               AppLocalizations.of(context)
+                                                   ?.translate(
+                                                   "selectdestination") ??
+                                               ""
+                                               : newToSelectedStation
+                                               ?.stopNameGujarati ??
+                                               AppLocalizations.of(context)
+                                                   ?.translate(
+                                                   "selectdestination") ??
+                                               "" :  routeData != null
+                                               ? routeData?.routeName
+                                               ?.split("-")[1] ??
+                                               AppLocalizations.of(context)
+                                                   ?.translate(
+                                                   "selectdestination") ??
+                                               ""
+                                               : newToSelectedStation
+                                               ?.stopName ??
+                                               AppLocalizations.of(context)
+                                                   ?.translate(
+                                                   "selectdestination") ??
+                                               "",
                                             style: satoshiRegular.copyWith(
                                                 fontSize: fontSize,
                                                 fontWeight: FontWeight.w700,
@@ -873,12 +919,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   "",
                               width: MediaQuery.of(context).size.width,
                               onPressed: () {
-                                newFromSelectedStation != null ?
-                                Get.toNamed(RouteHelper.getoneDayPassRoute(newFromSelectedStation!.stationCode ?? "")) :
-                                showCustomSnackBar(
-                                    "Please Select Source",
-                                    context,
-                                    isError: true);
+                                Get.toNamed(RouteHelper.getoneDayPassRoute("PASS" ?? "")) ;
+
                               },
                               style: satoshiRegular.copyWith(
                                   fontSize: 20.sp,
@@ -981,7 +1023,7 @@ class _HomeScreenState extends State<HomeScreen> {
         } else if (model.title == "smartrecharge") {
           Get.toNamed(RouteHelper.getCardDetailsRoute());
         } else if (model.title == "complaint") {
-          Get.to(ComplaintScreen(stopType: isAmts,));
+          Get.to(ComplaintScreen(stopType: isAmts ? "AMTS" : "BRTS",));
 
         } else if (model.title == "transitmap") {
           Get.toNamed(RouteHelper.getTransitMapScreenRoute());

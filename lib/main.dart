@@ -50,6 +50,7 @@ import 'presentation/blocs/booking/booking_list_bloc.dart';
 import 'presentation/blocs/feedback/feedback_bloc.dart';
 import 'presentation/blocs/language/language_cubit.dart';
 import 'presentation/blocs/onTapFav/ontap_fav_bloc.dart';
+import 'presentation/blocs/on_tap_search_bus_route/on_tap_search_bus_route_bloc.dart';
 import 'presentation/blocs/payment/payment_bloc.dart';
 import 'presentation/blocs/search_route/search_route_bloc.dart';
 import 'presentation/blocs/verify_otp/verify_otp_bloc.dart';
@@ -164,6 +165,9 @@ void main() async {
             ),
             BlocProvider<ComplaintHistoryBloc>(
               create: (context) => injector<ComplaintHistoryBloc>(),
+            ),
+            BlocProvider<OnTapSearchBusRouteDetailsBloc>(
+              create: (context) => injector<OnTapSearchBusRouteDetailsBloc>(),
             ),
           ],
           child: MyApp(),

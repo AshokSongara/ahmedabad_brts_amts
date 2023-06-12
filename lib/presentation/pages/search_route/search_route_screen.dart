@@ -2,6 +2,7 @@ import 'package:ahmedabad_brts_amts/data/requestmodels/add_route_request.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_route/search_route_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_route/search_route_state.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/search_route/on_tap_search_route_number_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
@@ -166,7 +167,7 @@ class _SearchRouteScreenState extends State<SearchRouteScreen> {
                                           ),
                                           const Spacer(),
 
-                                         widget.from == "c" ?  Spacer() :
+                                         widget.from == "com" ?  Spacer() :
                                          InkWell(
                                             onTap: () {
                                               localBrtsStopList[index].setFav(
@@ -214,7 +215,17 @@ class _SearchRouteScreenState extends State<SearchRouteScreen> {
                                     ],
                                   ),
                                   onTap: () {
-                                    Get.back(result: localBrtsStopList[index]);
+                                    widget.from == "com" ? Get.back(result: localBrtsStopList[index])   :    Get.to(OnTapSearchBusRouteScreen(title: widget.selectedLanguage == "gu"
+                                        ? localBrtsStopList[index]
+                                        .routeNameGujarati ??
+                                        ""
+                                        : localBrtsStopList[index]
+                                        .routeName ??
+                                        "",
+                                      routeCode: localBrtsStopList[index].routeCode ??
+                                          "",
+                                     ));
+
                                   },
                                 ),
                                 const Divider(

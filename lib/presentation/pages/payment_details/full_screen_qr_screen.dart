@@ -24,16 +24,24 @@ class _FullScreenQrState extends State<FullScreenQr> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: GestureDetector(
-        onTap: () => Navigator.pop(context),
-        child: Center(
-          child: Image.memory(
-            base64Decode(widget.qrCode),
-            fit: BoxFit.contain,
-          ),
-        ),
-      ),
+        backgroundColor: Colors.black,
+        body:  GestureDetector(
+          onTap: () => Navigator.pop(context),
+          child: Container(
+            color: Colors.black,
+            child: GridView.count(
+              crossAxisCount: 3,
+              //padding: EdgeInsets.all(16.0),
+              children: List.generate(15, (index) {
+                return Center(
+                  child: Image.memory(
+                    base64Decode(widget.qrCode),
+                    fit: BoxFit.contain,
+                  ),
+                );
+              }),
+            ),
+          ),)
     );
   }
 

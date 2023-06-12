@@ -22,7 +22,7 @@ import 'package:intl/intl.dart';
 import '../../blocs/complaint/complaint_event.dart';
 
 class ComplaintScreen extends StatefulWidget {
-  bool? stopType;
+  String? stopType;
 
   ComplaintScreen({Key? key, this.stopType}) : super(key: key);
 
@@ -63,9 +63,9 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
     context.read<LanguageCubit>().getCurrentSelectedLanguage().then((value) {
       selectedLanguage = value;
       BlocProvider.of<ComplaintBloc>(context).add(GetAvailableStopsEvent(
-          StopRequestModel(stopType: widget.stopType! ? 2 : 1)));
+          StopRequestModel(stopType: widget.stopType! == "AMTS" ? 2 : 1)));
       BlocProvider.of<ComplaintBloc>(context).add(GetAvailableRoutesEvent(
-          RoutesRequestModel(stopType: widget.stopType! ? 2 : 1)));
+          RoutesRequestModel(stopType: widget.stopType! == "AMTS"? 2 : 1)));
     });
   }
 
@@ -352,7 +352,7 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
                               print(selectedLanguage);
                               final result = await Get.toNamed(
                                 RouteHelper.getSearchStopScreenRoute(
-                                    selectedLanguage ?? ""),
+                                    selectedLanguage ?? "", widget.stopType ?? "BRTS"),
                                 arguments: operationBrtsStopResponseModel,
                               );
                               if (result != null && result is Data) {
@@ -390,10 +390,10 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
                               print(selectedLanguage);
                               final result = await Get.toNamed(
                                   RouteHelper.getSearchRouteScreenRoute(
-                                      selectedLanguage ?? "", "c"),
+                                      selectedLanguage ?? "", "com",),
                                   arguments: [
                                     brtsRoutesResponseModel,
-                                    widget.stopType
+                                    widget.stopType == "AMTS" ? true : false
                                   ]);
                               if (result != null && result is RouteData) {
                                 setState(() {

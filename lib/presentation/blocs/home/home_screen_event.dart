@@ -36,3 +36,10 @@ class SourceSelectionFromFavScreenEvent extends HomeEvent{
   @override
   List<Object> get props => [data];
 }
+class SourceSelectionFromSearchBusRouteScreenEvent extends HomeEvent{
+  final Data data;
+  const SourceSelectionFromSearchBusRouteScreenEvent(this.data);
+
+  @override
+  List<Object> get props => [data];
+}

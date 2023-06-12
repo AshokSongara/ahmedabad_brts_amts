@@ -163,7 +163,7 @@ class _ComplainHistoryDetailScreenState extends State<ComplainHistoryDetailScree
                 style: satoshiSmall.copyWith(
                   fontWeight: FontWeight.w500,
                   fontSize: Dimensions.dp15.sp,
-                  color: Colors.red,
+                  color: Colors.black,
                   overflow: TextOverflow.ellipsis,)),
           ],
         ),

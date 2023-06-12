@@ -30,13 +30,15 @@ class Data {
   String? stopName;
   String? stopLatitude;
   String? stopLongitude;
+  List<String>? latlong;
 
   Data(
       {this.sequenceNumber,
         this.stopCode,
         this.stopName,
         this.stopLatitude,
-        this.stopLongitude});
+        this.stopLongitude,
+      this.latlong});
 
   Data.fromJson(Map<String, dynamic> json) {
     sequenceNumber = json['sequenceNumber'];
@@ -44,7 +46,7 @@ class Data {
     stopName = json['stopName'];
     stopLatitude = json['stopLalitude'];
     stopLongitude = json['stopLongitude'];
-  }
+    latlong = json['latlong'].cast<String>();  }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -53,6 +55,7 @@ class Data {
     data['stopName'] = this.stopName;
     data['stopLatitude'] = this.stopLatitude;
     data['stopLongitude'] = this.stopLongitude;
+    data['latlong'] = this.latlong;
     return data;
   }
 }

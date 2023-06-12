@@ -76,6 +76,7 @@ import 'presentation/blocs/forgetpassword/forget_password_bloc.dart';
 import 'presentation/blocs/map_route_code/routes_on_map_bloc.dart';
 import 'presentation/blocs/notification/notification_bloc.dart';
 import 'presentation/blocs/onTapFav/ontap_fav_bloc.dart';
+import 'presentation/blocs/on_tap_search_bus_route/on_tap_search_bus_route_bloc.dart';
 import 'presentation/blocs/search_route/search_route_bloc.dart';
 
 final injector = GetIt.instance;
@@ -287,5 +288,8 @@ Future<void> init() async {
   );
   injector.registerFactory<OnTapFavDetailsBloc>(
           () => OnTapFavDetailsBloc(
+          routeStopListUseCase: injector(), addRouteStopListUseCase: injector()));
+  injector.registerFactory<OnTapSearchBusRouteDetailsBloc>(
+          () => OnTapSearchBusRouteDetailsBloc(
           routeStopListUseCase: injector(), addRouteStopListUseCase: injector()));
 }

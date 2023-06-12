@@ -45,6 +45,7 @@
   "transit_map": "Transit Map",
   "home" : "Home",
   "complaint" : "Complaint",
-  "complaint_history" : "Complaint History"
+  "complaint_history" : "Complaint History",
+  "tnc" : "Terms and Condition"
 
 }

@@ -3,58 +3,52 @@ import 'package:ahmedabad_brts_amts/data/requestmodels/route_details_request.dar
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.dart';
-import 'package:ahmedabad_brts_amts/presentation/blocs/onTapFav/ontap_fav_bloc.dart';
-import 'package:ahmedabad_brts_amts/presentation/blocs/onTapFav/ontap_fav_event.dart';
-import 'package:ahmedabad_brts_amts/presentation/blocs/onTapFav/ontap_fav_state.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/on_tap_search_bus_route/on_tap_search_bus_route_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/on_tap_search_bus_route/on_tap_search_bus_route_event.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/on_tap_search_bus_route/on_tap_search_bus_route_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
-import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:timeline_tile/timeline_tile.dart';
-import '../../../data/responsemodels/brts_stop_respons_model.dart' as brtsModel;
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../data/responsemodels/brts_stop_respons_model.dart' as brtsModel;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:timeline_tile/timeline_tile.dart';
 
-import '../../../data/responsemodels/brts_stop_respons_model.dart';
-
-class OnTapFavScreen extends StatefulWidget {
+class OnTapSearchBusRouteScreen extends StatefulWidget {
   final String title;
   final String routeCode;
-  final String serviceType;
-  final String? from;
-
-  const OnTapFavScreen({Key? key, required this.title, required this.routeCode, required this.serviceType,  this.from}) : super(key: key);
+  const OnTapSearchBusRouteScreen({Key? key, required this.title, required this.routeCode}) : super(key: key);
 
   @override
-  State<OnTapFavScreen> createState() => _OnTapFavScreenState();
+  State<OnTapSearchBusRouteScreen> createState() => _OnTapSearchRouteNumberScreenState();
 }
 
-class _OnTapFavScreenState extends State<OnTapFavScreen> with TickerProviderStateMixin {
+class _OnTapSearchRouteNumberScreenState extends State<OnTapSearchBusRouteScreen> with TickerProviderStateMixin {
   late TabController _controller;
+
   @override
   void initState() {
     super.initState();
     _controller = TabController(length: 1, vsync: this);
 
-    var request = RouteDetailsRequest(routeCode: widget.routeCode, serviceType: widget.serviceType);
+    var request = RouteDetailsRequest(routeCode: widget.routeCode);
 
-    BlocProvider.of<OnTapFavDetailsBloc>(context).add(
-      GetOnTapDetailsEvent(request: request),
+    BlocProvider.of<OnTapSearchBusRouteDetailsBloc>(context).add(
+      GetOnTapSearchBusRouteDetailsEvent(request: request),
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: AppColors.appBackground,
-        body: BlocConsumer<OnTapFavDetailsBloc, OnTapFavDetailsState>(
+        body: BlocConsumer<OnTapSearchBusRouteDetailsBloc, OnTapSearchBusRouteDetailsState>(
             listener: (context,state){
-              if (state is OnTapFavSuccessState) {
+              if (state is OnTapSearchBusRouteSuccessState) {
                 Loader.hide();
                 print("#####${state.value}");
                 if (state.value == true) {
@@ -67,9 +61,9 @@ class _OnTapFavScreenState extends State<OnTapFavScreen> with TickerProviderStat
               }
             },
             builder: (context, state) {
-              if (state is OnTapFavDetailsLoadingState) {
+              if (state is OnTapSearchBusRouteDetailsLoadingState) {
                 Loader.show(context);
-              } else if (state is OnTapFavSuccessState) {
+              } else if (state is OnTapSearchBusRouteSuccessState) {
                 Loader.hide();
                 return SafeArea(
                   child: Column(
@@ -88,7 +82,7 @@ class _OnTapFavScreenState extends State<OnTapFavScreen> with TickerProviderStat
                             ),
                             Expanded(
                               child: Text(widget.title,
-                                  style: screenTitle, 
+                                style: screenTitle,
                                 maxLines: 2,
                               ),
                             ),
@@ -170,7 +164,7 @@ class _OnTapFavScreenState extends State<OnTapFavScreen> with TickerProviderStat
                           controller: _controller,
                           children: [
                             Card(
-                              margin: const EdgeInsets.all(Dimensions.dp20),
+                              margin:  const EdgeInsets.all(Dimensions.dp20),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0),
                               ),
@@ -182,9 +176,9 @@ class _OnTapFavScreenState extends State<OnTapFavScreen> with TickerProviderStat
                                   return GestureDetector(
                                     onTap: () async {
                                       print("onTap Pressed");
-                                      widget.from == "drawer" ? Get.close(3) : Get.close(2);
+                                       Get.close(2);
                                       BlocProvider.of<HomeScreenBloc>(context).add(
-                                          SourceSelectionFromFavScreenEvent(brtsModel.Data(
+                                          SourceSelectionFromSearchBusRouteScreenEvent(brtsModel.Data(
                                               stopName: state.routeStopListResponse
                                                   .data?[index].stopName,
                                               stationCode: state.routeStopListResponse
@@ -242,7 +236,7 @@ class _OnTapFavScreenState extends State<OnTapFavScreen> with TickerProviderStat
                 );
               }else if (state is AddFavouriteRouteLoadingState) {
                 Loader.show(context);
-              } else if (state is OnTapFavSuccessState) {
+              } else if (state is OnTapSearchBusRouteSuccessState) {
                 Loader.hide();
                 print("#####${state.value}");
                 if (state.value == true) {
@@ -265,3 +259,4 @@ class _OnTapFavScreenState extends State<OnTapFavScreen> with TickerProviderStat
     Loader.hide();
   }
 }
+
