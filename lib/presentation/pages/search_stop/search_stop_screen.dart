@@ -30,45 +30,45 @@ class _SearchStopScreenState extends State<SearchStopScreen> {
   String _selectedValue2 = '';
   bool _isExpanded = true;
 
-  Future<void> _loadStoredValue() async {
-    final List<String> storedValues = await SharedPreferencesHelper.getStoredValues();
-    if (storedValues.isNotEmpty) {
-      setState(() {
-        _selectedValue = storedValues.join(', '); // Join all values into a single string
-      });
-    }
-  }
-
-  void _saveSelectedValue(int index) async {
-    final String value = widget.selectedLanguage == "gu" ? localBrtsStopList[index].stopNameGujarati!:localBrtsStopList[index].stopName!;
-    await SharedPreferencesHelper.saveValue(value);
-    setState(() {
-      _selectedValue = value;
-    });
-  }
-
-  Future<void> _loadStoredValue2() async {
-    final List<String> storedValues2 = await SharedPreferencesHelper2.getStoredValues2();
-    if (storedValues2.isNotEmpty) {
-      setState(() {
-        _selectedValue2 = storedValues2.join(', '); // Join all values into a single string
-      });
-    }
-  }
-
-  void _saveSelectedValue2(int index) async {
-    final String value = widget.selectedLanguage == "gu" ? localBrtsStopList[index].stopNameGujarati!:localBrtsStopList[index].stopName!;
-    await SharedPreferencesHelper2.saveValue2(value);
-    setState(() {
-      _selectedValue2 = value;
-    });
-  }
+  // Future<void> _loadStoredValue() async {
+  //   final List<String> storedValues = await SharedPreferencesHelper.getStoredValues();
+  //   if (storedValues.isNotEmpty) {
+  //     setState(() {
+  //       _selectedValue = storedValues.join(', '); // Join all values into a single string
+  //     });
+  //   }
+  // }
+  //
+  // void _saveSelectedValue(int index) async {
+  //   final String value = widget.selectedLanguage == "gu" ? localBrtsStopList[index].stopNameGujarati!:localBrtsStopList[index].stopName!;
+  //   await SharedPreferencesHelper.saveValue(value);
+  //   setState(() {
+  //     _selectedValue = value;
+  //   });
+  // }
+  //
+  // Future<void> _loadStoredValue2() async {
+  //   final List<String> storedValues2 = await SharedPreferencesHelper2.getStoredValues2();
+  //   if (storedValues2.isNotEmpty) {
+  //     setState(() {
+  //       _selectedValue2 = storedValues2.join(', '); // Join all values into a single string
+  //     });
+  //   }
+  // }
+  //
+  // void _saveSelectedValue2(int index) async {
+  //   final String value = widget.selectedLanguage == "gu" ? localBrtsStopList[index].stopNameGujarati!:localBrtsStopList[index].stopName!;
+  //   await SharedPreferencesHelper2.saveValue2(value);
+  //   setState(() {
+  //     _selectedValue2 = value;
+  //   });
+  // }
 
   @override
   void initState() {
     super.initState();
-    _loadStoredValue();
-    _loadStoredValue2();
+    // _loadStoredValue();
+    // _loadStoredValue2();
     // brtsStopResponseModel = Get.arguments as BrtsStopResponseModel;
     localBrtsStopResponseModel = Get.arguments as BrtsStopResponseModel;
     brtsStopList = localBrtsStopResponseModel?.data ?? [];
@@ -148,17 +148,17 @@ class _SearchStopScreenState extends State<SearchStopScreen> {
                   controller.text.isEmpty ?
                   Column(
                     children: [
-                      Text(
-                        'Recent Searches',
-                        style: TextStyle(
-                          fontSize: Dimensions.dp14.sp,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.darkGray,
-                        ),
-                      ),
+                      // Text(
+                      //   'Recent Searches',
+                      //   style: TextStyle(
+                      //     fontSize: Dimensions.dp14.sp,
+                      //     fontWeight: FontWeight.w700,
+                      //     color: AppColors.darkGray,
+                      //   ),
+                      // ),
                       SizedBox(height: Dimensions.dp8),
                    widget.stopType == "AMTS" ?   FutureBuilder<List<String>>(
-                     future: SharedPreferencesHelper2.getStoredValues2(),
+                    // future: SharedPreferencesHelper2.getStoredValues2(),
                      builder: (context, snapshot) {
                        final List<String> storedValues2 = snapshot.data ?? [];
                        final limitedValues = storedValues2.take(4).toList(); // Limit the values to a maximum of 4
@@ -199,7 +199,7 @@ class _SearchStopScreenState extends State<SearchStopScreen> {
                        );
                      },
                    ) :  FutureBuilder<List<String>>(
-                        future: SharedPreferencesHelper.getStoredValues(),
+                       // future: SharedPreferencesHelper.getStoredValues(),
                         builder: (context, snapshot) {
                           final List<String> storedValues = snapshot.data ?? [];
                           final limitedValues = storedValues.take(4).toList(); // Limit the values to a maximum of 4
@@ -255,7 +255,7 @@ class _SearchStopScreenState extends State<SearchStopScreen> {
               height: 1,
               color: AppColors.lightGray,
             ),
-            controller.text.isNotEmpty ?
+           // controller.text.isNotEmpty ?
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.symmetric(horizontal: 34),
@@ -273,7 +273,7 @@ class _SearchStopScreenState extends State<SearchStopScreen> {
                               color: AppColors.darkGray),
                         ),
                         onTap: () {
-                         widget.stopType == "AMTS" ?  _saveSelectedValue2(index) : _saveSelectedValue(index);
+                       //  widget.stopType == "AMTS" ?  _saveSelectedValue2(index) : _saveSelectedValue(index);
                           Get.back(result: localBrtsStopList[index]);
                         },
                       ),
@@ -285,7 +285,8 @@ class _SearchStopScreenState extends State<SearchStopScreen> {
                   );
                 },
               ),
-            ) : SizedBox(height: 0,)
+            )
+                //: SizedBox(height: 0,)
           ],
         ),
       ),
@@ -303,60 +304,60 @@ class _SearchStopScreenState extends State<SearchStopScreen> {
   }
 }
 
-class SharedPreferencesHelper {
-  static Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-
-  static const String _keyStoredValues = 'storedValues';
-
-  static Future<List<String>> getStoredValues() async {
-    final SharedPreferences prefs = await _prefs;
-    final List<String> storedValues = prefs.getStringList(_keyStoredValues) ?? [];
-    return storedValues;
-  }
-
-  static Future<void> saveValue(String value) async {
-    final SharedPreferences prefs = await _prefs;
-    List<String> storedValues = prefs.getStringList(_keyStoredValues) ?? [];
-
-    if (storedValues.contains(value)) {
-      storedValues.remove(value);
-    }
-
-    storedValues.insert(0, value);
-
-    if (storedValues.length > 4) {
-      storedValues = storedValues.sublist(0, 4);
-    }
-
-    await prefs.setStringList(_keyStoredValues, storedValues);
-  }
-}
-
-class SharedPreferencesHelper2 {
-  static Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-
-  static const String _keyStoredValues2 = 'storedValues2';
-
-  static Future<List<String>> getStoredValues2() async {
-    final SharedPreferences prefs2 = await _prefs;
-    final List<String> storedValues2 = prefs2.getStringList(_keyStoredValues2) ?? [];
-    return storedValues2;
-  }
-
-  static Future<void> saveValue2(String value) async {
-    final SharedPreferences prefs = await _prefs;
-    List<String> storedValues2 = prefs.getStringList(_keyStoredValues2) ?? [];
-
-    if (storedValues2.contains(value)) {
-      storedValues2.remove(value);
-    }
-
-    storedValues2.insert(0, value);
-
-    if (storedValues2.length > 4) {
-      storedValues2 = storedValues2.sublist(0, 4);
-    }
-
-    await prefs.setStringList(_keyStoredValues2, storedValues2);
-  }
-}
+// class SharedPreferencesHelper {
+//   static Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+//
+//   static const String _keyStoredValues = 'storedValues';
+//
+//   static Future<List<String>> getStoredValues() async {
+//     final SharedPreferences prefs = await _prefs;
+//     final List<String> storedValues = prefs.getStringList(_keyStoredValues) ?? [];
+//     return storedValues;
+//   }
+//
+//   static Future<void> saveValue(String value) async {
+//     final SharedPreferences prefs = await _prefs;
+//     List<String> storedValues = prefs.getStringList(_keyStoredValues) ?? [];
+//
+//     if (storedValues.contains(value)) {
+//       storedValues.remove(value);
+//     }
+//
+//     storedValues.insert(0, value);
+//
+//     if (storedValues.length > 4) {
+//       storedValues = storedValues.sublist(0, 4);
+//     }
+//
+//     await prefs.setStringList(_keyStoredValues, storedValues);
+//   }
+// }
+//
+// class SharedPreferencesHelper2 {
+//   static Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+//
+//   static const String _keyStoredValues2 = 'storedValues2';
+//
+//   static Future<List<String>> getStoredValues2() async {
+//     final SharedPreferences prefs2 = await _prefs;
+//     final List<String> storedValues2 = prefs2.getStringList(_keyStoredValues2) ?? [];
+//     return storedValues2;
+//   }
+//
+//   static Future<void> saveValue2(String value) async {
+//     final SharedPreferences prefs = await _prefs;
+//     List<String> storedValues2 = prefs.getStringList(_keyStoredValues2) ?? [];
+//
+//     if (storedValues2.contains(value)) {
+//       storedValues2.remove(value);
+//     }
+//
+//     storedValues2.insert(0, value);
+//
+//     if (storedValues2.length > 4) {
+//       storedValues2 = storedValues2.sublist(0, 4);
+//     }
+//
+//     await prefs.setStringList(_keyStoredValues2, storedValues2);
+//   }
+// }
