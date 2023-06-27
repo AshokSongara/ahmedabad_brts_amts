@@ -32,12 +32,15 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
   final MapController controller = MapController();
   NearMeResponse? nearMeResponse;
   List<Marker> markers = [];
+  bool _isLoading = true;
+
 
 
   @override
   void initState() {
     super.initState();
-    _getNearByRoutes();
+    _getLocationPermission();
+    //_getNearByRoutes();
   }
 
   @override
@@ -121,7 +124,8 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
                         icon: Icon(Icons.refresh, color: Colors.white))
                   ],
                 ),
-              ),
+              ),  _isLoading
+                  ? Center(child: CircularProgressIndicator()) :
               Expanded(
                 flex: 2,
                 child: nearMeResponse != null
@@ -181,46 +185,97 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
     Loader.hide();
   }
 
-  void _getNearByRoutes() async {
-    Location location = Location();
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
-    await location.requestService();
 
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      debugPrint("Location Permission Denied :(");
-      _permissionGranted = await location.requestPermission();
-    } else {
-      _locationData = await location.getLocation();
+  void _getLocationPermission() async {
+    final location = Location();
+    final permissionStatus = await location.hasPermission();
 
-      var nearByRequest = NearMeRequest();
-      nearByRequest.latitude = _locationData.latitude;
-      nearByRequest.longitude = _locationData.longitude;
-      nearByRequest.stopType = int.parse(widget.stopType ?? "1");
-      markers.add( Marker(
-        width: 80.0,
-        height: 80.0,
-        point: latLng.LatLng(_locationData.latitude??0,_locationData.longitude??0),
-        builder: (ctx) =>
-        const Icon(
-          Icons.person_pin_circle,
-          color: Colors.blue,
+    if (permissionStatus == PermissionStatus.denied) {
+      await location.requestPermission();
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+
+    if (!_isLoading) {
+      _getNearByRoutes();
+    }
+  }
+
+  void _getNearByRoutes() {
+    // Clear existing markers
+    markers.clear();
+
+    Location().getLocation().then((locationData) {
+      final nearByRequest = NearMeRequest();
+      nearByRequest.latitude = locationData.latitude;
+      nearByRequest.longitude = locationData.longitude;
+      nearByRequest.stopType = 2;
+
+      markers.add(
+        Marker(
+          width: 80.0,
+          height: 80.0,
+          point: latLng.LatLng(
+            locationData.latitude ?? 0,
+            locationData.longitude ?? 0,
+          ),
+          builder: (ctx) => const Icon(
+            Icons.person_pin_circle,
+            color: Colors.blue,
+          ),
         ),
-      ));
-      // controller.addMarker(
-      //     GeoPoint(
-      //         latitude: _locationData.latitude ?? 0,
-      //         longitude: _locationData.longitude ?? 0),
-      //     markerIcon: const MarkerIcon(
-      //         icon: Icon(
-      //       Icons.person_pin_circle,
-      //       color: Colors.blue,
-      //       size: 76,
-      //     )));
+      );
+
       BlocProvider.of<NearByMapBloc>(context).add(
         NearByMapRouteEvent(nearMeRequest: nearByRequest),
       );
-    }
+    });
   }
 }
+
+
+// void _getNearByRoutes() async {
+  //   Location location = Location();
+  //   PermissionStatus _permissionGranted;
+  //   LocationData _locationData;
+  //   await location.requestService();
+  //
+  //   _permissionGranted = await location.hasPermission();
+  //   if (_permissionGranted == PermissionStatus.denied) {
+  //     debugPrint("Location Permission Denied :(");
+  //     _permissionGranted = await location.requestPermission();
+  //   } else {
+  //     _locationData = await location.getLocation();
+  //
+  //     var nearByRequest = NearMeRequest();
+  //     nearByRequest.latitude = _locationData.latitude;
+  //     nearByRequest.longitude = _locationData.longitude;
+  //     nearByRequest.stopType = int.parse(widget.stopType ?? "1");
+  //     markers.add( Marker(
+  //       width: 80.0,
+  //       height: 80.0,
+  //       point: latLng.LatLng(_locationData.latitude??0,_locationData.longitude??0),
+  //       builder: (ctx) =>
+  //       const Icon(
+  //         Icons.person_pin_circle,
+  //         color: Colors.blue,
+  //       ),
+  //     ));
+  //     // controller.addMarker(
+  //     //     GeoPoint(
+  //     //         latitude: _locationData.latitude ?? 0,
+  //     //         longitude: _locationData.longitude ?? 0),
+  //     //     markerIcon: const MarkerIcon(
+  //     //         icon: Icon(
+  //     //       Icons.person_pin_circle,
+  //     //       color: Colors.blue,
+  //     //       size: 76,
+  //     //     )));
+  //     BlocProvider.of<NearByMapBloc>(context).add(
+  //       NearByMapRouteEvent(nearMeRequest: nearByRequest),
+  //     );
+  //   }
+  // }
+

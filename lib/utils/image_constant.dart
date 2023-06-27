@@ -3,6 +3,7 @@ class ImageConstant {
   static const String iCombineLogo = 'assets/images/ic_combine_app_logo.png';
   static const String iDisconnected = 'assets/images/ic_disconnected.png';
   static const String iComplaintHistory = 'assets/images/ic_complaint_history.png';
+  static const String iPlace = 'assets/images/place.png';
   static const String iComplaint = 'assets/images/ic_complaint.png';
   static const String iTnc = 'assets/images/ic_tnc.png';
   static const String iRightArrow = 'assets/images/ic_right_arrow_map.png';

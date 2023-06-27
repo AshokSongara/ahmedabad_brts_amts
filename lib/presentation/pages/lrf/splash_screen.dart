@@ -24,10 +24,17 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   String token = "";
+  bool showLocationPermissionDialog = true;
+  late ThemeData themeData;
+  bool isLocationPermissionDialogShown = false;
 
   @override
   void initState() {
     super.initState();
+    if (Globals.isLocationPermissionDialogShown) {
+      _showLocationPermissionDialog();
+      Globals.isLocationPermissionDialogShown = false;
+    }
     // BlocProvider.of<HomeScreenBloc>(context)
     //     .add(GetAvailableStopsEvent(StopRequestModel(stopType: 1)));
     //
@@ -40,8 +47,18 @@ class _SplashScreenState extends State<SplashScreen> {
     // BlocProvider.of<HomeScreenBloc>(context)
     //     .add(GetAvailableRoutesEvent(RoutesRequestModel(stopType: 2)));
 
-    _getLocationPermission();
+   // _getLocationPermission();
     getMemberID();
+  }
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    themeData = Theme.of(context); // Access inherited theme here
+    // if (showLocationPermissionDialog) {
+    //   _showLocationPermissionDialog();
+    // } else {
+    //   _getLocationPermission();
+    // }
   }
 
   @override
@@ -61,9 +78,11 @@ class _SplashScreenState extends State<SplashScreen> {
               const SizedBox(
                 height: Dimensions.dp30,
               ),
-              Text(
-                "Welcome!",
-                style: globalStyle,
+              Center(
+                child: Text(
+                  "Welcome!",
+                  style: globalStyle,
+                ),
               ),
               const SizedBox(
                 height: Dimensions.dp20,
@@ -77,9 +96,11 @@ class _SplashScreenState extends State<SplashScreen> {
               const SizedBox(
                 height: Dimensions.dp20,
               ),
-              Text(
-                "Get started by creating your account",
-                style: satoshiRegular,
+              Center(
+                child: Text(
+                  "Get started by creating your account",
+                  style: satoshiRegular,
+                ),
               ),
               const SizedBox(
                 height: Dimensions.dp25,
@@ -102,7 +123,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 },
                 child: const RoundContainerWidget(
                     imagePath: ImageConstant.iMobile,
-                    menuTitle: "Login with Mobile Number"),
+                    menuTitle: "Login with Mobile No."),
               ),
               const SizedBox(
                 height: 16,
@@ -118,25 +139,27 @@ class _SplashScreenState extends State<SplashScreen> {
               const SizedBox(
                 height: Dimensions.dp25,
               ),
-              RichText(
-                text: TextSpan(
-                  text: "Don’t have an account?",
-                  style: satoshiRegular.copyWith(
-                    fontSize: 14,
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(
-                        text: " ",
-                        style: satoshiRegular.copyWith(
-                            fontSize: 14, fontWeight: FontWeight.w700)),
-                    TextSpan(
-                      text: "Sign Up",
-                      style: satoshiRegular.copyWith(
-                          fontSize: 14, fontWeight: FontWeight.w700),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () => {Get.toNamed(RouteHelper.signup)},
+              Center(
+                child: RichText(
+                  text: TextSpan(
+                    text: "Don’t have an account?",
+                    style: satoshiRegular.copyWith(
+                      fontSize: 14,
                     ),
-                  ],
+                    children: <TextSpan>[
+                      TextSpan(
+                          text: " ",
+                          style: satoshiRegular.copyWith(
+                              fontSize: 14, fontWeight: FontWeight.w700)),
+                      TextSpan(
+                        text: "Sign Up",
+                        style: satoshiRegular.copyWith(
+                            fontSize: 14, fontWeight: FontWeight.w700),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => {Get.toNamed(RouteHelper.signup)},
+                      ),
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
@@ -190,6 +213,58 @@ class _SplashScreenState extends State<SplashScreen> {
         ));
   }
 
+  void _showLocationPermissionDialog() {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              "Location Permission",
+              style: TextStyle(fontSize: 20.sp),
+            ),
+            contentPadding: EdgeInsets.fromLTRB(24.sp, 20.sp, 24.sp, 0),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(
+                  ImageConstant.iPlace,
+                  height: Dimensions.dp100,
+                  width: Dimensions.dp100,
+                ),
+                SizedBox(height: 12.sp),
+                Text(
+                  "We require access of your location to get nearer bus stop from your location and enhance user experience",
+                  //textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                child: Text("Cancel"),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+              TextButton(
+                child: Text("OK"),
+                onPressed: () {
+                  setState(() {
+                    showLocationPermissionDialog = false;
+                  });
+
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    });
+  }
+
+
   getMemberID() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     token = prefs.getString(AppConstant.accessToken) ?? "";
@@ -203,35 +278,39 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }
 
-void _getLocationPermission() async {
-  Location location = Location();
+// void _getLocationPermission() async {
+//   Location location = Location();
+//
+//   bool serviceEnabled;
+//   PermissionStatus permissionGranted;
+//   LocationData locationData;
+//
+//   serviceEnabled = await location.serviceEnabled();
+//   if (!serviceEnabled) {
+//     debugPrint("Location service is not enabled :(");
+//     serviceEnabled = await location.requestService();
+//     if (!serviceEnabled) {
+//       return;
+//     }
+//   }
+//
+//   permissionGranted = await location.hasPermission();
+//   if (permissionGranted == PermissionStatus.denied) {
+//     debugPrint("Location Permission Denied :(");
+//     permissionGranted = await location.requestPermission();
+//     if (permissionGranted != PermissionStatus.granted) {
+//       debugPrint("Location Permission Granted!!");
+//       return;
+//     }
+//   }
+//
+//   locationData = await location.getLocation();
+//   debugPrint("_locationData latitude:- ${locationData.latitude}");
+//   debugPrint("_locationData longitude:- ${locationData.longitude}");
+//   debugPrint("_locationData altitude:- ${locationData.altitude}");
+//   debugPrint("_locationData provider:- ${locationData.provider}");
+// }
 
-  bool serviceEnabled;
-  PermissionStatus permissionGranted;
-  LocationData locationData;
-
-  serviceEnabled = await location.serviceEnabled();
-  if (!serviceEnabled) {
-    debugPrint("Location service is not enabled :(");
-    serviceEnabled = await location.requestService();
-    if (!serviceEnabled) {
-      return;
-    }
-  }
-
-  permissionGranted = await location.hasPermission();
-  if (permissionGranted == PermissionStatus.denied) {
-    debugPrint("Location Permission Denied :(");
-    permissionGranted = await location.requestPermission();
-    if (permissionGranted != PermissionStatus.granted) {
-      debugPrint("Location Permission Granted!!");
-      return;
-    }
-  }
-
-  locationData = await location.getLocation();
-  debugPrint("_locationData latitude:- ${locationData.latitude}");
-  debugPrint("_locationData longitude:- ${locationData.longitude}");
-  debugPrint("_locationData altitude:- ${locationData.altitude}");
-  debugPrint("_locationData provider:- ${locationData.provider}");
+class Globals {
+  static bool isLocationPermissionDialogShown = true;
 }
