@@ -143,6 +143,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                         Loader.hide();
                       } else if (state is PaymentFailedState) {
                         Loader.hide();
+                        Get.toNamed(RouteHelper.transactionStatus);
                       }
                     },
                     builder: (context, state) {
@@ -814,7 +815,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
               widget.type!.isEmpty ? "PASS" : widget.destinationStopId,
               discountype: status == "FAILED" ? "0" : widget.discountype,
               txnStatus: status,
-              merchantId: "470000012117828",
+              merchantId: widget.serviceType == "AMTS" ? "470000087089746" : "470000087089747",
               sourcecompanycode: "102",
               destinationcompanycode: "103",
               fpTransactionId: list[54].substring(27, 43),
@@ -823,6 +824,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
               merchantTxnId: "",
               transactionDateTime: DateTime.now().toString(),
               serviceType: widget.serviceType);
+             print(list[54].substring(27, 43));
 
           BlocProvider.of<PaymentBloc>(context).add(
             GetQRCodeEvent(paymentRequest: paymentRequest),
@@ -841,7 +843,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
               widget.type!.isEmpty ? "PASS" : widget.destinationStopId,
               discountype: widget.discountype,
               txnStatus: status,
-              merchantId: "470000012117828",
+              merchantId: widget.serviceType == "AMTS" ? "470000087089746" : "470000087089747",
               sourcecompanycode: "102",
               destinationcompanycode: "103",
               fpTransactionId: list[54].substring(27, 43),
@@ -858,12 +860,6 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
           );
         }
       }
-
-
-
-
-
-
   }
 }
 

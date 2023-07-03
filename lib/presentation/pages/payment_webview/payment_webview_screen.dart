@@ -51,7 +51,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
         onPageStarted: (String url) {
           print("onPageStarted${url}");
           if (url.contains(
-              "http://125.17.144.58:8081/SessionResponse?merchantId=470000012117828")) {
+              "http://125.17.144.58:8081/SessionResponse?merchantId=470000087089747")) {
             print("###Parse HTML");
 
             Future.delayed(const Duration(seconds: 5), () async {
@@ -61,6 +61,22 @@ class _WebViewScreenState extends State<WebViewScreen> {
              //  List<String>? list = html.split(' ');
              //
              // print("#####Data${list[422]}");
+
+              Navigator.pop(context, htmlContent);
+
+            });
+          }
+          else if(url.contains(
+              "http://125.17.144.58:8081/SessionResponse?merchantId=470000087089746")){
+            print("###Parse HTML");
+
+            Future.delayed(const Duration(seconds: 5), () async {
+              String htmlContent = await _controller
+                  .evaluateJavascript("document.documentElement.innerHTML");
+
+              //  List<String>? list = html.split(' ');
+              //
+              // print("#####Data${list[422]}");
 
               Navigator.pop(context, htmlContent);
 
