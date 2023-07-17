@@ -29,6 +29,12 @@ class HomeScreenBloc extends Bloc<HomeEvent,HomeState>{
     else if(event is SourceSelectionFromSearchBusRouteScreenEvent){
       yield SourceSelectionFromSearchBusRouteScreenState(event.data);
     }
+    else if(event is TicketBookedEvent) {
+      yield TicketBookState(brtsStopResponseModel!);
+    }
+    else if(event is ReturnHomeEvent) {
+      yield ReturnHomeState(brtsStopResponseModel!);
+    }
     if(event is GetAvailableRoutesEvent){
       // yield HomeLoadingState();
       var data = await homeGetRoutesUseCase.call(Params(data: event.model));

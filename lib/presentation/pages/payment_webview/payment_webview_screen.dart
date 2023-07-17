@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/transitmap/transitmap_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:html/parser.dart';
@@ -54,7 +55,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
               "http://125.17.144.58:8081/SessionResponse?merchantId=470000087089747")) {
             print("###Parse HTML");
 
-            Future.delayed(const Duration(seconds: 5), () async {
+            Future.delayed(const Duration(seconds: 3), () async {
               String htmlContent = await _controller
                   .evaluateJavascript("document.documentElement.innerHTML");
 
@@ -62,7 +63,10 @@ class _WebViewScreenState extends State<WebViewScreen> {
              //
              // print("#####Data${list[422]}");
 
+
+
               Navigator.pop(context, htmlContent);
+
 
             });
           }

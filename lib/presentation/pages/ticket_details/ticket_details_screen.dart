@@ -109,7 +109,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                           right: Dimensions.dp27,
                                           left: Dimensions.dp27),
                                       child: Text(
-                                        "Scan at your bording gate",
+                                        "Scan at your boarding gate",
                                         textAlign: TextAlign.center,
                                         style: satoshiRegular.copyWith(
                                             fontSize: Dimensions.dp12.sp,
@@ -138,6 +138,13 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                         ),
                                                       ),
                                                 ),
+                                                Text(
+                                                  state.paymentInitResponseModel.data![0].passName ?? "",
+                                                  textAlign: TextAlign.center,
+                                                  style: satoshiRegular.copyWith(
+                                                      fontSize: Dimensions.dp14.sp,
+                                                      fontWeight: FontWeight.w500,
+                                                      color: AppColors.lightBlue),),
                                                 Text(
                                                   "Click on QR code to expand",
                                                   textAlign: TextAlign.center,
@@ -218,7 +225,7 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                               ),
                                             ),
                                             child: Text(
-                                              "The validity period is 2 hours and the entry time is 15 minutes.",
+                                              "The validity period is 3 hours and the entry time is 15 minutes.",
                                               textAlign: TextAlign.center,
                                               style: satoshiRegular.copyWith(
                                                   fontSize: Dimensions.dp12.sp,

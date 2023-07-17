@@ -43,3 +43,14 @@ class SourceSelectionFromSearchBusRouteScreenEvent extends HomeEvent{
   @override
   List<Object> get props => [data];
 }
+
+class TicketBookedEvent extends HomeEvent{
+  final Data data;
+  const TicketBookedEvent(this.data);
+
+}
+
+class ReturnHomeEvent extends HomeEvent{
+  const ReturnHomeEvent();
+
+}

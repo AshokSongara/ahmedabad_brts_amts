@@ -1,11 +1,16 @@
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/localization/app_localizations.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+
+import '../../../data/responsemodels/brts_stop_respons_model.dart';
 
 class CustomToolbar extends StatelessWidget {
   const CustomToolbar(
@@ -38,6 +43,8 @@ class CustomToolbar extends StatelessWidget {
                 if (type == "Payment") {
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil(RouteHelper.dashboard, (Route<dynamic> route) => false);
+                  BlocProvider.of<HomeScreenBloc>(context).add(
+                      TicketBookedEvent(Data()));
                 }else if (type == "Passenger") {
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil(RouteHelper.dashboard, (Route<dynamic> route) => false);

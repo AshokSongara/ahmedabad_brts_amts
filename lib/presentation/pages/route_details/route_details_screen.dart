@@ -254,7 +254,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                                   width: 5,
                                 ),
                                 Text(
-                                  state.etaResponse.data!.isNotEmpty
+                                    state.etaResponse.data.isNull ? "":  state.etaResponse.data!.isNotEmpty
                                       ? toMinutes(
                                           "${state.etaResponse.data![0].eta}"
                                           ""
@@ -277,6 +277,45 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                             onPressed: () {
                               AppConstant.nameData.isEmpty ?
                               Get.toNamed(RouteHelper.getSplashRoute()) :
+
+                              widget.serviceType == "AMTS" && widget.interChange != "0" ?
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Confirmation'),
+                                    content: Text('Ticket is only booked for Route: ${widget.routeCode ?? ""}. You have to book another ticket for Route: ${widget.routeTwo ?? ""}.\n Do you wish to continue?'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          // Perform action on Cancel button press
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Get.toNamed(
+                                              RouteHelper.getPassengerDetailsRoute(
+                                                  widget.fromHome == "Yes"
+                                                      ? state.startStopId
+                                                      : widget.startRouteCode ?? "",
+                                                  widget.fromHome == "Yes"
+                                                      ? state.endStopId
+                                                      : widget.serviceType == "BRTS" ? widget.endRouteCode ?? "" : widget.originEnd ?? "" ,widget.routeCode ?? "",widget.serviceType ?? ""),
+                                              arguments: [
+                                                widget.startRouteName,
+                                                widget.endRouteName,
+                                                widget.startTime,
+                                                widget.endTime
+                                              ]);
+                                        },
+                                        child: Text('Book Tickets'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ) :
                               Get.toNamed(
                                   RouteHelper.getPassengerDetailsRoute(
                                       widget.fromHome == "Yes"

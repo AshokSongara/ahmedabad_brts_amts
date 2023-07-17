@@ -147,7 +147,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                                         forgetPasswordRequest: request),
                                   );
                                   showCustomSnackBar(
-                                      "OTP is sent to registered E-mail and number", context, isError: false);
+                                      "OTP is sent to registered number", context, isError: false);
                                 }
                               },
                               style: poppinsMedium.copyWith(

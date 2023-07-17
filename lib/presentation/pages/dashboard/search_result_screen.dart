@@ -3,6 +3,8 @@ import 'package:ahmedabad_brts_amts/data/requestmodels/add_favourite_request.dar
 import 'package:ahmedabad_brts_amts/data/requestmodels/search_route_request.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/search_route_response.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_state.dart';
@@ -95,6 +97,8 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                     children: [
                       GestureDetector(
                           onTap: () {
+                            BlocProvider.of<HomeScreenBloc>(context).add(
+                                ReturnHomeEvent());
                             Get.back();
                           },
                           child: SvgPicture.asset(ImageConstant.iLeftArrow)),

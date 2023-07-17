@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:ahmedabad_brts_amts/presentation/pages/payment_details/transaction_response_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/transitmap/transitmap_screen.dart';
 import 'package:get/get.dart';
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/payment_request.dart';
@@ -23,6 +25,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'full_screen_qr_screen.dart';
+import 'package:html/parser.dart' show parse;
+import 'package:html/dom.dart' as html;
 
 class PaymentDetailsScreen extends StatefulWidget {
   const PaymentDetailsScreen(
@@ -218,6 +222,13 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                     ),
                                                   ),
                                                   Text(
+                                                    state.paymentInitResponseModel.data![0].passName ?? "",
+                                                    textAlign: TextAlign.center,
+                                                    style: satoshiRegular.copyWith(
+                                                        fontSize: Dimensions.dp14.sp,
+                                                        fontWeight: FontWeight.w500,
+                                                        color: AppColors.lightBlue),),
+                                                  Text(
                                                     "Click on QR code to expand",
                                                     textAlign: TextAlign.center,
                                                     style: satoshiRegular.copyWith(
@@ -239,17 +250,6 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                             color: AppColors
                                                                 .darkGray),
                                                   ),
-                                                  state.paymentInitResponseModel.data![0].sourceStopName! == "OneDayPass" ?
-                                                  Text("ONE DAY PASS", style: satoshiRegular.copyWith(
-                                                      fontSize:
-                                                      Dimensions
-                                                          .dp16
-                                                          .sp,
-                                                      fontWeight:
-                                                      FontWeight
-                                                          .w700,
-                                                      color: AppColors
-                                                          .lightBlue)) : SizedBox(height: 0,)
                                                 ],
                                               )),
                                         ],
@@ -306,7 +306,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                 ),
                                               ),
                                               child: Text(
-                                                "The validity period is 2 hours and the entry time is 15 minutes.",
+                                                "The validity period is 3 hours and the entry time is 15 minutes.",
                                                 textAlign: TextAlign.center,
                                                 style: satoshiRegular.copyWith(
                                                     fontSize:
@@ -799,14 +799,49 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
     String? data = await Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => WebViewScreen(url: url)));
 
+    String htmlContent = '''
+$data''';
 
-      if (data == null) {
+    html.Document document = parse(htmlContent);
+    html.Element? jsonElement = document.getElementById('jsonresult');
+    String jsonString = jsonElement!.text;
+
+    Map<String, dynamic> jsonData = jsonDecode(jsonString);
+
+    String fpTransactionId = jsonData['fpTransactionId']?? "";
+    String merchantTxnId = jsonData['merchantTxnId']?? "";
+    String transactionStatus = jsonData['transactionStatus']?? "";
+    String externalTxnId = jsonData['externalTxnId'] ?? "";
+    String transactionDateTime = jsonData['transactionDateTime']?? "";
+    String transactionAmount = jsonData['transactionAmount']?? "";
+    String paymentMethod = jsonData['paymentMethod']?? "";
+
+    print('fpTransactionId: $fpTransactionId');
+    print('merchantTxnId: $merchantTxnId');
+    print('transactionStatus: $transactionStatus');
+
+    Navigator.push(context, MaterialPageRoute(builder: (context) =>
+        TransactionResponseScreen(
+          tId: fpTransactionId,
+          tAmount: transactionAmount,
+          tDT: transactionDateTime,
+          merchantTId: merchantTxnId,
+          payMethod: paymentMethod,
+          status : transactionStatus
+    )));
+
+    await Future.delayed(Duration(seconds: 4));
+
+
+
+
+
+    if (data == null) {
         Navigator.of(context).pop();
       }
-      else if (data.length < 3000) {
+      else if (transactionStatus == "FAILED") {
         status = "FAILED";
         print("#####WEBVIEW${data}");
-        List<String>? list = data.split(' ');
 
         if (data.isNotEmpty) {
           var paymentRequest = PaymentRequest(
@@ -816,15 +851,14 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
               discountype: status == "FAILED" ? "0" : widget.discountype,
               txnStatus: status,
               merchantId: widget.serviceType == "AMTS" ? "470000087089746" : "470000087089747",
-              sourcecompanycode: "102",
-              destinationcompanycode: "103",
-              fpTransactionId: list[54].substring(27, 43),
+              sourcecompanycode: widget.serviceType == "AMTS" ?"103" : "102",
+              destinationcompanycode: widget.serviceType == "AMTS" ?"103" : "102",
+              fpTransactionId: fpTransactionId,
               routeCode: widget.routeCode,
               externalTxnId: "",
               merchantTxnId: "",
-              transactionDateTime: DateTime.now().toString(),
+              transactionDateTime: transactionDateTime,
               serviceType: widget.serviceType);
-             print(list[54].substring(27, 43));
 
           BlocProvider.of<PaymentBloc>(context).add(
             GetQRCodeEvent(paymentRequest: paymentRequest),
@@ -834,7 +868,6 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
       else {
         status = "SUCCESS";
         print("#####WEBVIEW${data}");
-        List<String>? list = data.split(' ');
 
         if (data.isNotEmpty) {
           var paymentRequest = PaymentRequest(
@@ -844,15 +877,14 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
               discountype: widget.discountype,
               txnStatus: status,
               merchantId: widget.serviceType == "AMTS" ? "470000087089746" : "470000087089747",
-              sourcecompanycode: "102",
-              destinationcompanycode: "103",
-              fpTransactionId: list[54].substring(27, 43),
+              sourcecompanycode: widget.serviceType == "AMTS" ?"103" : "102",
+              destinationcompanycode: widget.serviceType == "AMTS" ?"103" : "102",
+              fpTransactionId: fpTransactionId,
               routeCode: widget.routeCode,
-              externalTxnId: list[127].substring(25, 36),
-              merchantTxnId: list[108].substring(18, 61),
+              externalTxnId: externalTxnId,
+              merchantTxnId: merchantTxnId,
               transactionDateTime:
-              "${list[90].substring(25, list[90].length)}T${list[91].substring(
-                  0, 12)}",
+              transactionDateTime,
               serviceType: widget.serviceType);
 
           BlocProvider.of<PaymentBloc>(context).add(

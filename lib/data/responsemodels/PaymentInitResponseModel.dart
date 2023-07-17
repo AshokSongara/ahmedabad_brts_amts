@@ -38,7 +38,8 @@ class Data {
     this.qrCode,
     this.sourceStopName,
     this.destinationStopName,
-    this.ticketType
+    this.ticketType,
+    this.passName
   });
 
   Data.fromJson(dynamic json) {
@@ -55,6 +56,7 @@ class Data {
     destinationStopName = json['destinationStopName'];
     routeCode = json['routeCode'];
     ticketType = json['ticketType'];
+    passName = json['passName'];
   }
   String? transactionStatus;
   String? ticketNo;
@@ -69,6 +71,7 @@ class Data {
   String? destinationStopName;
   String? routeCode;
   String? ticketType;
+  String? passName;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -85,6 +88,7 @@ class Data {
     map['destinationStopName'] = destinationStopName;
     map['routeCode'] = routeCode;
     map['ticketType'] = ticketType;
+    map['passName'] = passName;
     return map;
   }
 

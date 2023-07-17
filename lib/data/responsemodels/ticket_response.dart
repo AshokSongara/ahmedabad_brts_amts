@@ -50,6 +50,7 @@ class Data {
   Null? type;
   int? userId;
   String? ticketType;
+  String? passName;
 
   Data(
       {this.ticketNumber,
@@ -76,7 +77,8 @@ class Data {
       this.agency,
       this.type,
       this.userId,
-      this.ticketType});
+      this.ticketType,
+      this.passName});
 
   Data.fromJson(Map<String, dynamic> json) {
     ticketNumber = json['ticketNumber'];
@@ -104,6 +106,7 @@ class Data {
     type = json['type'];
     userId = json['userId'];
     ticketType = json['ticketType'];
+    passName = json['passName'];
   }
 
   Map<String, dynamic> toJson() {
@@ -132,7 +135,7 @@ class Data {
     data['agency'] = this.agency;
     data['type'] = this.type;
     data['userId'] = this.userId;
-    data['ticketType'] = this.ticketType;
+    data['passName'] = this.passName;
     return data;
   }
 }

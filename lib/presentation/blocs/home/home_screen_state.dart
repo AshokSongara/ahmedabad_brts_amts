@@ -41,3 +41,15 @@ class SourceSelectionFromSearchBusRouteScreenState extends HomeState{
   @override
   List<Object> get props => [data];
 }
+
+class TicketBookState extends HomeState{
+  final BrtsStopResponseModel model;
+
+  const TicketBookState(this.model);
+}
+
+class ReturnHomeState extends HomeState{
+  final BrtsStopResponseModel model;
+
+  const ReturnHomeState(this.model);
+}

@@ -2,6 +2,7 @@ import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/localization/app_localizations.dart';
@@ -426,8 +427,10 @@ class _BookingScreenState extends State<BookingScreen> {
   }
 
   String toDateTime(String dateData) {
-    final date = DateTime.parse(dateData);
-    return "${"${date.day}/${date.month}/${date.year} ${date.hour}:${date.minute}:${date.second}"} ";
+    DateTime dateTime = DateTime.parse(dateData);
+
+    String formattedDate = DateFormat('dd/MM/yyyy HH:mm:ss').format(dateTime);
+    return formattedDate;
   }
 
   @override

@@ -192,8 +192,8 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                                     GetChangePasswordEvent(
                                         changePasswordRequest: request),
                                   );
-                                  showCustomSnackBar(
-                                      "Password changed successfully", context,isError: false);
+                                  // showCustomSnackBar(
+                                  //     "Password changed successfully", context,isError: false);
                                 }
                               },
                               style: poppinsMedium.copyWith(

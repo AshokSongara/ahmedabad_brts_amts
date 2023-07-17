@@ -462,17 +462,64 @@ class _HomeScreenState extends State<HomeScreen> {
           }
           if (state is SourceSelectionFromMapScreenState) {
             newFromSelectedStation = state.data;
+            if (newToSelectedStation != null &&
+                newToSelectedStation?.stopName ==
+                    newFromSelectedStation?.stopName) {
+              newToSelectedStation = null;
+            }
+            operationBrtsStopResponseModel?.data
+                ?.removeWhere((element) => element.stopName == state.data.stopName);
+            operationBrtsStopResponseModel?.data?.add(newFromSelectedStation!);
           }
           if (state is SourceSelectionFromFavScreenState) {
             newFromSelectedStation = state.data;
+            if (newToSelectedStation != null &&
+                newToSelectedStation?.stopName ==
+                    newFromSelectedStation?.stopName) {
+              newToSelectedStation = null;
+            }
+            operationBrtsStopResponseModel?.data
+                ?.removeWhere((element) => element.stopName == state.data.stopName);
+            operationBrtsStopResponseModel?.data?.add(newFromSelectedStation!);
           }
           if (state is SourceSelectionFromSearchBusRouteScreenState) {
             newFromSelectedStation = state.data;
+            if (newToSelectedStation != null &&
+                newToSelectedStation?.stopName ==
+                    newFromSelectedStation?.stopName) {
+              newToSelectedStation = null;
+            }
+            operationBrtsStopResponseModel?.data
+                ?.removeWhere((element) => element.stopName == state.data.stopName);
+            operationBrtsStopResponseModel?.data?.add(newFromSelectedStation!);
           }
 
           if (state is RoutesResponseState) {
             brtsRoutesResponseModel = state.model;
             Loader.hide();
+          }
+           if(state is TicketBookState){
+            setState(() {
+              // newFromSelectedStation = null;
+              operationBrtsStopResponseModel?.data?.add(newFromSelectedStation!);
+            });
+            print(operationBrtsStopResponseModel?.data);
+
+            print("ticket book state called");
+
+          }
+           if(state is ReturnHomeState){
+            setState(() {
+              operationBrtsStopResponseModel?.data?.add(newFromSelectedStation!);
+              operationBrtsStopResponseModel?.data?.add(newToSelectedStation!);
+              newFromSelectedStation = null;
+              newToSelectedStation = null;
+
+            });
+            print("return home");
+
+            print("ticket book state called");
+
           }
           if (state is HomeLoadingState) {
           } else {
@@ -678,122 +725,129 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: Stack(
                             fit: StackFit.loose,
                             children: [
-                              SourceDestinationWidget(
-                                  title: "From",
-                                  // content: isAmts
-                                  //     ? "Ahmedabad Municipal Transport Service"
-                                  //     : "Bus Rapid Transit System (BRTS)",
-                                  contentTitle: SizedBox(
-                                    height: 42,
-                                    child: GestureDetector(
-                                      onTap: () async {
-                                        setState(() {
-                                          routeData = null;
-                                        });
+                              GestureDetector(
+                                onTap: () async {
+                                  setState(() {
+                                    routeData = null;
+                                  });
 
-                                        oldFromSelectedStation =
-                                            newFromSelectedStation;
-                                        newFromSelectedStation = await Get.toNamed(
-                                            RouteHelper
-                                                .getSearchStopScreenRoute(
-                                                    selectedLanguage ?? "", isAmts ? "AMTS" : "BRTS" ),
-                                            arguments: getSortedData(
-                                                oldToSelectedStation,
-                                                newToSelectedStation)) as Data;
-                                        setState(() {});
-                                      },
-                                      child: Text(
-                                          selectedLanguage == "gu" ? routeData != null
-                                              ? routeData?.routeNameGujarati
-                                              ?.split("-")[0] ??
-                                              AppLocalizations.of(context)
-                                                  ?.translate(
-                                                  "selectsource") ??
-                                              ""
-                                              : newFromSelectedStation
-                                              ?.stopNameGujarati ??
-                                              AppLocalizations.of(context)
-                                                  ?.translate(
-                                                  "selectsource") ??
-                                              "" : routeData != null
-                                              ? routeData?.routeName
-                                              ?.split("-")[0] ??
-                                              AppLocalizations.of(context)
-                                                  ?.translate(
-                                                  "selectsource") ??
-                                              ""
-                                              : newFromSelectedStation
-                                              ?.stopName ??
-                                              AppLocalizations.of(context)
-                                                  ?.translate(
-                                                  "selectsource") ??
-                                              "",
-                                          style: satoshiRegular.copyWith(
-                                              fontSize: fontSize,
-                                              fontWeight: FontWeight.w700,
-                                              color: AppColors.darkGray)),
-                                    ),
-                                  ),
-                                  svgImageFile: ImageConstant.iFromBus),
-                              Align(
-                                alignment: Alignment.bottomCenter,
+                                  oldFromSelectedStation =
+                                      newFromSelectedStation;
+                                  newFromSelectedStation = await Get.toNamed(
+                                      RouteHelper
+                                          .getSearchStopScreenRoute(
+                                          selectedLanguage ?? "", isAmts ? "AMTS" : "BRTS" ),
+                                      arguments: getSortedData(
+                                          oldToSelectedStation,
+                                          newToSelectedStation)) as Data;
+                                  setState(() {});
+                                },
+
                                 child: SourceDestinationWidget(
-                                    title: "To",
+                                    title: "From",
                                     // content: isAmts
                                     //     ? "Ahmedabad Municipal Transport Service"
                                     //     : "Bus Rapid Transit System (BRTS)",
                                     contentTitle: SizedBox(
                                       height: 42,
                                       child: GestureDetector(
-                                        onTap: () async {
-                                          setState(() {
-                                            routeData = null;
-                                          });
-                                          oldToSelectedStation =
-                                              newToSelectedStation;
-                                          newToSelectedStation = await Get.toNamed(
-                                                  RouteHelper
-                                                      .getSearchStopScreenRoute(
-                                                          selectedLanguage ?? "", isAmts ? "AMTS" : "BRTS"),
-                                                  arguments: getSortedData(
-                                                      oldFromSelectedStation,
-                                                      newFromSelectedStation))
-                                              as Data;
-                                          setState(() {});
-                                        },
+
                                         child: Text(
-                                           selectedLanguage == "gu" ?  routeData != null
-                                               ? routeData?.routeNameGujarati
-                                               ?.split("-")[1] ??
-                                               AppLocalizations.of(context)
-                                                   ?.translate(
-                                                   "selectdestination") ??
-                                               ""
-                                               : newToSelectedStation
-                                               ?.stopNameGujarati ??
-                                               AppLocalizations.of(context)
-                                                   ?.translate(
-                                                   "selectdestination") ??
-                                               "" :  routeData != null
-                                               ? routeData?.routeName
-                                               ?.split("-")[1] ??
-                                               AppLocalizations.of(context)
-                                                   ?.translate(
-                                                   "selectdestination") ??
-                                               ""
-                                               : newToSelectedStation
-                                               ?.stopName ??
-                                               AppLocalizations.of(context)
-                                                   ?.translate(
-                                                   "selectdestination") ??
-                                               "",
+                                            selectedLanguage == "gu" ? routeData != null
+                                                ? routeData?.routeNameGujarati
+                                                ?.split("-")[0] ??
+                                                AppLocalizations.of(context)
+                                                    ?.translate(
+                                                    "selectsource") ??
+                                                ""
+                                                : newFromSelectedStation
+                                                ?.stopNameGujarati ??
+                                                AppLocalizations.of(context)
+                                                    ?.translate(
+                                                    "selectsource") ??
+                                                "" : routeData != null
+                                                ? routeData?.routeName
+                                                ?.split("-")[0] ??
+                                                AppLocalizations.of(context)
+                                                    ?.translate(
+                                                    "selectsource") ??
+                                                ""
+                                                : newFromSelectedStation
+                                                ?.stopName ??
+                                                AppLocalizations.of(context)
+                                                    ?.translate(
+                                                    "selectsource") ??
+                                                "",
                                             style: satoshiRegular.copyWith(
                                                 fontSize: fontSize,
                                                 fontWeight: FontWeight.w700,
                                                 color: AppColors.darkGray)),
                                       ),
                                     ),
-                                    svgImageFile: ImageConstant.iToBus),
+                                    svgImageFile: ImageConstant.iFromBus),
+                              ),
+                              Align(
+                                alignment: Alignment.bottomCenter,
+                                child: GestureDetector(
+                                  onTap: () async {
+                                    setState(() {
+                                      routeData = null;
+                                    });
+                                    oldToSelectedStation =
+                                        newToSelectedStation;
+                                    newToSelectedStation = await Get.toNamed(
+                                        RouteHelper
+                                            .getSearchStopScreenRoute(
+                                            selectedLanguage ?? "", isAmts ? "AMTS" : "BRTS"),
+                                        arguments: getSortedData(
+                                            oldFromSelectedStation,
+                                            newFromSelectedStation))
+                                    as Data;
+                                    setState(() {});
+                                  },
+                                  child: SourceDestinationWidget(
+                                      title: "To",
+                                      // content: isAmts
+                                      //     ? "Ahmedabad Municipal Transport Service"
+                                      //     : "Bus Rapid Transit System (BRTS)",
+                                      contentTitle: SizedBox(
+                                        height: 42,
+                                        child: GestureDetector(
+
+                                          child: Text(
+                                             selectedLanguage == "gu" ?  routeData != null
+                                                 ? routeData?.routeNameGujarati
+                                                 ?.split("-")[1] ??
+                                                 AppLocalizations.of(context)
+                                                     ?.translate(
+                                                     "selectdestination") ??
+                                                 ""
+                                                 : newToSelectedStation
+                                                 ?.stopNameGujarati ??
+                                                 AppLocalizations.of(context)
+                                                     ?.translate(
+                                                     "selectdestination") ??
+                                                 "" :  routeData != null
+                                                 ? routeData?.routeName
+                                                 ?.split("-")[1] ??
+                                                 AppLocalizations.of(context)
+                                                     ?.translate(
+                                                     "selectdestination") ??
+                                                 ""
+                                                 : newToSelectedStation
+                                                 ?.stopName ??
+                                                 AppLocalizations.of(context)
+                                                     ?.translate(
+                                                     "selectdestination") ??
+                                                 "",
+                                              style: satoshiRegular.copyWith(
+                                                  fontSize: fontSize,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: AppColors.darkGray)),
+                                        ),
+                                      ),
+                                      svgImageFile: ImageConstant.iToBus),
+                                ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(right: 10),
