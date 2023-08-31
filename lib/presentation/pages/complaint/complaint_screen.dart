@@ -355,7 +355,7 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
                                     selectedLanguage ?? "", widget.stopType ?? "BRTS"),
                                 arguments: operationBrtsStopResponseModel,
                               );
-                              if (result != null && result is Data) {
+                              if (result != null && result is DataHive) {
                                 setState(() {
                                 selectedString = result.stopName ?? "";
                                 });
@@ -390,7 +390,7 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
                               print(selectedLanguage);
                               final result = await Get.toNamed(
                                   RouteHelper.getSearchRouteScreenRoute(
-                                      selectedLanguage ?? "", "com",),
+                                      selectedLanguage ?? "", "com",widget.stopType == "AMTS"? "AMTS" : "BRTS"),
                                   arguments: [
                                     brtsRoutesResponseModel,
                                     widget.stopType == "AMTS" ? true : false

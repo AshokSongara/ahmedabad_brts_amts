@@ -44,7 +44,7 @@ class CustomToolbar extends StatelessWidget {
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil(RouteHelper.dashboard, (Route<dynamic> route) => false);
                   BlocProvider.of<HomeScreenBloc>(context).add(
-                      TicketBookedEvent(Data()));
+                      TicketBookedEvent(DataHive()));
                 }else if (type == "Passenger") {
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil(RouteHelper.dashboard, (Route<dynamic> route) => false);

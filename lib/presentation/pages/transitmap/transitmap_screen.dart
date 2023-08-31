@@ -2,6 +2,7 @@ import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dar
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
+import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 
@@ -34,9 +35,9 @@ class TransitMapScreen extends StatelessWidget {
                       Radius.circular(Dimensions.dp10),
                     ),
                   ),
-                  imageProvider: NetworkImage(
-                    AppConstant.transitMap,
-                  ),
+                  imageProvider: AssetImage(ImageConstant.iMapImage),
+                  minScale: PhotoViewComputedScale.contained * 0.8,
+                  maxScale: PhotoViewComputedScale.covered * 5.0,
                 ),
               ),
             )

@@ -5,6 +5,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/search_route/search_route
 import 'package:ahmedabad_brts_amts/presentation/pages/search_route/on_tap_search_route_number_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
+import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
@@ -13,15 +14,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 
 import '../../blocs/search_route/search_route_event.dart';
 import '../../widgets/base/custom_snackbar.dart';
 
 class SearchRouteScreen extends StatefulWidget {
-  const SearchRouteScreen({Key? key, required this.selectedLanguage, this.from})
+  const SearchRouteScreen({Key? key, required this.selectedLanguage, this.from, this.stopType})
       : super(key: key);
   final String? selectedLanguage;
   final String? from;
+  final String? stopType;
+
 
   @override
   _SearchRouteScreenState createState() => _SearchRouteScreenState();
@@ -37,7 +41,12 @@ class _SearchRouteScreenState extends State<SearchRouteScreen> {
   @override
   void initState() {
     super.initState();
-    localBrtsStopResponseModel = Get.arguments[0] as BrtsRoutesResponseModel;
+    Box brtsBox = getLocalBrtsRoutesData();
+    BrtsRoutesResponseModel? brtsData = brtsBox.get("key");
+    Box amtsBox = getLocalAmtsRoutesData();
+    BrtsRoutesResponseModel? amtsData = amtsBox.get("key");
+  //  localBrtsStopResponseModel = Get.arguments[0] as BrtsRoutesResponseModel;
+    localBrtsStopResponseModel = widget.stopType == "BRTS" ?brtsBox.get("key"):amtsBox.get("key");
     _isAmts = Get.arguments[1] as bool;
     brtsStopList = localBrtsStopResponseModel?.data ?? [];
     localBrtsStopList = localBrtsStopResponseModel?.data ?? [];
@@ -244,5 +253,13 @@ class _SearchRouteScreenState extends State<SearchRouteScreen> {
             }),
       ),
     );
+  }
+
+  Box<BrtsRoutesResponseModel> getLocalBrtsRoutesData() {
+    return Hive.box<BrtsRoutesResponseModel>(AppConstant.brtsRoutesListBox);
+  }
+
+  Box<BrtsRoutesResponseModel> getLocalAmtsRoutesData() {
+    return Hive.box<BrtsRoutesResponseModel>(AppConstant.amtsRoutesListBox);
   }
 }

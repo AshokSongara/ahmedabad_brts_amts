@@ -178,7 +178,7 @@ class _OnTapSearchRouteNumberScreenState extends State<OnTapSearchBusRouteScreen
                                       print("onTap Pressed");
                                        Get.close(2);
                                       BlocProvider.of<HomeScreenBloc>(context).add(
-                                          SourceSelectionFromSearchBusRouteScreenEvent(brtsModel.Data(
+                                          SourceSelectionFromSearchBusRouteScreenEvent(brtsModel.DataHive(
                                               stopName: state.routeStopListResponse
                                                   .data?[index].stopName,
                                               stationCode: state.routeStopListResponse

@@ -19,7 +19,7 @@ class RoutesResponseState extends HomeState{
   const RoutesResponseState(this.model);
 }
 class SourceSelectionFromMapScreenState extends HomeState{
-  final Data data;
+  final DataHive data;
   const SourceSelectionFromMapScreenState(this.data);
 
   @override
@@ -27,7 +27,7 @@ class SourceSelectionFromMapScreenState extends HomeState{
 }
 
 class SourceSelectionFromFavScreenState extends HomeState{
-  final Data data;
+  final DataHive data;
   const SourceSelectionFromFavScreenState(this.data);
 
   @override
@@ -35,7 +35,7 @@ class SourceSelectionFromFavScreenState extends HomeState{
 }
 
 class SourceSelectionFromSearchBusRouteScreenState extends HomeState{
-  final Data data;
+  final DataHive data;
   const SourceSelectionFromSearchBusRouteScreenState(this.data);
 
   @override

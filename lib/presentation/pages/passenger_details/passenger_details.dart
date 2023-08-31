@@ -41,7 +41,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   int _addedAdultsCount = 0;
   int _addedKidsCount = 0;
   List<String?> list = [];
-
+  String? selectedOption = "PhonePe";
   String token = "";
 
   @override
@@ -115,6 +115,53 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                         ),
                         getSourceDestination(list[1] ?? "",
                             "${DateFormat('dd MMM yyyy').format(DateTime.now())}, ${list[3]}")
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 20.h,),
+
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: AppColors.grayC4C$C$,
+                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                          ),
+                          margin: const EdgeInsets.only(left: 30, right: 30),
+                          child: RadioListTile(
+                            title: Text("PhonePe",style: poppinsMedium.copyWith(fontSize: 18.sp,fontWeight: FontWeight.w400)),
+                            value: "PhonePe",
+                            activeColor: AppColors.primaryColor,
+                            //tileColor: Colors.grey,
+                            groupValue: selectedOption,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedOption = value as String?;
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 10.h,),
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: AppColors.grayC4C$C$,
+                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                          ),
+                          margin: const EdgeInsets.only(left: 30, right: 30),
+                          child: RadioListTile(
+                            title: Text("Fiser", style: poppinsMedium.copyWith(fontSize: 18.sp,fontWeight: FontWeight.w400)),
+                            value: "Fiser",
+                            activeColor: AppColors.primaryColor,
+                            groupValue: selectedOption,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedOption = value as String?;
+                              });
+                            },
+                          ),
+                        ),
                       ],
                     ),
                   ),

@@ -8,6 +8,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.da
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_state.dart';
+import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/route_title_widget.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/search_result_item.dart';
@@ -17,6 +18,7 @@ import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
@@ -142,7 +144,8 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                   from: true,
                 ),
                 Expanded(
-                  child: state.searchRouteResponse.data!.isNotEmpty
+                  child:
+                  state.searchRouteResponse.data!.isNotEmpty
                       ? ListView.builder(
                           padding: const EdgeInsets.only(top: 10),
                           itemCount: state.searchRouteResponse.data?.length,
@@ -202,11 +205,43 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                                   serviceType: widget.serviceType,
                                 ));
                           })
-                      : Center(
-                          child: Text(
-                            "No Route Available",
-                            style: satoshiRegularSmall.copyWith(
-                                color: Theme.of(context).primaryColor),
+                      :
+                  Center(
+                          child: Padding(
+                            padding:  EdgeInsets.symmetric(horizontal: 35.w),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "No Route Available",
+                                  style: satoshiRegularSmall.copyWith(
+                                      color: Theme.of(context).primaryColor),
+                                ),
+                                SizedBox(height: 50.h,),
+                               widget.serviceType == "BRTS" ? CustomButton(text: "Book Tickets",
+                                  onPressed: (){
+                                    Get.toNamed(
+                                        RouteHelper.getPassengerDetailsRoute(
+                                            widget.startRoute ?? "",
+                                            widget.startRoute ?? "",
+                                             "",
+                                            "BRTS"),
+                                        arguments: [
+                                          widget.startRouteName,
+                                          widget.endRouteName,
+                                          "",
+                                          ""
+                                        ]);
+                                  },
+                                  width: 200.w,
+                                  style: satoshiRegular.copyWith(
+                                      fontSize: 18.sp,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.white),
+                                  height: Dimensions.dp53, color: AppColors.lightBlue,) : SizedBox(height: 0,)
+                              ],
+                            ),
                           ),
                         ),
                 ),

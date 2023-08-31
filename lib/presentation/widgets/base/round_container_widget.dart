@@ -19,9 +19,9 @@ class RoundContainerWidget extends StatelessWidget {
           const EdgeInsets.only(left: Dimensions.dp30, right: Dimensions.dp30),
       decoration: BoxDecoration(
           border: Border.all(
-            color: Theme.of(context).buttonColor,
+            color: Colors.white,
           ),
-          color: Theme.of(context).buttonColor,
+          //color: Colors.white,
           borderRadius:
               const BorderRadius.all(Radius.circular(Dimensions.dp8))),
       child: Container(

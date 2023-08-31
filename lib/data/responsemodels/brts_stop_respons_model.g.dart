@@ -17,7 +17,7 @@ class BrtsStopResponseModelAdapter extends TypeAdapter<BrtsStopResponseModel> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return BrtsStopResponseModel(
-      data: (fields[0] as List?)?.cast<Data>(),
+      data: (fields[0] as List?)?.cast<DataHive>(),
     ).._succeeded = fields[1] as bool?;
   }
 
@@ -42,24 +42,24 @@ class BrtsStopResponseModelAdapter extends TypeAdapter<BrtsStopResponseModel> {
           typeId == other.typeId;
 }
 
-class DataAdapter extends TypeAdapter<Data> {
+class DataAdapter extends TypeAdapter<DataHive> {
   @override
   final int typeId = 2;
 
   @override
-  Data read(BinaryReader reader) {
+  DataHive read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return Data()
+    return DataHive()
       .._stationCode = fields[0] as String?
       .._stopName = fields[1] as String?
       .._stopNameGujarati = fields[2] as String?;
   }
 
   @override
-  void write(BinaryWriter writer, Data obj) {
+  void write(BinaryWriter writer, DataHive obj) {
     writer
       ..writeByte(3)
       ..writeByte(0)

@@ -45,12 +45,13 @@ class _SignupScreenState extends State<SignupScreen> {
   final FocusNode _mobileFocus = FocusNode();
   final FocusNode _passwordFocus = FocusNode();
   final FocusNode _confirmPasswordFocus = FocusNode();
-  StreamController<int>? genderValue = StreamController();
+  int _selectedGender = 1;
+
+
 
   @override
   void initState() {
     super.initState();
-    genderValue?.add(0);
   }
 
   @override
@@ -267,51 +268,69 @@ class _SignupScreenState extends State<SignupScreen> {
                     const SizedBox(
                       height: Dimensions.dp20,
                     ),
-                    StreamBuilder<int>(
-                        stream: genderValue?.stream,
-                        builder: (context, snapshot) {
-                          return Row(
-                            children: [
-                              Text(
-                                "Gender",
-                                style: satoshiRegular.copyWith(
-                                    fontSize: 15.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.darkGray),
-                              ),
-                              const SizedBox(
-                                width: Dimensions.dp15,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  genderValue?.add(0);
+                    Row(
+                      children: [
+                        Text(
+                          "Gender",
+                          style: satoshiRegular.copyWith(
+                              fontSize: 15.sp,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.darkGray),
+                        ),
+                        const SizedBox(
+                          width: Dimensions.dp15,
+                        ),
+                        Row(
+                          children: [
+                            Theme(
+                              data: ThemeData(
+                                unselectedWidgetColor: Colors.red,),
+                              child: Radio<int>(
+                                activeColor: AppColors.lightBlue,
+                                value: 1,
+                                groupValue: _selectedGender,
+                                onChanged: (int? value) {
+                                  setState(() {
+                                    _selectedGender = value ?? 1;
+                                  });
                                 },
-                                child: SvgPicture.asset(
-                                  ImageConstant.iSelectedMan,
-                                  color: snapshot.data == 0
-                                      ? Theme.of(context).primaryColor
-                                      : AppColors.lightGray,
-                                ),
                               ),
-                              const SizedBox(
-                                width: Dimensions.dp15,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  genderValue?.add(1);
+                            ),
+                            Text('Male', style: satoshiRegular.copyWith(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.darkGray),),
+                          ],
+                        ),
+                        Row(
+                          children: [
+                            Theme(
+                              data: ThemeData(
+                                unselectedWidgetColor: Colors.red,),
+                              child: Radio<int>(
+                                activeColor: AppColors.lightBlue,
+                                value: 2,
+                                groupValue: _selectedGender,
+                                onChanged: (int? value) {
+                                  setState(() {
+                                    _selectedGender = value ?? 1;
+                                  });
                                 },
-                                child: SvgPicture.asset(
-                                    ImageConstant.iSelectedWoman,
-                                    color: snapshot.data == 1
-                                        ? Theme.of(context).primaryColor
-                                        : AppColors.lightGray),
                               ),
-                            ],
-                          );
-                        }),
+                            ),
+                            Text('Female', style: satoshiRegular.copyWith(
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.darkGray),),
+                          ],
+                        ),
+
+                      ],
+                    ),
                     const SizedBox(
                       height: Dimensions.dp100,
                     ),
+
                   ],
                 ),
               ),
@@ -327,6 +346,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     onPressed: () {
                       RegExp regex = RegExp(
                           r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$');
+                      print(_selectedGender);
 
                       if (FocusManager.instance.primaryFocus!.hasFocus) {
                         FocusManager.instance.primaryFocus?.unfocus();
@@ -387,6 +407,8 @@ class _SignupScreenState extends State<SignupScreen> {
                         request.email = _emailController.text;
                         request.password = _passwordController.text;
                         request.phoneNumber = _mobileNumberController.text;
+                        request.gender = _selectedGender;
+
                         BlocProvider.of<SignupBloc>(context).add(
                           SignupUserEvent(data: request),
                         );
@@ -411,7 +433,6 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   void dispose() {
     super.dispose();
-    genderValue?.close();
     Loader.hide();
   }
 }

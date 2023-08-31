@@ -23,21 +23,21 @@ class GetAvailableRoutesEvent extends HomeEvent {
   const GetAvailableRoutesEvent(this.model);
 }
 class SourceSelectionFromMapScreenEvent extends HomeEvent{
-  final Data data;
+  final DataHive data;
   const SourceSelectionFromMapScreenEvent(this.data);
   @override
   List<Object> get props => [data];
 }
 
 class SourceSelectionFromFavScreenEvent extends HomeEvent{
-  final Data data;
+  final DataHive data;
   const SourceSelectionFromFavScreenEvent(this.data);
 
   @override
   List<Object> get props => [data];
 }
 class SourceSelectionFromSearchBusRouteScreenEvent extends HomeEvent{
-  final Data data;
+  final DataHive data;
   const SourceSelectionFromSearchBusRouteScreenEvent(this.data);
 
   @override
@@ -45,7 +45,7 @@ class SourceSelectionFromSearchBusRouteScreenEvent extends HomeEvent{
 }
 
 class TicketBookedEvent extends HomeEvent{
-  final Data data;
+  final DataHive data;
   const TicketBookedEvent(this.data);
 
 }

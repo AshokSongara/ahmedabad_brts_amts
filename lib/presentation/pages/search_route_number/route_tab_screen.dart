@@ -171,7 +171,7 @@ class _RouteTabScreenState extends State<RouteTabScreen>
                               return GestureDetector(
                                 onTap: () {
                                   BlocProvider.of<HomeScreenBloc>(context).add(
-                                      SourceSelectionFromMapScreenEvent(brtsModel.Data(
+                                      SourceSelectionFromMapScreenEvent(brtsModel.DataHive(
                                           stopName: state.routeStopListResponse
                                               .data?[index].stopName,
                                           stationCode: state.routeStopListResponse

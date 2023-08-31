@@ -1,10 +1,13 @@
 import 'dart:io';
 
+import 'package:ahmedabad_brts_amts/api/api_client.dart';
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/core/theme/theme_service.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/routes_request_model.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/stop_request_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/fare_response.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/search_route_response.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/localization/app_localizations.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
@@ -18,6 +21,7 @@ import 'package:ahmedabad_brts_amts/presentation/pages/notification/notification
 import 'package:ahmedabad_brts_amts/presentation/pages/tnc/terms_and_conditions_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
+import 'package:ahmedabad_brts_amts/presentation/widgets/base/home_dialog.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/source_destination_widget.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
@@ -32,6 +36,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import '../../../data/responseModels/quick_link_internal_model.dart';
 import '../../../data/responsemodels/brts_stop_respons_model.dart';
@@ -51,11 +57,15 @@ class _HomeScreenState extends State<HomeScreen> {
   BrtsRoutesResponseModel? brtsRoutesResponseModel;
   BrtsStopResponseModel? operationBrtsStopResponseModel;
   RouteData? routeData;
-  Data? newFromSelectedStation, oldFromSelectedStation;
-  Data? newToSelectedStation, oldToSelectedStation;
+  DataHive? newFromSelectedStation, oldFromSelectedStation;
+  DataHive? newToSelectedStation, oldToSelectedStation;
   String? selectedLanguage;
   String userName = "Guest User";
   static const platform = MethodChannel('nativeChannel');
+  bool isLoading = false;
+  String? startCode;
+  String? endCode;
+
 
   @override
   void initState() {
@@ -74,6 +84,73 @@ class _HomeScreenState extends State<HomeScreen> {
         GetAvailableRoutesEvent(RoutesRequestModel(stopType: isAmts ? 2 : 1)));
     Loader.show(context);
     setQuickLinks();
+  }
+
+  Future<SearchRouteResponse> fetchData() async {
+    final url = "http://125.17.144.58:8081/Route/BRTS/plan/start/${newFromSelectedStation?.stationCode
+        .toString() ??
+        ""}/end/${newToSelectedStation?.stationCode
+        .toString() ??
+        ""}";
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      return SearchRouteResponse.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  void openDialogBox() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final searchResponse = await fetchData();
+    startCode = searchResponse.data![0].routeDetails![0].startStopCode;
+    endCode = searchResponse.data![0].interChanges!.isEmpty ? searchResponse.data![0].routeDetails![0].endStopCode ?? "" :  searchResponse.data![0].routeDetails![searchResponse.data![0].routeDetails!.length - 1].endStopCode;
+
+    Future<FareResponse> fetchData2() async {
+      final url = "http://125.17.144.58:8081/fare/BRTS/startStop/${startCode}/endStop/${endCode}";
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        return FareResponse.fromJson(jsonDecode(response.body));
+      } else {
+        throw Exception('Failed to load data');
+      }
+    }
+
+    final fareResponse = await fetchData2();
+
+    setState(() {
+      isLoading = false;
+      showDialog(
+        context: context,
+        builder: (context) => MyDialog(
+          data: fareResponse.data,
+          data2: searchResponse.data![0],
+          isLoading: isLoading,
+          onCancel: () {
+            Navigator.of(context).pop();
+          },
+          onProceed: () {
+            Get.toNamed(
+                RouteHelper.getPassengerDetailsRoute(
+                  startCode ?? "",
+                  endCode ?? "",
+                   "",
+                   "BRTS",
+                ),
+                arguments: [
+                  searchResponse.data![0].routeDetails![0].startStopName,
+                  searchResponse.data![0].interChanges!.isEmpty ? searchResponse.data![0].routeDetails![0].endStopName ?? "" :  searchResponse.data![0].routeDetails![searchResponse.data![0].routeDetails!.length - 1].endStopName ?? ""
+                  "",
+                  "",
+                  ""
+                ]);
+           },
+        ),
+      );
+    });
   }
 
   setQuickLinks(){
@@ -547,9 +624,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       BlocProvider.of<HomeScreenBloc>(context).add(
                           GetAvailableRoutesEvent(
                               RoutesRequestModel(stopType: isAmts ? 2 : 1)));
-                      Loader.show(context);
+                      // Loader.show(context);
+
                       Future.delayed(const Duration(milliseconds: 100), () {
                         ThemeService().switchTheme(isAmts);
+
+                        // BlocProvider.of<HomeScreenBloc>(context).add(
+                        //     GetAvailableStopsEvent(
+                        //         StopRequestModel(stopType: isAmts ? 2 : 1)));
+                        // BlocProvider.of<HomeScreenBloc>(context).add(
+                        //     GetAvailableRoutesEvent(
+                        //         RoutesRequestModel(stopType: isAmts ? 2 : 1)));
                       });
                       setQuickLinks();
                       setState(() {});
@@ -639,46 +724,56 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: SvgPicture.asset(ImageConstant.iMenu)))
                 ],
               ),
-              if (brtsRoutesResponseModel != null)
-                Container(
-                  margin: const EdgeInsets.only(
-                      left: Dimensions.dp24,
-                      right: Dimensions.dp24,
-                      top: Dimensions.dp26),
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 14),
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(Dimensions.dp10),
+            //  if (brtsRoutesResponseModel != null)
+                GestureDetector( 
+                  onTap: () async {
+                    routeData = await Get.toNamed(
+                        RouteHelper.getSearchRouteScreenRoute(
+                            selectedLanguage ?? "", "",isAmts ? "AMTS" : "BRTS" ),
+                        arguments: [brtsRoutesResponseModel, isAmts])
+                    as RouteData;
+                    setState(() {});
+                  },
+                  child: Container(
+                    margin: const EdgeInsets.only(
+                        left: Dimensions.dp24,
+                        right: Dimensions.dp24,
+                        top: Dimensions.dp26),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 14),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(Dimensions.dp10),
+                      ),
                     ),
-                  ),
-                  child: GestureDetector(
-                    onTap: () async {
-                      routeData = await Get.toNamed(
-                              RouteHelper.getSearchRouteScreenRoute(
-                                  selectedLanguage ?? "", ""),
-                              arguments: [brtsRoutesResponseModel, isAmts])
-                          as RouteData;
-                      setState(() {});
-                    },
-                    child: Row(
-                      children: [
-                        SvgPicture.asset(ImageConstant.iSearch,
-                            height: 20, width: 20),
-                        const SizedBox(
-                          width: 14,
-                        ),
-                        Text(
-                          AppLocalizations.of(context)
-                                  ?.translate("searchbusroutenumber") ??
-                              "",
-                          style: satoshiRegular.copyWith(
-                              fontSize: Dimensions.dp13.sp,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.lightGray),
-                        )
-                      ],
+                    child: GestureDetector(
+                      onTap: () async {
+                        routeData = await Get.toNamed(
+                            RouteHelper.getSearchRouteScreenRoute(
+                                selectedLanguage ?? "", "",isAmts ? "AMTS" : "BRTS"),
+                            arguments: [brtsRoutesResponseModel, isAmts])
+                        as RouteData;
+                        setState(() {});
+                      },
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(ImageConstant.iSearch,
+                              height: 20, width: 20),
+                          const SizedBox(
+                            width: 14,
+                          ),
+                          Text(
+                            AppLocalizations.of(context)
+                                    ?.translate("searchbusroutenumber") ??
+                                "",
+                            style: satoshiRegular.copyWith(
+                                fontSize: Dimensions.dp13.sp,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.lightGray),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -699,7 +794,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(
                 height: Dimensions.dp15,
               ),
-              if (operationBrtsStopResponseModel != null)
+             // if (operationBrtsStopResponseModel != null)
                 Container(
                   margin: const EdgeInsets.only(
                       left: Dimensions.dp20, right: Dimensions.dp30),
@@ -739,7 +834,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           selectedLanguage ?? "", isAmts ? "AMTS" : "BRTS" ),
                                       arguments: getSortedData(
                                           oldToSelectedStation,
-                                          newToSelectedStation)) as Data;
+                                          newToSelectedStation)) as DataHive;
                                   setState(() {});
                                 },
 
@@ -802,7 +897,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         arguments: getSortedData(
                                             oldFromSelectedStation,
                                             newFromSelectedStation))
-                                    as Data;
+                                    as DataHive;
                                     setState(() {});
                                   },
                                   child: SourceDestinationWidget(
@@ -856,7 +951,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   child: InkWell(
                                     onTap: () {
                                       if (routeData == null) {
-                                        Data? temp = newFromSelectedStation;
+                                        DataHive? temp = newFromSelectedStation;
                                         newFromSelectedStation =
                                             newToSelectedStation;
                                         newToSelectedStation = temp;
@@ -960,7 +1055,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: Dimensions.dp53,
                           ),
                         ),
-                        if (isAmts)
+                        isAmts ?
                           Container(
                             margin: const EdgeInsets.only(
                                 left: Dimensions.dp10,
@@ -982,7 +1077,37 @@ class _HomeScreenState extends State<HomeScreen> {
                                   color: Colors.white),
                               height: Dimensions.dp53,
                             ),
+                          ) :
+                        Container(
+                          margin: const EdgeInsets.only(
+                              left: Dimensions.dp10,
+                              right: Dimensions.dp10,
+                              top: Dimensions.dp14),
+                          child: CustomButton(
+                            color: Theme.of(context).primaryColor,
+                            text: AppLocalizations.of(context)
+                                ?.translate("quick_book_ticket") ??
+                                "",
+                            width: MediaQuery.of(context).size.width,
+                            onPressed: () {
+                              if(newFromSelectedStation == null || newToSelectedStation == null){
+                                showCustomSnackBar(
+                                    "Please Select Source & Destination Station",
+                                    context,
+                                    isError: true);
+                              }
+                              else{
+                                openDialogBox();
+
+                              }
+                            },
+                            style: satoshiRegular.copyWith(
+                                fontSize: 20.sp,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white),
+                            height: Dimensions.dp53,
                           ),
+                        ),
                       ],
                     ),
                   ),
@@ -1049,7 +1174,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Loader.hide();
   }
 
-  BrtsStopResponseModel? getSortedData(Data? dataAdd, Data? dataRemove) {
+  BrtsStopResponseModel? getSortedData(DataHive? dataAdd, DataHive? dataRemove) {
     if (dataRemove != null) {
       operationBrtsStopResponseModel?.data?.remove(dataRemove);
     }

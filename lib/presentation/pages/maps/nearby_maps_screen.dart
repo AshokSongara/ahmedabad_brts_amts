@@ -211,7 +211,7 @@ class _NearByMapsScreenState extends State<NearByMapsScreen> {
       final nearByRequest = NearMeRequest();
       nearByRequest.latitude = locationData.latitude;
       nearByRequest.longitude = locationData.longitude;
-      nearByRequest.stopType = 2;
+      nearByRequest.stopType = int.parse(widget.stopType ?? "1");
 
       markers.add(
         Marker(

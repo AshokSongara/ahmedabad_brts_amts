@@ -4,7 +4,7 @@ part 'brts_stop_respons_model.g.dart';
 @HiveType(typeId: 1)
 class BrtsStopResponseModel extends HiveObject {
   BrtsStopResponseModel({
-      List<Data>? data, 
+      List<DataHive>? data,
       bool? succeeded,}){
     data = data;
     _succeeded = succeeded;
@@ -14,16 +14,16 @@ class BrtsStopResponseModel extends HiveObject {
     if (json['data'] != null) {
       data = [];
       json['data'].forEach((v) {
-        data?.add(Data.fromJson(v));
+        data?.add(DataHive.fromJson(v));
       });
     }
     _succeeded = json['succeeded'];
   }
   @HiveField(0)
-  List<Data>? data;
+  List<DataHive>? data;
   @HiveField(1)
   bool? _succeeded;
-BrtsStopResponseModel copyWith({  List<Data>? data,
+BrtsStopResponseModel copyWith({  List<DataHive>? data,
   bool? succeeded,
 }) => BrtsStopResponseModel(  data: data ?? this.data,
   succeeded: succeeded ?? _succeeded,
@@ -46,8 +46,8 @@ BrtsStopResponseModel copyWith({  List<Data>? data,
 /// stopName : "Maninagar"
 /// stopNameGujarati : "મણિનગર"
 @HiveType(typeId: 2)
-class Data extends HiveObject{
-  Data({
+class DataHive extends HiveObject{
+  DataHive({
       String? stationCode, 
       String? stopName, 
       String? stopNameGujarati,}){
@@ -56,7 +56,7 @@ class Data extends HiveObject{
     _stopNameGujarati = stopNameGujarati;
 }
 
-  Data.fromJson(dynamic json) {
+  DataHive.fromJson(dynamic json) {
     _stationCode = json['stationCode'];
     _stopName = json['stopName'];
     _stopNameGujarati = json['stopNameGujarati'];
@@ -67,10 +67,10 @@ class Data extends HiveObject{
   String? _stopName;
   @HiveField(2)
   String? _stopNameGujarati;
-Data copyWith({  String? stationCode,
+DataHive copyWith({  String? stationCode,
   String? stopName,
   String? stopNameGujarati,
-}) => Data(  stationCode: stationCode ?? _stationCode,
+}) => DataHive(  stationCode: stationCode ?? _stationCode,
   stopName: stopName ?? _stopName,
   stopNameGujarati: stopNameGujarati ?? _stopNameGujarati,
 );

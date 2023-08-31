@@ -52,7 +52,7 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   get_storage: ^2.0.3
-  intl: ^0.17.0
+  intl: ^0.18.1
   http_interceptor: ^1.0.2
   carousel_slider: ^4.2.1
   flutter_phone_direct_caller: ^2.1.1

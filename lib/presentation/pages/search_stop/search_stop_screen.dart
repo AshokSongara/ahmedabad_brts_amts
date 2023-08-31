@@ -1,6 +1,8 @@
+import 'package:ahmedabad_brts_amts/data/responsemodels/brts_routes_response_model.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
+import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
@@ -8,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchStopScreen extends StatefulWidget {
@@ -24,8 +27,8 @@ class _SearchStopScreenState extends State<SearchStopScreen> {
   BrtsStopResponseModel? brtsStopResponseModel;
   BrtsStopResponseModel? localBrtsStopResponseModel;
   TextEditingController controller = TextEditingController();
-  List<Data> brtsStopList = [];
-  List<Data> localBrtsStopList = [];
+  List<DataHive> brtsStopList = [];
+  List<DataHive> localBrtsStopList = [];
   String _selectedValue = '';
   String _selectedValue2 = '';
   bool _isExpanded = true;
@@ -70,7 +73,12 @@ class _SearchStopScreenState extends State<SearchStopScreen> {
     // _loadStoredValue();
     // _loadStoredValue2();
     // brtsStopResponseModel = Get.arguments as BrtsStopResponseModel;
-    localBrtsStopResponseModel = Get.arguments as BrtsStopResponseModel;
+
+    Box brtsBox = getLocalBrtsStopData();
+    BrtsStopResponseModel? brtsData = brtsBox.get("key");
+    Box amtsBox = getLocalAmtsStopData();
+    BrtsStopResponseModel? amtsData = amtsBox.get("key");
+    localBrtsStopResponseModel = widget.stopType == "BRTS" ?brtsBox.get("key"): amtsBox.get("key");
     brtsStopList = localBrtsStopResponseModel?.data ?? [];
     localBrtsStopList = localBrtsStopResponseModel?.data ?? [];
   }
@@ -158,7 +166,7 @@ class _SearchStopScreenState extends State<SearchStopScreen> {
                       // ),
                       SizedBox(height: Dimensions.dp8),
                    widget.stopType == "AMTS" ?   FutureBuilder<List<String>>(
-                    // future: SharedPreferencesHelper2.getStoredValues2(),
+                     future: null,
                      builder: (context, snapshot) {
                        final List<String> storedValues2 = snapshot.data ?? [];
                        final limitedValues = storedValues2.take(4).toList(); // Limit the values to a maximum of 4
@@ -199,7 +207,7 @@ class _SearchStopScreenState extends State<SearchStopScreen> {
                        );
                      },
                    ) :  FutureBuilder<List<String>>(
-                       // future: SharedPreferencesHelper.getStoredValues(),
+                     future: null,
                         builder: (context, snapshot) {
                           final List<String> storedValues = snapshot.data ?? [];
                           final limitedValues = storedValues.take(4).toList(); // Limit the values to a maximum of 4
@@ -291,6 +299,14 @@ class _SearchStopScreenState extends State<SearchStopScreen> {
         ),
       ),
     );
+  }
+
+  Box<BrtsStopResponseModel> getLocalBrtsStopData() {
+    return Hive.box<BrtsStopResponseModel>(AppConstant.BrtsStopListBox);
+  }
+
+  Box<BrtsStopResponseModel> getLocalAmtsStopData() {
+    return Hive.box<BrtsStopResponseModel>(AppConstant.AmtsStopListBox);
   }
 
   filterData(String value){

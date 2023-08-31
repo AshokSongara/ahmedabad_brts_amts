@@ -1,14 +1,14 @@
 class RouteDetailsRepsonse {
-  List<Data>? data;
+  List<DataRoute>? data;
   bool? succeeded;
 
   RouteDetailsRepsonse({this.data, this.succeeded});
 
   RouteDetailsRepsonse.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <DataRoute>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(DataRoute.fromJson(v));
       });
     }
     succeeded = json['succeeded'];
@@ -24,19 +24,19 @@ class RouteDetailsRepsonse {
   }
 }
 
-class Data {
+class DataRoute {
   String? stopCode;
   int? sequenceNumber;
   String? stopName;
   String? stopNameGujarati;
 
-  Data(
+  DataRoute(
       {this.stopCode,
       this.sequenceNumber,
       this.stopName,
       this.stopNameGujarati});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  DataRoute.fromJson(Map<String, dynamic> json) {
     stopCode = json['stopCode'];
     sequenceNumber = json['sequenceNumber'];
     stopName = json['stopName'];

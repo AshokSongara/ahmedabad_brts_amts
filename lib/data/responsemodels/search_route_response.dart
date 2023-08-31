@@ -1,14 +1,14 @@
 class SearchRouteResponse {
-  List<Data>? data;
+  List<DataSearch>? data;
   bool? succeeded;
 
   SearchRouteResponse({this.data, this.succeeded});
 
   SearchRouteResponse.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <DataSearch>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(DataSearch.fromJson(v));
       });
     }
     succeeded = json['succeeded'];
@@ -24,7 +24,7 @@ class SearchRouteResponse {
   }
 }
 
-class Data {
+class DataSearch {
   String? journeyStartDate;
   String? journeyEndDate;
   String? startTime;
@@ -36,7 +36,7 @@ class Data {
   int? fare;
   List<RouteDetails>? routeDetails;
 
-  Data(
+  DataSearch(
       {this.journeyStartDate,
         this.journeyEndDate,
         this.startTime,
@@ -48,7 +48,7 @@ class Data {
         this.fare,
         this.routeDetails});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  DataSearch.fromJson(Map<String, dynamic> json) {
     journeyStartDate = json['journeyStartDate'];
     journeyEndDate = json['journeyEndDate'];
     startTime = json['startTime'];
@@ -102,6 +102,7 @@ class RouteDetails {
   String? startDepartureTime;
   String? endArrivalTime;
   String? endDepartureTime;
+  int? fare;
 
   RouteDetails(
       {this.startStopCode,
@@ -120,7 +121,8 @@ class RouteDetails {
         this.startArrivalTime,
         this.startDepartureTime,
         this.endArrivalTime,
-        this.endDepartureTime});
+        this.endDepartureTime,
+      this.fare});
 
   RouteDetails.fromJson(Map<String, dynamic> json) {
     startStopCode = json['startStopCode'];
@@ -140,6 +142,7 @@ class RouteDetails {
     startDepartureTime = json['startDepartureTime'];
     endArrivalTime = json['endArrivalTime'];
     endDepartureTime = json['endDepartureTime'];
+    fare = json['fare'];
   }
 
   Map<String, dynamic> toJson() {
@@ -161,6 +164,7 @@ class RouteDetails {
     data['startDepartureTime'] = startDepartureTime;
     data['endArrivalTime'] = endArrivalTime;
     data['endDepartureTime'] = endDepartureTime;
+    data['fare'] = fare;
     return data;
   }
 }

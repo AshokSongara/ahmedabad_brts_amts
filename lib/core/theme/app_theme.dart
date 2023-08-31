@@ -6,7 +6,7 @@ class Themes {
   static final light = ThemeData.light().copyWith(
     primaryColor: const Color(0xffD43030),
     backgroundColor: AppColors.appBackground,
-    buttonColor: const Color(0xffDB5558),
+   // buttonColor: const Color(0xffDB5558),
     bottomAppBarColor: const Color(0xffD43030),
     buttonTheme: const ButtonThemeData(
       buttonColor: Color(0xffDB5558),
@@ -20,7 +20,7 @@ class Themes {
   static final dark = ThemeData.dark().copyWith(
     primaryColor: const Color(0xff0162B4),
     backgroundColor: AppColors.appBackground,
-    buttonColor: const Color(0xff0074B7),
+   // buttonColor: const Color(0xff0074B7),
     bottomAppBarColor: const Color(0xff0162B4),
     buttonTheme: const ButtonThemeData(
       buttonColor: Color(0xff0162B4),

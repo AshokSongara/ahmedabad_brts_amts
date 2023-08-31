@@ -1,11 +1,11 @@
 class FareResponse {
-  Data? data;
+  DataFare? data;
   bool? succeeded;
 
   FareResponse({this.data, this.succeeded});
 
   FareResponse.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? DataFare.fromJson(json['data']) : null;
     succeeded = json['succeeded'];
   }
 
@@ -19,21 +19,21 @@ class FareResponse {
   }
 }
 
-class Data {
+class DataFare {
   int? adult;
   int? child;
   String? startStopCode;
   String? endStopCode;
   String? routeCode;
 
-  Data(
+  DataFare(
       {this.adult,
       this.child,
       this.startStopCode,
       this.endStopCode,
       this.routeCode});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  DataFare.fromJson(Map<String, dynamic> json) {
     adult = json['adult'];
     child = json['child'];
     startStopCode = json['startStopCode'];

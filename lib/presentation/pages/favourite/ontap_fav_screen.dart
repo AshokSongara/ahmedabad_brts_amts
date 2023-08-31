@@ -184,7 +184,7 @@ class _OnTapFavScreenState extends State<OnTapFavScreen> with TickerProviderStat
                                       print("onTap Pressed");
                                       widget.from == "drawer" ? Get.close(3) : Get.close(2);
                                       BlocProvider.of<HomeScreenBloc>(context).add(
-                                          SourceSelectionFromFavScreenEvent(brtsModel.Data(
+                                          SourceSelectionFromFavScreenEvent(brtsModel.DataHive(
                                               stopName: state.routeStopListResponse
                                                   .data?[index].stopName,
                                               stationCode: state.routeStopListResponse

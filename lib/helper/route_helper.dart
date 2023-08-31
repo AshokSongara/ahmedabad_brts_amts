@@ -160,8 +160,8 @@ class RouteHelper {
   static String getSearchStopScreenRoute(String selectedLanguage, String stopType) =>
       '$searchStopScreen?selectedLanguage=$selectedLanguage&stopType=$stopType';
 
-  static String getSearchRouteScreenRoute(String selectedLanguage, String from) =>
-      '$searchRouteScreen?selectedLanguage=$selectedLanguage&from=$from';
+  static String getSearchRouteScreenRoute(String selectedLanguage, String from,String stopType) =>
+      '$searchRouteScreen?selectedLanguage=$selectedLanguage&from=$from&stopType=$stopType';
 
   static String getNearBySearchStopScreenRoute() => nearBySearchStopScreen;
 
@@ -239,6 +239,7 @@ class RouteHelper {
         page: () => SearchRouteScreen(
               selectedLanguage: Get.parameters['selectedLanguage'],
               from: Get.parameters['from'],
+              stopType: Get.parameters['stopType'],
             )),
     GetPage(
         name: enterCode,

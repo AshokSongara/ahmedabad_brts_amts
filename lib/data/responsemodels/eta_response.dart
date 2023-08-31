@@ -1,14 +1,14 @@
 class ETAResponse {
-  List<Data>? data;
+  List<EtaData>? data;
   bool? succeeded;
 
   ETAResponse({this.data, this.succeeded});
 
   ETAResponse.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <EtaData>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(EtaData.fromJson(v));
       });
     }
     succeeded = json['succeeded'];
@@ -24,14 +24,14 @@ class ETAResponse {
   }
 }
 
-class Data {
+class EtaData {
   String? eta;
   String? stopCode;
   String? routeCode;
 
-  Data({this.eta, this.stopCode, this.routeCode});
+  EtaData({this.eta, this.stopCode, this.routeCode});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  EtaData.fromJson(Map<String, dynamic> json) {
     eta = json['eta'];
     stopCode = json['stopCode'];
     routeCode = json['routeCode'];

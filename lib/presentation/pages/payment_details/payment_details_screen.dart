@@ -802,41 +802,47 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
     String htmlContent = '''
 $data''';
 
-    html.Document document = parse(htmlContent);
+    htmlContent = htmlContent.replaceAll(r'\u003C', '<');
+    htmlContent = htmlContent.replaceAll(r'\u003E', '>');
+    htmlContent = htmlContent.replaceAll(r'\"', '"');
+    String cleanedHtml = htmlContent;
+
+    // Parse the HTML
+    var document = parse(cleanedHtml);
+
     html.Element? jsonElement = document.getElementById('jsonresult');
-    String jsonString = jsonElement!.text;
 
-    Map<String, dynamic> jsonData = jsonDecode(jsonString);
+    if (jsonElement != null) {
+      String jsonString = jsonElement!.text;
 
-    String fpTransactionId = jsonData['fpTransactionId']?? "";
-    String merchantTxnId = jsonData['merchantTxnId']?? "";
-    String transactionStatus = jsonData['transactionStatus']?? "";
-    String externalTxnId = jsonData['externalTxnId'] ?? "";
-    String transactionDateTime = jsonData['transactionDateTime']?? "";
-    String transactionAmount = jsonData['transactionAmount']?? "";
-    String paymentMethod = jsonData['paymentMethod']?? "";
+      Map<String, dynamic> jsonData = jsonDecode(jsonString);
 
-    print('fpTransactionId: $fpTransactionId');
-    print('merchantTxnId: $merchantTxnId');
-    print('transactionStatus: $transactionStatus');
+      String fpTransactionId = jsonData['fpTransactionId']?? "";
+      String merchantTxnId = jsonData['merchantTxnId']?? "";
+      String transactionStatus = jsonData['transactionStatus']?? "";
+      String externalTxnId = jsonData['externalTxnId'] ?? "";
+      String transactionDateTime = jsonData['transactionDateTime']?? "";
+      String transactionAmount = jsonData['transactionAmount']?? "";
+      String paymentMethod = jsonData['paymentMethod']?? "";
 
-    Navigator.push(context, MaterialPageRoute(builder: (context) =>
-        TransactionResponseScreen(
-          tId: fpTransactionId,
-          tAmount: transactionAmount,
-          tDT: transactionDateTime,
-          merchantTId: merchantTxnId,
-          payMethod: paymentMethod,
-          status : transactionStatus
-    )));
+      print('fpTransactionId: $fpTransactionId');
+      print('merchantTxnId: $merchantTxnId');
+      print('transactionStatus: $transactionStatus');
 
-    await Future.delayed(Duration(seconds: 4));
+      // Navigator.push(context, MaterialPageRoute(builder: (context) =>
+      //     TransactionResponseScreen(
+      //       tId: fpTransactionId,
+      //       tAmount: transactionAmount,
+      //       tDT: transactionDateTime,
+      //       merchantTId: merchantTxnId,
+      //       payMethod: paymentMethod,
+      //       status : transactionStatus
+      // )));
+      //
+      // await Future.delayed(Duration(seconds: 4));
 
 
-
-
-
-    if (data == null) {
+      if (data == null) {
         Navigator.of(context).pop();
       }
       else if (transactionStatus == "FAILED") {
@@ -850,7 +856,7 @@ $data''';
               widget.type!.isEmpty ? "PASS" : widget.destinationStopId,
               discountype: status == "FAILED" ? "0" : widget.discountype,
               txnStatus: status,
-              merchantId: widget.serviceType == "AMTS" ? "470000087089746" : "470000087089747",
+              merchantId: "470000012117828",
               sourcecompanycode: widget.serviceType == "AMTS" ?"103" : "102",
               destinationcompanycode: widget.serviceType == "AMTS" ?"103" : "102",
               fpTransactionId: fpTransactionId,
@@ -876,7 +882,7 @@ $data''';
               widget.type!.isEmpty ? "PASS" : widget.destinationStopId,
               discountype: widget.discountype,
               txnStatus: status,
-              merchantId: widget.serviceType == "AMTS" ? "470000087089746" : "470000087089747",
+              merchantId: "470000012117828",
               sourcecompanycode: widget.serviceType == "AMTS" ?"103" : "102",
               destinationcompanycode: widget.serviceType == "AMTS" ?"103" : "102",
               fpTransactionId: fpTransactionId,
@@ -892,7 +898,24 @@ $data''';
           );
         }
       }
+
+
+      // Perform operations on jsonData
+    }
+    else {
+      status = "FAILED";
+      Get.toNamed(RouteHelper.transactionStatus);
+    }
+
+
+
+
+
   }
+
+
+
+
 }
 
 class LocalSliderModel {
