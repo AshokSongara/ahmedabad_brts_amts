@@ -63,6 +63,8 @@ dependencies:
   share: ^2.0.4
   flutter_windowmanager: ^0.2.0
   screen_brightness: ^0.2.2
+  phone_pe_pg: 0.0.2
+
 
 flutter_icons:
   android: true

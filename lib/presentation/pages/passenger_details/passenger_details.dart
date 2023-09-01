@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/discount/discount_bloc.dart';
@@ -17,6 +19,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:phone_pe_pg/phone_pe_pg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PassengerDetails extends StatefulWidget {
@@ -47,8 +50,20 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   @override
   void initState() {
     super.initState();
+    initPlatformState();
     list = Get.arguments as List<String?>;
     getMemberID();
+  }
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initPlatformState() async {
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    // We also handle the message potentially returning null.
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
   }
 
   getMemberID() async {
@@ -62,6 +77,41 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   getData() {
     BlocProvider.of<DiscountBloc>(context).add(const GetDiscountEvent());
   }
+
+  PhonePePg pePg = PhonePePg(
+    isUAT: true,
+    saltKey: "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399",
+    saltIndex: "1",
+  );
+
+  PaymentRequest _paymentRequest({String? merchantCallBackScheme}) {
+    String generateRandomString(int len) {
+      const chars =
+          'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
+      Random rnd = Random();
+      var s = String.fromCharCodes(Iterable.generate(
+          len, (_) => chars.codeUnitAt(rnd.nextInt(chars.length))));
+      return s;
+    }
+
+    PaymentRequest paymentRequest = PaymentRequest(
+      amount: 1000,
+      callbackUrl: "",
+      deviceContext: DeviceContext.getDefaultDeviceContext(
+          merchantCallBackScheme: merchantCallBackScheme),
+      merchantId: "PGTESTPAYUAT",
+      merchantTransactionId: generateRandomString(10).toUpperCase(),
+      merchantUserId: generateRandomString(8).toUpperCase(),
+      mobileNumber: "9601524257",
+    );
+    return paymentRequest;
+  }
+
+  PaymentRequest paypageRequestModel({String? merchantCallBackScheme}) =>
+      _paymentRequest(merchantCallBackScheme: merchantCallBackScheme).copyWith(
+          redirectUrl: "https://webhook.site/callback-url",
+          redirectMode: 'GET',
+          paymentInstrument: PayPagePaymentInstrument());
 
   @override
   Widget build(BuildContext context) {
@@ -206,21 +256,63 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        Get.toNamed(
-                                            RouteHelper.getPaymentDetailsRoute(
-                                                widget.sourceStopId ?? "",
-                                                widget.destinationStopId ?? "",
-                                                state
-                                                        .discountResponse
-                                                        .data![index]
-                                                        .discountTypeCode ??
-                                                    "",
-                                                "",
-                                                "",
-                                                "",
-                                                "",
-                                                widget.routeCode ?? "",
-                                                widget.serviceType ?? "","Payment"));
+                                        if(selectedOption == "PhonePe"){
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (_) => pePg.startPayPageTransaction(
+                                                    onPaymentComplete:
+                                                        (paymentResponse, paymentError) {
+                                                      Navigator.pop(context);
+
+                                                      if (paymentResponse != null &&
+                                                          paymentResponse.code ==
+                                                              PaymentStatus.success) {
+                                                        ScaffoldMessenger.of(context)
+                                                            .showSnackBar(const SnackBar(
+                                                            content: Text(
+                                                                "Transaction Successful")));
+                                                        print("PAYMENT RESPONSE${paymentResponse?.success}");
+                                                        print("PAYMENT RESPONSE${paymentResponse?.code}");
+                                                        print("PAYMENT RESPONSE${paymentResponse?.message}");
+
+                                                        print("PAYMENT RESPONSE${paymentResponse?.data?.state}");
+                                                        print("PAYMENT RESPONSE${paymentResponse?.data?.amount}");
+                                                        print("PAYMENT RESPONSE${paymentResponse?.data?.merchantId}");
+                                                        print("PAYMENT RESPONSE${paymentResponse?.data?.merchantTransactionId}");
+                                                        print("PAYMENT RESPONSE${paymentResponse?.data?.paymentInstrument}");
+                                                        print("PAYMENT RESPONSE${paymentResponse?.data?.responseCode}");
+                                                        print("PAYMENT RESPONSE${paymentResponse?.data?.responseCodeDescription}");
+                                                        print("PAYMENT RESPONSE${paymentResponse?.data?.transactionId}");
+                                                      } else {
+                                                        ScaffoldMessenger.of(context)
+                                                            .showSnackBar(SnackBar(
+                                                            content: Text(
+                                                                "Transaction Failed${paymentResponse?.success}")));
+                                                      }
+                                                    },
+                                                    paymentRequest: paypageRequestModel(),
+                                                  )));
+                                        }else {
+                                          Get.toNamed(
+                                              RouteHelper
+                                                  .getPaymentDetailsRoute(
+                                                  widget.sourceStopId ?? "",
+                                                  widget.destinationStopId ??
+                                                      "",
+                                                  state
+                                                      .discountResponse
+                                                      .data![index]
+                                                      .discountTypeCode ??
+                                                      "",
+                                                  "",
+                                                  "",
+                                                  "",
+                                                  "",
+                                                  widget.routeCode ?? "",
+                                                  widget.serviceType ?? "",
+                                                  "Payment"));
+                                        }
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
