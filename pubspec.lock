@@ -189,10 +189,10 @@ packages:
     dependency: transitive
     description:
       name: crypto
-      sha256: aa274aa7774f8964e4f4f38cc994db7b6158dd36e9187aaceaddc994b35c6c67
+      sha256: ff625774173754681d66daaf4a448684fb04b78f902da9cb3d308c19cc5e8bab
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.2"
+    version: "3.0.3"
   csslib:
     dependency: transitive
     description:
@@ -217,6 +217,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.4"
+  dio:
+    dependency: transitive
+    description:
+      name: dio
+      sha256: ce75a1b40947fea0a0e16ce73337122a86762e38b982e1ccb909daa3b9bc4197
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.3.2"
   equatable:
     dependency: "direct main"
     description:
@@ -286,6 +294,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.3.3"
+  flutter_inappwebview:
+    dependency: transitive
+    description:
+      name: flutter_inappwebview
+      sha256: f73505c792cf083d5566e1a94002311be497d984b5607f25be36d685cf6361cf
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.7.2+3"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -701,6 +717,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.0"
+  phone_pe_pg:
+    dependency: "direct main"
+    description:
+      name: phone_pe_pg
+      sha256: a57f51b6ccd7f3a04987f266bbb84a0a4e34ebbd4ab014adf08d4d893f08e076
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
   photo_view:
     dependency: "direct main"
     description:
@@ -1070,10 +1094,10 @@ packages:
     dependency: "direct main"
     description:
       name: url_launcher
-      sha256: "75f2846facd11168d007529d6cd8fcb2b750186bea046af9711f10b907e1587e"
+      sha256: "47e208a6711459d813ba18af120d9663c20bdf6985d6ad39fe165d2538378d27"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.10"
+    version: "6.1.14"
   url_launcher_android:
     dependency: transitive
     description:
@@ -1236,4 +1260,4 @@ packages:
     version: "3.1.1"
 sdks:
   dart: ">=3.1.0-185.0.dev <4.0.0"
-  flutter: ">=3.3.0"
+  flutter: ">=3.10.0"

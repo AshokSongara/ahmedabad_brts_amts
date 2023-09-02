@@ -31,16 +31,16 @@ import 'package:html/dom.dart' as html;
 class PaymentDetailsScreen extends StatefulWidget {
   const PaymentDetailsScreen(
       {Key? key,
-      required this.sourceStopId,
-      required this.destinationStopId,
-      required this.discountype,
-      required this.txnStatus,
-      required this.merchantId,
-      required this.sourcecompanycode,
-      required this.destinationcompanycode,
-      required this.routeCode,
-      required this.serviceType,
-      required this.type})
+       this.sourceStopId,
+       this.destinationStopId,
+       this.discountype,
+       this.txnStatus,
+       this.merchantId,
+       this.sourcecompanycode,
+       this.destinationcompanycode,
+       this.routeCode,
+       this.serviceType,
+       this.type})
       : super(key: key);
 
   final String? sourceStopId;
@@ -67,11 +67,11 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
   void initState() {
     super.initState();
     disableScreenshot();
-    getData();
+   if(widget.type == "Payment") getData();
   }
 
   getData() {
-    var paymentRequest = PaymentRequest(
+    var paymentRequest = PaymentRequest2(
         sourceStopId: widget.sourceStopId,
         destinationStopId: widget.destinationStopId,
         discountype: widget.discountype,
@@ -824,10 +824,12 @@ $data''';
       String transactionDateTime = jsonData['transactionDateTime']?? "";
       String transactionAmount = jsonData['transactionAmount']?? "";
       String paymentMethod = jsonData['paymentMethod']?? "";
+      String merchantId = jsonData['merchantId']?? "";
 
       print('fpTransactionId: $fpTransactionId');
       print('merchantTxnId: $merchantTxnId');
       print('transactionStatus: $transactionStatus');
+      print('merchantId: $merchantId');
 
       // Navigator.push(context, MaterialPageRoute(builder: (context) =>
       //     TransactionResponseScreen(
@@ -850,13 +852,13 @@ $data''';
         print("#####WEBVIEW${data}");
 
         if (data.isNotEmpty) {
-          var paymentRequest = PaymentRequest(
+          var paymentRequest = PaymentRequest2(
               sourceStopId: widget.sourceStopId,
               destinationStopId:
               widget.type!.isEmpty ? "PASS" : widget.destinationStopId,
               discountype: status == "FAILED" ? "0" : widget.discountype,
               txnStatus: status,
-              merchantId: "470000012117828",
+              merchantId: merchantId,
               sourcecompanycode: widget.serviceType == "AMTS" ?"103" : "102",
               destinationcompanycode: widget.serviceType == "AMTS" ?"103" : "102",
               fpTransactionId: fpTransactionId,
@@ -864,7 +866,12 @@ $data''';
               externalTxnId: "",
               merchantTxnId: "",
               transactionDateTime: transactionDateTime,
-              serviceType: widget.serviceType);
+              serviceType: widget.serviceType,
+              paymentType: 2,
+              paymentState: "",
+              pgServiceTransactionId: "",
+              pgTransactionId: ""
+          );
 
           BlocProvider.of<PaymentBloc>(context).add(
             GetQRCodeEvent(paymentRequest: paymentRequest),
@@ -876,13 +883,13 @@ $data''';
         print("#####WEBVIEW${data}");
 
         if (data.isNotEmpty) {
-          var paymentRequest = PaymentRequest(
+          var paymentRequest = PaymentRequest2(
               sourceStopId: widget.type!.isEmpty ? "PASS" : widget.sourceStopId,
               destinationStopId:
               widget.type!.isEmpty ? "PASS" : widget.destinationStopId,
               discountype: widget.discountype,
               txnStatus: status,
-              merchantId: "470000012117828",
+              merchantId: merchantId,
               sourcecompanycode: widget.serviceType == "AMTS" ?"103" : "102",
               destinationcompanycode: widget.serviceType == "AMTS" ?"103" : "102",
               fpTransactionId: fpTransactionId,
@@ -891,7 +898,12 @@ $data''';
               merchantTxnId: merchantTxnId,
               transactionDateTime:
               transactionDateTime,
-              serviceType: widget.serviceType);
+              serviceType: widget.serviceType,
+              paymentType: 2,
+              paymentState: "",
+              pgServiceTransactionId: "",
+              pgTransactionId: ""
+          );
 
           BlocProvider.of<PaymentBloc>(context).add(
             GetQRCodeEvent(paymentRequest: paymentRequest),

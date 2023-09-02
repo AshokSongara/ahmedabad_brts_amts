@@ -16,7 +16,7 @@ class GetDiscountEvent extends DiscountEvent {
 }
 
 class GetPaymentUrlEvent extends DiscountEvent {
-  final PaymentRequest paymentRequest;
+  final PaymentRequest2 paymentRequest;
 
   const GetPaymentUrlEvent({required this.paymentRequest});
 

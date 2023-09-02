@@ -51,11 +51,11 @@ abstract class UserRepository {
   Future<FavouriteRouteResponse> getFavouriteRouteListData(String serviceType);
   Future<QRCodeResponse> getQRCodeData();
   Future<UserProfileResponse> updateProfile(ProfileRequest body);
-  Future<PaymentInitResponseModel> addTransaction(PaymentRequest body);
+  Future<PaymentInitResponseModel> addTransaction(PaymentRequest2 body);
   Future<BookingListResponse> getBookingListData(String data);
   Future<ComplaintHistoryResponse> getComplaintHistoryData(String data);
   Future<TicketResponse> ticketData(String data);
-  Future<PaymentURLResponse> getPaymentUrl(PaymentRequest body);
+  Future<PaymentURLResponse> getPaymentUrl(PaymentRequest2 body);
   Future<FavouriteRoutesResponseList> getFavouriteRouteData(String serviceType);
   Future<ComplaintResponseModel> complaintUser(dynamic body);
 

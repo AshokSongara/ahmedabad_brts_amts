@@ -119,8 +119,8 @@ class RouteHelper {
       '$routeDetails?startRouteName=$startRouteName&startRouteCode=$startRouteCode&endRouteName=$endRouteName&endRouteCode=$endRouteCode&routeCode=$routeCode&startTime=$startTime&interChange=$interChange&fromHome=$fromHome&originStart=$originStart&originEnd=$originEnd&serviceType=$serviceType&interChangeName=$interChangeName&routeTwo=$routeTwo&startRouteTwo=$startRouteTwo&endRouteTwo=$endRouteTwo&endTime$endTime&startStopSequenceNumber=$startStopSequenceNumber&endStopSequenceNumber=$endStopSequenceNumber&startID=$startID&endID=$endID';
 
   static String getPassengerDetailsRoute(String sourceStopId,
-          String destinationStopId, String routeCode, String serviceType) =>
-      '$passengerDetails?sourceStopId=$sourceStopId&destinationStopId=$destinationStopId&routeCode=$routeCode&serviceType=$serviceType';
+          String destinationStopId, String routeCode, String serviceType, String fare) =>
+      '$passengerDetails?sourceStopId=$sourceStopId&destinationStopId=$destinationStopId&routeCode=$routeCode&serviceType=$serviceType&fare=$fare';
 
   static String getCardDetailsRoute() => cardDetails;
 
@@ -292,6 +292,7 @@ class RouteHelper {
               destinationStopId: Get.parameters['destinationStopId'],
               routeCode: Get.parameters['routeCode'],
               serviceType: Get.parameters['serviceType'],
+              fare: Get.parameters['fare'],
             )),
     GetPage(name: cardDetails, page: () => const CardDetailsScreen()),
     GetPage(

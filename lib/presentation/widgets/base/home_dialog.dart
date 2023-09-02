@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MyDialog extends StatelessWidget {
-  final DataFare? data;
+  final DataFare?   data;
   final DataSearch? data2;
   final bool isLoading;
   final Function() onCancel;

@@ -226,7 +226,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                                             widget.startRoute ?? "",
                                             widget.startRoute ?? "",
                                              "",
-                                            "BRTS"),
+                                            "BRTS",""),
                                         arguments: [
                                           widget.startRouteName,
                                           widget.endRouteName,

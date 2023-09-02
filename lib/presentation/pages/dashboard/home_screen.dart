@@ -25,6 +25,7 @@ import 'package:ahmedabad_brts_amts/presentation/widgets/base/home_dialog.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/source_destination_widget.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
+import 'package:ahmedabad_brts_amts/utils/app_util.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
@@ -139,6 +140,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   endCode ?? "",
                    "",
                    "BRTS",
+                    getFare(fareResponse.data?.adult ?? 0)
+
                 ),
                 arguments: [
                   searchResponse.data![0].routeDetails![0].startStopName,
@@ -261,26 +264,26 @@ class _HomeScreenState extends State<HomeScreen> {
                       Get.toNamed(RouteHelper.getBookingRoute("home"));
                     },
                   ),
-                  ListTile(
-                    leading: SvgPicture.asset(
-                      ImageConstant.iRoute,
-                      color: Colors.white,
-                      height: Dimensions.dp20,
-                      width: Dimensions.dp20,
-                    ),
-                    title: Text(
-                      AppLocalizations.of(context)
-                              ?.translate("smart_card_recharge") ??
-                          "",
-                      style: satoshiRegular.copyWith(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white),
-                    ),
-                    onTap: () {
-                      Get.toNamed(RouteHelper.getCardDetailsRoute());
-                    },
-                  ),
+                  // ListTile(
+                  //   leading: SvgPicture.asset(
+                  //     ImageConstant.iRoute,
+                  //     color: Colors.white,
+                  //     height: Dimensions.dp20,
+                  //     width: Dimensions.dp20,
+                  //   ),
+                  //   title: Text(
+                  //     AppLocalizations.of(context)
+                  //             ?.translate("smart_card_recharge") ??
+                  //         "",
+                  //     style: satoshiRegular.copyWith(
+                  //         fontSize: 14.sp,
+                  //         fontWeight: FontWeight.w500,
+                  //         color: Colors.white),
+                  //   ),
+                  //   onTap: () {
+                  //     Get.toNamed(RouteHelper.getCardDetailsRoute());
+                  //   },
+                  // ),
                   ListTile(
                     leading:Container(
                       height: Dimensions.dp28,

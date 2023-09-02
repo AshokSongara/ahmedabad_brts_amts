@@ -344,7 +344,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<PaymentInitResponseModel> addTransaction(PaymentRequest body) async {
+  Future<PaymentInitResponseModel> addTransaction(PaymentRequest2 body) async {
     Map data = {
       "sourceStopId": body.sourceStopId,
       "destinationStopId": body.destinationStopId,
@@ -357,7 +357,12 @@ class UserRepositoryImpl implements UserRepository {
       "merchantTxnId": body.merchantTxnId,
       "externalTxnId": body.externalTxnId,
       "transactionDateTime": body.transactionDateTime,
-      "routeCode": body.routeCode!.isEmpty ? "NA" : body.routeCode
+      "routeCode": body.routeCode!.isEmpty ? "NA" : body.routeCode,
+      "paymentType": body.paymentType,
+      "paymentState": body.paymentState,
+      "pgServiceTransactionId": body.pgServiceTransactionId,
+      "pgTransactionId": body.pgTransactionId,
+
     };
 
     var bodyData = json.encode(data);
@@ -407,7 +412,7 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<PaymentURLResponse> getPaymentUrl(PaymentRequest body) async {
+  Future<PaymentURLResponse> getPaymentUrl(PaymentRequest2 body) async {
     Map payload = {
       "startStopCode": body.sourceStopId,
       "endStopCode": body.destinationStopId,

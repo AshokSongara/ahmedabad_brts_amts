@@ -553,7 +553,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                                         Get.toNamed(
                                             RouteHelper.getPassengerDetailsRoute(
                                                 widget.startRouteCode ?? "",
-                                                 widget.serviceType == "BRTS" ? widget.endRouteCode ?? "" : widget.originEnd ?? "" ,widget.routeCode ?? "",widget.serviceType ?? ""),
+                                                 widget.serviceType == "BRTS" ? widget.endRouteCode ?? "" : widget.originEnd ?? "" ,widget.routeCode ?? "",widget.serviceType ?? "",getFare(fareData!.adult ?? 0)),
                                             arguments: [
                                               widget.startRouteName,
                                               widget.endRouteName,
@@ -571,7 +571,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                             Get.toNamed(
                                 RouteHelper.getPassengerDetailsRoute(
                                      widget.startRouteCode ?? "",
-                                     widget.serviceType == "BRTS" ? widget.endRouteCode ?? "" : widget.originEnd ?? "" ,widget.routeCode ?? "",widget.serviceType ?? ""),
+                                     widget.serviceType == "BRTS" ? widget.endRouteCode ?? "" : widget.originEnd ?? "" ,widget.routeCode ?? "",widget.serviceType ?? "",getFare(fareData!.adult ?? 0) ),
                                 arguments: [
                                   widget.startRouteName,
                                   widget.endRouteName,

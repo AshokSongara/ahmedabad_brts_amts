@@ -10,7 +10,7 @@ abstract class PaymentEvent extends Equatable {
 }
 
 class GetPaymentUrlEvent extends PaymentEvent {
-  final PaymentRequest paymentRequest;
+  final PaymentRequest2 paymentRequest;
 
   const GetPaymentUrlEvent({required this.paymentRequest});
 
@@ -19,7 +19,7 @@ class GetPaymentUrlEvent extends PaymentEvent {
 }
 
 class GetQRCodeEvent extends PaymentEvent {
-  final PaymentRequest paymentRequest;
+  final PaymentRequest2 paymentRequest;
 
   const GetQRCodeEvent({required this.paymentRequest});
 
