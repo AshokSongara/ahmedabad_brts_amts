@@ -99,9 +99,10 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                     children: [
                       GestureDetector(
                           onTap: () {
-                            BlocProvider.of<HomeScreenBloc>(context).add(
-                                ReturnHomeEvent());
-                            Get.back();
+                            Navigator.pop(context, "initScreenA");
+                            // BlocProvider.of<HomeScreenBloc>(context).add(
+                            //     ReturnHomeEvent());
+                            // Get.back();
                           },
                           child: SvgPicture.asset(ImageConstant.iLeftArrow)),
                       Expanded(

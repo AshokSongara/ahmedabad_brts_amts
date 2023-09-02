@@ -16,6 +16,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_state.da
 import 'package:ahmedabad_brts_amts/presentation/blocs/language/language_cubit.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/complaint/complaint_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/complaint_history/complaint_history_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/search_result_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/maps/nearby_maps_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/notification/notification_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/tnc/terms_and_conditions_screen.dart';
@@ -1031,16 +1032,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                   );
                                 } else if (newFromSelectedStation != null &&
                                     newToSelectedStation != null) {
-                                  Get.toNamed(RouteHelper.getSearchResultRoute(
-                                      newFromSelectedStation?.stationCode
-                                          .toString() ??
-                                          "",
-                                      newToSelectedStation?.stationCode
-                                          .toString() ??
-                                          "",
-                                      newFromSelectedStation?.stopName ?? "",
-                                      newToSelectedStation?.stopName ?? "",
-                                      isAmts ? "AMTS" : "BRTS"));
+                                  final result = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => SearchResultScreen(
+                                        startRoute:  newFromSelectedStation?.stationCode
+                                              .toString() ??
+                                              "",
+                                        endRoute:  newToSelectedStation?.stationCode
+                                              .toString() ??
+                                              "",
+                                        startRouteName:  newFromSelectedStation?.stopName ?? "",
+                                      endRouteName:    newToSelectedStation?.stopName ?? "",
+                                      serviceType:    isAmts ? "AMTS" : "BRTS")),
+                                  );
+
+                                  // Handle the result returned from ScreenB.
+                                  if (result == "initScreenA") {
+                                    // Call the init method or perform the desired action in ScreenA.
+                                    _initScreenA();
+                                  }
+
+                                  // Get.toNamed(RouteHelper.getSearchResultRoute(
+                                  //     newFromSelectedStation?.stationCode
+                                  //         .toString() ??
+                                  //         "",
+                                  //     newToSelectedStation?.stationCode
+                                  //         .toString() ??
+                                  //         "",
+                                  //     newFromSelectedStation?.stopName ?? "",
+                                  //     newToSelectedStation?.stopName ?? "",
+                                  //     isAmts ? "AMTS" : "BRTS"));
                                 } else {
                                   showCustomSnackBar(
                                       "Please Select Source & Destination Station",
@@ -1234,4 +1255,16 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+  void _initScreenA() {
+    // Initialize ScreenA here.
+    setState(() {
+      operationBrtsStopResponseModel?.data?.add(newFromSelectedStation!);
+      operationBrtsStopResponseModel?.data?.add(newToSelectedStation!);
+      newFromSelectedStation = null;
+      newToSelectedStation = null;
+
+    });
+    print('ScreenA initialized');
+  }
+
 }
