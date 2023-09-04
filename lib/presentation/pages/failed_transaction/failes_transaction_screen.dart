@@ -1,4 +1,8 @@
+import 'package:ahmedabad_brts_amts/data/responsemodels/brts_stop_respons_model.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
+import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
@@ -22,6 +26,7 @@ class _FailedTransactionScreenState extends State<FailedTransactionScreen> {
       onWillPop: () async {
         Navigator.of(context).pushNamedAndRemoveUntil(
             RouteHelper.dashboard, (Route<dynamic> route) => false);
+
         return true;
       },
       child: Scaffold(
@@ -32,7 +37,7 @@ class _FailedTransactionScreenState extends State<FailedTransactionScreen> {
               CustomToolbar(
                 title: "Transaction Status",
                 showOption: false,
-                type: "Passenger",
+                type: "Payment",
               ),
               SizedBox(
                 height: 200,
