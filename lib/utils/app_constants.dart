@@ -1,5 +1,5 @@
 class AppConstant {
-  static String apiUrl = "http://125.17.144.58:8081/";
+  static String apiUrl = "https://www.transportapp.co.in:8081/";
   static String mapKey = "AIzaSyB-f76UEQUmRrsajG14qz2cobJCiVLTz3A";
 
   static String loginWithEmail = "Login with Email";
@@ -32,7 +32,7 @@ class AppConstant {
   static String deleteFavouriteRoute = "Favourite/Delete/";
   static String addFavouriteRoute = "Favourite/";
   static String refreshToken = "User/refresh-token";
-  static String transitMap = "http://125.17.144.58:8081/images/map.jpg";
+  static String transitMap = "https://www.transportapp.co.in:8081/images/map.jpg";
  // static String routeDetails = "Route/201/stops/from/1/to/10";
   static String stopLists = "Route/stoplist/";
   //static String fareDetails = "fare/BRTS/201/startStop/57/endStop/62";

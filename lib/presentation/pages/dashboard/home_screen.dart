@@ -89,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<SearchRouteResponse> fetchData() async {
-    final url = "http://125.17.144.58:8081/Route/BRTS/plan/start/${newFromSelectedStation?.stationCode
+    final url = "https://www.transportapp.co.in:8081/Route/BRTS/plan/start/${newFromSelectedStation?.stationCode
         .toString() ??
         ""}/end/${newToSelectedStation?.stationCode
         .toString() ??
@@ -112,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
     endCode = searchResponse.data![0].interChanges!.isEmpty ? searchResponse.data![0].routeDetails![0].endStopCode ?? "" :  searchResponse.data![0].routeDetails![searchResponse.data![0].routeDetails!.length - 1].endStopCode;
 
     Future<FareResponse> fetchData2() async {
-      final url = "http://125.17.144.58:8081/fare/BRTS/startStop/${startCode}/endStop/${endCode}";
+      final url = "https://www.transportapp.co.in:8081/fare/BRTS/startStop/${startCode}/endStop/${endCode}";
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
         return FareResponse.fromJson(jsonDecode(response.body));
