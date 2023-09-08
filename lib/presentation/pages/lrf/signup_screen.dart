@@ -1,10 +1,13 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:ahmedabad_brts_amts/data/requestmodels/signup_request.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/mobile_number_otp_response_entity.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_state.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/lrf/signup_otp_verification_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_text_field.dart';
@@ -20,7 +23,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-
+import 'package:http/http.dart' as http;
 import '../../../core/loader/overylay_loader.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -46,6 +49,11 @@ class _SignupScreenState extends State<SignupScreen> {
   final FocusNode _passwordFocus = FocusNode();
   final FocusNode _confirmPasswordFocus = FocusNode();
   int _selectedGender = 1;
+  String? number;
+
+
+
+
 
 
 
@@ -343,7 +351,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     color: Theme.of(context).primaryColor,
                     text: "Sign Up",
                     width: MediaQuery.of(context).size.width,
-                    onPressed: () {
+                    onPressed: ()async {
                       RegExp regex = RegExp(
                           r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$');
                       print(_selectedGender);
@@ -401,17 +409,35 @@ class _SignupScreenState extends State<SignupScreen> {
                             "Password and Confirm Password Not Matched",
                             context);
                       } else {
-                        var request = SignupRequest();
-                        request.name = _nameController.text;
-                        request.lastname = _lastNameController.text;
-                        request.email = _emailController.text;
-                        request.password = _passwordController.text;
-                        request.phoneNumber = _mobileNumberController.text;
-                        request.gender = _selectedGender;
+                        fetchOtpResponse(_mobileNumberController.text);
+                        bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpOtpVerification(mobileNumber: _mobileNumberController.text,)));
+                        if (result == true) {
+                          var request = SignupRequest();
+                          request.name = _nameController.text;
+                          request.lastname = _lastNameController.text;
+                          request.email = _emailController.text;
+                          request.password = _passwordController.text;
+                          request.phoneNumber = _mobileNumberController.text;
+                          request.gender = _selectedGender;
 
-                        BlocProvider.of<SignupBloc>(context).add(
-                          SignupUserEvent(data: request),
-                        );
+                          BlocProvider.of<SignupBloc>(context).add(
+                            SignupUserEvent(data: request),
+                          );
+                        } else {
+                          // Handle other cases
+                        }
+
+                        // var request = SignupRequest();
+                        // request.name = _nameController.text;
+                        // request.lastname = _lastNameController.text;
+                        // request.email = _emailController.text;
+                        // request.password = _passwordController.text;
+                        // request.phoneNumber = _mobileNumberController.text;
+                        // request.gender = _selectedGender;
+                        //
+                        // BlocProvider.of<SignupBloc>(context).add(
+                        //   SignupUserEvent(data: request),
+                        // );
                       }
                     },
                     style: poppinsMedium.copyWith(
@@ -429,6 +455,33 @@ class _SignupScreenState extends State<SignupScreen> {
       ),
     );
   }
+
+
+
+  Future<MobileNumberOtpResponseEntity> fetchOtpResponse(String no) async {
+
+    final String apiUrl = "https://www.transportapp.co.in:8081/User/otp/generateOTP";
+    final Map<String, dynamic> data = {
+      'phoneNumber': no,
+    };
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: json.encode(data),
+    );
+
+    if (response.statusCode == 200) {
+      return MobileNumberOtpResponseEntity.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+
+
+
 
   @override
   void dispose() {
