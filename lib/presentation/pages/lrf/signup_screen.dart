@@ -195,7 +195,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       controller: _emailController,
                       focusNode: _emailFocus,
                       nextFocus: _mobileFocus,
-                      inputType: TextInputType.name,
+                      inputType: TextInputType.emailAddress,
                       onChanged: () {},
                       onSubmit: () {},
                       capitalization: TextCapitalization.words,

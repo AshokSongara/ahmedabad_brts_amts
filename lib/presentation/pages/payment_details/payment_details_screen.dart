@@ -222,6 +222,13 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                     ),
                                                   ),
                                                   Text(
+                                                    widget.serviceType ?? "",
+                                                    textAlign: TextAlign.center,
+                                                    style: satoshiRegular.copyWith(
+                                                        fontSize: Dimensions.dp18.sp,
+                                                        fontWeight: FontWeight.w500,
+                                                        color:  widget.serviceType == "BRTS" ?AppColors.lightBlue : Color(0xffD43030)),),
+                                                  Text(
                                                     state.paymentInitResponseModel.data![0].passName ?? "",
                                                     textAlign: TextAlign.center,
                                                     style: satoshiRegular.copyWith(
@@ -805,7 +812,10 @@ $data''';
     htmlContent = htmlContent.replaceAll(r'\u003C', '<');
     htmlContent = htmlContent.replaceAll(r'\u003E', '>');
     htmlContent = htmlContent.replaceAll(r'\"', '"');
+
+
     String cleanedHtml = htmlContent;
+
 
     // Parse the HTML
     var document = parse(cleanedHtml);

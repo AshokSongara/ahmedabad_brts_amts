@@ -6,6 +6,7 @@ import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,17 +51,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
         backgroundColor: Colors.white,
         body: WillPopScope(
           onWillPop: () async {
-            DateTime now = DateTime.now();
-            if (ctime == null ||
-                now.difference(ctime) > const Duration(seconds: 2)) {
-              //add duration of press gap
-              ctime = now;
-              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                  content: Text(
-                      'Press Back Button Again to Exit'))); //scaffold message, you can show Toast message too.
-              return false;
-            }
-            return true;
+             print("back back d");
+            // DateTime now = DateTime.now();
+            // if (ctime == null ||
+            //     now.difference(ctime) > const Duration(seconds: 2)) {
+            //   //add duration of press gap
+            //   ctime = now;
+            //   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            //       content: Text(
+            //           'Press Back Button Again to Exit'))); //scaffold message, you can show Toast message too.
+            //   return false;
+            // }
+            return false;
           },
           child: PageView(
             controller: _pageController,
