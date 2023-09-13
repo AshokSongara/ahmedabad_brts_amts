@@ -94,7 +94,6 @@ class _SignupScreenState extends State<SignupScreen> {
           },
           builder: (context, state) {
             return SingleChildScrollView(
-              reverse: true,
               child: Column(children: [
                 ClipRRect(
                   borderRadius: const BorderRadius.only(
