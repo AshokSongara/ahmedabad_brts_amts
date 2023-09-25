@@ -196,8 +196,10 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(height: 20.h,),
                   InkWell(
                       onTap: () {
+                        print("back clicked");
                         Navigator.pop(context);
                       },
                       child: SvgPicture.asset(ImageConstant.iClose)),
@@ -1060,13 +1062,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           startRouteName:  newFromSelectedStation?.stopName ?? "",
                                         endRouteName:    newToSelectedStation?.stopName ?? "",
                                         serviceType:    isAmts ? "AMTS" : "BRTS")),
-                                    );
-
+                                    ).then((context) => _initScreenA());
                                     // Handle the result returned from ScreenB.
-                                    if (result == "initScreenA") {
-                                      // Call the init method or perform the desired action in ScreenA.
-                                      _initScreenA();
-                                    }
+                                    // if (result == "initScreenA") {
+                                    //   // Call the init method or perform the desired action in ScreenA.
+                                    //   _initScreenA();
+                                    // }
 
                                     // Get.toNamed(RouteHelper.getSearchResultRoute(
                                     //     newFromSelectedStation?.stationCode

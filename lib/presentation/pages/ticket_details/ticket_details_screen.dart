@@ -169,6 +169,14 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                       color: AppColors
                                                           .darkGray),
                                                 ),
+                                                SizedBox(height: 5.h,),
+                                                Text(
+                                                  state.paymentInitResponseModel.data![0].sourceCompanyCode! == "0102" ? "BRTS" : "AMTS",
+                                                  textAlign: TextAlign.center,
+                                                  style: satoshiRegular.copyWith(
+                                                      fontSize: Dimensions.dp16.sp,
+                                                      fontWeight: FontWeight.w600,
+                                                      color: state.paymentInitResponseModel.data![0].sourceCompanyCode! == "0102" ? AppColors.lightBlue : Color(0xffD43030)),),
                                               ],
                                             )),
 
@@ -605,68 +613,68 @@ class _TicketDetailsScreenState extends State<TicketDetailsScreen> {
                                                   ),
                                                 ],
                                               ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "GST Amount",
-                                                    style:
-                                                    satoshiRegular.copyWith(
-                                                        fontSize: Dimensions
-                                                            .dp14.sp,
-                                                        fontWeight:
-                                                        FontWeight.w500,
-                                                        color: AppColors
-                                                            .darkGray),
-                                                  ),
-                                                  Text(
-                                                    "₹ 0.00",
-                                                    style:
-                                                    satoshiRegular.copyWith(
-                                                        fontSize: Dimensions
-                                                            .dp14.sp,
-                                                        fontWeight:
-                                                        FontWeight.w500,
-                                                        color: AppColors
-                                                            .darkGray),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment
-                                                    .spaceBetween,
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "Free cancellation charge",
-                                                    style:
-                                                    satoshiRegular.copyWith(
-                                                        fontSize: Dimensions
-                                                            .dp14.sp,
-                                                        fontWeight:
-                                                        FontWeight.w500,
-                                                        color: AppColors
-                                                            .darkGray),
-                                                  ),
-                                                  Text(
-                                                    "₹ 0.00",
-                                                    style:
-                                                    satoshiRegular.copyWith(
-                                                        fontSize: Dimensions
-                                                            .dp14.sp,
-                                                        fontWeight:
-                                                        FontWeight.w500,
-                                                        color: AppColors
-                                                            .darkGray),
-                                                  ),
-                                                ],
-                                              ),
+                                              // Row(
+                                              //   mainAxisAlignment:
+                                              //   MainAxisAlignment
+                                              //       .spaceBetween,
+                                              //   crossAxisAlignment:
+                                              //   CrossAxisAlignment.center,
+                                              //   children: [
+                                              //     Text(
+                                              //       "GST Amount",
+                                              //       style:
+                                              //       satoshiRegular.copyWith(
+                                              //           fontSize: Dimensions
+                                              //               .dp14.sp,
+                                              //           fontWeight:
+                                              //           FontWeight.w500,
+                                              //           color: AppColors
+                                              //               .darkGray),
+                                              //     ),
+                                              //     Text(
+                                              //       "₹ 0.00",
+                                              //       style:
+                                              //       satoshiRegular.copyWith(
+                                              //           fontSize: Dimensions
+                                              //               .dp14.sp,
+                                              //           fontWeight:
+                                              //           FontWeight.w500,
+                                              //           color: AppColors
+                                              //               .darkGray),
+                                              //     ),
+                                              //   ],
+                                              // ),
+                                              // Row(
+                                              //   mainAxisAlignment:
+                                              //   MainAxisAlignment
+                                              //       .spaceBetween,
+                                              //   crossAxisAlignment:
+                                              //   CrossAxisAlignment.center,
+                                              //   children: [
+                                              //     Text(
+                                              //       "Free cancellation charge",
+                                              //       style:
+                                              //       satoshiRegular.copyWith(
+                                              //           fontSize: Dimensions
+                                              //               .dp14.sp,
+                                              //           fontWeight:
+                                              //           FontWeight.w500,
+                                              //           color: AppColors
+                                              //               .darkGray),
+                                              //     ),
+                                              //     Text(
+                                              //       "₹ 0.00",
+                                              //       style:
+                                              //       satoshiRegular.copyWith(
+                                              //           fontSize: Dimensions
+                                              //               .dp14.sp,
+                                              //           fontWeight:
+                                              //           FontWeight.w500,
+                                              //           color: AppColors
+                                              //               .darkGray),
+                                              //     ),
+                                              //   ],
+                                              // ),
                                             ],
                                           ),
                                           Row(
@@ -757,6 +765,6 @@ String formatDate(String timestamp) {
 
 String formatTime(String timestamp) {
   DateTime dateTime = DateTime.parse(timestamp);
-  String formattedDate = DateFormat('hh:mm:ss').format(dateTime);
+  String formattedDate = DateFormat('HH:mm:ss').format(dateTime);
   return formattedDate;
 }

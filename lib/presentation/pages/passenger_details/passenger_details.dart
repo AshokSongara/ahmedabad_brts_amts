@@ -52,6 +52,8 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   List<String?> list = [];
   String? selectedOption = "PhonePe";
   String token = "";
+  String? serviceTypee ;
+  late PhonePePg? pePg;
 
   @override
   void initState() {
@@ -59,6 +61,12 @@ class _PassengerDetailsState extends State<PassengerDetails> {
    // initPlatformState();
     list = Get.arguments as List<String?>;
     getMemberID();
+
+     pePg = PhonePePg(
+      isUAT: true,
+      saltKey: widget.serviceType == "BRTS" ? "ed6a2f0e-ddba-4a8f-881b-20828029d147" : "28ddbe05-3f0c-483a-b966-3291dd254713",
+      saltIndex: "1",
+    );
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -84,11 +92,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     BlocProvider.of<DiscountBloc>(context).add(const GetDiscountEvent());
   }
 
-  PhonePePg pePg = PhonePePg(
-    isUAT: true,
-    saltKey: "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399",
-    saltIndex: "1",
-  );
+
 
   PaymentRequest _paymentRequest({String? merchantCallBackScheme}) {
     String generateRandomString(int len) {
@@ -105,7 +109,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
       callbackUrl: "",
       deviceContext: DeviceContext.getDefaultDeviceContext(
           merchantCallBackScheme: merchantCallBackScheme),
-      merchantId: "PGTESTPAYUAT",
+      merchantId: widget.serviceType == "BRTS" ?"AHMEDABADUAT" : "AMTSUAT",
       merchantTransactionId: generateRandomString(10).toUpperCase(),
       merchantUserId: generateRandomString(8).toUpperCase(),
       mobileNumber: "9601524257",
@@ -267,7 +271,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                         //   Navigator.push(
                                         //       context,
                                         //       MaterialPageRoute(
-                                        //           builder: (_) => pePg.startPayPageTransaction(
+                                        //           builder: (_) => pePg!.startPayPageTransaction(
                                         //             onPaymentComplete:
                                         //                 (paymentResponse, paymentError) {
                                         //               Navigator.pop(context);
@@ -333,7 +337,8 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                         //             },
                                         //             paymentRequest: paypageRequestModel(),
                                         //           )));
-                                        // }else {
+                                        // }
+                                        // else {
                                           Get.toNamed(
                                               RouteHelper
                                                   .getPaymentDetailsRoute(
@@ -352,8 +357,8 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                                   widget.routeCode ?? "",
                                                   widget.serviceType ?? "",
                                                   "Payment"));
-                                        },
-                                    //  },
+                                       // }
+                                      },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 8, horizontal: 15),

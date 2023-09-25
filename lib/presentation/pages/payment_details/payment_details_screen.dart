@@ -186,7 +186,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                             right: Dimensions.dp27,
                                             left: Dimensions.dp27),
                                         child: Text(
-                                          "Scan at your bording gate",
+                                          "Scan at your boarding gate",
                                           textAlign: TextAlign.center,
                                           style: satoshiRegular.copyWith(
                                               fontSize: Dimensions.dp12.sp,
@@ -651,76 +651,76 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                     ),
                                                   ],
                                                 ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      "GST Amount",
-                                                      style: satoshiRegular
-                                                          .copyWith(
-                                                              fontSize:
-                                                                  Dimensions
-                                                                      .dp14.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              color: AppColors
-                                                                  .darkGray),
-                                                    ),
-                                                    Text(
-                                                      "₹ 0.00",
-                                                      style: satoshiRegular
-                                                          .copyWith(
-                                                              fontSize:
-                                                                  Dimensions
-                                                                      .dp14.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              color: AppColors
-                                                                  .darkGray),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      "Free cancellation charge",
-                                                      style: satoshiRegular
-                                                          .copyWith(
-                                                              fontSize:
-                                                                  Dimensions
-                                                                      .dp14.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              color: AppColors
-                                                                  .darkGray),
-                                                    ),
-                                                    Text(
-                                                      "₹ 0.00",
-                                                      style: satoshiRegular
-                                                          .copyWith(
-                                                              fontSize:
-                                                                  Dimensions
-                                                                      .dp14.sp,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              color: AppColors
-                                                                  .darkGray),
-                                                    ),
-                                                  ],
-                                                ),
+                                                // Row(
+                                                //   mainAxisAlignment:
+                                                //       MainAxisAlignment
+                                                //           .spaceBetween,
+                                                //   crossAxisAlignment:
+                                                //       CrossAxisAlignment.center,
+                                                //   children: [
+                                                //     Text(
+                                                //       "GST Amount",
+                                                //       style: satoshiRegular
+                                                //           .copyWith(
+                                                //               fontSize:
+                                                //                   Dimensions
+                                                //                       .dp14.sp,
+                                                //               fontWeight:
+                                                //                   FontWeight
+                                                //                       .w500,
+                                                //               color: AppColors
+                                                //                   .darkGray),
+                                                //     ),
+                                                //     Text(
+                                                //       "₹ 0.00",
+                                                //       style: satoshiRegular
+                                                //           .copyWith(
+                                                //               fontSize:
+                                                //                   Dimensions
+                                                //                       .dp14.sp,
+                                                //               fontWeight:
+                                                //                   FontWeight
+                                                //                       .w500,
+                                                //               color: AppColors
+                                                //                   .darkGray),
+                                                //     ),
+                                                //   ],
+                                                // ),
+                                                // Row(
+                                                //   mainAxisAlignment:
+                                                //       MainAxisAlignment
+                                                //           .spaceBetween,
+                                                //   crossAxisAlignment:
+                                                //       CrossAxisAlignment.center,
+                                                //   children: [
+                                                //     Text(
+                                                //       "Free cancellation charge",
+                                                //       style: satoshiRegular
+                                                //           .copyWith(
+                                                //               fontSize:
+                                                //                   Dimensions
+                                                //                       .dp14.sp,
+                                                //               fontWeight:
+                                                //                   FontWeight
+                                                //                       .w500,
+                                                //               color: AppColors
+                                                //                   .darkGray),
+                                                //     ),
+                                                //     Text(
+                                                //       "₹ 0.00",
+                                                //       style: satoshiRegular
+                                                //           .copyWith(
+                                                //               fontSize:
+                                                //                   Dimensions
+                                                //                       .dp14.sp,
+                                                //               fontWeight:
+                                                //                   FontWeight
+                                                //                       .w500,
+                                                //               color: AppColors
+                                                //                   .darkGray),
+                                                //     ),
+                                                //   ],
+                                                // ),
                                               ],
                                             ),
                                             Row(
@@ -880,7 +880,9 @@ $data''';
               paymentType: 2,
               paymentState: "",
               pgServiceTransactionId: "",
-              pgTransactionId: ""
+              pgTransactionId: "",
+            paymentMethod: paymentMethod
+
           );
 
           BlocProvider.of<PaymentBloc>(context).add(
@@ -912,7 +914,8 @@ $data''';
               paymentType: 2,
               paymentState: "",
               pgServiceTransactionId: "",
-              pgTransactionId: ""
+              pgTransactionId: "",
+            paymentMethod: paymentMethod
           );
 
           BlocProvider.of<PaymentBloc>(context).add(

@@ -177,12 +177,19 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                                                   .routeDetails![0]
                                                   .endStopCode ??
                                               ""
-                                          : state
+                                          : widget.serviceType == "BRTS" ?
+                                      state
                                                   .searchRouteResponse
                                                   .data![index]
                                                   .routeDetails![state.searchRouteResponse.data![index].routeDetails!.length - 1]
                                                   .endStopCode ??
-                                              "",
+                                              "" :
+                                      state
+                                          .searchRouteResponse
+                                          .data![index]
+                                          .routeDetails![0]
+                                          .endStopCode ??
+                                          "",
                                       state.searchRouteResponse.data![index].routeDetails![0].routeCode.toString(),
                                       state.searchRouteResponse.data![index].routeDetails![0].startArrivalTime ?? "0",
                                       state.searchRouteResponse.data![index].interChanges?.length.toString() ?? "0",

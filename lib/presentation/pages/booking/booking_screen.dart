@@ -346,8 +346,17 @@ class _BookingScreenState extends State<BookingScreen> {
                                       color: AppColors.lightGray,
                                     ),
                                     SizedBox(
-                                      height: 21.h,
+                                      height: 12.h,
                                     ),
+                                    Center(
+                                      child: Text(
+                                        state.bookingListResponse.data![index].sourceCompanyCode! == "0102" ?  'BRTS' : 'AMTS',style: satoshiRegular.copyWith(
+                                          fontSize: Dimensions.dp16.sp,
+                                          fontWeight: FontWeight.w600,
+                                          color: state.bookingListResponse.data![index].sourceCompanyCode! == "0102" ? AppColors.lightBlue : Color(0xffD43030)),
+                                      ),
+                                    ),
+
                                     // RichText(
                                     //   text: TextSpan(
                                     //     text: AppLocalizations.of(context)

@@ -16,6 +16,7 @@ class PaymentRequest2 {
   String? paymentState;
   String? pgTransactionId;
   String? pgServiceTransactionId;
+  String? paymentMethod;
 
   PaymentRequest2(
       {this.sourceStopId,
@@ -35,6 +36,7 @@ class PaymentRequest2 {
         this.paymentState,
         this.pgTransactionId,
         this.pgServiceTransactionId,
+        this.paymentMethod,
 
       });
 
@@ -56,6 +58,7 @@ class PaymentRequest2 {
     paymentState = json['paymentState'];
     pgTransactionId = json['pgTransactionId'];
     pgServiceTransactionId = json['pgServiceTransactionId'];
+    paymentMethod = json['paymentMethod'];
 
   }
 
@@ -78,6 +81,7 @@ class PaymentRequest2 {
     data['paymentState'] = this.paymentState;
     data['pgTransactionId'] = this.pgTransactionId;
     data['pgServiceTransactionId'] = this.pgServiceTransactionId;
+    data['paymentMethod'] = this.paymentMethod;
     return data;
   }
 }

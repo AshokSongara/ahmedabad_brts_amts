@@ -36,6 +36,7 @@ class Data {
   String? destinationStopId;
   String? destinationStopName;
   String? ticketExpiry;
+  String? sourceCompanyCode;
   bool? ticketIsActive;
 
 
@@ -51,6 +52,7 @@ class Data {
         this.destinationStopId,
         this.destinationStopName,
         this.ticketExpiry,
+        this.sourceCompanyCode,
         this.ticketIsActive});
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -64,6 +66,7 @@ class Data {
     sourceStopName = json['sourceStopName'];
     destinationStopId = json['destinationStopId'];
     destinationStopName = json['destinationStopName'];
+    sourceCompanyCode = json['sourceCompanyCode'];
     ticketExpiry = json['ticketExpiry'];
     ticketIsActive = json['ticketIsActive'];
   }
@@ -80,6 +83,7 @@ class Data {
     data['sourceStopName'] = this.sourceStopName;
     data['destinationStopId'] = this.destinationStopId;
     data['destinationStopName'] = this.destinationStopName;
+    data['sourceCompanyCode'] = this.sourceCompanyCode;
     data['ticketExpiry'] = this.ticketExpiry;
     data['ticketIsActive'] = this.ticketIsActive;
     return data;

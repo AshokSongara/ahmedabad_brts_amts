@@ -10,6 +10,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/route_details/route_detai
 import 'package:ahmedabad_brts_amts/presentation/blocs/route_details/route_details_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/route_details/route_details_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
+import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/route_title_widget.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
@@ -550,7 +551,14 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                                     ),
                                     TextButton(
                                       onPressed: () {
-                                        Get.toNamed(
+                                       if(fareData.isNull){
+                                         Navigator.of(context).pop();
+                                         showCustomSnackBar(
+                                             "Unexpected error! Please try again later",
+                                             context,
+                                             isError: true);
+                                       }
+                                       else {Get.toNamed(
                                             RouteHelper.getPassengerDetailsRoute(
                                                 widget.startRouteCode ?? "",
                                                  widget.serviceType == "BRTS" ? widget.endRouteCode ?? "" : widget.originEnd ?? "" ,widget.routeCode ?? "",widget.serviceType ?? "",getFare(fareData!.adult ?? 0)),
@@ -559,7 +567,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                                               widget.endRouteName,
                                               widget.startTime,
                                               widget.endTime
-                                            ]);
+                                            ]);}
                                       },
                                       child: Text('Book Tickets'),
                                     ),

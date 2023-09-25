@@ -362,6 +362,7 @@ class UserRepositoryImpl implements UserRepository {
       "paymentState": body.paymentState,
       "pgServiceTransactionId": body.pgServiceTransactionId,
       "pgTransactionId": body.pgTransactionId,
+      "paymentMethod": body.paymentMethod ?? "",
 
     };
 

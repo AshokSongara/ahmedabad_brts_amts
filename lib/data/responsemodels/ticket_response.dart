@@ -28,7 +28,7 @@ class Data {
   String? ticketNumber;
   String? transactionDatetime;
   String? orderId;
-  Null? sourceCompanyCode;
+  String? sourceCompanyCode;
   Null? destinationCompanyCode;
   String? sourceStopId;
   String? sourceStopName;
