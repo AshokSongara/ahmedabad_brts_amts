@@ -205,8 +205,16 @@ class _MobileNumberScreenState extends State<MobileNumberScreen> {
                   text: "PROCEED",
                   width: MediaQuery.of(context).size.width,
                   onPressed: () {
-                    BlocProvider.of<MobileNumberLoginBloc>(context)
-                        .add(PhoneNumberSubmitEvent(_mobileController.text));
+                    if(_mobileController.text.length != 10){
+                      showCustomSnackBar(
+                          "Please enter a valid Mobile number",
+                          context,
+                          isError: true);
+                    }
+                    else {
+                      BlocProvider.of<MobileNumberLoginBloc>(context)
+                          .add(PhoneNumberSubmitEvent(_mobileController.text));
+                    }
                   },
                   style: poppinsMedium.copyWith(
                       color: Colors.white, fontSize: 15.sp),

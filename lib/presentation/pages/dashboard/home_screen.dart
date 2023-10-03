@@ -552,9 +552,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     newFromSelectedStation?.stopName) {
               newToSelectedStation = null;
             }
-            operationBrtsStopResponseModel?.data
-                ?.removeWhere((element) => element.stopName == state.data.stopName);
-            operationBrtsStopResponseModel?.data?.add(newFromSelectedStation!);
+            // operationBrtsStopResponseModel?.data
+            //     ?.removeWhere((element) => element.stopName == state.data.stopName);
+            // operationBrtsStopResponseModel?.data?.add(newFromSelectedStation!);
           }
           if (state is SourceSelectionFromFavScreenState) {
             newFromSelectedStation = state.data;
@@ -563,9 +563,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     newFromSelectedStation?.stopName) {
               newToSelectedStation = null;
             }
-            operationBrtsStopResponseModel?.data
-                ?.removeWhere((element) => element.stopName == state.data.stopName);
-            operationBrtsStopResponseModel?.data?.add(newFromSelectedStation!);
+            // operationBrtsStopResponseModel?.data
+            //     ?.removeWhere((element) => element.stopName == state.data.stopName);
+            // operationBrtsStopResponseModel?.data?.add(newFromSelectedStation!);
           }
           if (state is SourceSelectionFromSearchBusRouteScreenState) {
             newFromSelectedStation = state.data;
@@ -574,9 +574,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     newFromSelectedStation?.stopName) {
               newToSelectedStation = null;
             }
-            operationBrtsStopResponseModel?.data
-                ?.removeWhere((element) => element.stopName == state.data.stopName);
-            operationBrtsStopResponseModel?.data?.add(newFromSelectedStation!);
+            // operationBrtsStopResponseModel?.data
+            //     ?.removeWhere((element) => element.stopName == state.data.stopName);
+            // operationBrtsStopResponseModel?.data?.add(newFromSelectedStation!);
           }
 
           if (state is RoutesResponseState) {
@@ -586,8 +586,8 @@ class _HomeScreenState extends State<HomeScreen> {
            if(state is TicketBookState){
             setState(() {
               // newFromSelectedStation = null;
-              operationBrtsStopResponseModel?.data?.add(newFromSelectedStation!);
-              operationBrtsStopResponseModel?.data?.add(newToSelectedStation!);
+              // operationBrtsStopResponseModel?.data?.add(newFromSelectedStation!);
+              // operationBrtsStopResponseModel?.data?.add(newToSelectedStation!);
             });
             print(operationBrtsStopResponseModel?.data);
 
@@ -596,10 +596,10 @@ class _HomeScreenState extends State<HomeScreen> {
           }
            if(state is ReturnHomeState){
             setState(() {
-              operationBrtsStopResponseModel?.data?.add(newFromSelectedStation!);
-              operationBrtsStopResponseModel?.data?.add(newToSelectedStation!);
-              newFromSelectedStation = null;
-              newToSelectedStation = null;
+              // operationBrtsStopResponseModel?.data?.add(newFromSelectedStation!);
+              // operationBrtsStopResponseModel?.data?.add(newToSelectedStation!);
+              // newFromSelectedStation = null;
+              // newToSelectedStation = null;
 
             });
             print("return home");
@@ -854,9 +854,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         RouteHelper
                                             .getSearchStopScreenRoute(
                                             selectedLanguage ?? "", isAmts ? "AMTS" : "BRTS" ),
-                                        arguments: getSortedData(
-                                            oldToSelectedStation,
-                                            newToSelectedStation)) as DataHive;
+                                        arguments: operationBrtsStopResponseModel) as DataHive;
                                     setState(() {});
                                   },
 
@@ -916,9 +914,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           RouteHelper
                                               .getSearchStopScreenRoute(
                                               selectedLanguage ?? "", isAmts ? "AMTS" : "BRTS"),
-                                          arguments: getSortedData(
-                                              oldFromSelectedStation,
-                                              newFromSelectedStation))
+                                          arguments: operationBrtsStopResponseModel)
                                       as DataHive;
                                       setState(() {});
                                     },
@@ -1138,6 +1134,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                       context,
                                       isError: true);
                                 }
+                                else if(newFromSelectedStation != null && newFromSelectedStation?.stationCode == newToSelectedStation?.stationCode){
+                                  showCustomSnackBar(
+                                      "Please Select Different Source & Destination Station",
+                                      context,
+                                      isError: true);
+                                }
                                 else{
                                   openDialogBox();
 
@@ -1277,8 +1279,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void _initScreenA() {
     // Initialize ScreenA here.
     setState(() {
-      operationBrtsStopResponseModel?.data?.add(newFromSelectedStation!);
-      operationBrtsStopResponseModel?.data?.add(newToSelectedStation!);
+      // operationBrtsStopResponseModel?.data?.add(newFromSelectedStation!);
+      // operationBrtsStopResponseModel?.data?.add(newToSelectedStation!);
       newFromSelectedStation = null;
       newToSelectedStation = null;
 
