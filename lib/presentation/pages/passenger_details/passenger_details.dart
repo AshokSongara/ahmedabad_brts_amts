@@ -23,7 +23,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:phone_pe_pg/phone_pe_pg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PassengerDetails extends StatefulWidget {
@@ -83,41 +82,6 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   getData() {
     BlocProvider.of<DiscountBloc>(context).add(const GetDiscountEvent());
   }
-
-  PhonePePg pePg = PhonePePg(
-    isUAT: true,
-    saltKey: "099eb0cd-02cf-4e2a-8aca-3e6c6aff0399",
-    saltIndex: "1",
-  );
-
-  PaymentRequest _paymentRequest({String? merchantCallBackScheme}) {
-    String generateRandomString(int len) {
-      const chars =
-          'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-      Random rnd = Random();
-      var s = String.fromCharCodes(Iterable.generate(
-          len, (_) => chars.codeUnitAt(rnd.nextInt(chars.length))));
-      return s;
-    }
-
-    PaymentRequest paymentRequest = PaymentRequest(
-      amount: double.tryParse(widget.fare!),
-      callbackUrl: "",
-      deviceContext: DeviceContext.getDefaultDeviceContext(
-          merchantCallBackScheme: merchantCallBackScheme),
-      merchantId: "PGTESTPAYUAT",
-      merchantTransactionId: generateRandomString(10).toUpperCase(),
-      merchantUserId: generateRandomString(8).toUpperCase(),
-      mobileNumber: "9601524257",
-    );
-    return paymentRequest;
-  }
-
-  PaymentRequest paypageRequestModel({String? merchantCallBackScheme}) =>
-      _paymentRequest(merchantCallBackScheme: merchantCallBackScheme).copyWith(
-          redirectUrl: "https://webhook.site/callback-url",
-          redirectMode: 'GET',
-          paymentInstrument: PayPagePaymentInstrument());
 
   @override
   Widget build(BuildContext context) {

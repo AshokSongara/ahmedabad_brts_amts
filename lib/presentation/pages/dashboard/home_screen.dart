@@ -14,6 +14,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dar
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/language/language_cubit.dart';
+import 'package:ahmedabad_brts_amts/presentation/merchant_app.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/complaint/complaint_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/complaint_history/complaint_history_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/search_result_screen.dart';
@@ -1014,79 +1015,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   "",
                               width: MediaQuery.of(context).size.width,
                               onPressed: () async{
-                                if(newFromSelectedStation != null && newFromSelectedStation?.stationCode == newToSelectedStation?.stationCode){
-                                  showCustomSnackBar(
-                                      "Please Select Different Source & Destination Station",
-                                      context,
-                                      isError: true);
-                                }
-                                else{
-                                  if (routeData != null) {
-                                    Get.toNamed(
-                                      RouteHelper.getRouteDetailsRoute(
-                                          routeData?.routeName
-                                              ?.split("-")[0]
-                                              .trim() ??
-                                              "",
-                                          routeData?.customerRouteCode ?? "",
-                                          routeData?.routeName
-                                              ?.split("-")[1]
-                                              .trim() ??
-                                              "",
-                                          routeData?.customerRouteCode ?? "",
-                                          routeData?.routeCode ?? "",
-                                          "",
-                                          "0",
-                                          "Yes",
-                                          "",
-                                          "",
-                                          isAmts ? "AMTS" : "BRTS",
-                                          "",
-                                          "",
-                                          "",
-                                          "","00:00:00","","","",""),
-                                    );
-                                  } else if (newFromSelectedStation != null &&
-                                      newToSelectedStation != null) {
-                                    final result = await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(builder: (context) => SearchResultScreen(
-                                          startRoute:  newFromSelectedStation?.stationCode
-                                                .toString() ??
-                                                "",
-                                          endRoute:  newToSelectedStation?.stationCode
-                                                .toString() ??
-                                                "",
-                                          startRouteName:  newFromSelectedStation?.stopName ?? "",
-                                        endRouteName:    newToSelectedStation?.stopName ?? "",
-                                        serviceType:    isAmts ? "AMTS" : "BRTS")),
-                                    );
-
-                                    // Handle the result returned from ScreenB.
-                                    if (result == "initScreenA") {
-                                      // Call the init method or perform the desired action in ScreenA.
-                                      _initScreenA();
-                                    }
-
-                                    // Get.toNamed(RouteHelper.getSearchResultRoute(
-                                    //     newFromSelectedStation?.stationCode
-                                    //         .toString() ??
-                                    //         "",
-                                    //     newToSelectedStation?.stationCode
-                                    //         .toString() ??
-                                    //         "",
-                                    //     newFromSelectedStation?.stopName ?? "",
-                                    //     newToSelectedStation?.stopName ?? "",
-                                    //     isAmts ? "AMTS" : "BRTS"));
-                                  } else {
-                                    showCustomSnackBar(
-                                        "Please Select Source & Destination Station",
-                                        context,
-                                        isError: true);
-                                  }
-                                }
-
-
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => const MerchantApp()));
                               },
                               style: satoshiRegular.copyWith(
                                   fontSize: 20.sp,

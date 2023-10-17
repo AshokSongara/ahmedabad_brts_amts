@@ -10,6 +10,7 @@
 
     <queries >
         <package android:name="com.phonepe.app" />
+        <package android:name="com.phonepe.simulator" />
     </queries>
 
     <application
