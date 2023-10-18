@@ -4,6 +4,8 @@ import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/login/login_state.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/dashboard_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/home_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_text_field.dart';
@@ -291,7 +293,7 @@ class _LoginScreenState extends State<LoginScreen> {
     AppConstant.nameData = prefs.getString(AppConstant.name) ?? "";
     AppConstant.emailData = prefs.getString(AppConstant.email) ?? "";
     AppConstant.lastNameData = prefs.getString(AppConstant.lastName) ?? "";
-    Get.offAllNamed(RouteHelper.dashboard);
+    Get.offAll(HomeScreen());
   }
 
   clearData() async {

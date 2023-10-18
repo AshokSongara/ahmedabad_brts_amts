@@ -689,7 +689,8 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
   }
 
   Future<RouteDetailsRepsonse> fetchRouteData(String apiUrl, String routeCode,String startStopSequenceNumber, String endStopSequenceNumber) async {
-    var url = Uri.parse('$apiUrl/Route/${routeCode..replaceAll("/", "%2F")}/stops/from/$startStopSequenceNumber/to/$endStopSequenceNumber');
+    var url = Uri.parse('$apiUrl/Route/${routeCode.replaceAll("/", "%2F")}/stops/from/$startStopSequenceNumber/to/$endStopSequenceNumber');
+    print(url);
     var response = await http.get(url);
 
     if (response.statusCode == 200) {

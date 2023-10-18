@@ -8,6 +8,7 @@ import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:move_to_background/move_to_background.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../localization/app_localizations.dart';
@@ -23,6 +24,7 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late PageController _pageController;
   int _pageIndex = 0;
   var ctime;
@@ -47,10 +49,17 @@ class _DashboardScreenState extends State<DashboardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        extendBody: true,
+      key: _scaffoldKey,
+      extendBody: true,
         backgroundColor: Colors.white,
         body: WillPopScope(
           onWillPop: () async {
+            if (_scaffoldKey.currentState!.isDrawerOpen) {
+              // If the drawer is open, close it
+              _scaffoldKey.currentState!.openEndDrawer();
+              return false; // Prevent the default back button behavior
+            }
+            MoveToBackground.moveTaskToBack();
              print("back back d");
             // DateTime now = DateTime.now();
             // if (ctime == null ||

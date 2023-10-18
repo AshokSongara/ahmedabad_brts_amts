@@ -42,7 +42,8 @@ class _OneDayPassScreenState extends State<OneDayPassScreen> {
   @override
   void initState() {
     super.initState();
-    getMemberID();
+    //getMemberID();
+    getData();
   }
 
   getMemberID() async {
@@ -174,7 +175,8 @@ class _OneDayPassScreenState extends State<OneDayPassScreen> {
                                       "Please Select Ticket", context,
                                       isError: true);
                                 } else {
-                                  getPaymentUrl(
+                                  AppConstant.nameData.isEmpty ?
+                                  Get.toNamed(RouteHelper.getSplashRoute())  : getPaymentUrl(
                                       data!.discountTypeCode.toString() ?? "");
                                 }
                               },

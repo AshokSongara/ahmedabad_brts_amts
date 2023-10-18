@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/payment_request.dart';
@@ -8,6 +9,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/discount/discount_event.d
 import 'package:ahmedabad_brts_amts/presentation/blocs/discount/discount_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/payment/payment_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/payment/payment_event.dart';
+import 'package:ahmedabad_brts_amts/presentation/json_request.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/payment_details/payment_details_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
@@ -22,9 +24,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:get_upi/get_upi.dart';
 import 'package:intl/intl.dart';
-import 'package:phone_pe_pg/phone_pe_pg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+
 
 class PassengerDetails extends StatefulWidget {
   const PassengerDetails({
@@ -53,20 +57,16 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   String? selectedOption = "PhonePe";
   String token = "";
   String? serviceTypee ;
-  late PhonePePg? pePg;
+  PhonepeRequest? phonepeRequest ;
 
   @override
   void initState() {
     super.initState();
    // initPlatformState();
     list = Get.arguments as List<String?>;
+
     getMemberID();
 
-     pePg = PhonePePg(
-      isUAT: true,
-      saltKey: widget.serviceType == "BRTS" ? "ed6a2f0e-ddba-4a8f-881b-20828029d147" : "28ddbe05-3f0c-483a-b966-3291dd254713",
-      saltIndex: "1",
-    );
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -92,36 +92,6 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     BlocProvider.of<DiscountBloc>(context).add(const GetDiscountEvent());
   }
 
-
-
-  PaymentRequest _paymentRequest({String? merchantCallBackScheme}) {
-    String generateRandomString(int len) {
-      const chars =
-          'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-      Random rnd = Random();
-      var s = String.fromCharCodes(Iterable.generate(
-          len, (_) => chars.codeUnitAt(rnd.nextInt(chars.length))));
-      return s;
-    }
-
-    PaymentRequest paymentRequest = PaymentRequest(
-      amount: double.tryParse(widget.fare!),
-      callbackUrl: "",
-      deviceContext: DeviceContext.getDefaultDeviceContext(
-          merchantCallBackScheme: merchantCallBackScheme),
-      merchantId: widget.serviceType == "BRTS" ?"AHMEDABADUAT" : "AMTSUAT",
-      merchantTransactionId: generateRandomString(10).toUpperCase(),
-      merchantUserId: generateRandomString(8).toUpperCase(),
-      mobileNumber: "9601524257",
-    );
-    return paymentRequest;
-  }
-
-  PaymentRequest paypageRequestModel({String? merchantCallBackScheme}) =>
-      _paymentRequest(merchantCallBackScheme: merchantCallBackScheme).copyWith(
-          redirectUrl: "https://webhook.site/callback-url",
-          redirectMode: 'GET',
-          paymentInstrument: PayPagePaymentInstrument());
 
   @override
   Widget build(BuildContext context) {
@@ -180,51 +150,51 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                   ),
                   SizedBox(height: 20.h,),
 
-                  // Center(
-                  //   child: Column(
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: [
-                  //       Container(
-                  //         decoration: const BoxDecoration(
-                  //           color: AppColors.grayC4C$C$,
-                  //           borderRadius: BorderRadius.all(Radius.circular(50)),
-                  //         ),
-                  //         margin: const EdgeInsets.only(left: 30, right: 30),
-                  //         child: RadioListTile(
-                  //           title: Text("PhonePe",style: poppinsMedium.copyWith(fontSize: 18.sp,fontWeight: FontWeight.w400)),
-                  //           value: "PhonePe",
-                  //           activeColor: AppColors.primaryColor,
-                  //           //tileColor: Colors.grey,
-                  //           groupValue: selectedOption,
-                  //           onChanged: (value) {
-                  //             setState(() {
-                  //               selectedOption = value as String?;
-                  //             });
-                  //           },
-                  //         ),
-                  //       ),
-                  //       SizedBox(height: 10.h,),
-                  //       Container(
-                  //         decoration: const BoxDecoration(
-                  //           color: AppColors.grayC4C$C$,
-                  //           borderRadius: BorderRadius.all(Radius.circular(50)),
-                  //         ),
-                  //         margin: const EdgeInsets.only(left: 30, right: 30),
-                  //         child: RadioListTile(
-                  //           title: Text("Fiserv", style: poppinsMedium.copyWith(fontSize: 18.sp,fontWeight: FontWeight.w400)),
-                  //           value: "Fiser",
-                  //           activeColor: AppColors.primaryColor,
-                  //           groupValue: selectedOption,
-                  //           onChanged: (value) {
-                  //             setState(() {
-                  //               selectedOption = value as String?;
-                  //             });
-                  //           },
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: AppColors.grayC4C$C$,
+                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                          ),
+                          margin: const EdgeInsets.only(left: 30, right: 30),
+                          child: RadioListTile(
+                            title: Text("PhonePe",style: poppinsMedium.copyWith(fontSize: 18.sp,fontWeight: FontWeight.w400)),
+                            value: "PhonePe",
+                            activeColor: AppColors.primaryColor,
+                            //tileColor: Colors.grey,
+                            groupValue: selectedOption,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedOption = value as String?;
+                              });
+                            },
+                          ),
+                        ),
+                        SizedBox(height: 10.h,),
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: AppColors.grayC4C$C$,
+                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                          ),
+                          margin: const EdgeInsets.only(left: 30, right: 30),
+                          child: RadioListTile(
+                            title: Text("Fiserv", style: poppinsMedium.copyWith(fontSize: 18.sp,fontWeight: FontWeight.w400)),
+                            value: "Fiser",
+                            activeColor: AppColors.primaryColor,
+                            groupValue: selectedOption,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedOption = value as String?;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   ListView.builder(
                       shrinkWrap: true,
                       itemCount: state.discountResponse.data?.length,
@@ -266,79 +236,12 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        // if(selectedOption == "PhonePe")
-                                        // {
-                                        //   Navigator.push(
-                                        //       context,
-                                        //       MaterialPageRoute(
-                                        //           builder: (_) => pePg!.startPayPageTransaction(
-                                        //             onPaymentComplete:
-                                        //                 (paymentResponse, paymentError) {
-                                        //               Navigator.pop(context);
-                                        //
-                                        //               if (paymentResponse != null &&
-                                        //                   paymentResponse.code ==
-                                        //                       PaymentStatus.success) {
-                                        //                 ScaffoldMessenger.of(context)
-                                        //                     .showSnackBar(const SnackBar(
-                                        //                     content: Text(
-                                        //                         "Transaction Successful")));
-                                        //
-                                        //
-                                        //                 print("PAYMENT RESPONSE${paymentResponse?.success}");
-                                        //                 print("PAYMENT RESPONSE${paymentResponse?.code}");
-                                        //                 print("PAYMENT RESPONSE${paymentResponse?.message}");
-                                        //                 print("PAYMENT RESPONSE${paymentResponse?.data?.state}");
-                                        //                 print("PAYMENT RESPONSE${paymentResponse?.data?.amount}");
-                                        //                 print("PAYMENT RESPONSE${paymentResponse?.data?.merchantId}");
-                                        //                 print("PAYMENT RESPONSE${paymentResponse?.data?.merchantTransactionId}");
-                                        //                 print("PAYMENT RESPONSE${paymentResponse?.data?.paymentInstrument}");
-                                        //                 print("PAYMENT RESPONSE${paymentResponse?.data?.responseCode}");
-                                        //                 print("PAYMENT RESPONSE${paymentResponse?.data?.responseCodeDescription}");
-                                        //                 print("PAYMENT RESPONSE${paymentResponse?.data?.transactionId}");
-                                        //
-                                        //                 var paymentRequest2 = PaymentRequest2(
-                                        //                     sourceStopId:  widget.sourceStopId,
-                                        //                     destinationStopId:
-                                        //                     widget.destinationStopId,
-                                        //                     discountype: state
-                                        //                         .discountResponse
-                                        //                         .data![index]
-                                        //                         .discountTypeCode ??
-                                        //                         "",
-                                        //                     txnStatus: "SUCCESS",
-                                        //                     merchantId: paymentResponse?.data?.merchantId,
-                                        //                     sourcecompanycode: widget.serviceType == "AMTS" ?"103" : "102",
-                                        //                     destinationcompanycode: widget.serviceType == "AMTS" ?"103" : "102",
-                                        //                     fpTransactionId: paymentResponse?.data?.transactionId,
-                                        //                     routeCode: widget.routeCode,
-                                        //                     externalTxnId: "",
-                                        //                     merchantTxnId: paymentResponse?.data?.merchantTransactionId,
-                                        //                     transactionDateTime:
-                                        //                     "",
-                                        //                     serviceType: widget.serviceType,
-                                        //                     paymentType: 1,
-                                        //                     paymentState: paymentResponse?.data?.state,
-                                        //                     pgServiceTransactionId: paymentResponse?.data?.paymentInstrument?.pgServiceTransactionId,
-                                        //                     pgTransactionId: paymentResponse?.data?.paymentInstrument?.pgTransactionId);
-                                        //
-                                        //                 BlocProvider.of<PaymentBloc>(context).add(
-                                        //                   GetQRCodeEvent(paymentRequest: paymentRequest2),
-                                        //                 );
-                                        //
-                                        //                 Get.to(() =>PaymentDetailsScreen());
-                                        //
-                                        //               } else {
-                                        //                 ScaffoldMessenger.of(context)
-                                        //                     .showSnackBar(SnackBar(
-                                        //                     content: Text(
-                                        //                         "Transaction Failed${paymentResponse?.success}")));
-                                        //               }
-                                        //             },
-                                        //             paymentRequest: paypageRequestModel(),
-                                        //           )));
-                                        // }
-                                        // else {
+                                        if(selectedOption == "PhonePe")
+                                        {
+                                          apiCall();
+
+                                        }
+                                        else {
                                           Get.toNamed(
                                               RouteHelper
                                                   .getPaymentDetailsRoute(
@@ -357,7 +260,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                                   widget.routeCode ?? "",
                                                   widget.serviceType ?? "",
                                                   "Payment"));
-                                       // }
+                                        }
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
@@ -445,6 +348,66 @@ class _PassengerDetailsState extends State<PassengerDetails> {
       ),
     );
   }
+  void apiCall() async {
+
+
+     phonepeRequest = PhonepeRequest(
+        startStopCode: widget.sourceStopId,
+        endStopCode: widget.destinationStopId,
+        discountype: "01",
+        routeCode: widget.routeCode,
+        routeType: 1,
+        mobileNumber: "9876543210",
+        deviceOS: Platform.isAndroid ? "ANDROID" : "IOS",
+        paymentInstrumentType: "UPI_INTENT",
+        targateApp: "com.phonepe.simulator");
+
+     // phonepeRequest = PhonepeRequest(
+     //     startStopCode: "101",
+     //     endStopCode: "104",
+     //     discountype: "01",
+     //     routeCode: "11U",
+     //     routeType: 1,
+     //     mobileNumber: "9876543210",
+     //     deviceOS: "IOS",
+     //     paymentInstrumentType: "UPI_INTENT",
+     //     targateApp: "com.phonepe.simulator");
+
+    String jsonStr = jsonEncode(phonepeRequest);
+
+    String url = 'http://103.69.196.78:8082/PhonepePG/PayRequest';
+
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? token = sharedPreferences.getString(AppConstant.accessToken);
+
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      "Authorization": "Bearer $token"
+    };
+
+    final response = await http.post(
+      Uri.parse(url),
+      headers: headers,
+      body: jsonStr,
+    );
+
+    if (response.statusCode == 200) {
+      print('Request successful! Response data:');
+      print(response.body);
+
+      final responseData = json.decode(response.body);
+
+      String? intentUrl = responseData['data']['data']['instrumentResponse']['intentUrl'];
+
+      GetUPI.openNativeIntent(
+        url: intentUrl ?? ""
+       // 'upi://pay?pa=AHMEDABADUAT@ybl&pn=MERCHANT&am=400&mam=400&tr=MT7850590868188104&tn=Payment%20for%20MT7850590868188104&mc=5311&mode=04&purpose=00&utm_campaign=B2B_PG&utm_medium=AHMEDABADUAT&utm_source=MT7850590868188104&mcbs=',
+      );
+    } else {
+      print('Request failed with status code: ${response.statusCode}');
+    }
+  }
+
 
   setPassengerData(int adultsCount, int kidsCount) {
     _addedKidsCount = kidsCount;

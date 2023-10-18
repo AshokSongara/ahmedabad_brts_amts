@@ -217,14 +217,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.4"
-  dio:
-    dependency: transitive
+  double_back_to_close_app:
+    dependency: "direct main"
     description:
-      name: dio
-      sha256: ce75a1b40947fea0a0e16ce73337122a86762e38b982e1ccb909daa3b9bc4197
+      name: double_back_to_close_app
+      sha256: d19ce4e2f8d2cb9f35bdbc90eecd5c731cc0e6216f5e8f14e7d1e076dafb344a
       url: "https://pub.dev"
     source: hosted
-    version: "5.3.2"
+    version: "2.1.0"
   equatable:
     dependency: "direct main"
     description:
@@ -294,14 +294,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "7.3.3"
-  flutter_inappwebview:
-    dependency: transitive
-    description:
-      name: flutter_inappwebview
-      sha256: f73505c792cf083d5566e1a94002311be497d984b5607f25be36d685cf6361cf
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.7.2+3"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -405,6 +397,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  get_upi:
+    dependency: "direct main"
+    description:
+      name: get_upi
+      sha256: a53f1544b9884a90ffd3b6fef18e6189c80f78bbf3de4eee9c7ee7aee6446ee2
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.4"
   glob:
     dependency: transitive
     description:
@@ -621,6 +621,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  move_to_background:
+    dependency: "direct main"
+    description:
+      name: move_to_background
+      sha256: "00caad17a6ce149910777131503f43f8ed80025681f94684e3a6a87d979b914c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   nested:
     dependency: transitive
     description:
@@ -717,14 +725,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.0"
-  phone_pe_pg:
+  phonepe_payment_sdk:
     dependency: "direct main"
     description:
-      name: phone_pe_pg
-      sha256: a57f51b6ccd7f3a04987f266bbb84a0a4e34ebbd4ab014adf08d4d893f08e076
+      name: phonepe_payment_sdk
+      sha256: "1a3761a91fd79ef27b09fe478a02ace4f5908697cf8adbe615abff474e8f777c"
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.2"
+    version: "1.0.3"
   photo_view:
     dependency: "direct main"
     description:
@@ -1094,10 +1102,10 @@ packages:
     dependency: "direct main"
     description:
       name: url_launcher
-      sha256: "47e208a6711459d813ba18af120d9663c20bdf6985d6ad39fe165d2538378d27"
+      sha256: "eb1e00ab44303d50dd487aab67ebc575456c146c6af44422f9c13889984c00f3"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.14"
+    version: "6.1.11"
   url_launcher_android:
     dependency: transitive
     description:
@@ -1260,4 +1268,4 @@ packages:
     version: "3.1.1"
 sdks:
   dart: ">=3.1.0-185.0.dev <4.0.0"
-  flutter: ">=3.10.0"
+  flutter: ">=3.3.0"

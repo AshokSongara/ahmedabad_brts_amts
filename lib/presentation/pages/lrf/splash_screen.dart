@@ -1,5 +1,7 @@
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/language/language_cubit.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/dashboard_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/home_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/round_container_widget.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
@@ -130,7 +132,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               GestureDetector(
                 onTap: () {
-                  Get.offNamed(RouteHelper.getDashboardRoute());
+                  Get.offAll(HomeScreen());
                 },
                 child: const RoundContainerWidget(
                     imagePath: ImageConstant.iUser,
