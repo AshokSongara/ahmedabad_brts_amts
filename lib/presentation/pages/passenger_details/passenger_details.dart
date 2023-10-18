@@ -239,7 +239,6 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                         if(selectedOption == "PhonePe")
                                         {
                                           apiCall();
-
                                         }
                                         else {
                                           Get.toNamed(
@@ -357,7 +356,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
         discountype: "01",
         routeCode: widget.routeCode,
         routeType: 1,
-        mobileNumber: "9876543210",
+        mobileNumber: "9601524257",
         deviceOS: Platform.isAndroid ? "ANDROID" : "IOS",
         paymentInstrumentType: "UPI_INTENT",
         targateApp: "com.phonepe.simulator");
@@ -399,10 +398,12 @@ class _PassengerDetailsState extends State<PassengerDetails> {
 
       String? intentUrl = responseData['data']['data']['instrumentResponse']['intentUrl'];
 
-      GetUPI.openNativeIntent(
+      final data = await GetUPI.openNativeIntent(
         url: intentUrl ?? ""
        // 'upi://pay?pa=AHMEDABADUAT@ybl&pn=MERCHANT&am=400&mam=400&tr=MT7850590868188104&tn=Payment%20for%20MT7850590868188104&mc=5311&mode=04&purpose=00&utm_campaign=B2B_PG&utm_medium=AHMEDABADUAT&utm_source=MT7850590868188104&mcbs=',
       );
+
+      print("###Payment Response${data}");
     } else {
       print('Request failed with status code: ${response.statusCode}');
     }
