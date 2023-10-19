@@ -52,7 +52,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
         onPageStarted: (String url) {
           print("onPageStarted${url}");
           if (url.contains(
-              "https://www.transportapp.co.in:8081/SessionResponse?merchantId=470000087089747")) {
+              "http://103.69.196.78:8082/SessionResponse?merchantId=470000087089747")) {
             print("###Parse HTML");
 
             Future.delayed(const Duration(seconds: 3), () async {
@@ -71,7 +71,7 @@ class _WebViewScreenState extends State<WebViewScreen> {
             });
           }
           else if(url.contains(
-              "https://www.transportapp.co.in:8081/SessionResponse?merchantId=470000087089746")){
+              "http://103.69.196.78:8082/SessionResponse?merchantId=470000087089746")){
             print("###Parse HTML");
 
             Future.delayed(const Duration(seconds: 5), () async {

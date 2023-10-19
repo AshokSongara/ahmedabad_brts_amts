@@ -354,11 +354,11 @@ class SearchResultItem extends StatelessWidget {
                     ),
                     Expanded(
                       child: Container(
-                        margin: const EdgeInsets.only(left: 15, right: 12),
+                        margin: const EdgeInsets.only(left: 5, right: 5),
                         child: Row(
                           children: [
                             Container(
-                              width: 10,
+                              width: 0,
                               height: 10,
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,

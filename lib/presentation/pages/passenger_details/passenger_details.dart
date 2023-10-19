@@ -238,7 +238,11 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                       onTap: () {
                                         if(selectedOption == "PhonePe")
                                         {
-                                          apiCall();
+                                          apiCall(state
+                                              .discountResponse
+                                              .data![index]
+                                              .discountTypeCode ??
+                                              "");
 
                                         }
                                         else {
@@ -348,7 +352,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
       ),
     );
   }
-  void apiCall() async {
+  void apiCall(String discountType) async {
 
 
      phonepeRequest = PhonepeRequest(
@@ -357,7 +361,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
         discountype: "01",
         routeCode: widget.routeCode,
         routeType: 1,
-        mobileNumber: "9876543210",
+        mobileNumber: "9601524257",
         deviceOS: Platform.isAndroid ? "ANDROID" : "IOS",
         paymentInstrumentType: "UPI_INTENT",
         targateApp: "com.phonepe.simulator");
@@ -399,10 +403,41 @@ class _PassengerDetailsState extends State<PassengerDetails> {
 
       String? intentUrl = responseData['data']['data']['instrumentResponse']['intentUrl'];
 
-      GetUPI.openNativeIntent(
-        url: intentUrl ?? ""
-       // 'upi://pay?pa=AHMEDABADUAT@ybl&pn=MERCHANT&am=400&mam=400&tr=MT7850590868188104&tn=Payment%20for%20MT7850590868188104&mc=5311&mode=04&purpose=00&utm_campaign=B2B_PG&utm_medium=AHMEDABADUAT&utm_source=MT7850590868188104&mcbs=',
+      final data = await GetUPI.openNativeIntent(
+          url: intentUrl ?? ""
+        // 'upi://pay?pa=AHMEDABADUAT@ybl&pn=MERCHANT&am=400&mam=400&tr=MT7850590868188104&tn=Payment%20for%20MT7850590868188104&mc=5311&mode=04&purpose=00&utm_campaign=B2B_PG&utm_medium=AHMEDABADUAT&utm_source=MT7850590868188104&mcbs=',
       );
+
+      print("###Payment Response${data}");
+
+                      var paymentRequest2 = PaymentRequest2(
+                          sourceStopId:  widget.sourceStopId,
+                          destinationStopId:
+                          widget.destinationStopId,
+                          discountype: discountType,
+                          txnStatus: data == "Success" ? "SUCCESS" : "FAILED",
+                          merchantId: "",
+                          sourcecompanycode: widget.serviceType == "AMTS" ?"103" : "102",
+                          destinationcompanycode: widget.serviceType == "AMTS" ?"103" : "102",
+                          fpTransactionId: "",
+                          routeCode: widget.routeCode,
+                          externalTxnId: "",
+                          merchantTxnId: "",
+                          transactionDateTime: "",
+                          serviceType: widget.serviceType,
+                          paymentType: 1,
+                          paymentState: "",
+                          pgServiceTransactionId: "",
+                          pgTransactionId: "");
+
+
+                      BlocProvider.of<PaymentBloc>(context).add(
+                        GetQRCodeEvent(paymentRequest: paymentRequest2),
+                      );
+
+                      Get.to(() =>PaymentDetailsScreen());
+
+
     } else {
       print('Request failed with status code: ${response.statusCode}');
     }
