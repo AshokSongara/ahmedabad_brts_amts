@@ -1,7 +1,7 @@
 class AppConstant {
   static String apiUrl = "https://www.transportapp.co.in:8081/";
   static String mapKey = "AIzaSyB-f76UEQUmRrsajG14qz2cobJCiVLTz3A";
-
+  
   static String loginWithEmail = "Login with Email";
   static String loginWithMobile = "Login with Mobile Number";
   static String loginWithGuest = "Login as Guest";

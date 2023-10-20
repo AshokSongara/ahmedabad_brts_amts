@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/home_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/otp_request.dart';
@@ -92,7 +93,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
             Loader.hide();
             // saveMemberID(state.verifyOtpResponse.data?.jwt?.accessToken,
             //     state.verifyOtpResponse.data?.jwt?.email);
-            Get.toNamed(RouteHelper.dashboard);
+            Get.offAll(HomeScreen());
           } else if (state is VerifyOtpFailedState) {
             Loader.hide();
             showCustomSnackBar(state.errorMessage, context,

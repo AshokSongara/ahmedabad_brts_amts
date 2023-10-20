@@ -2,6 +2,7 @@ import 'package:ahmedabad_brts_amts/presentation/pages/booking/booking_screen.da
 import 'package:ahmedabad_brts_amts/presentation/pages/card_details/card_detail_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/contact_us/contact_us_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/dashboard_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/home_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/failed_transaction/failes_transaction_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/maps/polyline_page.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/my_routes/my_routes_tab_screen.dart';
@@ -248,8 +249,7 @@ class RouteHelper {
             )),
     GetPage(
         name: dashboard,
-        page: () => DashboardScreen(
-              pageIndex: 0,
+        page: () => HomeScreen(
             )),
     GetPage(
         name: searchResult,

@@ -1,22 +1,20 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_inappwebview (0.0.1):
-    - Flutter
-    - flutter_inappwebview/Core (= 0.0.1)
-    - OrderedSet (~> 5.0)
-  - flutter_inappwebview/Core (0.0.1):
-    - Flutter
-    - OrderedSet (~> 5.0)
   - flutter_phone_direct_caller (0.0.1):
+    - Flutter
+  - get_upi (0.0.1):
     - Flutter
   - location (0.0.1):
     - Flutter
-  - OrderedSet (5.0.0)
+  - move_to_background (0.0.1):
+    - Flutter
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - phone_pe_pg (0.0.1):
+  - phonepe_payment_sdk (1.0.3):
     - Flutter
+    - PhonePePayment (= 2.6.0)
+  - PhonePePayment (2.6.0)
   - screen_brightness_ios (0.1.0):
     - Flutter
   - share (0.0.1):
@@ -31,11 +29,12 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - flutter_inappwebview (from `.symlinks/plugins/flutter_inappwebview/ios`)
   - flutter_phone_direct_caller (from `.symlinks/plugins/flutter_phone_direct_caller/ios`)
+  - get_upi (from `.symlinks/plugins/get_upi/ios`)
   - location (from `.symlinks/plugins/location/ios`)
+  - move_to_background (from `.symlinks/plugins/move_to_background/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
-  - phone_pe_pg (from `.symlinks/plugins/phone_pe_pg/ios`)
+  - phonepe_payment_sdk (from `.symlinks/plugins/phonepe_payment_sdk/ios`)
   - screen_brightness_ios (from `.symlinks/plugins/screen_brightness_ios/ios`)
   - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
@@ -44,21 +43,23 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - OrderedSet
+    - PhonePePayment
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  flutter_inappwebview:
-    :path: ".symlinks/plugins/flutter_inappwebview/ios"
   flutter_phone_direct_caller:
     :path: ".symlinks/plugins/flutter_phone_direct_caller/ios"
+  get_upi:
+    :path: ".symlinks/plugins/get_upi/ios"
   location:
     :path: ".symlinks/plugins/location/ios"
+  move_to_background:
+    :path: ".symlinks/plugins/move_to_background/ios"
   path_provider_foundation:
     :path: ".symlinks/plugins/path_provider_foundation/darwin"
-  phone_pe_pg:
-    :path: ".symlinks/plugins/phone_pe_pg/ios"
+  phonepe_payment_sdk:
+    :path: ".symlinks/plugins/phonepe_payment_sdk/ios"
   screen_brightness_ios:
     :path: ".symlinks/plugins/screen_brightness_ios/ios"
   share:
@@ -72,12 +73,13 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  flutter_inappwebview: bfd58618f49dc62f2676de690fc6dcda1d6c3721
   flutter_phone_direct_caller: bd2ffd297f371a8a6c7bfbba0196964ffe3c4358
+  get_upi: 0844bbe5b833e69bb6e21b3eb9ba072c94ed4ef0
   location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
-  OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
+  move_to_background: 39a5b79b26d577b0372cbe8a8c55e7aa9fcd3a2d
   path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
-  phone_pe_pg: aa105d5d30c17221473b4ede955bdf212ca13272
+  phonepe_payment_sdk: c4fc2f011e8cf31bbd460c6fe423f5e85351478b
+  PhonePePayment: a23a9cec49aa34eaa7f83c89f7381ea76e1de477
   screen_brightness_ios: 715ca807df953bf676d339f11464e438143ee625
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
