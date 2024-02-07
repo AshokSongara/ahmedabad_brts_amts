@@ -366,10 +366,19 @@ class UserRepositoryImpl implements UserRepository {
 
     };
 
-    var bodyData = json.encode(data);
+    Map data2 = {
+      "sourceStopId": body.sourceStopId,
+      "destinationStopId": body.destinationStopId,
+      "discountype": body.discountype,
+      "txnStatus": body.txnStatus,
+      "sourcecompanycode": body.serviceType == "BRTS" ? "0102" : "0103",
+      "merchantTxnId": body.merchantTxnId,
+    };
+
+    var bodyData = json.encode(body.fpTransactionId == "" ? data2 : data);
 
     Response response = await apiClient.postDataWithHeader(
-        AppConstant.addTransaction, bodyData);
+        body.fpTransactionId == "" ? "PhonepePG/AddTransaction":AppConstant.addTransaction, bodyData);
     PaymentInitResponseModel loginResponse =
         PaymentInitResponseModel.fromJson(response.body);
     return loginResponse;

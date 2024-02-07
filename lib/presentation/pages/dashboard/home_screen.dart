@@ -14,6 +14,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dar
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/language/language_cubit.dart';
+import 'package:ahmedabad_brts_amts/presentation/merchant_app.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/complaint/complaint_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/complaint_history/complaint_history_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/search_result_screen.dart';
@@ -112,8 +113,25 @@ class _HomeScreenState extends State<HomeScreen> {
     });
 
     final searchResponse = await fetchData();
-    startCode = searchResponse.data![0].routeDetails![0].startStopCode;
-    endCode = searchResponse.data![0].interChanges!.isEmpty ? searchResponse.data![0].routeDetails![0].endStopCode ?? "" :  searchResponse.data![0].routeDetails![searchResponse.data![0].routeDetails!.length - 1].endStopCode;
+    if(searchResponse.data!.length == 0){
+
+      setState(() {
+        startCode = newFromSelectedStation?.stationCode
+            .toString();
+        endCode = newToSelectedStation?.stationCode
+            .toString();
+      });
+
+    }
+    else {
+      startCode = searchResponse.data![0].routeDetails![0].startStopCode;
+      endCode =
+      searchResponse.data![0].interChanges!.isEmpty ? searchResponse.data![0]
+          .routeDetails![0].endStopCode ?? "" : searchResponse.data![0]
+          .routeDetails![searchResponse.data![0].routeDetails!.length - 1]
+          .endStopCode
+          .toString();
+    }
 
     Future<FareResponse> fetchData2() async {
       final url = "https://www.transportapp.co.in:8081/fare/BRTS/startStop/${startCode}/endStop/${endCode}";
@@ -133,7 +151,9 @@ class _HomeScreenState extends State<HomeScreen> {
         context: context,
         builder: (context) => MyDialog(
           data: fareResponse.data,
-          data2: searchResponse.data![0],
+          data2: searchResponse.data!.length != 0 ? searchResponse.data![0] : null,
+          startName: newFromSelectedStation?.stopName.toString(),
+          endName: newToSelectedStation?.stopName.toString(),
           isLoading: isLoading,
           onCancel: () {
             Navigator.of(context).pop();
@@ -150,9 +170,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 ),
                 arguments: [
-                  searchResponse.data![0].routeDetails![0].startStopName,
-                  searchResponse.data![0].interChanges!.isEmpty ? searchResponse.data![0].routeDetails![0].endStopName ?? "" :  searchResponse.data![0].routeDetails![searchResponse.data![0].routeDetails!.length - 1].endStopName ?? ""
-                  "",
+                  searchResponse.data!.length != 0 ? searchResponse.data![0].routeDetails![0].startStopName : newFromSelectedStation?.stopName.toString(),
+                  searchResponse.data!.length != 0 ? searchResponse.data![0].interChanges!.isEmpty ? searchResponse.data![0].routeDetails![0].endStopName ?? "" :  searchResponse.data![0].routeDetails![searchResponse.data![0].routeDetails!.length - 1].endStopName ?? ""
+                  "" : newToSelectedStation?.stopName.toString(),
                   "",
                   ""
                 ]);
@@ -820,15 +840,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     height: Dimensions.dp25,
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(
-                        left: Dimensions.dp20, right: Dimensions.dp30),
-                    child: Text(
-                      AppLocalizations.of(context)?.translate("planyourtrip") ?? "",
-                      style: satoshiRegular.copyWith(
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.darkGray),
+                  GestureDetector(
+                    onTap: (){
+                      Get.to(MerchantApp());
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.only(
+                          left: Dimensions.dp20, right: Dimensions.dp30),
+                      child: Text(
+                        AppLocalizations.of(context)?.translate("planyourtrip") ?? "",
+                        style: satoshiRegular.copyWith(
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.darkGray),
+                      ),
                     ),
                   ),
                   const SizedBox(
@@ -1110,30 +1135,32 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: Dimensions.dp53,
                               ),
                             ),
-                            isAmts ?
-                              Container(
-                                margin: const EdgeInsets.only(
-                                    left: Dimensions.dp10,
-                                    right: Dimensions.dp10,
-                                    top: Dimensions.dp14),
-                                child: CustomButton(
-                                  color: Theme.of(context).primaryColor,
-                                  text: AppLocalizations.of(context)
-                                          ?.translate("onedaypass") ??
-                                      "",
-                                  width: MediaQuery.of(context).size.width,
-                                  onPressed: () {
-                                    AppConstant.nameData.isEmpty ?
-                                    Get.toNamed(RouteHelper.getSplashRoute())  : Get.toNamed(RouteHelper.getoneDayPassRoute("PASS" ?? "")) ;
+                           if(isAmts) Container(
+                              margin: const EdgeInsets.only(
+                                  left: Dimensions.dp10,
+                                  right: Dimensions.dp10,
+                                  top: Dimensions.dp14),
+                              child: CustomButton(
+                                color: Theme.of(context).primaryColor,
+                                text: AppLocalizations.of(context)
+                                    ?.translate("onedaypass") ??
+                                    "",
+                                width: MediaQuery.of(context).size.width,
+                                onPressed: () {
+                                  AppConstant.nameData.isEmpty ?
+                                  Get.toNamed(RouteHelper.getSplashRoute())  :
+                                  Get.toNamed(RouteHelper.getoneDayPassRoute("PASS" ?? "",isAmts ? "AMTS" : "BRTS")) ;
 
-                                  },
-                                  style: satoshiRegular.copyWith(
-                                      fontSize: 20.sp,
-                                      fontWeight: FontWeight.w700,
-                                      color: Colors.white),
-                                  height: Dimensions.dp53,
-                                ),
-                              ) :
+                                },
+                                style: satoshiRegular.copyWith(
+                                    fontSize: 20.sp,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.white),
+                                height: Dimensions.dp53,
+                              ),
+                            ),
+                            isAmts ?
+                              Container() :
                             Container(
                               margin: const EdgeInsets.only(
                                   left: Dimensions.dp10,

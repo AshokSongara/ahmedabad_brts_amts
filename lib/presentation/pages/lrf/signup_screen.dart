@@ -8,6 +8,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/signup/signup_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/lrf/signup_otp_verification_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/tnc/terms_and_conditions_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_text_field.dart';
@@ -50,6 +51,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final FocusNode _confirmPasswordFocus = FocusNode();
   int _selectedGender = 1;
   String? number;
+  bool _isChecked = false;
 
 
 
@@ -346,6 +348,48 @@ class _SignupScreenState extends State<SignupScreen> {
                     ],
                   ),
                 ),
+                Row(
+                  children: [
+                    Theme(
+                      data: ThemeData(
+                        unselectedWidgetColor: Colors.red,),
+                      child: Checkbox(
+                        activeColor: AppColors.lightBlue,
+
+
+                        value: _isChecked,
+                        onChanged: (value) {
+                          setState(() {
+                            _isChecked = value!;
+                          });
+                        },
+                      ),
+                    ),
+                    Text(
+                      "Before you can complete your registration, you must accept the",
+                      style: satoshiRegular.copyWith(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.black),
+                    ),
+                  ],
+                ),
+                GestureDetector(
+                  onTap: (){
+                    Get.to(TermsAndConditionScreen());
+                  },
+                  child: Text(
+                    "Terms and conditions.",
+                    style: satoshiRegular.copyWith(
+                        fontSize: 12,
+                        decoration: TextDecoration.underline,
+                        fontWeight: FontWeight.w300,
+                        color: AppColors.lightBlue),
+                  ),
+                ),
+                SizedBox(
+                  height: Dimensions.dp20.h,
+                ),
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
@@ -412,7 +456,14 @@ class _SignupScreenState extends State<SignupScreen> {
                           showCustomSnackBar(
                               "Password and Confirm Password Not Matched",
                               context);
-                        } else {
+                        }
+                        else if (_isChecked == false){
+                          showCustomSnackBar(
+                              "Please accept terms and conditions to proceed",
+                              context);
+                        }
+                        else
+                        {
                           fetchOtpResponse(_mobileNumberController.text);
                           bool result = await Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpOtpVerification(mobileNumber: _mobileNumberController.text,)));
                           if (result == true) {
@@ -452,7 +503,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
 
                  SizedBox(
-                  height: 220.h,
+                  height: 350.h,
                 ),
                 Padding(
                     padding: EdgeInsets.only(

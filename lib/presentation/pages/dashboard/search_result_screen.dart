@@ -232,7 +232,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                                     Get.toNamed(
                                         RouteHelper.getPassengerDetailsRoute(
                                             widget.startRoute ?? "",
-                                            widget.startRoute ?? "",
+                                            widget.endRoute ?? "",
                                              "",
                                             "BRTS",""),
                                         arguments: [

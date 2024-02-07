@@ -153,8 +153,8 @@ class MerchantScreen extends State<MerchantApp> {
 
   void startPGTransaction() async {
     try {
-      PhonePePaymentSdk.startPGTransaction(
-          body, callback, checksum, pgHeaders, apiEndPoint, packageName)
+      PhonePePaymentSdk.startTransaction(
+          body, callback, checksum, apiEndPoint)
           .then((response) => {
         setState(() {
           if (response != null) {
@@ -192,8 +192,8 @@ class MerchantScreen extends State<MerchantApp> {
 
   void startContainerTransaction() async {
     try {
-      PhonePePaymentSdk.startContainerTransaction(
-          body, callback, checksum, headers, apiEndPoint)
+      PhonePePaymentSdk.startTransaction(
+          body, callback, checksum,packageName)
           .then((response) => {
         setState(() {
           if (response != null) {
@@ -229,7 +229,7 @@ class MerchantScreen extends State<MerchantApp> {
   void apiCall() async {
     String jsonStr = jsonEncode(phonepeRequest);
 
-    String url = 'http://103.69.196.78:8082/PhonepePG/PayRequest';
+    String url = 'https://www.transportapp.co.in:8081/PhonepePG/PayRequest';
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? token = sharedPreferences.getString(AppConstant.accessToken);

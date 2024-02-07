@@ -12,6 +12,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/payment/payment_event.dar
 import 'package:ahmedabad_brts_amts/data/requestmodels/json_request.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/payment_details/payment_details_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
+import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
@@ -58,6 +59,9 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   String token = "";
   String? serviceTypee ;
   PhonepeRequest? phonepeRequest ;
+  List upiAppsListAndroid = [];
+  bool appOpen = false;
+
 
   @override
   void initState() {
@@ -144,57 +148,59 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                           child: SvgPicture.asset(ImageConstant.iArrowRight),
                         ),
                         getSourceDestination(list[1] ?? "",
-                            "${DateFormat('dd MMM yyyy').format(DateTime.now())}, ${list[3]}")
+                            "${DateFormat('dd MMM yyyy').format(DateTime.now())}, ${list[3]}"
+                        )
                       ],
                     ),
                   ),
                   SizedBox(height: 20.h,),
 
-                  // Center(
-                  //   child: Column(
-                  //     mainAxisAlignment: MainAxisAlignment.center,
-                  //     children: [
-                  //       Container(
-                  //         decoration: const BoxDecoration(
-                  //           color: AppColors.grayC4C$C$,
-                  //           borderRadius: BorderRadius.all(Radius.circular(50)),
-                  //         ),
-                  //         margin: const EdgeInsets.only(left: 30, right: 30),
-                  //         child: RadioListTile(
-                  //           title: Text("PhonePe",style: poppinsMedium.copyWith(fontSize: 18.sp,fontWeight: FontWeight.w400)),
-                  //           value: "PhonePe",
-                  //           activeColor: AppColors.primaryColor,
-                  //           //tileColor: Colors.grey,
-                  //           groupValue: selectedOption,
-                  //           onChanged: (value) {
-                  //             setState(() {
-                  //               selectedOption = value as String?;
-                  //             });
-                  //           },
-                  //         ),
-                  //       ),
-                  //       SizedBox(height: 10.h,),
-                  //       Container(
-                  //         decoration: const BoxDecoration(
-                  //           color: AppColors.grayC4C$C$,
-                  //           borderRadius: BorderRadius.all(Radius.circular(50)),
-                  //         ),
-                  //         margin: const EdgeInsets.only(left: 30, right: 30),
-                  //         child: RadioListTile(
-                  //           title: Text("Fiserv", style: poppinsMedium.copyWith(fontSize: 18.sp,fontWeight: FontWeight.w400)),
-                  //           value: "Fiser",
-                  //           activeColor: AppColors.primaryColor,
-                  //           groupValue: selectedOption,
-                  //           onChanged: (value) {
-                  //             setState(() {
-                  //               selectedOption = value as String?;
-                  //             });
-                  //           },
-                  //         ),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: AppColors.grayC4C$C$,
+                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                          ),
+                          margin: const EdgeInsets.only(left: 30, right: 30),
+                          child: RadioListTile(
+                            title: Text("UPI apps",style: poppinsMedium.copyWith(fontSize: 18.sp,fontWeight: FontWeight.w400)),
+                            value: "PhonePe",
+                            activeColor: AppColors.primaryColor,
+                            //tileColor: Colors.grey,
+                            groupValue: selectedOption,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedOption = value as String?;
+                              });
+                            },
+                          ),
+                        ),
+                       SizedBox(height: 10.h,),
+
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: AppColors.grayC4C$C$,
+                            borderRadius: BorderRadius.all(Radius.circular(50)),
+                          ),
+                          margin: const EdgeInsets.only(left: 30, right: 30),
+                          child: RadioListTile(
+                            title: Text("Fiserv", style: poppinsMedium.copyWith(fontSize: 18.sp,fontWeight: FontWeight.w400)),
+                            value: "Fiser",
+                            activeColor: AppColors.primaryColor,
+                            groupValue: selectedOption,
+                            onChanged: (value) {
+                              setState(() {
+                                selectedOption = value as String?;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   ListView.builder(
                       shrinkWrap: true,
                       itemCount: state.discountResponse.data?.length,
@@ -236,16 +242,16 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        // if(selectedOption == "PhonePe")
-                                        // {
-                                        //   apiCall(state
-                                        //       .discountResponse
-                                        //       .data![index]
-                                        //       .discountTypeCode ??
-                                        //       "");
-                                        //
-                                        // }
-                                        // else {
+                                        if(selectedOption == "PhonePe")
+                                        {
+                                          apiCall(state
+                                              .discountResponse
+                                              .data![index]
+                                              .discountTypeCode ??
+                                              "");
+
+                                        }
+                                        else {
                                           Get.toNamed(
                                               RouteHelper
                                                   .getPaymentDetailsRoute(
@@ -264,8 +270,8 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                                   widget.routeCode ?? "",
                                                   widget.serviceType ?? "",
                                                   "Payment"));
-                                        },
-                                    //  },
+                                        }
+                                      },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
                                             vertical: 8, horizontal: 15),
@@ -354,6 +360,12 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   }
   void apiCall(String discountType) async {
 
+    // var value = await GetUPI.apps();
+    // print(value.data);
+    // upiAppsListAndroid = value.data;
+
+
+
 
      phonepeRequest = PhonepeRequest(
         startStopCode: widget.sourceStopId,
@@ -366,20 +378,10 @@ class _PassengerDetailsState extends State<PassengerDetails> {
         paymentInstrumentType: "UPI_INTENT",
         targateApp: "com.phonepe.simulator");
 
-     // phonepeRequest = PhonepeRequest(
-     //     startStopCode: "101",
-     //     endStopCode: "104",
-     //     discountype: "01",
-     //     routeCode: "11U",
-     //     routeType: 1,
-     //     mobileNumber: "9876543210",
-     //     deviceOS: "IOS",
-     //     paymentInstrumentType: "UPI_INTENT",
-     //     targateApp: "com.phonepe.simulator");
 
     String jsonStr = jsonEncode(phonepeRequest);
 
-    String url = 'http://103.69.196.78:8082/PhonepePG/PayRequest';
+    String url = 'https://www.transportapp.co.in:8081/PhonepePG/PayRequest';
 
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     String? token = sharedPreferences.getString(AppConstant.accessToken);
@@ -402,13 +404,29 @@ class _PassengerDetailsState extends State<PassengerDetails> {
       final responseData = json.decode(response.body);
 
       String? intentUrl = responseData['data']['data']['instrumentResponse']['intentUrl'];
+      String? merchantTxnId = responseData['data']['data']['merchantTransactionId'];
+
+      print(merchantTxnId);
+
+
+
+
+
 
       final data = await GetUPI.openNativeIntent(
           url: intentUrl ?? ""
         // 'upi://pay?pa=AHMEDABADUAT@ybl&pn=MERCHANT&am=400&mam=400&tr=MT7850590868188104&tn=Payment%20for%20MT7850590868188104&mc=5311&mode=04&purpose=00&utm_campaign=B2B_PG&utm_medium=AHMEDABADUAT&utm_source=MT7850590868188104&mcbs=',
       );
 
+
       print("###Payment Response${data}");
+
+      showCustomSnackBar(
+          "$data",
+          context,
+          isError: false);
+
+
 
                       var paymentRequest2 = PaymentRequest2(
                           sourceStopId:  widget.sourceStopId,
@@ -422,7 +440,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                           fpTransactionId: "",
                           routeCode: widget.routeCode,
                           externalTxnId: "",
-                          merchantTxnId: "",
+                          merchantTxnId: merchantTxnId,
                           transactionDateTime: "",
                           serviceType: widget.serviceType,
                           paymentType: 1,

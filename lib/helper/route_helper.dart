@@ -133,8 +133,8 @@ class RouteHelper {
 
   static String getSearchRoute() => searchRoute;
 
-  static String getoneDayPassRoute(String sourceStationID) =>
-      "$oneDayPassRoute?sourceStationID=$sourceStationID";
+  static String getoneDayPassRoute(String sourceStationID,String serviceType) =>
+      "$oneDayPassRoute?sourceStationID=$sourceStationID&serviceType=$serviceType";
 
   static String getContactUsRoute() => contactUs;
 
@@ -225,6 +225,7 @@ class RouteHelper {
         name: oneDayPassRoute,
         page: () => OneDayPassScreen(
               sourceStationID: Get.parameters['sourceStationID'],
+              serviceType: Get.parameters['serviceType'],
             )),
     GetPage(name: contactUs, page: () => const ContactUsScreen()),
     GetPage(

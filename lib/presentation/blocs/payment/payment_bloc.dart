@@ -42,6 +42,7 @@ class PaymentBloc extends Bloc<PaymentEvent, PaymentState> {
         yield PaymentSuccessState(paymentInitResponseModel: qrCodeResponse);
       } else {
         yield const PaymentFailedState(errorMessage: "Something Went Wrong");
+        print("failed state");
       }
     }
   }

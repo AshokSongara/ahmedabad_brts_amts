@@ -354,7 +354,7 @@ class SearchResultItem extends StatelessWidget {
                     ),
                     Expanded(
                       child: Container(
-                        margin: const EdgeInsets.only(left: 15, right: 12),
+                        margin: const EdgeInsets.only(left: 0, right: 0),
                         child: Row(
                           children: [
                             Container(

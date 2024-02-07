@@ -5,6 +5,7 @@ import 'package:ahmedabad_brts_amts/utils/app_util.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 class MyDialog extends StatelessWidget {
   final DataFare?   data;
@@ -12,8 +13,10 @@ class MyDialog extends StatelessWidget {
   final bool isLoading;
   final Function() onCancel;
   final Function() onProceed;
+  final String? startName;
+  final String? endName;
 
-  MyDialog({required this.data, required this.isLoading, required this.onCancel, required this.onProceed,required this.data2});
+  MyDialog({required this.data, required this.isLoading, required this.onCancel, required this.onProceed, this.data2, this.startName, this.endName});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,11 @@ class MyDialog extends StatelessWidget {
                 color: AppColors.darkGray),),
                 SizedBox(height: 30.h,),
                 Expanded(
-                  child: Text("${data2!.routeDetails![0].startStopName} - ${data2!.interChanges!.isEmpty ? data2!.routeDetails![0].endStopName ?? "" :  data2!.routeDetails![data2!.routeDetails!.length - 1].endStopName ?? ""}", style: satoshiRegular.copyWith(
+                  child: data2.isNull ? Text("$startName - $endName" ,style: satoshiRegular.copyWith(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.lightBlue),): Text("${data2!.routeDetails![0].startStopName} - ${data2!.interChanges!.isEmpty ? data2!.routeDetails![0].endStopName ?? "" :  data2!.routeDetails![data2!.routeDetails!.length - 1].endStopName ?? ""}",
+                    style: satoshiRegular.copyWith(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w700,
                       color: AppColors.lightBlue),),

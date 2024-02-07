@@ -1,6 +1,7 @@
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/language/language_cubit.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/home_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/tnc/terms_and_conditions_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/round_container_widget.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
@@ -195,13 +196,18 @@ class _SplashScreenState extends State<SplashScreen> {
                               fontWeight: FontWeight.w300,
                               color: Colors.black),
                         ),
-                        Text(
-                          "Terms of Service.",
-                          style: satoshiRegular.copyWith(
-                              fontSize: 12,
-                              decoration: TextDecoration.underline,
-                              fontWeight: FontWeight.w300,
-                              color: AppColors.lightBlue),
+                        GestureDetector(
+                          onTap: (){
+                            Get.to(TermsAndConditionScreen());
+                          },
+                          child: Text(
+                            "Terms and conditions.",
+                            style: satoshiRegular.copyWith(
+                                fontSize: 12,
+                                decoration: TextDecoration.underline,
+                                fontWeight: FontWeight.w300,
+                                color: AppColors.lightBlue),
+                          ),
                         ),
                         SizedBox(
                           height: Dimensions.dp20.h,

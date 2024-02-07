@@ -29,8 +29,9 @@ class LocalModel {
 
 class OneDayPassScreen extends StatefulWidget {
   final String? sourceStationID;
+  final String? serviceType;
 
-  const OneDayPassScreen({Key? key,required this.sourceStationID}) : super(key: key);
+  const OneDayPassScreen({Key? key,required this.sourceStationID,required this.serviceType}) : super(key: key);
 
   @override
   _OneDayPassScreenState createState() => _OneDayPassScreenState();
@@ -205,8 +206,17 @@ class _OneDayPassScreenState extends State<OneDayPassScreen> {
   }
 
   getPaymentUrl(String discountType) {
-    Get.toNamed(RouteHelper.getPaymentDetailsRoute(widget.sourceStationID ?? "",
-        "PASS" ?? "", data!.discountTypeCode ?? "", "", "", "", "", "" ?? "","","Payment"));
+    Get.toNamed(RouteHelper.getPaymentDetailsRoute(
+        widget.sourceStationID ?? "",
+        "PASS" ?? "",
+        data!.discountTypeCode ?? "",
+        "",
+        "",
+        "",
+        "",
+        "" ?? "",
+        widget.serviceType ?? "",
+        "Payment"));
   }
 
   @override
