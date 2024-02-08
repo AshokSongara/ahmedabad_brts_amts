@@ -20,6 +20,7 @@ import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
+import io.flutter.plugin.common.MethodChannel.Result
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,44 +41,53 @@ class MainActivity : FlutterActivity() {
     private var randomkey: String? = null
     private var apiService: ApiInterface? = null
     private val CHANNEL = "nativeChannel"
+    private var finalResult: Result? = null
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, CHANNEL)
             .setMethodCallHandler { call: MethodCall, result: MethodChannel.Result? ->
+                finalResult = result
                 if (call.method == "setToast") {
                     apiService = RetrofitApiClient.getClient().create(ApiInterface::class.java)
                     Toast.makeText(context, "Called here", Toast.LENGTH_SHORT).show()
                     initiateApiCall()
 
                 }else if(call.method =="startPayment"){
-                    var intentUrl = call.arguments as String
+                    var args = call.arguments
 
                     val intent = Intent(Intent.ACTION_VIEW)
-                    intent.setData(Uri.parse(intentUrl))
-                    intent.setPackage("com.google.android.apps.nbu.paisa.user")
-                    activity.startActivityForResult(intent, 123)
+                    intent.setData(Uri.parse(call.argument<String>("intentUrl")))
+                    intent.setPackage(call.argument<String>("packageName"))
+                    activity.startActivityForResult(intent, 125)
                 }
             }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
         try {
             super.onActivityResult(requestCode, resultCode, data)
-            val myIntent = Intent(
-                this@MainActivity,
-                SuccessActivity::class.java
-            )
-            val value = data.getStringExtra(FD_PAYMENT_RESULT)
-            val gson = Gson()
-            val paymentCallResponse: PaymentCallResponse =
-                gson.fromJson(value, PaymentCallResponse::class.java)
-            val response: String = paymentCallResponse.response
-            Log.e("Nithin", "Came inside here response$response")
+            if(requestCode == 125){
+                val trxt = data.getStringExtra("response")
+                Log.e("UPI", "onActivityResult: $trxt")
+                finalResult?.success(trxt)
 
-            myIntent.putExtra("key", value)
-            this@MainActivity.startActivity(myIntent)
+            }else{
+                val myIntent = Intent(
+                    this@MainActivity,
+                    SuccessActivity::class.java
+                )
+                val value = data.getStringExtra(FD_PAYMENT_RESULT)
+                val gson = Gson()
+                val paymentCallResponse: PaymentCallResponse =
+                    gson.fromJson(value, PaymentCallResponse::class.java)
+                val response: String = paymentCallResponse.response
+                Log.e("Nithin", "Came inside here response$response")
+
+                myIntent.putExtra("key", value)
+                this@MainActivity.startActivity(myIntent)
+            }
+
             // finish()
         } catch (ex: java.lang.Exception) {
             Toast.makeText(this@MainActivity, ex.toString(), Toast.LENGTH_SHORT).show()

@@ -57,14 +57,15 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   String? selectedOption = "PhonePe";
   String token = "";
   String? serviceTypee;
-  List<String> appNamesList = [];
-  String? selectedPackageName;
+  List<UpiObject> appNamesList = [];
+  UpiObject? selectedPackageName;
 
 
   PhonepeRequest? phonepeRequest;
 
   List upiAppsListAndroid = [];
   bool appOpen = false;
+  String discountCode = '';
 
   @override
    initState()  {
@@ -108,6 +109,11 @@ class _PassengerDetailsState extends State<PassengerDetails> {
           if (state is DiscountLoadingState) {
             Loader.show(context);
           } else if (state is DiscountSuccessState) {
+            discountCode = state
+                .discountResponse
+                .data?.first
+                .discountTypeCode ??
+                "";
             Loader.hide();
           } else if (state is DiscountFailedState) {
             Loader.hide();
@@ -265,7 +271,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                                   .discountResponse
                                                   .data![index]
                                                   .discountTypeCode ??
-                                              "");
+                                              "",'');
                                         } else {
                                           Get.toNamed(RouteHelper
                                               .getPaymentDetailsRoute(
@@ -377,7 +383,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     );
   }
 
-  void apiCall(String discountType) async {
+  void apiCall(String discountType,String packageName) async {
     // var value = await GetUPI.apps();
     // print(value.data);
     // upiAppsListAndroid = value.data;
@@ -391,7 +397,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
         mobileNumber: "9601524257",
         deviceOS: Platform.isAndroid ? "ANDROID" : "IOS",
         paymentInstrumentType: "UPI_INTENT",
-        targateApp: "com.google.android.apps.nbu.paisa.user");
+        targateApp: packageName);
 
     String jsonStr = jsonEncode(phonepeRequest);
 
@@ -428,48 +434,66 @@ class _PassengerDetailsState extends State<PassengerDetails> {
       var values = await GetUPI.apps();
       upiAppsList = values.data;
       upiAppsList.forEach((element) {
-        appNamesList.add(element.name);
-
-
+        appNamesList.add(element);
       });
-      print(appNamesList);
+      String result = '';
+      
+      try {
+        var data = {
+          "intentUrl":intentUrl,
+          "packageName":packageName
+        };
 
-      MethodChannel channel = const MethodChannel('nativeChannel');
-      await channel.invokeMethod('startPayment', intentUrl);
+          MethodChannel channel = const MethodChannel('nativeChannel');
+          result = await channel.invokeMethod('startPayment', data);
+        } on PlatformException catch (e) {
+          print('Failed : ${e.message}');
+        }
 
-      // showCustomSnackBar(
-      //     "$data",
-      //     context,
-      //     isError: false);
-      //
-      //
-      //
-      //                 var paymentRequest2 = PaymentRequest2(
-      //                     sourceStopId:  widget.sourceStopId,
-      //                     destinationStopId:
-      //                     widget.destinationStopId,
-      //                     discountype: discountType,
-      //                     txnStatus: data == "Success" ? "SUCCESS" : "FAILED",
-      //                     merchantId: "",
-      //                     sourcecompanycode: widget.serviceType == "AMTS" ?"103" : "102",
-      //                     destinationcompanycode: widget.serviceType == "AMTS" ?"103" : "102",
-      //                     fpTransactionId: "",
-      //                     routeCode: widget.routeCode,
-      //                     externalTxnId: "",
-      //                     merchantTxnId: merchantTxnId,
-      //                     transactionDateTime: "",
-      //                     serviceType: widget.serviceType,
-      //                     paymentType: 1,
-      //                     paymentState: "",
-      //                     pgServiceTransactionId: "",
-      //                     pgTransactionId: "");
-      //
-      //
-      //                 BlocProvider.of<PaymentBloc>(context).add(
-      //                   GetQRCodeEvent(paymentRequest: paymentRequest2),
-      //                 );
+        
+        List<String> sepratedList = result.split("&");
+        String paymentStatus = '';
+        sepratedList.forEach((element) {
+          if(element.isCaseInsensitiveContainsAny('Status')){
+            List<String> splitStatus = element.split("=");
+            paymentStatus = splitStatus.last;
+          }
+        });
+         
+        if(sepratedList.contains('Status=SUCCESS')){
+          showCustomSnackBar(
+              "SUCCESS",
+              context,
+              isError: false);
 
-      Get.to(() => PaymentDetailsScreen());
+          var paymentRequest2 = PaymentRequest2(
+              sourceStopId:  widget.sourceStopId,
+              destinationStopId:
+              widget.destinationStopId,
+              discountype: discountType,
+              txnStatus: paymentStatus == "SUCCESS" ? "SUCCESS" : "FAILED",
+              merchantId: "",
+              sourcecompanycode: widget.serviceType == "AMTS" ?"103" : "102",
+              destinationcompanycode: widget.serviceType == "AMTS" ?"103" : "102",
+              fpTransactionId: "",
+              routeCode: widget.routeCode,
+              externalTxnId: "",
+              merchantTxnId: merchantTxnId,
+              transactionDateTime: "",
+              serviceType: widget.serviceType,
+              paymentType: 1,
+              paymentState: "",
+              pgServiceTransactionId: "",
+              pgTransactionId: "");
+
+
+          BlocProvider.of<PaymentBloc>(context).add(
+            GetQRCodeEvent(paymentRequest: paymentRequest2),
+          );
+
+          Get.to(() => PaymentDetailsScreen());
+
+        }
     } else {
       print('Request failed with status code: ${response.statusCode}');
     }
@@ -481,11 +505,10 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     setState(() {});
   }
 
-  void onRadioChanged(String? value) {
+  void onRadioChanged(UpiObject? value) {
     // Update the selected package name
     selectedPackageName = value;
-    // You can perform additional actions based on the selected package name
-    print('Selected Package Name: $value');
+    apiCall(discountCode,selectedPackageName?.packageName ?? '');
   }
 
   Future<void> _showBottomSheet() async {
@@ -493,12 +516,11 @@ class _PassengerDetailsState extends State<PassengerDetails> {
 
     var values = await GetUPI.apps();
     upiAppsList = values.data;
+    appNamesList.clear();
     upiAppsList.forEach((element) {
-      appNamesList.add(element.name);
-
-
+      appNamesList.add(UpiObject(name: element.name, packageName: element.packageName, icon: element.icon));
     });
-    print(appNamesList);
+
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -507,18 +529,13 @@ class _PassengerDetailsState extends State<PassengerDetails> {
           children: [
             // Display radio buttons using RadioListTile
             Column(
-              children: appNamesList.map((String packageName) {
-                return RadioListTile(
-                  title: Text(packageName),
-                  value: packageName,
+              children: appNamesList.map((UpiObject upiObject) {
+                return RadioListTile<UpiObject>(
+                  title: Text(upiObject.name),
+                  value: upiObject,
                   groupValue: selectedPackageName,
-                  onChanged: (String? value) {
-                    // Handle radio button selection
+                  onChanged: (UpiObject? value) {
                     onRadioChanged(value);
-                    setState(() {
-                      appNamesList.clear();
-                    });
-                    // Close the bottom sheet after selection
                     Navigator.pop(context);
                   },
                 );
