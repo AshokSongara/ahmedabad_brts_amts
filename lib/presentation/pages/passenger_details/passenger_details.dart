@@ -57,6 +57,9 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   String? selectedOption = "PhonePe";
   String token = "";
   String? serviceTypee;
+  List<String> appNamesList = [];
+  String? selectedPackageName;
+
 
   PhonepeRequest? phonepeRequest;
 
@@ -64,8 +67,9 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   bool appOpen = false;
 
   @override
-  void initState() {
+   initState()  {
     super.initState();
+
     // initPlatformState();
     list = Get.arguments as List<String?>;
 
@@ -152,6 +156,14 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                   ),
                   SizedBox(
                     height: 20.h,
+                  ),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        _showBottomSheet();
+                      },
+                      child: Text('Select UPI App'),
+                    ),
                   ),
 
                   Center(
@@ -341,6 +353,8 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     Loader.hide();
   }
 
+
+
   Widget getSourceDestination(String title, String schedule) {
     return Expanded(
       flex: 2,
@@ -414,9 +428,11 @@ class _PassengerDetailsState extends State<PassengerDetails> {
       var values = await GetUPI.apps();
       upiAppsList = values.data;
       upiAppsList.forEach((element) {
+        appNamesList.add(element.name);
+
 
       });
-
+      print(appNamesList);
 
       MethodChannel channel = const MethodChannel('nativeChannel');
       await channel.invokeMethod('startPayment', intentUrl);
@@ -463,5 +479,55 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     _addedKidsCount = kidsCount;
     _addedAdultsCount = adultsCount;
     setState(() {});
+  }
+
+  void onRadioChanged(String? value) {
+    // Update the selected package name
+    selectedPackageName = value;
+    // You can perform additional actions based on the selected package name
+    print('Selected Package Name: $value');
+  }
+
+  Future<void> _showBottomSheet() async {
+    List<UpiObject> upiAppsList = [];
+
+    var values = await GetUPI.apps();
+    upiAppsList = values.data;
+    upiAppsList.forEach((element) {
+      appNamesList.add(element.name);
+
+
+    });
+    print(appNamesList);
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // Display radio buttons using RadioListTile
+            Column(
+              children: appNamesList.map((String packageName) {
+                return RadioListTile(
+                  title: Text(packageName),
+                  value: packageName,
+                  groupValue: selectedPackageName,
+                  onChanged: (String? value) {
+                    // Handle radio button selection
+                    onRadioChanged(value);
+                    setState(() {
+                      appNamesList.clear();
+                    });
+                    // Close the bottom sheet after selection
+                    Navigator.pop(context);
+                  },
+                );
+              }).toList(),
+            ),
+            // Display selected package name
+          ],
+        );
+      },
+    );
   }
 }
