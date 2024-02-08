@@ -30,16 +30,15 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-
 class PassengerDetails extends StatefulWidget {
-  const PassengerDetails({
-    Key? key,
-    required this.sourceStopId,
-    required this.destinationStopId,
-    required this.routeCode,
-    required this.serviceType,
-    this.fare
-  }) : super(key: key);
+  const PassengerDetails(
+      {Key? key,
+      required this.sourceStopId,
+      required this.destinationStopId,
+      required this.routeCode,
+      required this.serviceType,
+      this.fare})
+      : super(key: key);
 
   final String? sourceStopId;
   final String? destinationStopId;
@@ -57,20 +56,20 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   List<String?> list = [];
   String? selectedOption = "PhonePe";
   String token = "";
-  String? serviceTypee ;
-  PhonepeRequest? phonepeRequest ;
+  String? serviceTypee;
+
+  PhonepeRequest? phonepeRequest;
+
   List upiAppsListAndroid = [];
   bool appOpen = false;
-
 
   @override
   void initState() {
     super.initState();
-   // initPlatformState();
+    // initPlatformState();
     list = Get.arguments as List<String?>;
 
     getMemberID();
-
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -95,7 +94,6 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   getData() {
     BlocProvider.of<DiscountBloc>(context).add(const GetDiscountEvent());
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -148,12 +146,13 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                           child: SvgPicture.asset(ImageConstant.iArrowRight),
                         ),
                         getSourceDestination(list[1] ?? "",
-                            "${DateFormat('dd MMM yyyy').format(DateTime.now())}, ${list[3]}"
-                        )
+                            "${DateFormat('dd MMM yyyy').format(DateTime.now())}, ${list[3]}")
                       ],
                     ),
                   ),
-                  SizedBox(height: 20.h,),
+                  SizedBox(
+                    height: 20.h,
+                  ),
 
                   Center(
                     child: Column(
@@ -166,7 +165,10 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                           ),
                           margin: const EdgeInsets.only(left: 30, right: 30),
                           child: RadioListTile(
-                            title: Text("UPI apps",style: poppinsMedium.copyWith(fontSize: 18.sp,fontWeight: FontWeight.w400)),
+                            title: Text("UPI apps",
+                                style: poppinsMedium.copyWith(
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.w400)),
                             value: "PhonePe",
                             activeColor: AppColors.primaryColor,
                             //tileColor: Colors.grey,
@@ -178,8 +180,9 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                             },
                           ),
                         ),
-                       SizedBox(height: 10.h,),
-
+                        SizedBox(
+                          height: 10.h,
+                        ),
                         Container(
                           decoration: const BoxDecoration(
                             color: AppColors.grayC4C$C$,
@@ -187,7 +190,10 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                           ),
                           margin: const EdgeInsets.only(left: 30, right: 30),
                           child: RadioListTile(
-                            title: Text("Fiserv", style: poppinsMedium.copyWith(fontSize: 18.sp,fontWeight: FontWeight.w400)),
+                            title: Text("Fiserv",
+                                style: poppinsMedium.copyWith(
+                                    fontSize: 18.sp,
+                                    fontWeight: FontWeight.w400)),
                             value: "Fiser",
                             activeColor: AppColors.primaryColor,
                             groupValue: selectedOption,
@@ -242,26 +248,22 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        if(selectedOption == "PhonePe")
-                                        {
+                                        if (selectedOption == "PhonePe") {
                                           apiCall(state
-                                              .discountResponse
-                                              .data![index]
-                                              .discountTypeCode ??
+                                                  .discountResponse
+                                                  .data![index]
+                                                  .discountTypeCode ??
                                               "");
-
-                                        }
-                                        else {
-                                          Get.toNamed(
-                                              RouteHelper
-                                                  .getPaymentDetailsRoute(
+                                        } else {
+                                          Get.toNamed(RouteHelper
+                                              .getPaymentDetailsRoute(
                                                   widget.sourceStopId ?? "",
                                                   widget.destinationStopId ??
                                                       "",
                                                   state
-                                                      .discountResponse
-                                                      .data![index]
-                                                      .discountTypeCode ??
+                                                          .discountResponse
+                                                          .data![index]
+                                                          .discountTypeCode ??
                                                       "",
                                                   "",
                                                   "",
@@ -283,12 +285,14 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                               ),
                                             ),
                                             border: Border.all(
-                                                color: Theme.of(context).primaryColor)),
+                                                color: Theme.of(context)
+                                                    .primaryColor)),
                                         child: Text("Book Ticket",
                                             style: satoshiRegular.copyWith(
                                                 fontSize: Dimensions.dp15.sp,
                                                 fontWeight: FontWeight.w500,
-                                                color: Theme.of(context).primaryColor)),
+                                                color: Theme.of(context)
+                                                    .primaryColor)),
                                       ),
                                     )
                                   ],
@@ -358,16 +362,13 @@ class _PassengerDetailsState extends State<PassengerDetails> {
       ),
     );
   }
-  void apiCall(String discountType) async {
 
+  void apiCall(String discountType) async {
     // var value = await GetUPI.apps();
     // print(value.data);
     // upiAppsListAndroid = value.data;
 
-
-
-
-     phonepeRequest = PhonepeRequest(
+    phonepeRequest = PhonepeRequest(
         startStopCode: widget.sourceStopId,
         endStopCode: widget.destinationStopId,
         discountype: "01",
@@ -376,8 +377,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
         mobileNumber: "9601524257",
         deviceOS: Platform.isAndroid ? "ANDROID" : "IOS",
         paymentInstrumentType: "UPI_INTENT",
-        targateApp: "com.phonepe.simulator");
-
+        targateApp: "com.google.android.apps.nbu.paisa.user");
 
     String jsonStr = jsonEncode(phonepeRequest);
 
@@ -403,64 +403,61 @@ class _PassengerDetailsState extends State<PassengerDetails> {
 
       final responseData = json.decode(response.body);
 
-      String? intentUrl = responseData['data']['data']['instrumentResponse']['intentUrl'];
-      String? merchantTxnId = responseData['data']['data']['merchantTransactionId'];
+      String? intentUrl =
+          responseData['data']['data']['instrumentResponse']['intentUrl'];
+      String? merchantTxnId =
+          responseData['data']['data']['merchantTransactionId'];
 
       print(merchantTxnId);
+      List<UpiObject> upiAppsList = [];
+
+      var values = await GetUPI.apps();
+      upiAppsList = values.data;
+      upiAppsList.forEach((element) {
+
+      });
 
 
+      MethodChannel channel = const MethodChannel('nativeChannel');
+      await channel.invokeMethod('startPayment', intentUrl);
 
+      // showCustomSnackBar(
+      //     "$data",
+      //     context,
+      //     isError: false);
+      //
+      //
+      //
+      //                 var paymentRequest2 = PaymentRequest2(
+      //                     sourceStopId:  widget.sourceStopId,
+      //                     destinationStopId:
+      //                     widget.destinationStopId,
+      //                     discountype: discountType,
+      //                     txnStatus: data == "Success" ? "SUCCESS" : "FAILED",
+      //                     merchantId: "",
+      //                     sourcecompanycode: widget.serviceType == "AMTS" ?"103" : "102",
+      //                     destinationcompanycode: widget.serviceType == "AMTS" ?"103" : "102",
+      //                     fpTransactionId: "",
+      //                     routeCode: widget.routeCode,
+      //                     externalTxnId: "",
+      //                     merchantTxnId: merchantTxnId,
+      //                     transactionDateTime: "",
+      //                     serviceType: widget.serviceType,
+      //                     paymentType: 1,
+      //                     paymentState: "",
+      //                     pgServiceTransactionId: "",
+      //                     pgTransactionId: "");
+      //
+      //
+      //                 BlocProvider.of<PaymentBloc>(context).add(
+      //                   GetQRCodeEvent(paymentRequest: paymentRequest2),
+      //                 );
 
-
-
-      final data = await GetUPI.openNativeIntent(
-          url: intentUrl ?? ""
-        // 'upi://pay?pa=AHMEDABADUAT@ybl&pn=MERCHANT&am=400&mam=400&tr=MT7850590868188104&tn=Payment%20for%20MT7850590868188104&mc=5311&mode=04&purpose=00&utm_campaign=B2B_PG&utm_medium=AHMEDABADUAT&utm_source=MT7850590868188104&mcbs=',
-      );
-
-
-      print("###Payment Response${data}");
-
-      showCustomSnackBar(
-          "$data",
-          context,
-          isError: false);
-
-
-
-                      var paymentRequest2 = PaymentRequest2(
-                          sourceStopId:  widget.sourceStopId,
-                          destinationStopId:
-                          widget.destinationStopId,
-                          discountype: discountType,
-                          txnStatus: data == "Success" ? "SUCCESS" : "FAILED",
-                          merchantId: "",
-                          sourcecompanycode: widget.serviceType == "AMTS" ?"103" : "102",
-                          destinationcompanycode: widget.serviceType == "AMTS" ?"103" : "102",
-                          fpTransactionId: "",
-                          routeCode: widget.routeCode,
-                          externalTxnId: "",
-                          merchantTxnId: merchantTxnId,
-                          transactionDateTime: "",
-                          serviceType: widget.serviceType,
-                          paymentType: 1,
-                          paymentState: "",
-                          pgServiceTransactionId: "",
-                          pgTransactionId: "");
-
-
-                      BlocProvider.of<PaymentBloc>(context).add(
-                        GetQRCodeEvent(paymentRequest: paymentRequest2),
-                      );
-
-                      Get.to(() =>PaymentDetailsScreen());
-
-
+      Get.to(() => PaymentDetailsScreen());
     } else {
       print('Request failed with status code: ${response.statusCode}');
     }
   }
-
 
   setPassengerData(int adultsCount, int kidsCount) {
     _addedKidsCount = kidsCount;

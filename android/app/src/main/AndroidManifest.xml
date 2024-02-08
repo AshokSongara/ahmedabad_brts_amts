@@ -10,7 +10,11 @@
 
     <queries >
         <package android:name="com.phonepe.app" />
+        <package android:name="in.org.npci.upiapp" />
         <package android:name="com.phonepe.simulator" />
+        <package android:name="net.one97.paytm" />
+        <package android:name="com.google.android.apps.nbu.paisa.user" />
+        <package android:name="in.amazon.mShop.android.shopping" />
     </queries>
 
     <application

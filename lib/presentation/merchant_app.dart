@@ -61,6 +61,7 @@ class MerchantScreen extends State<MerchantApp> {
     PhonePePaymentSdk.init(environmentValue, appId, merchantId, enableLogs)
         .then((isInitialized) => {
       setState(() {
+        print(appId);
         result = 'PhonePe SDK Initialized - $isInitialized';
       })
     })

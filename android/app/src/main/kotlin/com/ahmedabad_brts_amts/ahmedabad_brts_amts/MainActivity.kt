@@ -1,6 +1,7 @@
 package com.ahmedabad_brts_amts.ahmedabad_brts_amts
 
 import android.content.Intent
+import android.net.Uri
 import android.util.Base64
 import android.util.Log
 import android.widget.Toast
@@ -33,7 +34,6 @@ import kotlin.String
 import kotlin.Throwable
 import kotlin.let
 
-
 class MainActivity : FlutterActivity() {
     private var sessionToken = ""
     private var fdPaymentSDK: FDPaymentSDK? = null
@@ -50,6 +50,13 @@ class MainActivity : FlutterActivity() {
                     Toast.makeText(context, "Called here", Toast.LENGTH_SHORT).show()
                     initiateApiCall()
 
+                }else if(call.method =="startPayment"){
+                    var intentUrl = call.arguments as String
+
+                    val intent = Intent(Intent.ACTION_VIEW)
+                    intent.setData(Uri.parse(intentUrl))
+                    intent.setPackage("com.google.android.apps.nbu.paisa.user")
+                    activity.startActivityForResult(intent, 123)
                 }
             }
 
