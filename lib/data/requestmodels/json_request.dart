@@ -4,7 +4,6 @@ class PhonepeRequest {
   String? discountype;
   String? routeCode;
   int? routeType;
-  String? mobileNumber;
   String? deviceOS;
   String? paymentInstrumentType;
   String? targateApp;
@@ -15,7 +14,6 @@ class PhonepeRequest {
         this.discountype,
         this.routeCode,
         this.routeType,
-        this.mobileNumber,
         this.deviceOS,
         this.paymentInstrumentType,
         this.targateApp});
@@ -26,7 +24,6 @@ class PhonepeRequest {
     discountype = json['discountype'];
     routeCode = json['routeCode'];
     routeType = json['routeType'];
-    mobileNumber = json['mobileNumber'];
     deviceOS = json['deviceOS'];
     paymentInstrumentType = json['paymentInstrumentType'];
     targateApp = json['targateApp'];
@@ -39,7 +36,6 @@ class PhonepeRequest {
     data['discountype'] = this.discountype;
     data['routeCode'] = this.routeCode;
     data['routeType'] = this.routeType;
-    data['mobileNumber'] = this.mobileNumber;
     data['deviceOS'] = this.deviceOS;
     data['paymentInstrumentType'] = this.paymentInstrumentType;
     data['targateApp'] = this.targateApp;

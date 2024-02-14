@@ -66,6 +66,7 @@ class ImageConstant {
   static const String iStop = 'assets/images/ic_stop.svg';
   static const String iAMTS = 'assets/images/ic_amts.png';
   static const String failed = 'assets/images/failed.svg';
+  static const String pending = 'assets/images/pending.svg';
 
   static const String iMapImage = 'assets/images/ic_map_image.png';
 

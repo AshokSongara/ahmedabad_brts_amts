@@ -11,6 +11,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/payment/payment_bloc.dart
 import 'package:ahmedabad_brts_amts/presentation/blocs/payment/payment_event.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/json_request.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/payment_details/payment_details_screen.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/pending_screen/pending_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
@@ -59,7 +60,9 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   String? serviceTypee;
   List<UpiObject> appNamesList = [];
   UpiObject? selectedPackageName;
-
+  bool areButtonsVisible = false;
+  bool areupiappsvisible = false;
+  String? discount;
 
   PhonepeRequest? phonepeRequest;
 
@@ -68,7 +71,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   String discountCode = '';
 
   @override
-   initState()  {
+  initState() {
     super.initState();
 
     // initPlatformState();
@@ -109,11 +112,8 @@ class _PassengerDetailsState extends State<PassengerDetails> {
           if (state is DiscountLoadingState) {
             Loader.show(context);
           } else if (state is DiscountSuccessState) {
-            discountCode = state
-                .discountResponse
-                .data?.first
-                .discountTypeCode ??
-                "";
+            discountCode =
+                state.discountResponse.data?.first.discountTypeCode ?? "";
             Loader.hide();
           } else if (state is DiscountFailedState) {
             Loader.hide();
@@ -122,118 +122,259 @@ class _PassengerDetailsState extends State<PassengerDetails> {
         builder: (context, state) {
           if (state is DiscountSuccessState) {
             return SafeArea(
-              child: Column(
-                children: [
-                  CustomToolbar(
-                    title: "passenger_details",
-                    showOption: false,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 19, vertical: 24),
-                    margin: const EdgeInsets.only(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomToolbar(
+                      title: "passenger_details",
+                      showOption: false,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 19, vertical: 24),
+                      margin: const EdgeInsets.only(
                         left: Dimensions.dp24,
                         right: Dimensions.dp24,
-                        top: Dimensions.dp35),
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.gray6E8EE7,
-                          blurRadius: 5.0,
+                      ),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: AppColors.gray6E8EE7,
+                            blurRadius: 5.0,
+                          ),
+                        ],
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(Dimensions.dp10),
                         ),
-                      ],
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(Dimensions.dp10),
+                      ),
+                      child: Row(
+                        children: [
+                          getSourceDestination(list[0] ?? "",
+                              "${DateFormat('dd MMM yyyy').format(DateTime.now())}, ${list[2]}"),
+                          Expanded(
+                            flex: 1,
+                            child: SvgPicture.asset(ImageConstant.iArrowRight),
+                          ),
+                          getSourceDestination(list[1] ?? "",
+                              "${DateFormat('dd MMM yyyy').format(DateTime.now())}, ${list[3]}")
+                        ],
                       ),
                     ),
-                    child: Row(
-                      children: [
-                        getSourceDestination(list[0] ?? "",
-                            "${DateFormat('dd MMM yyyy').format(DateTime.now())}, ${list[2]}"),
-                        Expanded(
-                          flex: 1,
-                          child: SvgPicture.asset(ImageConstant.iArrowRight),
-                        ),
-                        getSourceDestination(list[1] ?? "",
-                            "${DateFormat('dd MMM yyyy').format(DateTime.now())}, ${list[3]}")
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  Center(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        _showBottomSheet();
-                      },
-                      child: Text('Select UPI App'),
-                    ),
-                  ),
 
-                  Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          decoration: const BoxDecoration(
-                            color: AppColors.grayC4C$C$,
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
-                          ),
-                          margin: const EdgeInsets.only(left: 30, right: 30),
-                          child: RadioListTile(
-                            title: Text("UPI apps",
-                                style: poppinsMedium.copyWith(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w400)),
-                            value: "PhonePe",
-                            activeColor: AppColors.primaryColor,
-                            //tileColor: Colors.grey,
-                            groupValue: selectedOption,
-                            onChanged: (value) {
-                              setState(() {
-                                selectedOption = value as String?;
-                              });
-                            },
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        Container(
-                          decoration: const BoxDecoration(
-                            color: AppColors.grayC4C$C$,
-                            borderRadius: BorderRadius.all(Radius.circular(50)),
-                          ),
-                          margin: const EdgeInsets.only(left: 30, right: 30),
-                          child: RadioListTile(
-                            title: Text("Fiserv",
-                                style: poppinsMedium.copyWith(
-                                    fontSize: 18.sp,
-                                    fontWeight: FontWeight.w400)),
-                            value: "Fiser",
-                            activeColor: AppColors.primaryColor,
-                            groupValue: selectedOption,
-                            onChanged: (value) {
-                              setState(() {
-                                selectedOption = value as String?;
-                              });
-                            },
-                          ),
-                        ),
-                      ],
+                    // Center(
+                    //   child: ElevatedButton(
+                    //     onPressed: () {
+                    //       _showBottomSheet();
+                    //     },
+                    //     child: Text('Select UPI App'),
+                    //   ),
+                    // ),
+
+                    // Center(
+                    //   child: Column(
+                    //     mainAxisAlignment: MainAxisAlignment.center,
+                    //     children: [
+                    //       // Container(
+                    //       //   decoration: const BoxDecoration(
+                    //       //     color: AppColors.grayC4C$C$,
+                    //       //     borderRadius: BorderRadius.all(Radius.circular(50)),
+                    //       //   ),
+                    //       //   margin: const EdgeInsets.only(left: 30, right: 30),
+                    //       //   child: RadioListTile(
+                    //       //     title: Text("UPI apps",
+                    //       //         style: poppinsMedium.copyWith(
+                    //       //             fontSize: 18.sp,
+                    //       //             fontWeight: FontWeight.w400)),
+                    //       //     value: "PhonePe",
+                    //       //     activeColor: AppColors.primaryColor,
+                    //       //     //tileColor: Colors.grey,
+                    //       //     groupValue: selectedOption,
+                    //       //     onChanged: (value) {
+                    //       //       setState(() {
+                    //       //         selectedOption = value as String?;
+                    //       //       });
+                    //       //     },
+                    //       //   ),
+                    //       // ),
+                    //
+                    //       // Container(
+                    //       //   decoration: const BoxDecoration(
+                    //       //     color: AppColors.grayC4C$C$,
+                    //       //     borderRadius: BorderRadius.all(Radius.circular(50)),
+                    //       //   ),
+                    //       //   margin: const EdgeInsets.only(left: 30, right: 30),
+                    //       //   child: RadioListTile(
+                    //       //     title: Text("Fiserv",
+                    //       //         style: poppinsMedium.copyWith(
+                    //       //             fontSize: 18.sp,
+                    //       //             fontWeight: FontWeight.w400)),
+                    //       //     value: "Fiser",
+                    //       //     activeColor: AppColors.primaryColor,
+                    //       //     groupValue: selectedOption,
+                    //       //     onChanged: (value) {
+                    //       //       setState(() {
+                    //       //         selectedOption = value as String?;
+                    //       //       });
+                    //       //     },
+                    //       //   ),
+                    //       // ),
+                    //     ],
+                    //   ),
+                    // ),
+                    ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: state.discountResponse.data?.length,
+                        itemBuilder: (context, index) {
+                          return SingleChildScrollView(
+                            child: Container(
+                              margin: const EdgeInsets.only(
+                                  left: Dimensions.dp24,
+                                  right: Dimensions.dp24,
+                                  top: Dimensions.dp15),
+                              decoration: const BoxDecoration(
+                                color: Colors.white,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.gray6E8EE7,
+                                    blurRadius: 5.0,
+                                  ),
+                                ],
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(Dimensions.dp10),
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(
+                                    top: 15, right: 18, left: 18),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          state.discountResponse.data![index]
+                                                  .catPassSubCateName ??
+                                              "",
+                                          style: satoshiRegular.copyWith(
+                                              fontSize: Dimensions.dp16.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.darkGray),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              discount = state
+                                                      .discountResponse
+                                                      .data![index]
+                                                      .catPassSubCateName ??
+                                                  "";
+                                              areButtonsVisible =
+                                                  !areButtonsVisible;
+                                            });
+                                            // if (selectedOption == "PhonePe") {
+                                            //   apiCall(state
+                                            //           .discountResponse
+                                            //           .data![index]
+                                            //           .discountTypeCode ??
+                                            //       "",'');
+                                            // } else {
+                                            //   Get.toNamed(RouteHelper
+                                            //       .getPaymentDetailsRoute(
+                                            //           widget.sourceStopId ?? "",
+                                            //           widget.destinationStopId ??
+                                            //               "",
+                                            //           state
+                                            //                   .discountResponse
+                                            //                   .data![index]
+                                            //                   .discountTypeCode ??
+                                            //               "",
+                                            //           "",
+                                            //           "",
+                                            //           "",
+                                            //           "",
+                                            //           widget.routeCode ?? "",
+                                            //           widget.serviceType ?? "",
+                                            //           "Payment"));
+                                            // }
+                                          },
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 8, horizontal: 15),
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(
+                                                    Dimensions.dp5,
+                                                  ),
+                                                ),
+                                                border: Border.all(
+                                                    color: Theme.of(context)
+                                                        .primaryColor)),
+                                            child: Text("Book Ticket",
+                                                style: satoshiRegular.copyWith(
+                                                    fontSize:
+                                                        Dimensions.dp15.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: Theme.of(context)
+                                                        .primaryColor)),
+                                          ),
+                                        )
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        }),
+                    SizedBox(
+                      height: 18.h,
                     ),
-                  ),
-                  ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: state.discountResponse.data?.length,
-                      itemBuilder: (context, index) {
-                        return Container(
+
+                    Visibility(
+                      visible: areButtonsVisible,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 18.w),
+                        child: Text("How would you want to pay?",
+                            style: satoshiRegular.copyWith(
+                                fontSize: Dimensions.dp16.sp,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black)),
+                      ),
+                    ),
+
+                    Visibility(
+                      visible: areButtonsVisible,
+                      child: GestureDetector(
+                        onTap: () async {
+                          List<UpiObject> upiAppsList = [];
+
+                          var values = await GetUPI.apps();
+                          upiAppsList = values.data;
+                          appNamesList.clear();
+                          upiAppsList.forEach((element) {
+                            appNamesList.add(UpiObject(
+                                name: element.name,
+                                packageName: element.packageName,
+                                icon: element.icon));
+                          });
+                          setState(() {
+                            areupiappsvisible = !areupiappsvisible;
+                          });
+                        },
+                        child: Container(
+                          width: Get.width,
+                          height: 50.h,
                           margin: const EdgeInsets.only(
                               left: Dimensions.dp24,
                               right: Dimensions.dp24,
-                              top: Dimensions.dp35),
+                              top: Dimensions.dp10),
                           decoration: const BoxDecoration(
                             color: Colors.white,
                             boxShadow: [
@@ -246,104 +387,152 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                               Radius.circular(Dimensions.dp10),
                             ),
                           ),
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 15, right: 18, left: 18),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      state.discountResponse.data![index]
-                                              .catPassSubCateName ??
-                                          "",
-                                      style: satoshiRegular.copyWith(
-                                          fontSize: Dimensions.dp16.sp,
-                                          fontWeight: FontWeight.w500,
-                                          color: AppColors.darkGray),
+                          child: Center(
+                            child: Text("Pay via UPI apps",
+                                style: satoshiRegular.copyWith(
+                                    fontSize: Dimensions.dp18.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: Theme.of(context).primaryColor)),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Visibility(
+                      visible: areupiappsvisible,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          // Display buttons using ElevatedButton
+                          for (UpiObject upiObject in appNamesList)
+                            GestureDetector(
+                              onTap: () {
+                                onButtonPressed(upiObject);
+                              },
+                              child: Container(
+                                width: Get.width,
+                                height: 50.h,
+                                margin: const EdgeInsets.only(
+                                    left: Dimensions.dp24,
+                                    right: Dimensions.dp24,
+                                    top: Dimensions.dp10),
+                                decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.gray6E8EE7,
+                                      blurRadius: 5.0,
                                     ),
-                                    InkWell(
-                                      onTap: () {
-                                        if (selectedOption == "PhonePe") {
-                                          apiCall(state
-                                                  .discountResponse
-                                                  .data![index]
-                                                  .discountTypeCode ??
-                                              "",'');
-                                        } else {
-                                          Get.toNamed(RouteHelper
-                                              .getPaymentDetailsRoute(
-                                                  widget.sourceStopId ?? "",
-                                                  widget.destinationStopId ??
-                                                      "",
-                                                  state
-                                                          .discountResponse
-                                                          .data![index]
-                                                          .discountTypeCode ??
-                                                      "",
-                                                  "",
-                                                  "",
-                                                  "",
-                                                  "",
-                                                  widget.routeCode ?? "",
-                                                  widget.serviceType ?? "",
-                                                  "Payment"));
-                                        }
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 8, horizontal: 15),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                              Radius.circular(
-                                                Dimensions.dp5,
-                                              ),
-                                            ),
-                                            border: Border.all(
-                                                color: Theme.of(context)
-                                                    .primaryColor)),
-                                        child: Text("Book Ticket",
-                                            style: satoshiRegular.copyWith(
-                                                fontSize: Dimensions.dp15.sp,
-                                                fontWeight: FontWeight.w500,
-                                                color: Theme.of(context)
-                                                    .primaryColor)),
+                                  ],
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(Dimensions.dp10),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 10.w,
+                                    ),
+                                    Container(
+                                      width: 22,
+                                      height: 22,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
                                       ),
-                                    )
+                                      child: (Image.memory(
+                                          decodeIcon(upiObject.icon))),
+                                    ),
+                                    SizedBox(
+                                      width: 15.w,
+                                    ),
+                                    Container(
+                                      width: 280.w,
+                                      child: Text(upiObject.name,
+                                          style: satoshiRegular.copyWith(
+                                              fontSize: Dimensions.dp15.sp,
+                                              fontWeight: FontWeight.w500,
+                                              color: Theme.of(context)
+                                                  .primaryColor)),
+                                    ),
+                                  SvgPicture.asset(ImageConstant.iRightGrayArrow,color: Theme.of(context).primaryColor,)
                                   ],
                                 ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                              ],
+                              ),
+                            ),
+                          // Display selected package name if needed
+                          // if (selectedPackageName != null)
+                          //   Text(
+                          //       'Selected Package Name: ${selectedPackageName?.name ?? ''}'),
+                        ],
+                      ),
+                    ),
+
+                    Visibility(
+                      child: GestureDetector(
+                        child: Container(
+                          width: Get.width,
+                          height: 50.h,
+                          margin: const EdgeInsets.only(
+                              left: Dimensions.dp24,
+                              right: Dimensions.dp24,
+                              top: Dimensions.dp10),
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppColors.gray6E8EE7,
+                                blurRadius: 5.0,
+                              ),
+                            ],
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(Dimensions.dp10),
                             ),
                           ),
-                        );
-                      }),
-                  // Expanded(
-                  //   child: Align(
-                  //     alignment: Alignment.bottomCenter,
-                  //     child: Container(
-                  //       margin: const EdgeInsets.all(20),
-                  //       height: 53,
-                  //       child: CustomButton(
-                  //         color: AppColors.primaryColor,
-                  //         text: "Payment",
-                  //         onPressed: () {
-                  //
-                  //         },
-                  //         width: MediaQuery.of(context).size.width,
-                  //         style: poppinsMedium.copyWith(
-                  //             color: Colors.white, fontSize: 15.sp),
-                  //         height: 53,
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
-                ],
+                          child: Center(
+                            child: Text("Pay via Fiserv",
+                                style: satoshiRegular.copyWith(
+                                    fontSize: Dimensions.dp18.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: Theme.of(context).primaryColor)),
+                          ),
+                        ),
+                        onTap: () {
+                          Get.toNamed(RouteHelper.getPaymentDetailsRoute(
+                              widget.sourceStopId ?? "",
+                              widget.destinationStopId ?? "",
+                              discount ?? "",
+                              "",
+                              "",
+                              "",
+                              "",
+                              widget.routeCode ?? "",
+                              widget.serviceType ?? "",
+                              "Payment"));
+                        },
+                      ),
+                      visible: areButtonsVisible,
+                    ),
+                    // Expanded(
+                    //   child: Align(
+                    //     alignment: Alignment.bottomCenter,
+                    //     child: Container(
+                    //       margin: const EdgeInsets.all(20),
+                    //       height: 53,
+                    //       child: CustomButton(
+                    //         color: AppColors.primaryColor,
+                    //         text: "Payment",
+                    //         onPressed: () {
+                    //
+                    //         },
+                    //         width: MediaQuery.of(context).size.width,
+                    //         style: poppinsMedium.copyWith(
+                    //             color: Colors.white, fontSize: 15.sp),
+                    //         height: 53,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                ),
               ),
             );
           }
@@ -358,8 +547,6 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     super.dispose();
     Loader.hide();
   }
-
-
 
   Widget getSourceDestination(String title, String schedule) {
     return Expanded(
@@ -383,7 +570,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     );
   }
 
-  void apiCall(String discountType,String packageName) async {
+  void apiCall(String discountType, String packageName) async {
     // var value = await GetUPI.apps();
     // print(value.data);
     // upiAppsListAndroid = value.data;
@@ -391,10 +578,9 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     phonepeRequest = PhonepeRequest(
         startStopCode: widget.sourceStopId,
         endStopCode: widget.destinationStopId,
-        discountype: "01",
+        discountype: discountType,
         routeCode: widget.routeCode,
-        routeType: 1,
-        mobileNumber: "9601524257",
+        routeType: widget.serviceType == "BRTS" ? 1 : 2,
         deviceOS: Platform.isAndroid ? "ANDROID" : "IOS",
         paymentInstrumentType: "UPI_INTENT",
         targateApp: packageName);
@@ -418,6 +604,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     );
 
     if (response.statusCode == 200) {
+      appNamesList.clear();
       print('Request successful! Response data:');
       print(response.body);
 
@@ -441,64 +628,115 @@ class _PassengerDetailsState extends State<PassengerDetails> {
        //Write Ios code here
       }
       String result = '';
-      
+
       try {
-        var data = {
-          "intentUrl":intentUrl,
-          "packageName":packageName
-        };
+        var data = {"intentUrl": intentUrl, "packageName": packageName};
 
-          MethodChannel channel = const MethodChannel('nativeChannel');
-          result = await channel.invokeMethod('startPayment', data);
-        } on PlatformException catch (e) {
-          print('Failed : ${e.message}');
+        MethodChannel channel = const MethodChannel('nativeChannel');
+        result = await channel.invokeMethod('startPayment', data);
+        appNamesList.clear();
+      } on PlatformException catch (e) {
+        print('Failed : ${e.message}');
+      }
+
+      List<String> sepratedList = result.split("&");
+      String paymentStatus = '';
+      sepratedList.forEach((element) {
+        if (element.isCaseInsensitiveContainsAny('Status')) {
+          List<String> splitStatus = element.split("=");
+          paymentStatus = splitStatus.last;
         }
+      });
 
-        
-        List<String> sepratedList = result.split("&");
-        String paymentStatus = '';
-        sepratedList.forEach((element) {
-          if(element.isCaseInsensitiveContainsAny('Status')){
-            List<String> splitStatus = element.split("=");
-            paymentStatus = splitStatus.last;
-          }
-        });
-         
-        if(sepratedList.contains('Status=SUCCESS')){
-          showCustomSnackBar(
-              "SUCCESS",
-              context,
-              isError: false);
+      if (sepratedList.contains('Status=SUCCESS')) {
+        showCustomSnackBar("SUCCESS", context, isError: false);
 
-          var paymentRequest2 = PaymentRequest2(
-              sourceStopId:  widget.sourceStopId,
-              destinationStopId:
-              widget.destinationStopId,
-              discountype: discountType,
-              txnStatus: paymentStatus == "SUCCESS" ? "SUCCESS" : "FAILED",
-              merchantId: "",
-              sourcecompanycode: widget.serviceType == "AMTS" ?"103" : "102",
-              destinationcompanycode: widget.serviceType == "AMTS" ?"103" : "102",
-              fpTransactionId: "",
-              routeCode: widget.routeCode,
-              externalTxnId: "",
-              merchantTxnId: merchantTxnId,
-              transactionDateTime: "",
-              serviceType: widget.serviceType,
-              paymentType: 1,
-              paymentState: "",
-              pgServiceTransactionId: "",
-              pgTransactionId: "");
+        appNamesList.clear();
 
+        var paymentRequest2 = PaymentRequest2(
+            sourceStopId: widget.sourceStopId,
+            destinationStopId: widget.destinationStopId,
+            discountype: discountType,
+            txnStatus: paymentStatus == "SUCCESS" ? "SUCCESS" : "FAILED",
+            merchantId: "",
+            sourcecompanycode: widget.serviceType == "AMTS" ? "103" : "102",
+            destinationcompanycode:
+                widget.serviceType == "AMTS" ? "103" : "102",
+            fpTransactionId: "",
+            routeCode: widget.routeCode,
+            externalTxnId: "",
+            merchantTxnId: merchantTxnId,
+            transactionDateTime: "",
+            serviceType: widget.serviceType,
+            paymentType: 1,
+            paymentState: "",
+            pgServiceTransactionId: "",
+            pgTransactionId: "");
 
-          BlocProvider.of<PaymentBloc>(context).add(
-            GetQRCodeEvent(paymentRequest: paymentRequest2),
-          );
+        BlocProvider.of<PaymentBloc>(context).add(
+          GetQRCodeEvent(paymentRequest: paymentRequest2),
+        );
 
-          Get.to(() => PaymentDetailsScreen());
+        Get.to(() => PaymentDetailsScreen());
+      } else if (sepratedList.contains('Status=PENDING')) {
+        showCustomSnackBar("PENDING", context, isError: false);
 
-        }
+        var paymentRequest2 = PaymentRequest2(
+            sourceStopId: widget.sourceStopId,
+            destinationStopId: widget.destinationStopId,
+            discountype: discountType,
+            txnStatus:"PENDING",
+            merchantId: "",
+            sourcecompanycode: widget.serviceType == "AMTS" ? "103" : "102",
+            destinationcompanycode:
+            widget.serviceType == "AMTS" ? "103" : "102",
+            fpTransactionId: "",
+            routeCode: widget.routeCode,
+            externalTxnId: "",
+            merchantTxnId: merchantTxnId,
+            transactionDateTime: "",
+            serviceType: widget.serviceType,
+            paymentType: 1,
+            paymentState: "",
+            pgServiceTransactionId: "",
+            pgTransactionId: "");
+
+        BlocProvider.of<PaymentBloc>(context).add(
+          GetQRCodeEvent(paymentRequest: paymentRequest2),
+        );
+        Get.to(() => PendingScreen());
+        appNamesList.clear();
+      } else if (sepratedList.contains('Status=FAILED')) {
+        showCustomSnackBar("FAILED", context, isError: false);
+
+        var paymentRequest2 = PaymentRequest2(
+            sourceStopId: widget.sourceStopId,
+            destinationStopId: widget.destinationStopId,
+            discountype: discountType,
+            txnStatus:"FAILED",
+            merchantId: "",
+            sourcecompanycode: widget.serviceType == "AMTS" ? "103" : "102",
+            destinationcompanycode:
+            widget.serviceType == "AMTS" ? "103" : "102",
+            fpTransactionId: "",
+            routeCode: widget.routeCode,
+            externalTxnId: "",
+            merchantTxnId: merchantTxnId,
+            transactionDateTime: "",
+            serviceType: widget.serviceType,
+            paymentType: 1,
+            paymentState: "",
+            pgServiceTransactionId: "",
+            pgTransactionId: "");
+
+        BlocProvider.of<PaymentBloc>(context).add(
+          GetQRCodeEvent(paymentRequest: paymentRequest2),
+        );
+        appNamesList.clear();
+        Get.toNamed(RouteHelper.transactionStatus);
+      }
     } else {
+      appNamesList.clear();
       print('Request failed with status code: ${response.statusCode}');
     }
   }
@@ -512,43 +750,59 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   void onRadioChanged(UpiObject? value) {
     // Update the selected package name
     selectedPackageName = value;
-    apiCall(discountCode,selectedPackageName?.packageName ?? '');
+    apiCall(discountCode, selectedPackageName?.packageName ?? '');
   }
 
-  Future<void> _showBottomSheet() async {
-    List<UpiObject> upiAppsList = [];
+  // Future<void> _showBottomSheet() async {
+  //   List<UpiObject> upiAppsList = [];
+  //
+  //   var values = await GetUPI.apps();
+  //   upiAppsList = values.data;
+  //   appNamesList.clear();
+  //   upiAppsList.forEach((element) {
+  //     appNamesList.add(UpiObject(
+  //         name: element.name,
+  //         packageName: element.packageName,
+  //         icon: element.icon));
+  //   });
+  //
+  //   showModalBottomSheet(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return Column(
+  //         mainAxisSize: MainAxisSize.min,
+  //         children: [
+  //           // Display radio buttons using RadioListTile
+  //           Column(
+  //             children: appNamesList.map((UpiObject upiObject) {
+  //               return RadioListTile<UpiObject>(
+  //                 title: Text(upiObject.name),
+  //                 value: upiObject,
+  //                 groupValue: selectedPackageName,
+  //                 onChanged: (UpiObject? value) {
+  //                   onRadioChanged(value);
+  //                   Navigator.pop(context);
+  //                 },
+  //               );
+  //             }).toList(),
+  //           ),
+  //           // Display selected package name
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
-    var values = await GetUPI.apps();
-    upiAppsList = values.data;
-    appNamesList.clear();
-    upiAppsList.forEach((element) {
-      appNamesList.add(UpiObject(name: element.name, packageName: element.packageName, icon: element.icon));
+  void onButtonPressed(UpiObject upiObject) {
+    setState(() {
+      selectedPackageName = upiObject;
     });
+    // Add your logic when a button is pressed
+    // For example, you can call the API or perform other actions
+    apiCall(discountCode, selectedPackageName?.packageName ?? '');
+  }
 
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext context) {
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Display radio buttons using RadioListTile
-            Column(
-              children: appNamesList.map((UpiObject upiObject) {
-                return RadioListTile<UpiObject>(
-                  title: Text(upiObject.name),
-                  value: upiObject,
-                  groupValue: selectedPackageName,
-                  onChanged: (UpiObject? value) {
-                    onRadioChanged(value);
-                    Navigator.pop(context);
-                  },
-                );
-              }).toList(),
-            ),
-            // Display selected package name
-          ],
-        );
-      },
-    );
+  Uint8List decodeIcon(String base64String) {
+    return base64Decode(base64String);
   }
 }

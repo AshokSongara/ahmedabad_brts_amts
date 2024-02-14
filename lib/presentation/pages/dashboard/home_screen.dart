@@ -842,7 +842,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   GestureDetector(
                     onTap: (){
-                      Get.to(MerchantApp());
+                     // Get.to(MerchantApp());
                     },
                     child: Container(
                       margin: const EdgeInsets.only(

@@ -16,7 +16,6 @@ class MerchantScreen extends State<MerchantApp> {
       discountype: "01",
       routeCode: "11U",
       routeType: 1,
-      mobileNumber: "9876543210",
       deviceOS: "IOS",
       paymentInstrumentType: "UPI_INTENT",
       targateApp: "com.phonepe.simulator");
