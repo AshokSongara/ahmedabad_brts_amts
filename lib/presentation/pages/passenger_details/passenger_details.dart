@@ -354,16 +354,30 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                       child: GestureDetector(
                         onTap: () async {
                           List<UpiObject> upiAppsList = [];
+                          List<dynamic> upiAppsList2 = [];
+                          if(Platform.isAndroid) {
+                            var values = await GetUPI.apps();
+                            upiAppsList = values.data;
+                            appNamesList.clear();
+                            upiAppsList.forEach((element) {
+                              appNamesList.add(UpiObject(
+                                  name: element.name,
+                                  packageName: element.packageName,
+                                  icon: element.icon));
+                            });
+                          }
+                          else if (Platform.isIOS) {
+                            //Write Ios code here
+                            var valueIos = await GetUPI.iosApps();
+                            upiAppsList2 = valueIos;
+                            upiAppsList2.forEach((element) {
+                              appNamesList.add(UpiObject(
+                                  name: element.name,
+                                  packageName: element.packageName,
+                                  icon: element.icon));
+                            });
+                          }
 
-                          var values = await GetUPI.apps();
-                          upiAppsList = values.data;
-                          appNamesList.clear();
-                          upiAppsList.forEach((element) {
-                            appNamesList.add(UpiObject(
-                                name: element.name,
-                                packageName: element.packageName,
-                                icon: element.icon));
-                          });
                           setState(() {
                             areupiappsvisible = !areupiappsvisible;
                           });
@@ -617,6 +631,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
 
       print(merchantTxnId);
       List<UpiObject> upiAppsList = [];
+      List<dynamic> upiAppsList2 = [];
 
       if(Platform.isAndroid){
         var values = await GetUPI.apps();
@@ -626,6 +641,11 @@ class _PassengerDetailsState extends State<PassengerDetails> {
         });
       }else if (Platform.isIOS) {
        //Write Ios code here
+        var valueIos = await GetUPI.iosApps();
+        upiAppsList2 = valueIos;
+        upiAppsList2.forEach((element) {
+          appNamesList.add(element);
+        });
       }
       String result = '';
 
