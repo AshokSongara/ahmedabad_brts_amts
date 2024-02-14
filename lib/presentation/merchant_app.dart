@@ -1,14 +1,6 @@
-import 'package:ahmedabad_brts_amts/presentation/upi_apps.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'dart:io';
-import 'package:http/http.dart' as http;
-import 'package:phonepe_payment_sdk/phonepe_payment_sdk.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../data/requestmodels/json_request.dart';
-import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
-import 'package:get_upi/get_upi.dart';
-
 
 class MerchantApp extends StatefulWidget {
   const MerchantApp({super.key});
@@ -47,140 +39,6 @@ class MerchantScreen extends State<MerchantApp> {
   String merchantId = "";
   String packageName = "com.phonepe.simulator";
 
-
-
-
-
-  void startTransaction() {
-    dropdownValue == 'Container'
-        ? startContainerTransaction()
-        : startPGTransaction();
-  }
-
-  void initPhonePeSdk() {
-    PhonePePaymentSdk.init(environmentValue, appId, merchantId, enableLogs)
-        .then((isInitialized) => {
-      setState(() {
-        print(appId);
-        result = 'PhonePe SDK Initialized - $isInitialized';
-      })
-    })
-        .catchError((error) {
-      handleError(error);
-      return <dynamic>{};
-    });
-  }
-
-  void isPhonePeInstalled() {
-    PhonePePaymentSdk.isPhonePeInstalled()
-        .then((isPhonePeInstalled) => {
-      setState(() {
-        result = 'PhonePe Installed - $isPhonePeInstalled';
-      })
-    })
-        .catchError((error) {
-      handleError(error);
-      return <dynamic>{};
-    });
-  }
-
-  void isGpayInstalled() {
-    PhonePePaymentSdk.isGPayAppInstalled()
-        .then((isGpayInstalled) => {
-      setState(() {
-        result = 'GPay Installed - $isGpayInstalled';
-      })
-    })
-        .catchError((error) {
-      handleError(error);
-      return <dynamic>{};
-    });
-  }
-
-  void isPaytmInstalled() {
-    PhonePePaymentSdk.isPaytmAppInstalled()
-        .then((isPaytmInstalled) => {
-      setState(() {
-        result = 'Paytm Installed - $isPaytmInstalled';
-      })
-    })
-        .catchError((error) {
-      handleError(error);
-      return <dynamic>{};
-    });
-  }
-
-  void getPackageSignatureForAndroid() {
-    if (Platform.isAndroid) {
-      PhonePePaymentSdk.getPackageSignatureForAndroid()
-          .then((packageSignature) => {
-        setState(() {
-          result = 'getPackageSignatureForAndroid - $packageSignature';
-        })
-      })
-          .catchError((error) {
-        handleError(error);
-        return <dynamic>{};
-      });
-    }
-  }
-
-  void getInstalledUpiAppsForAndroid() {
-    if (Platform.isAndroid) {
-      PhonePePaymentSdk.getInstalledUpiAppsForAndroid()
-          .then((apps) => {
-        setState(() {
-          if (apps != null) {
-            Iterable l = json.decode(apps);
-            List<UPIApp> upiApps = List<UPIApp>.from(
-                l.map((model) => UPIApp.fromJson(model)));
-            String appString = '';
-            for (var element in upiApps) {
-              appString +=
-              "${element.applicationName} ${element.version} ${element.packageName}";
-            }
-            result = 'Installed Upi Apps - $appString';
-          } else {
-            result = 'Installed Upi Apps - 0';
-          }
-        })
-      })
-          .catchError((error) {
-        handleError(error);
-        return <dynamic>{};
-      });
-    }
-  }
-
-  void startPGTransaction() async {
-    try {
-      PhonePePaymentSdk.startTransaction(
-          body, callback, checksum, apiEndPoint)
-          .then((response) => {
-        setState(() {
-          if (response != null) {
-            String status = response['status'].toString();
-            String error = response['error'].toString();
-            if (status == 'SUCCESS') {
-              result = "Flow Completed - Status: Success!";
-            } else {
-              result =
-              "Flow Completed - Status: $status and Error: $error";
-            }
-          } else {
-            result = "Flow Incomplete";
-          }
-        })
-      })
-          .catchError((error) {
-        handleError(error);
-        return <dynamic>{};
-      });
-    } catch (error) {
-      handleError(error);
-    }
-  }
-
   void handleError(error) {
     setState(() {
       if (error is Exception) {
@@ -191,75 +49,10 @@ class MerchantScreen extends State<MerchantApp> {
     });
   }
 
-  void startContainerTransaction() async {
-    try {
-      PhonePePaymentSdk.startTransaction(
-          body, callback, checksum,packageName)
-          .then((response) => {
-        setState(() {
-          if (response != null) {
-            String status = response['status'].toString();
-            String error = response['error'].toString();
-            if (status == 'SUCCESS') {
-              result = "Flow Completed - Status: Success!";
-            } else {
-              result =
-              "Flow Completed - Status: $status and Error: $error";
-            }
-          } else {
-            result = "Flow Incomplete";
-          }
-        })
-      })
-          .catchError((error) {
-        handleError(error);
-        return <dynamic>{};
-      });
-    } catch (error) {
-      result = {"error": error};
-    }
-  }
-
   @override
   void initState() {
-
     super.initState();
-
   }
-
-  void apiCall() async {
-    String jsonStr = jsonEncode(phonepeRequest);
-
-    String url = 'https://www.transportapp.co.in:8081/PhonepePG/PayRequest';
-
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String? token = sharedPreferences.getString(AppConstant.accessToken);
-
-    Map<String, String> headers = {
-      'Content-Type': 'application/json',
-      "Authorization": "Bearer $token"
-    };
-
-    final response = await http.post(
-      Uri.parse(url),
-      headers: headers,
-      body: jsonStr,
-    );
-
-    if (response.statusCode == 200) {
-      print('Request successful! Response data:');
-      print(response.body);
-
-      GetUPI.openNativeIntent(
-        url:
-        'upi://pay?pa=AHMEDABADUAT@ybl&pn=MERCHANT&am=400&mam=400&tr=MT7850590868188104&tn=Payment%20for%20MT7850590868188104&mc=5311&mode=04&purpose=00&utm_campaign=B2B_PG&utm_medium=AHMEDABADUAT&utm_source=MT7850590868188104&mcbs=',
-      );
-    } else {
-      print('Request failed with status code: ${response.statusCode}');
-    }
-  }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -355,8 +148,6 @@ class MerchantScreen extends State<MerchantApp> {
                     style: TextStyle(color: Colors.red),
                   ),
 
-                  ElevatedButton(
-                      onPressed: initPhonePeSdk, child: const Text('INIT SDK')),
                   const SizedBox(width: 5.0),
                   TextField(
                     decoration: const InputDecoration(
@@ -411,55 +202,6 @@ class MerchantScreen extends State<MerchantApp> {
                       )
                     ],
                   ),
-                  ElevatedButton(
-                      onPressed: startTransaction,
-                      child: const Text('Start Transaction')),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Expanded(
-                            child: ElevatedButton(
-                                onPressed: isPhonePeInstalled,
-                                child: const Text('PhonePe App'))),
-                        const SizedBox(width: 5.0),
-                        Expanded(
-                            child: ElevatedButton(
-                                onPressed: isGpayInstalled,
-                                child: const Text('Gpay App'))),
-                        const SizedBox(width: 5.0),
-                        Expanded(
-                            child: ElevatedButton(
-                                onPressed: isPaytmInstalled,
-                                child: const Text('Paytm App'))),
-                      ]),
-                  Visibility(
-                      maintainSize: false,
-                      maintainAnimation: false,
-                      maintainState: false,
-                      visible: Platform.isAndroid,
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Expanded(
-                                child: ElevatedButton(
-                                    onPressed: getPackageSignatureForAndroid,
-                                    child:
-                                    const Text('Get Package Signature'))),
-                            const SizedBox(width: 5.0),
-                            Expanded(
-                                child: ElevatedButton(
-                                    onPressed: getInstalledUpiAppsForAndroid,
-                                    child: const Text('Get UPI Apps'))),
-                            const SizedBox(width: 5.0),
-                          ])),
-                  Text("Result: \n $result"),
-
-
-                  ElevatedButton(
-                      onPressed: (){
-                        apiCall();
-                      },
-                      child: const Text('api call'))
                 ],
               ),
             ),

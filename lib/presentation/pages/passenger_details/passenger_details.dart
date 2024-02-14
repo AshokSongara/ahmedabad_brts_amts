@@ -431,11 +431,15 @@ class _PassengerDetailsState extends State<PassengerDetails> {
       print(merchantTxnId);
       List<UpiObject> upiAppsList = [];
 
-      var values = await GetUPI.apps();
-      upiAppsList = values.data;
-      upiAppsList.forEach((element) {
-        appNamesList.add(element);
-      });
+      if(Platform.isAndroid){
+        var values = await GetUPI.apps();
+        upiAppsList = values.data;
+        upiAppsList.forEach((element) {
+          appNamesList.add(element);
+        });
+      }else if (Platform.isIOS) {
+       //Write Ios code here
+      }
       String result = '';
       
       try {
