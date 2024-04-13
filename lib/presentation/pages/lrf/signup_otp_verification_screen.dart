@@ -250,7 +250,7 @@ class _SignUpOtpVerificationState extends State<SignUpOtpVerification> {
   }
 
   Future<MobileNumberOtpResponseEntity> fetchOtpResponse(String no) async {
-    final String apiUrl = "https://www.transportapp.co.in:8081/User/sign-up/otp";
+    final String apiUrl = "https://www.transportapp.co.in/User/sign-up/otp";
     final Map<String, dynamic> data = {
       'phoneNumber': no,
       'otp': textEditingController.text,

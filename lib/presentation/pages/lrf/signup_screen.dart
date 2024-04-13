@@ -520,7 +520,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   Future<MobileNumberOtpResponseEntity> fetchOtpResponse(String no) async {
 
-    final String apiUrl = "https://www.transportapp.co.in:8081/User/otp/generateOTP";
+    final String apiUrl = "https://www.transportapp.co.in/User/otp/generateOTP";
     final Map<String, dynamic> data = {
       'phoneNumber': no,
     };

@@ -189,7 +189,7 @@ class _OneDayPassScreenState extends State<OneDayPassScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 32,
+                            height: 31,
                           ),
                         ],
                       ),
@@ -202,8 +202,7 @@ class _OneDayPassScreenState extends State<OneDayPassScreen> {
           },
         ),
       ),
-    );
-  }
+    ); }
 
   getPaymentUrl(String discountType) {
     Get.toNamed(RouteHelper.getPaymentDetailsRoute(

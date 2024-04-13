@@ -620,7 +620,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
   }
 
   void fetchData(String routeCode, String startCode) {
-    String apiUrl = 'https://www.transportapp.co.in:8081';
+    String apiUrl = 'https://www.transportapp.co.in';
 
     fetchETAData(apiUrl, routeCode, startCode).then((etaResponse) {
       List<EtaData>? etaDataList = etaResponse.data;
@@ -662,7 +662,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
   }
 
   void fetchFare(String startCode,String endCode, String routeCode){
-    String apiUrl = 'https://www.transportapp.co.in:8081';
+    String apiUrl = 'https://www.transportapp.co.in';
 
     fetchFareData(apiUrl, startCode, endCode, routeCode).then((fareResponse) {
       DataFare? fareDataList = fareResponse.data;
@@ -701,7 +701,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
   }
 
   void fetchRoute(String routeCode,String startStopSequenceNumber, String endStopSequenceNumber){
-    String apiUrl = 'https://www.transportapp.co.in:8081';
+    String apiUrl = 'https://www.transportapp.co.in';
 
     fetchRouteData(apiUrl, routeCode, startStopSequenceNumber,endStopSequenceNumber).then((routeResponse) {
       List<DataRoute>? routeDataList = routeResponse.data;
@@ -728,7 +728,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
   }
 
   void fetchRoute2(String routeCode,String startStopSequenceNumber, String endStopSequenceNumber){
-    String apiUrl = 'https://www.transportapp.co.in:8081';
+    String apiUrl = 'https://www.transportapp.co.in';
 
     fetchRouteData(apiUrl, routeCode, startStopSequenceNumber,endStopSequenceNumber).then((routeResponse) {
       List<DataRoute>? routeDataList = routeResponse.data;

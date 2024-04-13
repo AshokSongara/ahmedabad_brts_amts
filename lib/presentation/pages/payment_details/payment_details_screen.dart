@@ -66,7 +66,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    disableScreenshot();
+    //disableScreenshot();
    if(widget.type == "Payment") getData();
   }
 
@@ -516,7 +516,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                                                         ),
                                                         Text(
                                                           state.paymentInitResponseModel
-                                                              .data![0].ticketType! == "Adult" ? "1" : "0",
+                                                              .data![0].ticketType == "Adult" ? "1" : "0",
                                                           style: satoshiRegular
                                                               .copyWith(
                                                                   fontSize:
@@ -783,7 +783,7 @@ class _PaymentDetailsScreenState extends State<PaymentDetailsScreen> {
                           child: const Text("Error"),
                         );
                       }
-                      return Container();
+                      return Container(child: Text('error'),);
                     },
                   ),
                 ),
@@ -931,9 +931,6 @@ $data''';
       status = "FAILED";
       Get.toNamed(RouteHelper.transactionStatus);
     }
-
-
-
 
 
   }

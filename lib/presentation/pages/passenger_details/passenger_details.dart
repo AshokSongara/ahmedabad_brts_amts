@@ -69,6 +69,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   List upiAppsListAndroid = [];
   bool appOpen = false;
   String discountCode = '';
+  bool isLoading = false;
 
   @override
   initState() {
@@ -121,7 +122,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
         },
         builder: (context, state) {
           if (state is DiscountSuccessState) {
-            return SafeArea(
+            return isLoading ? Center(child: CircularProgressIndicator()) :SafeArea(
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -268,8 +269,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                                             setState(() {
                                               discount = state
                                                       .discountResponse
-                                                      .data![index]
-                                                      .catPassSubCateName ??
+                                                      .data![index].discountTypeCode ??
                                                   "";
                                               areButtonsVisible =
                                                   !areButtonsVisible;
@@ -349,7 +349,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                       ),
                     ),
 
-                    Visibility(
+                    if(widget.serviceType == "BRTS")     Visibility(
                       visible: areButtonsVisible,
                       child: GestureDetector(
                         onTap: () async {
@@ -411,7 +411,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                         ),
                       ),
                     ),
-                    Visibility(
+                     Visibility(
                       visible: areupiappsvisible,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -480,7 +480,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                       ),
                     ),
 
-                    Visibility(
+                   Visibility(
                       child: GestureDetector(
                         child: Container(
                           width: Get.width,
@@ -601,10 +601,10 @@ class _PassengerDetailsState extends State<PassengerDetails> {
 
     String jsonStr = jsonEncode(phonepeRequest);
 
-    String url = 'https://www.transportapp.co.in:8081/PhonepePG/PayRequest';
+    String url = 'https://www.transportapp.co.in/PhonepePG/PayRequest';
 
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String? token = sharedPreferences.getString(AppConstant.accessToken);
+    // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    // String? token = sharedPreferences.getString(AppConstant.accessToken);
 
     Map<String, String> headers = {
       'Content-Type': 'application/json',
@@ -623,6 +623,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
       print(response.body);
 
       final responseData = json.decode(response.body);
+      print(responseData);
 
       String? intentUrl =
           responseData['data']['data']['instrumentResponse']['intentUrl'];
@@ -654,111 +655,161 @@ class _PassengerDetailsState extends State<PassengerDetails> {
 
         MethodChannel channel = const MethodChannel('nativeChannel');
         result = await channel.invokeMethod('startPayment', data);
+        print('$result result');
         appNamesList.clear();
       } on PlatformException catch (e) {
-        print('Failed : ${e.message}');
+        print('Failed 2: ${e.message}');
       }
 
-      List<String> sepratedList = result.split("&");
-      String paymentStatus = '';
-      sepratedList.forEach((element) {
-        if (element.isCaseInsensitiveContainsAny('Status')) {
-          List<String> splitStatus = element.split("=");
-          paymentStatus = splitStatus.last;
-        }
+      // List<String> sepratedList = result.split("&");
+      // String paymentStatus = '';
+      // sepratedList.forEach((element) {
+      //   if (element.isCaseInsensitiveContainsAny('Status')) {
+      //     List<String> splitStatus = element.split("=");
+      //     paymentStatus = splitStatus.last;
+      //     print("$paymentStatus 3");
+      //   }
+      //   else {
+      //     print("failed 1");
+      //   }
+      // });
+
+      Map<String, String> apiData = {"merchantTransactionId": merchantTxnId!};
+      var apiUrl = 'https://www.transportapp.co.in/PhonepePG/PayResponce';
+      // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      // String? token = sharedPreferences.getString(AppConstant.accessToken);
+
+      Map<String, String> headers = {
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer $token"
+      };
+      setState(() {
+        isLoading = true;
       });
 
-      if (sepratedList.contains('Status=SUCCESS')) {
-        showCustomSnackBar("SUCCESS", context, isError: false);
 
+      Future.delayed(Duration(seconds: 3), () async{
+
+      var response2 = await http.post(Uri.parse(apiUrl),
+          headers:headers,
+          body: jsonEncode(apiData));
+
+      if (response2.statusCode == 200) {
+        var jsonResponse2 = json.decode(response2.body);
+
+        var responseData2 = jsonResponse2['data'];
+
+        var responceStatus = responseData2['responceStatus'];
+        var transactionId = responseData2['transactionId'];
+        var isResponceReceived = responseData2['isResponceReceived'];
+        setState(() {
+          isLoading = false;
+        });
+
+        print('$responceStatus status');
+        if (responceStatus == 'PAYMENT_SUCCESS') {
+          showCustomSnackBar("SUCCESS", context, isError: false);
+         // print("$sepratedList Separated List");
+
+          appNamesList.clear();
+
+          var paymentRequest2 = PaymentRequest2(
+              sourceStopId: widget.sourceStopId,
+              destinationStopId: widget.destinationStopId,
+              discountype: discountType,
+              txnStatus: responceStatus == "PAYMENT_SUCCESS" ? "SUCCESS" : "FAILED",
+              merchantId: "",
+              sourcecompanycode: widget.serviceType == "AMTS" ? "103" : "102",
+              destinationcompanycode:
+              widget.serviceType == "AMTS" ? "103" : "102",
+              fpTransactionId: "",
+              routeCode: widget.routeCode,
+              externalTxnId: "",
+              merchantTxnId: merchantTxnId,
+              transactionDateTime: "",
+              serviceType: widget.serviceType,
+              paymentType: 1,
+              paymentState: "",
+              pgServiceTransactionId: "",
+              pgTransactionId: "");
+
+          BlocProvider.of<PaymentBloc>(context).add(
+            GetQRCodeEvent(paymentRequest: paymentRequest2),
+          );
+
+          Get.to(() => PaymentDetailsScreen());
+        }
+        else if (responceStatus == null || responceStatus == 'PAYMENT_PENDING'
+        ) {
+          showCustomSnackBar("PENDING", context, isError: false);
+
+          var paymentRequest2 = PaymentRequest2(
+              sourceStopId: widget.sourceStopId,
+              destinationStopId: widget.destinationStopId,
+              discountype: discountType,
+              txnStatus:"PENDING",
+              merchantId: "",
+              sourcecompanycode: widget.serviceType == "AMTS" ? "103" : "102",
+              destinationcompanycode:
+              widget.serviceType == "AMTS" ? "103" : "102",
+              fpTransactionId: "",
+              routeCode: widget.routeCode,
+              externalTxnId: "",
+              merchantTxnId: merchantTxnId,
+              transactionDateTime: "",
+              serviceType: widget.serviceType,
+              paymentType: 1,
+              paymentState: "",
+              pgServiceTransactionId: "",
+              pgTransactionId: "");
+
+          BlocProvider.of<PaymentBloc>(context).add(
+            GetQRCodeEvent(paymentRequest: paymentRequest2),
+          );
+          Get.to(() => PendingScreen());
+          appNamesList.clear();
+        }
+        else if (responceStatus == 'PAYMENT_ERROR') {
+          showCustomSnackBar("FAILED", context, isError: false);
+
+          var paymentRequest2 = PaymentRequest2(
+              sourceStopId: widget.sourceStopId,
+              destinationStopId: widget.destinationStopId,
+              discountype: discountType,
+              txnStatus:"FAILED",
+              merchantId: "",
+              sourcecompanycode: widget.serviceType == "AMTS" ? "103" : "102",
+              destinationcompanycode:
+              widget.serviceType == "AMTS" ? "103" : "102",
+              fpTransactionId: "",
+              routeCode: widget.routeCode,
+              externalTxnId: "",
+              merchantTxnId: merchantTxnId,
+              transactionDateTime: "",
+              serviceType: widget.serviceType,
+              paymentType: 1,
+              paymentState: "",
+              pgServiceTransactionId: "",
+              pgTransactionId: "");
+
+          BlocProvider.of<PaymentBloc>(context).add(
+            GetQRCodeEvent(paymentRequest: paymentRequest2),
+          );
+          appNamesList.clear();
+          Get.toNamed(RouteHelper.transactionStatus);
+        }
+      } else {
         appNamesList.clear();
-
-        var paymentRequest2 = PaymentRequest2(
-            sourceStopId: widget.sourceStopId,
-            destinationStopId: widget.destinationStopId,
-            discountype: discountType,
-            txnStatus: paymentStatus == "SUCCESS" ? "SUCCESS" : "FAILED",
-            merchantId: "",
-            sourcecompanycode: widget.serviceType == "AMTS" ? "103" : "102",
-            destinationcompanycode:
-                widget.serviceType == "AMTS" ? "103" : "102",
-            fpTransactionId: "",
-            routeCode: widget.routeCode,
-            externalTxnId: "",
-            merchantTxnId: merchantTxnId,
-            transactionDateTime: "",
-            serviceType: widget.serviceType,
-            paymentType: 1,
-            paymentState: "",
-            pgServiceTransactionId: "",
-            pgTransactionId: "");
-
-        BlocProvider.of<PaymentBloc>(context).add(
-          GetQRCodeEvent(paymentRequest: paymentRequest2),
-        );
-
-        Get.to(() => PaymentDetailsScreen());
-      } else if (sepratedList.contains('Status=PENDING')) {
-        showCustomSnackBar("PENDING", context, isError: false);
-
-        var paymentRequest2 = PaymentRequest2(
-            sourceStopId: widget.sourceStopId,
-            destinationStopId: widget.destinationStopId,
-            discountype: discountType,
-            txnStatus:"PENDING",
-            merchantId: "",
-            sourcecompanycode: widget.serviceType == "AMTS" ? "103" : "102",
-            destinationcompanycode:
-            widget.serviceType == "AMTS" ? "103" : "102",
-            fpTransactionId: "",
-            routeCode: widget.routeCode,
-            externalTxnId: "",
-            merchantTxnId: merchantTxnId,
-            transactionDateTime: "",
-            serviceType: widget.serviceType,
-            paymentType: 1,
-            paymentState: "",
-            pgServiceTransactionId: "",
-            pgTransactionId: "");
-
-        BlocProvider.of<PaymentBloc>(context).add(
-          GetQRCodeEvent(paymentRequest: paymentRequest2),
-        );
-        Get.to(() => PendingScreen());
-        appNamesList.clear();
-      } else if (sepratedList.contains('Status=FAILED')) {
-        showCustomSnackBar("FAILED", context, isError: false);
-
-        var paymentRequest2 = PaymentRequest2(
-            sourceStopId: widget.sourceStopId,
-            destinationStopId: widget.destinationStopId,
-            discountype: discountType,
-            txnStatus:"FAILED",
-            merchantId: "",
-            sourcecompanycode: widget.serviceType == "AMTS" ? "103" : "102",
-            destinationcompanycode:
-            widget.serviceType == "AMTS" ? "103" : "102",
-            fpTransactionId: "",
-            routeCode: widget.routeCode,
-            externalTxnId: "",
-            merchantTxnId: merchantTxnId,
-            transactionDateTime: "",
-            serviceType: widget.serviceType,
-            paymentType: 1,
-            paymentState: "",
-            pgServiceTransactionId: "",
-            pgTransactionId: "");
-
-        BlocProvider.of<PaymentBloc>(context).add(
-          GetQRCodeEvent(paymentRequest: paymentRequest2),
-        );
-        appNamesList.clear();
-        Get.toNamed(RouteHelper.transactionStatus);
+        print('Request failed with status code: ${response2.statusCode}');
       }
-    } else {
-      appNamesList.clear();
-      print('Request failed with status code: ${response.statusCode}');
-    }
+      });
+      }
+      else {
+
+        throw Exception('Failed to load data');
+      }
+
+
   }
 
   setPassengerData(int adultsCount, int kidsCount) {
@@ -817,8 +868,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     setState(() {
       selectedPackageName = upiObject;
     });
-    // Add your logic when a button is pressed
-    // For example, you can call the API or perform other actions
+
     apiCall(discountCode, selectedPackageName?.packageName ?? '');
   }
 

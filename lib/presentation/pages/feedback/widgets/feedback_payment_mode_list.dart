@@ -1,8 +1,8 @@
+import 'package:ahmedabad_brts_amts/data/responseModels/feedback_status_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-import '../../../../data/responseModels/feedback_status_list_item.dart';
 import '../../../../utils/app_colors.dart';
 import '../../../../utils/dimensions.dart';
 import '../../../../utils/styles.dart';

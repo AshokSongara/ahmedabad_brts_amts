@@ -19,7 +19,7 @@ void showCustomSnackBar(String message, BuildContext context,
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(Dimensions.radiusSmall)),
       content:
-          Text(message, style: satoshiRegular),
+          Text(message, style: satoshiRegular,),
     ));
   }
 }

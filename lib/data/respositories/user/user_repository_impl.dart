@@ -119,9 +119,9 @@ class UserRepositoryImpl implements UserRepository {
       "crowding": body.crowding,
       "serviceQuality": body.serviceQuality,
       "journey": body.journey,
-      "assistance": body.journey,
-      "paymentMode": body.journey,
-      "suggestion": body.journey,
+      "assistance": body.assistance,
+      "paymentMode": body.paymentMode,
+      "suggestion": body.suggestion,
     };
 
     var bodyData = json.encode(data);
