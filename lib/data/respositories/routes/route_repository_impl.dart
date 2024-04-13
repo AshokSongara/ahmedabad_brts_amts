@@ -173,9 +173,6 @@ class RouteRepositoryImpl implements RouteRepository {
     Response response = await apiClient.getData(AppConstant.fareDiscount);
     OneDayPassResponse oneDayPassResponse =
     OneDayPassResponse.fromJson(response.body);
-
-    try {} on Exception catch (exception) {
-    } catch (error) {}
     return oneDayPassResponse;
   }
 

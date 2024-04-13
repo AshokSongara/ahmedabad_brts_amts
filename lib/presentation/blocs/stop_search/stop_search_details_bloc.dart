@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:ahmedabad_brts_amts/data/responsemodels/add_favourite_response.dart';
 import 'package:ahmedabad_brts_amts/domain/usecases/add_route_stoplist_usecase.dart';
 import 'package:bloc/bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/models/params.dart';
 import '../../../data/responsemodels/route_stoplist_response.dart';

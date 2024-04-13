@@ -3,8 +3,6 @@ import 'package:ahmedabad_brts_amts/data/requestmodels/add_favourite_request.dar
 import 'package:ahmedabad_brts_amts/data/requestmodels/search_route_request.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/search_route_response.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
-import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dart';
-import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/search_result_route/search_result_route_state.dart';
@@ -199,8 +197,8 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                                       widget.serviceType ?? "BRTS",
                                       state.searchRouteResponse.data![index].interChanges!.isNotEmpty ? state.searchRouteResponse.data![index].interChanges![0] : "",
                                       state.searchRouteResponse.data![index].routeDetails!.length > 1 ? state.searchRouteResponse.data![index].routeDetails![1].routeCode ?? "" : "",
-                                      state.searchRouteResponse.data![index].routeDetails!.length > 1 ? state.searchRouteResponse.data![index].routeDetails![1].startStopSequenceNumber.toString() ?? "" : "",
-                                      state.searchRouteResponse.data![index].routeDetails!.length > 1 ? state.searchRouteResponse.data![index].routeDetails![1].endStopSequenceNumber.toString() ?? "" : "",
+                                      state.searchRouteResponse.data![index].routeDetails!.length > 1 ? state.searchRouteResponse.data![index].routeDetails![1].startStopSequenceNumber.toString() : "",
+                                      state.searchRouteResponse.data![index].routeDetails!.length > 1 ? state.searchRouteResponse.data![index].routeDetails![1].endStopSequenceNumber.toString() : "",
                                       state.searchRouteResponse.data![index].endTime.toString(),
                                       state.searchRouteResponse.data![index].routeDetails![0].startStopSequenceNumber.toString(),
                                       state.searchRouteResponse.data![index].routeDetails![0].endStopSequenceNumber.toString(),

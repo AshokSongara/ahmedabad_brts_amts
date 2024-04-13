@@ -14,7 +14,6 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_bloc.dar
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/home/home_screen_state.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/language/language_cubit.dart';
-import 'package:ahmedabad_brts_amts/presentation/merchant_app.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/complaint/complaint_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/complaint_history/complaint_history_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/search_result_screen.dart';
@@ -1089,7 +1088,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       );
                                     } else if (newFromSelectedStation != null &&
                                         newToSelectedStation != null) {
-                                      final result = await Navigator.push(
+                                      await Navigator.push(
                                         context,
                                         MaterialPageRoute(builder: (context) => SearchResultScreen(
                                             startRoute:  newFromSelectedStation?.stationCode

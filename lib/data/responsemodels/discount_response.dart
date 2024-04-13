@@ -30,15 +30,13 @@ class Data {
   String? mediaType;
   String? operator;
   int? discountRate;
-  Null? passFare;
 
   Data(
       {this.discountTypeCode,
       this.catPassSubCateName,
       this.mediaType,
       this.operator,
-      this.discountRate,
-      this.passFare});
+      this.discountRate});
 
   Data.fromJson(Map<String, dynamic> json) {
     discountTypeCode = json['discountTypeCode'];
@@ -46,7 +44,6 @@ class Data {
     mediaType = json['mediaType'];
     operator = json['operator'];
     discountRate = json['discountRate'];
-    passFare = json['passFare'];
   }
 
   Map<String, dynamic> toJson() {
@@ -56,7 +53,6 @@ class Data {
     data['mediaType'] = this.mediaType;
     data['operator'] = this.operator;
     data['discountRate'] = this.discountRate;
-    data['passFare'] = this.passFare;
     return data;
   }
 }

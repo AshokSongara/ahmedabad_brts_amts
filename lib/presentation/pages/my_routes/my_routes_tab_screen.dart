@@ -54,8 +54,8 @@ class _MyRoutesTabScreenState extends State<MyRoutesTabScreen> with SingleTicker
               physics: const BouncingScrollPhysics(),
               controller: _tabController,
               children:  [
-                MyRoutesScreen(serviceType: widget.serviceType ?? ""),
-                MyRoutesScreenTwo(serviceType: widget.serviceType ?? "", from: widget.from,),
+                MyRoutesScreen(serviceType: widget.serviceType),
+                MyRoutesScreenTwo(serviceType: widget.serviceType, from: widget.from,),
               ],
             ),
           ),

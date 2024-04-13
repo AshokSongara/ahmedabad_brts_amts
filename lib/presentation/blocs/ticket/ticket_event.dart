@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:ahmedabad_brts_amts/data/requestmodels/payment_request.dart';
 
 abstract class TicketEvent extends Equatable {
   const TicketEvent();

@@ -2,8 +2,6 @@
 import 'package:ahmedabad_brts_amts/data/responsemodels/complaint_history_response.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../data/responsemodels/complaint_history_response.dart';
-
 abstract class ComplaintHistoryState extends Equatable {
   const ComplaintHistoryState();
 

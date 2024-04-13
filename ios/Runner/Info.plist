@@ -74,6 +74,16 @@
 		<string>paytmmp</string>
 		<string>ppe</string>
 		<string>tel</string>
+		<string>freecharge</string>
+        <string>gpay</string>
+        <string>in.fampay.app</string>
+        <string>lotza</string>
+        <string>mobikwik</string>
+        <string>paytm</string>
+        <string>phonepe</string>
+        <string>upi</string>
+        <string>upibillpay</string>
+        <string>whatsapp</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>

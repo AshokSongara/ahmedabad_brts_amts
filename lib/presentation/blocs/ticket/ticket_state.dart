@@ -1,4 +1,3 @@
-import 'package:ahmedabad_brts_amts/data/responsemodels/PaymentInitResponseModel.dart';
 import 'package:ahmedabad_brts_amts/data/responsemodels/ticket_response.dart';
 import 'package:equatable/equatable.dart';
 

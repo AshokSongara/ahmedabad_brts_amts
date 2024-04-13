@@ -1,6 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:ahmedabad_brts_amts/data/requestmodels/nearme_request.dart';
-import 'package:ahmedabad_brts_amts/data/requestmodels/route_details_request.dart';
 
 abstract class RoutesOnMapEvent extends Equatable {
   const RoutesOnMapEvent();

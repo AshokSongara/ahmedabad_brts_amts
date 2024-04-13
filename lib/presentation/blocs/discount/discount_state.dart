@@ -1,7 +1,5 @@
 import 'package:ahmedabad_brts_amts/data/responsemodels/discount_response.dart';
-import 'package:ahmedabad_brts_amts/data/responsemodels/nearme_response.dart';
 import 'package:equatable/equatable.dart';
-import 'package:ahmedabad_brts_amts/data/responsemodels/one_day_pass_response.dart';
 
 abstract class DiscountState extends Equatable {
   const DiscountState();

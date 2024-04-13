@@ -20,8 +20,8 @@ class PaymentURLResponse {
 }
 
 class Data {
-  Null? errorMessage;
-  Null? errorCode;
+  Null errorMessage;
+  Null errorCode;
   String? paymentURL;
 
   Data({this.errorMessage, this.errorCode, this.paymentURL});

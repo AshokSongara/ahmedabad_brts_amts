@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
-import 'package:ahmedabad_brts_amts/localization/app_localizations.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/booking/booking_list_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/booking/booking_list_event.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/booking/booking_list_state.dart';

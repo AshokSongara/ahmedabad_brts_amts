@@ -45,7 +45,7 @@ class OverlayView {
       );
     });
 
-    overlayState?.insert(overlayEntry);
+    overlayState.insert(overlayEntry);
   }
 
   removeOverlay() {

@@ -7,8 +7,6 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/ticket/ticket_state.dart'
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ahmedabad_brts_amts/core/models/params.dart';
 
-import '../../../data/responsemodels/PaymentInitResponseModel.dart';
-
 class TicketBloc extends Bloc<TicketEvent, TicketState> {
   TicketBloc({required this.ticketUseCase}) : super(TicketInitialState());
 

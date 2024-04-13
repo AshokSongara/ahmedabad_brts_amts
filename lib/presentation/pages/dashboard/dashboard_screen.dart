@@ -1,16 +1,10 @@
 import 'package:ahmedabad_brts_amts/presentation/pages/booking/booking_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/home_screen.dart';
-import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/profile_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/notification/notification_screen.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
-import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
-import 'package:ahmedabad_brts_amts/utils/styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../localization/app_localizations.dart';
 import '../maps/nearby_maps_screen.dart';
 
 class DashboardScreen extends StatefulWidget {

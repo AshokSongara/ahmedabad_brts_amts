@@ -1,7 +1,6 @@
 import 'package:ahmedabad_brts_amts/presentation/pages/booking/booking_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/card_details/card_detail_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/contact_us/contact_us_screen.dart';
-import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/dashboard_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/home_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/failed_transaction/failes_transaction_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/maps/polyline_page.dart';

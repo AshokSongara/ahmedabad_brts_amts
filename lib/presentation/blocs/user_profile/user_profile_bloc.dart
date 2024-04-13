@@ -33,8 +33,8 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
 
   saveMemberID(String fName, String lName) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(AppConstant.name, fName ?? "");
-    prefs.setString(AppConstant.lastName, lName ?? "");
+    prefs.setString(AppConstant.name, fName);
+    prefs.setString(AppConstant.lastName, lName);
     AppConstant.nameData = fName;
     AppConstant.lastNameData = lName;
   }

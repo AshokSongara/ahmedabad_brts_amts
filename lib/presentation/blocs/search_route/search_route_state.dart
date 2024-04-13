@@ -1,5 +1,4 @@
 import 'package:ahmedabad_brts_amts/data/responsemodels/add_favourite_response.dart';
-import 'package:ahmedabad_brts_amts/data/responsemodels/add_route_response.dart';
 
 abstract class SearchRouteState {}
 
