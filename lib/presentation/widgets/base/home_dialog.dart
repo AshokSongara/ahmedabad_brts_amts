@@ -10,23 +10,19 @@ import 'package:get/get.dart';
 class MyDialog extends StatelessWidget {
   final DataFare?   data;
   final DataSearch? data2;
-  final bool isLoading;
+  //final bool isLoading;
   final Function() onCancel;
   final Function() onProceed;
   final String? startName;
   final String? endName;
 
-  MyDialog({required this.data, required this.isLoading, required this.onCancel, required this.onProceed, this.data2, this.startName, this.endName});
+  MyDialog({required this.data, required this.onCancel, required this.onProceed, this.data2, this.startName, this.endName});
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Colors.white,
-      content: isLoading
-          ? Center(
-        child: CircularProgressIndicator(),
-      )
-          : Container(
+      content: Container(
         height: 100.h,
             child: Column(
               children: [

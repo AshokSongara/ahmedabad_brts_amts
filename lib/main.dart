@@ -177,6 +177,9 @@ void main() async {
   );
 }
 
+bool syncButtonPressed1 = false;
+bool syncButtonPressed2 = false;
+
 class MyApp extends StatefulWidget {
   @override
   State<MyApp> createState() => _MyAppState();
@@ -184,6 +187,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool isConnected = false;
+
 
   @override
   void initState() {
@@ -205,6 +209,8 @@ class _MyAppState extends State<MyApp> {
       });
     }
   }
+
+
 
 
 

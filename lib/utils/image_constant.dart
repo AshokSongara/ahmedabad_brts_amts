@@ -69,6 +69,7 @@ class ImageConstant {
   static const String pending = 'assets/images/pending.svg';
 
   static const String iMapImage = 'assets/images/ic_map_image.png';
+  static const String refresh = 'assets/images/refresh.png';
 
 
   //Temp Images

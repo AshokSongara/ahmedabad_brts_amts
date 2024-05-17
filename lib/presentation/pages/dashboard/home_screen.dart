@@ -38,13 +38,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:move_to_background/move_to_background.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:share/share.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 
 import '../../../data/responseModels/quick_link_internal_model.dart';
 import '../../../data/responsemodels/brts_stop_respons_model.dart';
+import '../../../main.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -66,16 +69,19 @@ class _HomeScreenState extends State<HomeScreen> {
   String? selectedLanguage;
   String userName = "Guest User";
   static const platform = MethodChannel('nativeChannel');
-  bool isLoading = false;
   String? startCode;
   String? endCode;
   DateTime? ctime;
+  String latestAndroidVersion = "";
+  String latestIOSVersion = "";
+  String currentAppVersion = "";
 
 
 
   @override
   void initState() {
     super.initState();
+    if(Platform.isAndroid)getVersionInfo();
 
     Future.delayed(const Duration(milliseconds: 100), () {
       ThemeService().switchTheme(isAmts);
@@ -91,6 +97,71 @@ class _HomeScreenState extends State<HomeScreen> {
     Loader.show(context);
     setQuickLinks();
   }
+  getVersionInfo(){
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+      String appName = packageInfo.appName;
+      String packageName = packageInfo.packageName;
+      String version = packageInfo.version;
+      String buildNumber = packageInfo.buildNumber;
+      setState(() {
+        currentAppVersion = version;
+      });
+      print(currentAppVersion);
+    });
+
+    fetchLatestVersion();
+
+
+  }
+  Future<void> fetchLatestVersion() async {
+    final response = await http.get(Uri.parse('https://www.transportapp.co.in/Common/appVersions'));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      setState(() {
+        latestAndroidVersion = data['data']['androidVersion'];
+        latestIOSVersion = data['data']['iosVersion'];
+      });
+    }
+    if(currentAppVersion != latestAndroidVersion && Platform.isAndroid)_showUpdateDialog();
+
+
+    else {
+    }
+  }
+
+  void _showUpdateDialog(){
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return WillPopScope(
+          onWillPop: () async => false, // Prevents dialog from closing when back button is pressed
+          child: AlertDialog(
+            title: Text('New version available'),
+            content: Text('A new version of the app is available. Please update to continue using the app.'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Update'),
+                onPressed: () {
+                  _launchURL(Uri.parse("https://play.google.com/store/apps/details?id=com.ahmedabad_brts_amts.ahmedabad_brts_amts"));
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _launchURL(Uri url) async {
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
 
   Future<SearchRouteResponse> fetchData() async {
     final url = "https://www.transportapp.co.in/Route/BRTS/plan/start/${newFromSelectedStation?.stationCode
@@ -107,9 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void openDialogBox() async {
-    setState(() {
-      isLoading = true;
-    });
+
 
     final searchResponse = await fetchData();
     if(searchResponse.data!.length == 0){
@@ -145,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final fareResponse = await fetchData2();
 
     setState(() {
-      isLoading = false;
+
       showDialog(
         context: context,
         builder: (context) => MyDialog(
@@ -153,13 +222,13 @@ class _HomeScreenState extends State<HomeScreen> {
           data2: searchResponse.data!.length != 0 ? searchResponse.data![0] : null,
           startName: newFromSelectedStation?.stopName.toString(),
           endName: newToSelectedStation?.stopName.toString(),
-          isLoading: isLoading,
           onCancel: () {
             Navigator.of(context).pop();
           },
           onProceed: () {
             AppConstant.nameData.isEmpty ?
-            Get.toNamed(RouteHelper.getSplashRoute())  : Get.toNamed(
+            Get.toNamed(RouteHelper.getSplashRoute())  :
+            Get.toNamed(
                 RouteHelper.getPassengerDetailsRoute(
                   startCode ?? "",
                   endCode ?? "",
@@ -641,7 +710,7 @@ class _HomeScreenState extends State<HomeScreen> {
               FocusScope.of(context).unfocus();
           }
         }, builder: (context, state) {
-          return WillPopScope(
+          return  WillPopScope(
             onWillPop: () async {
               if (_scaffoldKey.currentState?.isEndDrawerOpen == true) {
                 // If the drawer is open, close it
@@ -784,57 +853,90 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 //  if (brtsRoutesResponseModel != null)
-                    GestureDetector(
-                      onTap: () async {
-                        routeData = await Get.toNamed(
-                            RouteHelper.getSearchRouteScreenRoute(
-                                selectedLanguage ?? "", "",isAmts ? "AMTS" : "BRTS" ),
-                            arguments: [brtsRoutesResponseModel, isAmts])
-                        as RouteData;
-                        setState(() {});
-                      },
-                      child: Container(
-                        margin: const EdgeInsets.only(
-                            left: Dimensions.dp24,
-                            right: Dimensions.dp24,
-                            top: Dimensions.dp26),
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 14),
-                        decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(Dimensions.dp10),
-                          ),
-                        ),
-                        child: GestureDetector(
+                    Row(
+                      children: [
+
+                        GestureDetector(
                           onTap: () async {
                             routeData = await Get.toNamed(
                                 RouteHelper.getSearchRouteScreenRoute(
-                                    selectedLanguage ?? "", "",isAmts ? "AMTS" : "BRTS"),
+                                    selectedLanguage ?? "", "",isAmts ? "AMTS" : "BRTS" ),
                                 arguments: [brtsRoutesResponseModel, isAmts])
                             as RouteData;
                             setState(() {});
                           },
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(ImageConstant.iSearch,
-                                  height: 20, width: 20),
-                              const SizedBox(
-                                width: 14,
+                          child: Container(
+                            width: 330.w,
+                            margin:  EdgeInsets.only(
+                                left: Dimensions.dp24,
+                                right: Dimensions.dp20.w,
+                                top: Dimensions.dp26),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 10.0, horizontal: 14),
+                            decoration: const BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(Dimensions.dp10),
                               ),
-                              Text(
-                                AppLocalizations.of(context)
-                                        ?.translate("searchbusroutenumber") ??
-                                    "",
-                                style: satoshiRegular.copyWith(
-                                    fontSize: Dimensions.dp13.sp,
-                                    fontWeight: FontWeight.w700,
-                                    color: AppColors.lightGray),
-                              )
-                            ],
+                            ),
+                            child: GestureDetector(
+                              onTap: () async {
+                                routeData = await Get.toNamed(
+                                    RouteHelper.getSearchRouteScreenRoute(
+                                        selectedLanguage ?? "", "",isAmts ? "AMTS" : "BRTS"),
+                                    arguments: [brtsRoutesResponseModel, isAmts])
+                                as RouteData;
+                                setState(() {});
+                              },
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(ImageConstant.iSearch,
+                                      height: 20, width: 20),
+                                  const SizedBox(
+                                    width: 14,
+                                  ),
+                                  Text(
+                                    AppLocalizations.of(context)
+                                            ?.translate("searchbusroutenumber") ??
+                                        "",
+                                    style: satoshiRegular.copyWith(
+                                        fontSize: Dimensions.dp13.sp,
+                                        fontWeight: FontWeight.w700,
+                                        color: AppColors.lightGray),
+                                  )
+                                ],
+                              ),
+                            ),
                           ),
                         ),
-                      ),
+                        GestureDetector(
+                          onTap: (){
+                            Loader.show(context);
+                            syncButtonPressed1 = true;
+                            syncButtonPressed2 = true;
+                            BlocProvider.of<HomeScreenBloc>(context).add(
+                                GetAvailableStopsEvent(StopRequestModel(stopType: isAmts ? 2 : 1)));
+                            BlocProvider.of<HomeScreenBloc>(context).add(
+                                GetAvailableRoutesEvent(RoutesRequestModel(stopType: isAmts ? 2 : 1)));
+
+                            showCustomSnackBar(
+                                'Data Refreshed Successfully',
+                                context,
+                                isError: false);
+
+
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 25.h),
+                            child: Image.asset(
+                              ImageConstant.refresh,
+                              height: Dimensions.dp25.sp,
+                              width: Dimensions.dp25.sp,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
                   const SizedBox(
                     height: Dimensions.dp25,
@@ -1172,7 +1274,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ?.translate("quick_book_ticket") ??
                                     "",
                                 width: MediaQuery.of(context).size.width,
-                                onPressed: () {
+                                onPressed: () async {
                                   if(newFromSelectedStation == null || newToSelectedStation == null){
                                     showCustomSnackBar(
                                         "Please Select Source & Destination Station",
@@ -1186,7 +1288,71 @@ class _HomeScreenState extends State<HomeScreen> {
                                         isError: true);
                                   }
                                   else{
-                                    openDialogBox();
+
+                                    Loader.show(context);
+                                    //openDialogBox();
+
+                                    // setState(() {
+                                    //   isLoading = true;
+                                    // });
+
+                                    final searchResponse = await fetchData();
+                                    if(searchResponse.data!.length == 0){
+
+                                      setState(() {
+                                        startCode = newFromSelectedStation?.stationCode
+                                            .toString();
+                                        endCode = newToSelectedStation?.stationCode
+                                            .toString();
+                                      });
+
+                                    }
+                                    else {
+                                      startCode = searchResponse.data![0].routeDetails![0].startStopCode;
+                                      endCode =
+                                      searchResponse.data![0].interChanges!.isEmpty ? searchResponse.data![0]
+                                          .routeDetails![0].endStopCode ?? "" : searchResponse.data![0]
+                                          .routeDetails![searchResponse.data![0].routeDetails!.length - 1]
+                                          .endStopCode
+                                          .toString();
+                                    }
+
+                                    Future<FareResponse> fetchData2() async {
+                                      final url = "https://www.transportapp.co.in/fare/BRTS/startStop/${startCode}/endStop/${endCode}";
+                                      final response = await http.get(Uri.parse(url));
+                                      if (response.statusCode == 200) {
+                                        return FareResponse.fromJson(jsonDecode(response.body));
+                                      } else {
+                                        throw Exception('Failed to load data');
+                                      }
+                                    }
+
+                                    final fareResponse = await fetchData2();
+
+                                   Loader.hide();
+
+                                    AppConstant.nameData.isEmpty ?
+                                    Get.toNamed(RouteHelper.getSplashRoute())  :
+                                    Get.toNamed(
+                                        RouteHelper.getPassengerDetailsRoute(
+                                            startCode ?? "",
+                                            endCode ?? "",
+                                            "",
+                                            "BRTS",
+                                            getFare(fareResponse.data?.adult ?? 0)
+
+                                        ),
+                                        arguments: [
+                                          searchResponse.data!.length != 0 ? searchResponse.data![0].routeDetails![0].startStopName : newFromSelectedStation?.stopName.toString(),
+                                          searchResponse.data!.length != 0 ? searchResponse.data![0].interChanges!.isEmpty ? searchResponse.data![0].routeDetails![0].endStopName ?? "" :  searchResponse.data![0].routeDetails![searchResponse.data![0].routeDetails!.length - 1].endStopName ?? ""
+                                              "" : newToSelectedStation?.stopName.toString(),
+                                          "",
+                                          ""
+                                        ]);
+
+
+
+
 
                                   }
                                 },
@@ -1197,6 +1363,39 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: Dimensions.dp53,
                               ),
                             ),
+                            // Container(
+                            //   margin: const EdgeInsets.only(
+                            //       left: Dimensions.dp10,
+                            //       right: Dimensions.dp10,
+                            //       top: Dimensions.dp14),
+                            //   child: CustomButton(
+                            //     color: Theme.of(context).primaryColor,
+                            //     text: AppLocalizations.of(context)
+                            //         ?.translate("refresh_data") ??
+                            //         "",
+                            //     width: MediaQuery.of(context).size.width,
+                            //     onPressed: () {
+                            //       Loader.show(context);
+                            //       syncButtonPressed1 = true;
+                            //       syncButtonPressed2 = true;
+                            //       BlocProvider.of<HomeScreenBloc>(context).add(
+                            //           GetAvailableStopsEvent(StopRequestModel(stopType: isAmts ? 2 : 1)));
+                            //       BlocProvider.of<HomeScreenBloc>(context).add(
+                            //           GetAvailableRoutesEvent(RoutesRequestModel(stopType: isAmts ? 2 : 1)));
+                            //
+                            //       showCustomSnackBar(
+                            //           'Data Refreshed Successfully',
+                            //           context,
+                            //           isError: false);
+                            //
+                            //     },
+                            //     style: satoshiRegular.copyWith(
+                            //         fontSize: 20.sp,
+                            //         fontWeight: FontWeight.w700,
+                            //         color: Colors.white),
+                            //     height: Dimensions.dp53,
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),

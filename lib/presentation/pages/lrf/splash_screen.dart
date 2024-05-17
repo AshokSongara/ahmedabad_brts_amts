@@ -1,3 +1,5 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/language/language_cubit.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/dashboard/home_screen.dart';
@@ -13,9 +15,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:location/location.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../utils/image_constant.dart';
+import 'package:http/http.dart' as http;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -29,10 +34,17 @@ class _SplashScreenState extends State<SplashScreen> {
   bool showLocationPermissionDialog = true;
   late ThemeData themeData;
   bool isLocationPermissionDialogShown = false;
+  String latestAndroidVersion = "";
+  String latestIOSVersion = "";
+  String currentAppVersion = "";
+
 
   @override
   void initState() {
     super.initState();
+    if(Platform.isAndroid) getVersionInfo();
+    //fetchLatestVersion();
+   // if(currentAppVersionAndroid != latestAndroidVersion)_showUpdateDialog();
     if (Globals.isLocationPermissionDialogShown) {
       _showLocationPermissionDialog();
       Globals.isLocationPermissionDialogShown = false;
@@ -61,6 +73,23 @@ class _SplashScreenState extends State<SplashScreen> {
     // } else {
     //   _getLocationPermission();
     // }
+  }
+
+  Future<void> fetchLatestVersion() async {
+    final response = await http.get(Uri.parse('https://www.transportapp.co.in/Common/appVersions'));
+
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> data = json.decode(response.body);
+      setState(() {
+        latestAndroidVersion = data['data']['androidVersion'];
+        latestIOSVersion = data['data']['iosVersion'];
+      });
+    }
+    if(currentAppVersion != latestAndroidVersion && Platform.isAndroid)_showUpdateDialog();
+
+
+    else {
+    }
   }
 
   @override
@@ -104,6 +133,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   style: satoshiRegular,
                 ),
               ),
+
               const SizedBox(
                 height: Dimensions.dp25,
               ),
@@ -127,17 +157,17 @@ class _SplashScreenState extends State<SplashScreen> {
                     imagePath: ImageConstant.iMobile,
                     menuTitle: "Login with Mobile No."),
               ),
-              const SizedBox(
-                height: 16,
-              ),
-              GestureDetector(
-                onTap: () {
-                  Get.offNamed(RouteHelper.getDashboardRoute());
-                },
-                child: const RoundContainerWidget(
-                    imagePath: ImageConstant.iUser,
-                    menuTitle: "Login as Guest"),
-              ),
+              // const SizedBox(
+              //   height: 16,
+              // ),
+              // GestureDetector(
+              //   onTap: () {
+              //     Get.offNamed(RouteHelper.getDashboardRoute());
+              //   },
+              //   child: const RoundContainerWidget(
+              //       imagePath: ImageConstant.iUser,
+              //       menuTitle: "Login as Guest"),
+              // ),
               const SizedBox(
                 height: Dimensions.dp25,
               ),
@@ -165,7 +195,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ),
               SizedBox(
-                height: Dimensions.dp20.h,
+                height: Dimensions.dp40.h,
               ),
               Expanded(
                 child: Container(
@@ -187,7 +217,7 @@ class _SplashScreenState extends State<SplashScreen> {
                                 left: Dimensions.dp30, right: Dimensions.dp30),
                             child: Image.asset(ImageConstant.iCombineLogo)),
                         SizedBox(
-                          height: Dimensions.dp50.h,
+                          height: Dimensions.dp10.h.h,
                         ),
                         Text(
                           "By creating an account, I accept App’s ",
@@ -271,6 +301,38 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
+  void _showUpdateDialog(){
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return WillPopScope(
+          onWillPop: () async => false, // Prevents dialog from closing when back button is pressed
+          child: AlertDialog(
+            title: Text('New version available'),
+            content: Text('A new version of the app is available. Please update to continue using the app.'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('Update'),
+                onPressed: () {
+                  _launchURL(Uri.parse("https://play.google.com/store/apps/details?id=com.ahmedabad_brts_amts.ahmedabad_brts_amts"));
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void _launchURL(Uri url) async {
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
 
   getMemberID() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -283,6 +345,23 @@ class _SplashScreenState extends State<SplashScreen> {
       Get.offAll(HomeScreen());
     }
   }
+
+   getVersionInfo(){
+     PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+       String appName = packageInfo.appName;
+       String packageName = packageInfo.packageName;
+       String version = packageInfo.version;
+       String buildNumber = packageInfo.buildNumber;
+       setState(() {
+         currentAppVersion = version;
+       });
+       print(currentAppVersion);
+     });
+
+     fetchLatestVersion();
+
+
+   }
 }
 
 // void _getLocationPermission() async {

@@ -30,6 +30,8 @@ import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../main.dart';
+
 class UserRepositoryImpl implements UserRepository {
   final ApiClient apiClient;
   final SharedPreferences sharedPreferences;
@@ -173,11 +175,12 @@ class UserRepositoryImpl implements UserRepository {
       AppConstant.getStops + "${body.stopType}",
     );
     if (body.stopType == 1) {
-      if (brtsData == null || brtsData.data == null || brtsData.data!.isEmpty) {
+      if (brtsData == null || brtsData.data == null || brtsData.data!.isEmpty|| syncButtonPressed1 == true) {
         print("response.body ${response.body}");
         BrtsStopResponseModel stopResponseModel =
             BrtsStopResponseModel.fromJson(response.body);
         getLocalBrtsStopData().put("key", stopResponseModel);
+        syncButtonPressed1 = false;
 
         return brtsBox.get("key");
       } else {
@@ -188,11 +191,12 @@ class UserRepositoryImpl implements UserRepository {
         return brtsBox.get("key");
       }
     } else {
-      if (amtsData == null || amtsData.data == null || amtsData.data!.isEmpty) {
+      if (amtsData == null || amtsData.data == null || amtsData.data!.isEmpty|| syncButtonPressed1 == true) {
         print("response.body ${response.body}");
         BrtsStopResponseModel stopResponseModel =
             BrtsStopResponseModel.fromJson(response.body);
         getLocalAmtsStopData().put("key", stopResponseModel);
+        syncButtonPressed1 = false;
 
         return amtsBox.get("key");
       } else {
@@ -216,11 +220,12 @@ class UserRepositoryImpl implements UserRepository {
       AppConstant.getRoutes + "${body.stopType}",
     );
     if (body.stopType == 1) {
-      if (brtsData == null || brtsData.data == null || brtsData.data!.isEmpty) {
+      if (brtsData == null || brtsData.data == null || brtsData.data!.isEmpty|| syncButtonPressed2 == true) {
         print("getRoutes response.body ${response.body}");
         BrtsRoutesResponseModel stopResponseModel =
             BrtsRoutesResponseModel.fromJson(response.body);
         getLocalBrtsRoutesData().put("key", stopResponseModel);
+        syncButtonPressed2 = false;
 
         return brtsBox.get("key");
       } else {
@@ -231,11 +236,12 @@ class UserRepositoryImpl implements UserRepository {
         return brtsBox.get("key");
       }
     } else {
-      if (amtsData == null || amtsData.data == null || amtsData.data!.isEmpty) {
+      if (amtsData == null || amtsData.data == null || amtsData.data!.isEmpty|| syncButtonPressed2 == true) {
         print("getRoutes response.body ${response.body}");
         BrtsRoutesResponseModel stopResponseModel =
             BrtsRoutesResponseModel.fromJson(response.body);
         getLocalAmtsRoutesData().put("key", stopResponseModel);
+        syncButtonPressed2 = false;
 
         return amtsBox.get("key");
       } else {

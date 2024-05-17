@@ -47,6 +47,7 @@
   "complaint" : "Complaint",
   "complaint_history" : "Complaint History",
   "tnc" : "Terms and Condition",
-  "quick_book_ticket" : "Quick Book Ticket"
+  "quick_book_ticket" : "Quick Book Ticket",
+  "refresh_data" : "Refresh Data"
 
 }

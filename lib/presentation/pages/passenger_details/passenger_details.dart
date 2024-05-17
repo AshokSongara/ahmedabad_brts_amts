@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:ahmedabad_brts_amts/core/loader/overylay_loader.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/payment_request.dart';
+import 'package:ahmedabad_brts_amts/data/responsemodels/payment_new_response.dart';
 import 'package:ahmedabad_brts_amts/helper/route_helper.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/discount/discount_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/discount/discount_event.dart';
@@ -10,6 +11,7 @@ import 'package:ahmedabad_brts_amts/presentation/blocs/discount/discount_state.d
 import 'package:ahmedabad_brts_amts/presentation/blocs/payment/payment_bloc.dart';
 import 'package:ahmedabad_brts_amts/presentation/blocs/payment/payment_event.dart';
 import 'package:ahmedabad_brts_amts/data/requestmodels/json_request.dart';
+import 'package:ahmedabad_brts_amts/presentation/pages/payment_details/new_payment_details_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/payment_details/payment_details_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/pages/pending_screen/pending_screen.dart';
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_button.dart';
@@ -17,6 +19,7 @@ import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_snackbar.da
 import 'package:ahmedabad_brts_amts/presentation/widgets/base/custom_toolbar.dart';
 import 'package:ahmedabad_brts_amts/utils/app_colors.dart';
 import 'package:ahmedabad_brts_amts/utils/app_constants.dart';
+import 'package:ahmedabad_brts_amts/utils/app_util.dart';
 import 'package:ahmedabad_brts_amts/utils/dimensions.dart';
 import 'package:ahmedabad_brts_amts/utils/image_constant.dart';
 import 'package:ahmedabad_brts_amts/utils/styles.dart';
@@ -60,8 +63,8 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   String? serviceTypee;
   List<UpiObject> appNamesList = [];
   UpiObject? selectedPackageName;
-  bool areButtonsVisible = false;
-  bool areupiappsvisible = false;
+ // bool areButtonsVisible = false;
+ // bool areupiappsvisible = false;
   String? discount;
 
   PhonepeRequest? phonepeRequest;
@@ -70,6 +73,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   bool appOpen = false;
   String discountCode = '';
   bool isLoading = false;
+  String showFare = "";
 
   @override
   initState() {
@@ -77,6 +81,10 @@ class _PassengerDetailsState extends State<PassengerDetails> {
 
     // initPlatformState();
     list = Get.arguments as List<String?>;
+    print(widget.fare);
+    setState(() {
+      showFare = widget.fare ?? "";
+    });
 
     getMemberID();
   }
@@ -97,12 +105,41 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     token = prefs.getString(AppConstant.accessToken) ?? "";
     if (token.isNotEmpty) {
       getData();
+      getUpiList();
     }
   }
 
   getData() {
     BlocProvider.of<DiscountBloc>(context).add(const GetDiscountEvent());
   }
+
+  getUpiList() async {
+    List<UpiObject> upiAppsList = [];
+    List<dynamic> upiAppsList2 = [];
+    if (Platform.isAndroid) {
+      var values = await GetUPI.apps();
+      upiAppsList = values.data;
+      appNamesList.clear();
+      upiAppsList.forEach((element) {
+        appNamesList.add(UpiObject(
+            name: element.name,
+            packageName: element.packageName,
+            icon: element.icon));
+      });
+    }
+    else if (Platform.isIOS) {
+            var valueIos = await GetUPI.iosApps();
+            upiAppsList2 = valueIos;
+            upiAppsList2.forEach((element) {
+              appNamesList.add(UpiObject(
+                  name: element.name,
+                  packageName: element.packageName,
+                  icon: element.icon));
+            });
+          }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -150,16 +187,36 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                           Radius.circular(Dimensions.dp10),
                         ),
                       ),
-                      child: Row(
+                      child: Column(
                         children: [
-                          getSourceDestination(list[0] ?? "",
-                              "${DateFormat('dd MMM yyyy').format(DateTime.now())}, ${list[2]}"),
-                          Expanded(
-                            flex: 1,
-                            child: SvgPicture.asset(ImageConstant.iArrowRight),
+                          Row(
+                            children: [
+                              getSourceDestination(list[0] ?? "",
+                                  "${DateFormat('dd MMM yyyy').format(DateTime.now())}, ${list[2]}"),
+                              Expanded(
+                                flex: 1,
+                                child: SvgPicture.asset(ImageConstant.iArrowRight),
+                              ),
+                              getSourceDestination(list[1] ?? "",
+                                  "${DateFormat('dd MMM yyyy').format(DateTime.now())}, ${list[3]}")
+                            ],
                           ),
-                          getSourceDestination(list[1] ?? "",
-                              "${DateFormat('dd MMM yyyy').format(DateTime.now())}, ${list[3]}")
+                          SizedBox(height: 10.h,),
+                          Center(child:  RichText(
+                            text: TextSpan(
+                              text: "Fare  ",
+                              style: satoshiRegular.copyWith(
+                                  fontSize: 14.5.sp, color: AppColors.darkGray),
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text:"₹${formatString(showFare)}",
+                                    style: satoshiRegularSmall.copyWith(
+                                        fontWeight: FontWeight.w700,
+                                        fontSize: 19.sp,
+                                        color: AppColors.darkGray)),
+                              ],
+                            ),
+                          ),)
                         ],
                       ),
                     ),
@@ -224,307 +281,330 @@ class _PassengerDetailsState extends State<PassengerDetails> {
                     //     ],
                     //   ),
                     // ),
-                    ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: state.discountResponse.data?.length,
-                        itemBuilder: (context, index) {
-                          return SingleChildScrollView(
-                            child: Container(
-                              margin: const EdgeInsets.only(
-                                  left: Dimensions.dp24,
-                                  right: Dimensions.dp24,
-                                  top: Dimensions.dp15),
-                              decoration: const BoxDecoration(
-                                color: Colors.white,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColors.gray6E8EE7,
-                                    blurRadius: 5.0,
-                                  ),
-                                ],
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(Dimensions.dp10),
-                                ),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.only(
-                                    top: 15, right: 18, left: 18),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          state.discountResponse.data![index]
-                                                  .catPassSubCateName ??
-                                              "",
-                                          style: satoshiRegular.copyWith(
-                                              fontSize: Dimensions.dp16.sp,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.darkGray),
-                                        ),
-                                        InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              discount = state
-                                                      .discountResponse
-                                                      .data![index].discountTypeCode ??
-                                                  "";
-                                              areButtonsVisible =
-                                                  !areButtonsVisible;
-                                            });
-                                            // if (selectedOption == "PhonePe") {
-                                            //   apiCall(state
-                                            //           .discountResponse
-                                            //           .data![index]
-                                            //           .discountTypeCode ??
-                                            //       "",'');
-                                            // } else {
-                                            //   Get.toNamed(RouteHelper
-                                            //       .getPaymentDetailsRoute(
-                                            //           widget.sourceStopId ?? "",
-                                            //           widget.destinationStopId ??
-                                            //               "",
-                                            //           state
-                                            //                   .discountResponse
-                                            //                   .data![index]
-                                            //                   .discountTypeCode ??
-                                            //               "",
-                                            //           "",
-                                            //           "",
-                                            //           "",
-                                            //           "",
-                                            //           widget.routeCode ?? "",
-                                            //           widget.serviceType ?? "",
-                                            //           "Payment"));
-                                            // }
-                                          },
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 8, horizontal: 15),
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(
-                                                    Dimensions.dp5,
-                                                  ),
-                                                ),
-                                                border: Border.all(
-                                                    color: Theme.of(context)
-                                                        .primaryColor)),
-                                            child: Text("Book Ticket",
-                                                style: satoshiRegular.copyWith(
-                                                    fontSize:
-                                                        Dimensions.dp15.sp,
-                                                    fontWeight: FontWeight.w500,
-                                                    color: Theme.of(context)
-                                                        .primaryColor)),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          );
-                        }),
-                    SizedBox(
-                      height: 18.h,
+                    SizedBox(height: 20.h,),
+
+
+                    // Code hidden from below
+                    // ListView.builder(
+                    //     shrinkWrap: true,
+                    //     itemCount: state.discountResponse.data?.length,
+                    //     itemBuilder: (context, index) {
+                    //       return SingleChildScrollView(
+                    //         child: Container(
+                    //           margin: const EdgeInsets.only(
+                    //               left: Dimensions.dp24,
+                    //               right: Dimensions.dp24,
+                    //               top: Dimensions.dp15),
+                    //           decoration: const BoxDecoration(
+                    //             color: Colors.white,
+                    //             boxShadow: [
+                    //               BoxShadow(
+                    //                 color: AppColors.gray6E8EE7,
+                    //                 blurRadius: 5.0,
+                    //               ),
+                    //             ],
+                    //             borderRadius: BorderRadius.all(
+                    //               Radius.circular(Dimensions.dp10),
+                    //             ),
+                    //           ),
+                    //           child: Padding(
+                    //             padding: const EdgeInsets.only(
+                    //                 top: 15, right: 18, left: 18),
+                    //             child: Column(
+                    //               children: [
+                    //                 Row(
+                    //                   mainAxisAlignment:
+                    //                       MainAxisAlignment.spaceBetween,
+                    //                   children: [
+                    //                     Text(
+                    //                       state.discountResponse.data![index]
+                    //                               .catPassSubCateName ??
+                    //                           "",
+                    //                       style: satoshiRegular.copyWith(
+                    //                           fontSize: Dimensions.dp16.sp,
+                    //                           fontWeight: FontWeight.w500,
+                    //                           color: AppColors.darkGray),
+                    //                     ),
+                    //                     InkWell(
+                    //                       onTap: () async{
+                    //                         setState(() {
+                    //                           discount = state
+                    //                                   .discountResponse
+                    //                                   .data![index].discountTypeCode ??
+                    //                               "";
+                    //                           // areButtonsVisible =
+                    //                           //     !areButtonsVisible;
+                    //                         });
+                    //
+                    //
+                    //
+                    //                         List<UpiObject> upiAppsList = [];
+                    //                         List<dynamic> upiAppsList2 = [];
+                    //                         if(Platform.isAndroid) {
+                    //                           var values = await GetUPI.apps();
+                    //                           upiAppsList = values.data;
+                    //                           appNamesList.clear();
+                    //                           upiAppsList.forEach((element) {
+                    //                             appNamesList.add(UpiObject(
+                    //                                 name: element.name,
+                    //                                 packageName: element.packageName,
+                    //                                 icon: element.icon));
+                    //                           });
+                    //                         }
+                    //                         else if (Platform.isIOS) {
+                    //                           //Write Ios code here
+                    //                           var valueIos = await GetUPI.iosApps();
+                    //                           upiAppsList2 = valueIos;
+                    //                           upiAppsList2.forEach((element) {
+                    //                             appNamesList.add(UpiObject(
+                    //                                 name: element.name,
+                    //                                 packageName: element.packageName,
+                    //                                 icon: element.icon));
+                    //                           });
+                    //                         }
+                    //
+                    //                         // setState(() {
+                    //                         //   areupiappsvisible = !areupiappsvisible;
+                    //                         // });
+                    //                         // if (selectedOption == "PhonePe") {
+                    //                         //   apiCall(state
+                    //                         //           .discountResponse
+                    //                         //           .data![index]
+                    //                         //           .discountTypeCode ??
+                    //                         //       "",'');
+                    //                         // } else {
+                    //                         //   Get.toNamed(RouteHelper
+                    //                         //       .getPaymentDetailsRoute(
+                    //                         //           widget.sourceStopId ?? "",
+                    //                         //           widget.destinationStopId ??
+                    //                         //               "",
+                    //                         //           state
+                    //                         //                   .discountResponse
+                    //                         //                   .data![index]
+                    //                         //                   .discountTypeCode ??
+                    //                         //               "",
+                    //                         //           "",
+                    //                         //           "",
+                    //                         //           "",
+                    //                         //           "",
+                    //                         //           widget.routeCode ?? "",
+                    //                         //           widget.serviceType ?? "",
+                    //                         //           "Payment"));
+                    //                         // }
+                    //                       },
+                    //                       child: Container(
+                    //                         padding: const EdgeInsets.symmetric(
+                    //                             vertical: 8, horizontal: 15),
+                    //                         decoration: BoxDecoration(
+                    //                             borderRadius:
+                    //                                 const BorderRadius.all(
+                    //                               Radius.circular(
+                    //                                 Dimensions.dp5,
+                    //                               ),
+                    //                             ),
+                    //                             border: Border.all(
+                    //                                 color: Theme.of(context)
+                    //                                     .primaryColor)),
+                    //                         child: Text("Book Ticket",
+                    //                             style: satoshiRegular.copyWith(
+                    //                                 fontSize:
+                    //                                     Dimensions.dp15.sp,
+                    //                                 fontWeight: FontWeight.w500,
+                    //                                 color: Theme.of(context)
+                    //                                     .primaryColor)),
+                    //                       ),
+                    //                     )
+                    //                   ],
+                    //                 ),
+                    //                 const SizedBox(
+                    //                   height: 10,
+                    //                 ),
+                    //               ],
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       );
+                    //     }),
+                    // SizedBox(
+                    //   height: 18.h,
+                    // ),
+
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 18.w),
+                      child: Text("How would you want to pay?",
+                          style: satoshiRegular.copyWith(
+                              fontSize: Dimensions.dp16.sp,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black)),
                     ),
 
-                    Visibility(
-                      visible: areButtonsVisible,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 18.w),
-                        child: Text("How would you want to pay?",
-                            style: satoshiRegular.copyWith(
-                                fontSize: Dimensions.dp16.sp,
-                                fontWeight: FontWeight.w700,
-                                color: Colors.black)),
-                      ),
-                    ),
+                    // if(widget.serviceType == "BRTS")     GestureDetector(
+                    //   onTap: () async {
+                    //     List<UpiObject> upiAppsList = [];
+                    //     List<dynamic> upiAppsList2 = [];
+                    //     if(Platform.isAndroid) {
+                    //       var values = await GetUPI.apps();
+                    //       upiAppsList = values.data;
+                    //       appNamesList.clear();
+                    //       upiAppsList.forEach((element) {
+                    //         appNamesList.add(UpiObject(
+                    //             name: element.name,
+                    //             packageName: element.packageName,
+                    //             icon: element.icon));
+                    //       });
+                    //     }
+                    //     else if (Platform.isIOS) {
+                    //       //Write Ios code here
+                    //       var valueIos = await GetUPI.iosApps();
+                    //       upiAppsList2 = valueIos;
+                    //       upiAppsList2.forEach((element) {
+                    //         appNamesList.add(UpiObject(
+                    //             name: element.name,
+                    //             packageName: element.packageName,
+                    //             icon: element.icon));
+                    //       });
+                    //     }
+                    //
+                    //     // setState(() {
+                    //     //   areupiappsvisible = !areupiappsvisible;
+                    //     // });
+                    //   },
+                    //   child: Container(
+                    //     width: Get.width,
+                    //     height: 50.h,
+                    //     margin:  EdgeInsets.only(
+                    //         left: Dimensions.dp24,
+                    //         right: Dimensions.dp24,
+                    //         top: Dimensions.dp10),
+                    //     decoration:  BoxDecoration(
+                    //       color: Theme.of(context).primaryColor,
+                    //       boxShadow: [
+                    //         BoxShadow(
+                    //           color: AppColors.gray6E8EE7,
+                    //           blurRadius: 5.0,
+                    //         ),
+                    //       ],
+                    //       borderRadius: BorderRadius.all(
+                    //         Radius.circular(Dimensions.dp10),
+                    //       ),
+                    //     ),
+                    //     child: Center(
+                    //       child: Text("Pay via UPI apps",
+                    //           style: satoshiRegular.copyWith(
+                    //               fontSize: Dimensions.dp18.sp,
+                    //               fontWeight: FontWeight.w700,
+                    //               color: Colors.white)),
+                    //     ),
+                    //   ),
+                    // ),
+                     Column(
+                       mainAxisAlignment: MainAxisAlignment.center,
+                       children: <Widget>[
+                         // Display buttons using ElevatedButton
+                         for (UpiObject upiObject in appNamesList)
+                           GestureDetector(
+                             onTap: () {
+                               onButtonPressed(upiObject);
+                             },
+                             child: Container(
+                               width: Get.width,
+                               height: 70.h,
+                               margin: const EdgeInsets.only(
+                                   left: Dimensions.dp24,
+                                   right: Dimensions.dp24,
+                                   top: Dimensions.dp10),
+                               decoration: const BoxDecoration(
+                                 color: Colors.white,
+                                 boxShadow: [
+                                   BoxShadow(
+                                     color: AppColors.gray6E8EE7,
+                                     blurRadius: 5.0,
+                                   ),
+                                 ],
+                                 borderRadius: BorderRadius.all(
+                                   Radius.circular(Dimensions.dp10),
+                                 ),
+                               ),
+                               child: Row(
+                                 children: [
+                                   SizedBox(
+                                     width: 10.w,
+                                   ),
+                                   Container(
+                                     width: 25,
+                                     height: 25,
+                                     decoration: BoxDecoration(
+                                       shape: BoxShape.circle,
+                                     ),
+                                     child: (Image.memory(
+                                         decodeIcon(upiObject.icon))),
+                                   ),
+                                   SizedBox(
+                                     width: 15.w,
+                                   ),
+                                   Container(
+                                     width: 280.w,
+                                     child: Text(upiObject.name,
+                                         style: satoshiRegular.copyWith(
+                                             fontSize: Dimensions.dp20.sp,
+                                             fontWeight: FontWeight.w500,
+                                             color: Theme.of(context)
+                                                 .primaryColor)),
+                                   ),
+                                 SvgPicture.asset(ImageConstant.iRightGrayArrow,color: Theme.of(context).primaryColor,)
+                                 ],
+                               ),
+                             ),
+                           ),
+                         // Display selected package name if needed
+                         // if (selectedPackageName != null)
+                         //   Text(
+                         //       'Selected Package Name: ${selectedPackageName?.name ?? ''}'),
+                       ],
+                     ),
 
-                    if(widget.serviceType == "BRTS")     Visibility(
-                      visible: areButtonsVisible,
-                      child: GestureDetector(
-                        onTap: () async {
-                          List<UpiObject> upiAppsList = [];
-                          List<dynamic> upiAppsList2 = [];
-                          if(Platform.isAndroid) {
-                            var values = await GetUPI.apps();
-                            upiAppsList = values.data;
-                            appNamesList.clear();
-                            upiAppsList.forEach((element) {
-                              appNamesList.add(UpiObject(
-                                  name: element.name,
-                                  packageName: element.packageName,
-                                  icon: element.icon));
-                            });
-                          }
-                          else if (Platform.isIOS) {
-                            //Write Ios code here
-                            var valueIos = await GetUPI.iosApps();
-                            upiAppsList2 = valueIos;
-                            upiAppsList2.forEach((element) {
-                              appNamesList.add(UpiObject(
-                                  name: element.name,
-                                  packageName: element.packageName,
-                                  icon: element.icon));
-                            });
-                          }
-
-                          setState(() {
-                            areupiappsvisible = !areupiappsvisible;
-                          });
-                        },
-                        child: Container(
-                          width: Get.width,
-                          height: 50.h,
-                          margin: const EdgeInsets.only(
-                              left: Dimensions.dp24,
-                              right: Dimensions.dp24,
-                              top: Dimensions.dp10),
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.gray6E8EE7,
-                                blurRadius: 5.0,
-                              ),
-                            ],
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(Dimensions.dp10),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text("Pay via UPI apps",
-                                style: satoshiRegular.copyWith(
-                                    fontSize: Dimensions.dp18.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: Theme.of(context).primaryColor)),
-                          ),
-                        ),
-                      ),
-                    ),
-                     Visibility(
-                      visible: areupiappsvisible,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          // Display buttons using ElevatedButton
-                          for (UpiObject upiObject in appNamesList)
-                            GestureDetector(
-                              onTap: () {
-                                onButtonPressed(upiObject);
-                              },
-                              child: Container(
-                                width: Get.width,
-                                height: 50.h,
-                                margin: const EdgeInsets.only(
-                                    left: Dimensions.dp24,
-                                    right: Dimensions.dp24,
-                                    top: Dimensions.dp10),
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: AppColors.gray6E8EE7,
-                                      blurRadius: 5.0,
-                                    ),
-                                  ],
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(Dimensions.dp10),
-                                  ),
-                                ),
-                                child: Row(
-                                  children: [
-                                    SizedBox(
-                                      width: 10.w,
-                                    ),
-                                    Container(
-                                      width: 22,
-                                      height: 22,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: (Image.memory(
-                                          decodeIcon(upiObject.icon))),
-                                    ),
-                                    SizedBox(
-                                      width: 15.w,
-                                    ),
-                                    Container(
-                                      width: 280.w,
-                                      child: Text(upiObject.name,
-                                          style: satoshiRegular.copyWith(
-                                              fontSize: Dimensions.dp15.sp,
-                                              fontWeight: FontWeight.w500,
-                                              color: Theme.of(context)
-                                                  .primaryColor)),
-                                    ),
-                                  SvgPicture.asset(ImageConstant.iRightGrayArrow,color: Theme.of(context).primaryColor,)
-                                  ],
-                                ),
-                              ),
-                            ),
-                          // Display selected package name if needed
-                          // if (selectedPackageName != null)
-                          //   Text(
-                          //       'Selected Package Name: ${selectedPackageName?.name ?? ''}'),
-                        ],
-                      ),
-                    ),
-
-                   Visibility(
-                      child: GestureDetector(
-                        child: Container(
-                          width: Get.width,
-                          height: 50.h,
-                          margin: const EdgeInsets.only(
-                              left: Dimensions.dp24,
-                              right: Dimensions.dp24,
-                              top: Dimensions.dp10),
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.gray6E8EE7,
-                                blurRadius: 5.0,
-                              ),
-                            ],
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(Dimensions.dp10),
-                            ),
-                          ),
-                          child: Center(
-                            child: Text("Pay via Fiserv",
-                                style: satoshiRegular.copyWith(
-                                    fontSize: Dimensions.dp18.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: Theme.of(context).primaryColor)),
-                          ),
-                        ),
-                        onTap: () {
-                          Get.toNamed(RouteHelper.getPaymentDetailsRoute(
-                              widget.sourceStopId ?? "",
-                              widget.destinationStopId ?? "",
-                              discount ?? "",
-                              "",
-                              "",
-                              "",
-                              "",
-                              widget.routeCode ?? "",
-                              widget.serviceType ?? "",
-                              "Payment"));
-                        },
-                      ),
-                      visible: areButtonsVisible,
-                    ),
+                   GestureDetector(
+                     child: Container(
+                       width: Get.width,
+                       height: 70.h,
+                       margin: const EdgeInsets.only(
+                           left: Dimensions.dp24,
+                           right: Dimensions.dp24,
+                           top: Dimensions.dp10),
+                       decoration: const BoxDecoration(
+                         color: Colors.white,
+                         boxShadow: [
+                           BoxShadow(
+                             color: AppColors.gray6E8EE7,
+                             blurRadius: 5.0,
+                           ),
+                         ],
+                         borderRadius: BorderRadius.all(
+                           Radius.circular(Dimensions.dp10),
+                         ),
+                       ),
+                       child: Center(
+                         child: Text("Pay via Fiserv",
+                             style: satoshiRegular.copyWith(
+                                 fontSize: Dimensions.dp20.sp,
+                                 fontWeight: FontWeight.w500,
+                                 color: Theme.of(context).primaryColor)),
+                       ),
+                     ),
+                     onTap: () {
+                       Get.toNamed(RouteHelper.getPaymentDetailsRoute(
+                           widget.sourceStopId ?? "",
+                           widget.destinationStopId ?? "",
+                           "01",
+                           "",
+                           "",
+                           "",
+                           "",
+                           widget.routeCode ?? "",
+                           widget.serviceType ?? "",
+                           "Payment"));
+                     },
+                   ),
                     // Expanded(
                     //   child: Align(
                     //     alignment: Alignment.bottomCenter,
@@ -640,7 +720,8 @@ class _PassengerDetailsState extends State<PassengerDetails> {
         upiAppsList.forEach((element) {
           appNamesList.add(element);
         });
-      }else if (Platform.isIOS) {
+      }
+      else if (Platform.isIOS) {
        //Write Ios code here
         var valueIos = await GetUPI.iosApps();
         upiAppsList2 = valueIos;
@@ -661,18 +742,87 @@ class _PassengerDetailsState extends State<PassengerDetails> {
         print('Failed 2: ${e.message}');
       }
 
-      // List<String> sepratedList = result.split("&");
-      // String paymentStatus = '';
-      // sepratedList.forEach((element) {
-      //   if (element.isCaseInsensitiveContainsAny('Status')) {
-      //     List<String> splitStatus = element.split("=");
-      //     paymentStatus = splitStatus.last;
-      //     print("$paymentStatus 3");
+      // Map<String, String> apiData = {"merchantTransactionId": merchantTxnId!};
+      // var apiUrl = 'https://www.transportapp.co.in/AddTransaction/BookedTicket';
+      // // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+      // // String? token = sharedPreferences.getString(AppConstant.accessToken);
+      //
+      // Map<String, String> headers = {
+      //   'Content-Type': 'application/json',
+      //   "Authorization": "Bearer $token"
+      // };
+      // setState(() {
+      //   isLoading = true;
+      // });
+      //
+      // Future.delayed(Duration(seconds: 0), () async{
+      //
+      //   var response2 = await http.post(Uri.parse(apiUrl),
+      //       headers:headers,
+      //       body: jsonEncode(apiData));
+      //
+      //   if (response2.statusCode == 200) {
+      //     Map<String, dynamic> responseJson = jsonDecode(response.body);
+      //     PaymentNewResponse paymentResponse = PaymentNewResponse.fromJson(responseJson);
+      //
+      //     if (paymentResponse.data != null) {
+      //       print('Transaction Status: ${paymentResponse.data!.transactionStatus}');
+      //       print('Ticket No: ${paymentResponse.data!.ticketNo}');
+      //     } else {
+      //       print('Response data is null');
+      //     }
+      //     setState(() {
+      //       isLoading = false;
+      //     });
+      //
+      //
+      //     if (paymentResponse.data!.transactionStatus == 'PAYMENT_SUCCESS') {
+      //       showCustomSnackBar("SUCCESS", context, isError: false);
+      //       // print("$sepratedList Separated List");
+      //
+      //       appNamesList.clear();
+      //
+      //
+      //       Get.to(() => NewPaymentDetailsScreen(
+      //         qrCode: paymentResponse.data!.qrCode ?? "",
+      //         serviceType: paymentResponse.data!.qrCode ?? "",
+      //         ticketNo: paymentResponse.data!.qrCode ?? "",
+      //         passName: paymentResponse.data!.qrCode ?? "",
+      //         sourceStopName: paymentResponse.data!.qrCode ?? "",
+      //         destinationStopName: paymentResponse.data!.qrCode ?? "",
+      //         routeCode: paymentResponse.data!.qrCode ?? "",
+      //         ticketType: paymentResponse.data!.qrCode ?? "",
+      //         fareAmt: paymentResponse.data!.qrCode ?? "",
+      //         length: paymentResponse.data!.qrCode ?? "",
+      //       ));
+      //     }
+      //     else if (paymentResponse.data!.transactionStatus == null || paymentResponse.data!.transactionStatus == 'PAYMENT_PENDING'
+      //     ) {
+      //       showCustomSnackBar("PENDING", context, isError: false);
+      //
+      //       Get.to(() => PendingScreen());
+      //       appNamesList.clear();
+      //     }
+      //     else if (paymentResponse.data!.transactionStatus == 'PAYMENT_ERROR') {
+      //       showCustomSnackBar("FAILED", context, isError: false);
+      //
+      //       appNamesList.clear();
+      //       Get.toNamed(RouteHelper.transactionStatus);
+      //     }
+      //     else {
+      //       print("pending case else");
+      //       Get.to(() => PendingScreen());
+      //     }
       //   }
+      //
       //   else {
-      //     print("failed 1");
+      //     appNamesList.clear();
+      //     print('Request failed with status code: ${response2.statusCode}');
       //   }
       // });
+
+
+
 
       Map<String, String> apiData = {"merchantTransactionId": merchantTxnId!};
       var apiUrl = 'https://www.transportapp.co.in/PhonepePG/PayResponce';
@@ -688,7 +838,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
       });
 
 
-      Future.delayed(Duration(seconds: 3), () async{
+      Future.delayed(Duration(seconds: 0), () async{
 
       var response2 = await http.post(Uri.parse(apiUrl),
           headers:headers,
@@ -805,6 +955,8 @@ class _PassengerDetailsState extends State<PassengerDetails> {
       });
       }
       else {
+        print(token);
+
 
         throw Exception('Failed to load data');
       }
@@ -818,11 +970,11 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     setState(() {});
   }
 
-  void onRadioChanged(UpiObject? value) {
-    // Update the selected package name
-    selectedPackageName = value;
-    apiCall(discountCode, selectedPackageName?.packageName ?? '');
-  }
+  // void onRadioChanged(UpiObject? value) {
+  //   // Update the selected package name
+  //   selectedPackageName = value;
+  //   apiCall(discountCode, selectedPackageName?.packageName ?? '');
+  // }
 
   // Future<void> _showBottomSheet() async {
   //   List<UpiObject> upiAppsList = [];
@@ -869,10 +1021,15 @@ class _PassengerDetailsState extends State<PassengerDetails> {
       selectedPackageName = upiObject;
     });
 
-    apiCall(discountCode, selectedPackageName?.packageName ?? '');
+    apiCall("01", selectedPackageName?.packageName ?? '');
   }
 
   Uint8List decodeIcon(String base64String) {
     return base64Decode(base64String);
+  }
+
+  String formatString(String value) {
+    double number = double.parse(value);
+    return (number % 1 == 0) ? number.toInt().toString() : value;
   }
 }

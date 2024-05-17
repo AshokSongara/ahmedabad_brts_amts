@@ -104,16 +104,16 @@ class _NotificationScreenState extends State<NotificationScreen> {
                                             color: AppColors.darkGray),
                                       ),
                                     ),
-                                    Align(
-                                      alignment: Alignment.topRight,
-                                      child: Text("08:15 PM",
-                                        textAlign: TextAlign.end,
-                                        style: satoshiSmall.copyWith(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: Dimensions.dp12,
-                                            color: AppColors.lightGray),
-                                      ),
-                                    ),
+                                    // Align(
+                                    //   alignment: Alignment.topRight,
+                                    //   child: Text("08:15 PM",
+                                    //     textAlign: TextAlign.end,
+                                    //     style: satoshiSmall.copyWith(
+                                    //         fontWeight: FontWeight.w500,
+                                    //         fontSize: Dimensions.dp12,
+                                    //         color: AppColors.lightGray),
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
                               );

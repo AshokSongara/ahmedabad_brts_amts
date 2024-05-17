@@ -140,39 +140,51 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
                           padding: const EdgeInsets.only(right: 43, left: 39),
                           children: [
                             getQuestionWidget("Title", Colors.red),
-                            TextField(
-                              controller: _title,
-                              style: satoshiRegular.copyWith(
-                                  fontSize: Dimensions.dp16.sp,
-                                  fontWeight: FontWeight.w300,
-                                  color: AppColors.darkGray),
-                              textAlign: TextAlign.start,
-                              keyboardType: TextInputType.text,
-                              onChanged: (value) {},
-                              decoration: InputDecoration(
-                                border: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                focusedBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                enabledBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                errorBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor)),
-                                disabledBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                hintStyle: satoshiRegular.copyWith(
+                            SizedBox(height: 10.h,),
+                            Container(
+                              height: 42.h,
+                              padding: EdgeInsets.only(left: 10.w),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Theme.of(context).primaryColor),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: TextField(
+
+                                controller: _title,
+                                style: satoshiRegular.copyWith(
                                     fontSize: Dimensions.dp16.sp,
                                     fontWeight: FontWeight.w300,
-                                    color: AppColors.lightGray),
+                                    color: AppColors.darkGray),
+                                textAlign: TextAlign.start,
+                                keyboardType: TextInputType.text,
+                                onChanged: (value) {},
+                                decoration: InputDecoration(
+                                  border: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  focusedBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  enabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).primaryColor)),
+                                  disabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  hintText: 'Enter title',
+                                  hintStyle: satoshiRegular.copyWith(
+                                      fontSize: Dimensions.dp16.sp,
+                                      fontWeight: FontWeight.w300,
+                                      color: AppColors.lightGray),
+                                ),
                               ),
                             ),
                             getQuestionWidget(
-                                "Incident occur date *", Colors.red),
+                                "Incident date *", Colors.red),
                             SizedBox(
                               height: 10.sp,
                             ),
@@ -198,7 +210,7 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
                                 ),
                               ),
                             ),
-                            getQuestionWidget("Incident occur time", Colors.red),
+                            getQuestionWidget("Incident time", Colors.red),
                             SizedBox(
                               height: 10.sp,
                             ),
@@ -261,67 +273,81 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: DropdownButton<String>(
-                                isExpanded: true,
-                                hint: Text(
-                                  'Tap to select category',
-                                  style: satoshiRegular.copyWith(
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                  isExpanded: true,
+                                  hint: Text(
+                                    'Tap to select category',
+                                    style: satoshiRegular.copyWith(
+                                        fontSize: Dimensions.dp16.sp,
+                                        fontWeight: FontWeight.w300,
+                                        color: AppColors.lightGray),
+                                  ),
+                                  value: selectedSubCategory,
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      selectedSubCategory = newValue;
+                                      selectedCategoryCode = categoryCodes[newValue!];
+                                    });
+                                  },
+                                  dropdownColor: Colors.white,
+                                  items: categoryCodes.keys.map<DropdownMenuItem<String>>((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(
+                                        value,
+                                        style: satoshiRegular.copyWith(
+                                            fontSize: Dimensions.dp18.sp,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.black),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                            getQuestionWidget("Bus Number", Colors.white),
+                            SizedBox(height: 10.h,),
+                            Container(
+                              height: 42.h,
+                              padding: EdgeInsets.only(left: 10.w),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Theme.of(context).primaryColor),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: TextField(
+
+                                controller: _busNumber,
+                                style: satoshiRegular.copyWith(
+                                    fontSize: Dimensions.dp16.sp,
+                                    fontWeight: FontWeight.w300,
+                                    color: AppColors.darkGray),
+                                textAlign: TextAlign.start,
+                                keyboardType: TextInputType.text,
+                                onChanged: (value) {},
+                                decoration: InputDecoration(
+                                  border: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  focusedBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  enabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).primaryColor)),
+                                  disabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  hintText: 'Enter bus number',
+                                  hintStyle: satoshiRegular.copyWith(
                                       fontSize: Dimensions.dp16.sp,
                                       fontWeight: FontWeight.w300,
                                       color: AppColors.lightGray),
                                 ),
-                                value: selectedSubCategory,
-                                onChanged: (String? newValue) {
-                                  setState(() {
-                                    selectedSubCategory = newValue;
-                                    selectedCategoryCode = categoryCodes[newValue!];
-                                  });
-                                },
-                                dropdownColor: Colors.white,
-                                items: categoryCodes.keys.map<DropdownMenuItem<String>>((String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(
-                                      value,
-                                      style: satoshiRegular.copyWith(
-                                          fontSize: Dimensions.dp18.sp,
-                                          fontWeight: FontWeight.w500,
-                                          color: AppColors.black),
-                                    ),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                            getQuestionWidget("Bus Number", Colors.white),
-                            TextField(
-                              controller: _busNumber,
-                              style: satoshiRegular.copyWith(
-                                  fontSize: Dimensions.dp16.sp,
-                                  fontWeight: FontWeight.w300,
-                                  color: AppColors.darkGray),
-                              textAlign: TextAlign.start,
-                              keyboardType: TextInputType.text,
-                              onChanged: (value) {},
-                              decoration: InputDecoration(
-                                border: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                focusedBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                enabledBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                errorBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor)),
-                                disabledBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                hintStyle: satoshiRegular.copyWith(
-                                    fontSize: Dimensions.dp16.sp,
-                                    fontWeight: FontWeight.w300,
-                                    color: AppColors.lightGray),
                               ),
                             ),
                             getQuestionWidget(
@@ -407,100 +433,133 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
                               },
                             ),
                             getQuestionWidget("Landmark", Colors.white),
-                            TextField(
-                              controller: _landmark,
-                              style: satoshiRegular.copyWith(
-                                  fontSize: Dimensions.dp16.sp,
-                                  fontWeight: FontWeight.w300,
-                                  color: AppColors.darkGray),
-                              textAlign: TextAlign.start,
-                              keyboardType: TextInputType.text,
-                              onChanged: (value) {},
-                              decoration: InputDecoration(
-                                border: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                focusedBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                enabledBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                errorBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor)),
-                                disabledBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                hintStyle: satoshiRegular.copyWith(
+                            SizedBox(height: 10.h,),
+                            Container(
+                              height: 42.h,
+                              padding: EdgeInsets.only(left: 10.w),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Theme.of(context).primaryColor),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: TextField(
+                                controller: _landmark,
+                                style: satoshiRegular.copyWith(
                                     fontSize: Dimensions.dp16.sp,
                                     fontWeight: FontWeight.w300,
-                                    color: AppColors.lightGray),
+                                    color: AppColors.darkGray),
+                                textAlign: TextAlign.start,
+                                keyboardType: TextInputType.text,
+                                onChanged: (value) {},
+                                decoration: InputDecoration(
+                                  border: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  focusedBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  enabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).primaryColor)),
+                                  disabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  hintText: 'Enter landmark',
+                                  hintStyle: satoshiRegular.copyWith(
+                                      fontSize: Dimensions.dp16.sp,
+                                      fontWeight: FontWeight.w300,
+                                      color: AppColors.lightGray),
+                                ),
                               ),
                             ),
                             getQuestionWidget(
                                 "Incident Description", Colors.white),
-                            TextField(
-                              controller: _incidentDescription,
-                              style: satoshiRegular.copyWith(
-                                  fontSize: Dimensions.dp16.sp,
-                                  fontWeight: FontWeight.w300,
-                                  color: AppColors.darkGray),
-                              textAlign: TextAlign.start,
-                              keyboardType: TextInputType.text,
-                              onChanged: (value) {},
-                              decoration: InputDecoration(
-                                border: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                focusedBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                enabledBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                errorBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor)),
-                                disabledBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                hintStyle: satoshiRegular.copyWith(
+                            SizedBox(height: 10.h,),
+                            Container(
+                              height: 42.h,
+                              padding: EdgeInsets.only(left: 10.w),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Theme.of(context).primaryColor),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: TextField(
+                                controller: _incidentDescription,
+                                style: satoshiRegular.copyWith(
                                     fontSize: Dimensions.dp16.sp,
                                     fontWeight: FontWeight.w300,
-                                    color: AppColors.lightGray),
+                                    color: AppColors.darkGray),
+                                textAlign: TextAlign.start,
+                                keyboardType: TextInputType.text,
+                                onChanged: (value) {},
+                                decoration: InputDecoration(
+                                  border: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  focusedBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  enabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).primaryColor)),
+                                  disabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  hintText: 'Enter incident description',
+                                  hintStyle: satoshiRegular.copyWith(
+                                      fontSize: Dimensions.dp16.sp,
+                                      fontWeight: FontWeight.w300,
+                                      color: AppColors.lightGray),
+                                ),
                               ),
                             ),
                             getQuestionWidget("Mobile number", Colors.red),
-                            TextField(
-                              controller: _mobileNumber,
-                              style: satoshiRegular.copyWith(
-                                  fontSize: Dimensions.dp16.sp,
-                                  fontWeight: FontWeight.w300,
-                                  color: AppColors.darkGray),
-                              textAlign: TextAlign.start,
-                              keyboardType: TextInputType.number,
-                              onChanged: (value) {},
-                              decoration: InputDecoration(
-                                border: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                focusedBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                enabledBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                errorBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Theme.of(context).primaryColor)),
-                                disabledBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: AppColors.lightGray)),
-                                hintStyle: satoshiRegular.copyWith(
+                            SizedBox(height: 10.h,),
+                            Container(
+                              height: 42.h,
+                              padding: EdgeInsets.only(left: 10.w),
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Theme.of(context).primaryColor),
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: TextField(
+                                controller: _mobileNumber,
+                                style: satoshiRegular.copyWith(
                                     fontSize: Dimensions.dp16.sp,
                                     fontWeight: FontWeight.w300,
-                                    color: AppColors.lightGray),
+                                    color: AppColors.darkGray),
+                                textAlign: TextAlign.start,
+                                keyboardType: TextInputType.number,
+                                onChanged: (value) {},
+                                decoration: InputDecoration(
+                                  border: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  focusedBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  enabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  errorBorder: UnderlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Theme.of(context).primaryColor)),
+                                  disabledBorder: const UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: AppColors.lightGray)),
+                                  hintText: 'Enter mobile number',
+                                  hintStyle: satoshiRegular.copyWith(
+                                      fontSize: Dimensions.dp16.sp,
+                                      fontWeight: FontWeight.w300,
+                                      color: AppColors.lightGray),
+                                ),
                               ),
                             ),
                             SizedBox(
