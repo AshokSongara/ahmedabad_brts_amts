@@ -87,6 +87,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
   @override
   void initState() {
     super.initState();
+    print(widget.endTime);
     fetchFare(widget.startRouteCode!,widget.endRouteCode!,widget.routeCode!);
     fetchData(widget.routeCode!,widget.originStart!,);
     fetchRoute(widget.routeCode!, widget.startStopSequenceNumber!, widget.endStopSequenceNumber!);
@@ -561,7 +562,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                                        else {Get.toNamed(
                                             RouteHelper.getPassengerDetailsRoute(
                                                 widget.startRouteCode ?? "",
-                                                 widget.serviceType == "BRTS" ? widget.endRouteCode ?? "" : widget.originEnd ?? "" ,widget.routeCode ?? "",widget.serviceType ?? "",getFare(fareData!.adult ?? 0)),
+                                                 widget.serviceType == "BRTS" ? widget.endRouteCode ?? "" : widget.originEnd ?? "" ,widget.routeCode ?? "",widget.serviceType ?? "",getFare(fareData!.adult ?? 0),"h"),
                                             arguments: [
                                               widget.startRouteName,
                                               widget.endRouteName,
@@ -579,7 +580,7 @@ class _RouteDetailScreenState extends State<RouteDetailScreen> {
                             Get.toNamed(
                                 RouteHelper.getPassengerDetailsRoute(
                                      widget.startRouteCode ?? "",
-                                     widget.serviceType == "BRTS" ? widget.endRouteCode ?? "" : widget.originEnd ?? "" ,widget.routeCode ?? "",widget.serviceType ?? "",getFare(fareData!.adult ?? 0) ),
+                                     widget.serviceType == "BRTS" ? widget.endRouteCode ?? "" : widget.originEnd ?? "" ,widget.routeCode ?? "",widget.serviceType ?? "",getFare(fareData!.adult ?? 0) , "h"),
                                 arguments: [
                                   widget.startRouteName,
                                   widget.endRouteName,

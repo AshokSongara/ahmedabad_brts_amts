@@ -106,7 +106,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                       .data![index]
                                       .ticketNo
                                       .toString() ??
-                                      "") ) : state.bookingListResponse.data![index].txnStatus == "PENDING" ? showCustomSnackBar(
+                                      "") ) : state.bookingListResponse.data![index].txnStatus == "PAYMENT_PENDING" ? showCustomSnackBar(
                                       "Pending Transaction... !",
                                       context,
                                       isError: true):
@@ -177,7 +177,7 @@ class _BookingScreenState extends State<BookingScreen> {
                                               ),
                                             ),
                                           ) :
-                                          state.bookingListResponse.data![index].txnStatus == "PENDING" ?
+                                          state.bookingListResponse.data![index].txnStatus == "PAYMENT_PENDING" ?
                                           SizedBox(
                                             child: Text(
                                               "Transaction Pending",

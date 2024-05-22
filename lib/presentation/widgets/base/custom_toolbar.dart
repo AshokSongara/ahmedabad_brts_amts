@@ -48,7 +48,12 @@ class CustomToolbar extends StatelessWidget {
                 }else if (type == "Passenger") {
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil(RouteHelper.dashboard, (Route<dynamic> route) => false);
-                }else{
+                }
+                else if (type == "History") {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(RouteHelper.booking, (Route<dynamic> route) => false);
+                }
+                else{
                   Get.back();
                 }
               },

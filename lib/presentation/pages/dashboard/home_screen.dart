@@ -234,7 +234,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   endCode ?? "",
                    "",
                    "BRTS",
-                    getFare(fareResponse.data?.adult ?? 0)
+                    getFare(fareResponse.data?.adult ?? 0),
+                  "h"
 
                 ),
                 arguments: [
@@ -1339,7 +1340,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                             endCode ?? "",
                                             "",
                                             "BRTS",
-                                            getFare(fareResponse.data?.adult ?? 0)
+                                            getFare(fareResponse.data?.adult ?? 0),
+                                          "h"
 
                                         ),
                                         arguments: [

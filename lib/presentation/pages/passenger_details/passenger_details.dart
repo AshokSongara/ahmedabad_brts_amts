@@ -41,6 +41,7 @@ class PassengerDetails extends StatefulWidget {
       required this.destinationStopId,
       required this.routeCode,
       required this.serviceType,
+      required this.from,
       this.fare})
       : super(key: key);
 
@@ -49,6 +50,7 @@ class PassengerDetails extends StatefulWidget {
   final String? routeCode;
   final String? serviceType;
   final String? fare;
+  final String? from;
 
   @override
   _PassengerDetailsState createState() => _PassengerDetailsState();
@@ -105,7 +107,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     token = prefs.getString(AppConstant.accessToken) ?? "";
     if (token.isNotEmpty) {
       getData();
-      getUpiList();
+      if(widget.from== "h")getUpiList();
     }
   }
 
@@ -665,30 +667,27 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   }
 
   void apiCall(String discountType, String packageName) async {
-    // var value = await GetUPI.apps();
-    // print(value.data);
-    // upiAppsListAndroid = value.data;
 
+    setState(() {
+      isLoading = true;
+    });
     phonepeRequest = PhonepeRequest(
-        startStopCode: widget.sourceStopId,
-        endStopCode: widget.destinationStopId,
-        discountype: discountType,
-        routeCode: widget.routeCode,
-        routeType: widget.serviceType == "BRTS" ? 1 : 2,
-        deviceOS: Platform.isAndroid ? "ANDROID" : "IOS",
-        paymentInstrumentType: "UPI_INTENT",
-        targateApp: packageName);
+      startStopCode: widget.sourceStopId,
+      endStopCode: widget.destinationStopId,
+      discountype: discountType,
+      routeCode: widget.routeCode,
+      routeType: widget.serviceType == "BRTS" ? 1 : 2,
+      deviceOS: Platform.isAndroid ? "ANDROID" : "IOS",
+      paymentInstrumentType: "UPI_INTENT",
+      targateApp: packageName,
+    );
 
     String jsonStr = jsonEncode(phonepeRequest);
-
     String url = 'https://www.transportapp.co.in/PhonepePG/PayRequest';
-
-    // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    // String? token = sharedPreferences.getString(AppConstant.accessToken);
 
     Map<String, String> headers = {
       'Content-Type': 'application/json',
-      "Authorization": "Bearer $token"
+      "Authorization": "Bearer $token",
     };
 
     final response = await http.post(
@@ -698,270 +697,119 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     );
 
     if (response.statusCode == 200) {
-      appNamesList.clear();
+      setState(() {
+        isLoading = false;
+      });
+     // appNamesList.clear();
       print('Request successful! Response data:');
       print(response.body);
 
       final responseData = json.decode(response.body);
       print(responseData);
 
-      String? intentUrl =
-          responseData['data']['data']['instrumentResponse']['intentUrl'];
-      String? merchantTxnId =
-          responseData['data']['data']['merchantTransactionId'];
+      String? intentUrl = responseData['data']['data']['instrumentResponse']['intentUrl'];
+      String? merchantTxnId = responseData['data']['data']['merchantTransactionId'];
 
       print(merchantTxnId);
       List<UpiObject> upiAppsList = [];
       List<dynamic> upiAppsList2 = [];
 
-      if(Platform.isAndroid){
+      if (Platform.isAndroid) {
         var values = await GetUPI.apps();
         upiAppsList = values.data;
         upiAppsList.forEach((element) {
           appNamesList.add(element);
         });
-      }
-      else if (Platform.isIOS) {
-       //Write Ios code here
+      } else if (Platform.isIOS) {
         var valueIos = await GetUPI.iosApps();
         upiAppsList2 = valueIos;
         upiAppsList2.forEach((element) {
           appNamesList.add(element);
         });
       }
-      String result = '';
 
+      String result = '';
       try {
         var data = {"intentUrl": intentUrl, "packageName": packageName};
 
         MethodChannel channel = const MethodChannel('nativeChannel');
         result = await channel.invokeMethod('startPayment', data);
-        print('$result result');
-        appNamesList.clear();
+        print('$result resultttttt');
+      //  appNamesList.clear();
       } on PlatformException catch (e) {
+        //Get.to(PendingScreen());
         print('Failed 2: ${e.message}');
       }
 
-      // Map<String, String> apiData = {"merchantTransactionId": merchantTxnId!};
-      // var apiUrl = 'https://www.transportapp.co.in/AddTransaction/BookedTicket';
-      // // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-      // // String? token = sharedPreferences.getString(AppConstant.accessToken);
-      //
-      // Map<String, String> headers = {
-      //   'Content-Type': 'application/json',
-      //   "Authorization": "Bearer $token"
-      // };
-      // setState(() {
-      //   isLoading = true;
-      // });
-      //
-      // Future.delayed(Duration(seconds: 0), () async{
-      //
-      //   var response2 = await http.post(Uri.parse(apiUrl),
-      //       headers:headers,
-      //       body: jsonEncode(apiData));
-      //
-      //   if (response2.statusCode == 200) {
-      //     Map<String, dynamic> responseJson = jsonDecode(response.body);
-      //     PaymentNewResponse paymentResponse = PaymentNewResponse.fromJson(responseJson);
-      //
-      //     if (paymentResponse.data != null) {
-      //       print('Transaction Status: ${paymentResponse.data!.transactionStatus}');
-      //       print('Ticket No: ${paymentResponse.data!.ticketNo}');
-      //     } else {
-      //       print('Response data is null');
-      //     }
-      //     setState(() {
-      //       isLoading = false;
-      //     });
-      //
-      //
-      //     if (paymentResponse.data!.transactionStatus == 'PAYMENT_SUCCESS') {
-      //       showCustomSnackBar("SUCCESS", context, isError: false);
-      //       // print("$sepratedList Separated List");
-      //
-      //       appNamesList.clear();
-      //
-      //
-      //       Get.to(() => NewPaymentDetailsScreen(
-      //         qrCode: paymentResponse.data!.qrCode ?? "",
-      //         serviceType: paymentResponse.data!.qrCode ?? "",
-      //         ticketNo: paymentResponse.data!.qrCode ?? "",
-      //         passName: paymentResponse.data!.qrCode ?? "",
-      //         sourceStopName: paymentResponse.data!.qrCode ?? "",
-      //         destinationStopName: paymentResponse.data!.qrCode ?? "",
-      //         routeCode: paymentResponse.data!.qrCode ?? "",
-      //         ticketType: paymentResponse.data!.qrCode ?? "",
-      //         fareAmt: paymentResponse.data!.qrCode ?? "",
-      //         length: paymentResponse.data!.qrCode ?? "",
-      //       ));
-      //     }
-      //     else if (paymentResponse.data!.transactionStatus == null || paymentResponse.data!.transactionStatus == 'PAYMENT_PENDING'
-      //     ) {
-      //       showCustomSnackBar("PENDING", context, isError: false);
-      //
-      //       Get.to(() => PendingScreen());
-      //       appNamesList.clear();
-      //     }
-      //     else if (paymentResponse.data!.transactionStatus == 'PAYMENT_ERROR') {
-      //       showCustomSnackBar("FAILED", context, isError: false);
-      //
-      //       appNamesList.clear();
-      //       Get.toNamed(RouteHelper.transactionStatus);
-      //     }
-      //     else {
-      //       print("pending case else");
-      //       Get.to(() => PendingScreen());
-      //     }
-      //   }
-      //
-      //   else {
-      //     appNamesList.clear();
-      //     print('Request failed with status code: ${response2.statusCode}');
-      //   }
-      // });
-
-
-
-
       Map<String, String> apiData = {"merchantTransactionId": merchantTxnId!};
-      var apiUrl = 'https://www.transportapp.co.in/PhonepePG/PayResponce';
-      // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-      // String? token = sharedPreferences.getString(AppConstant.accessToken);
+      var apiUrl = 'https://www.transportapp.co.in/AddTransaction/BookedTicket';
 
-      Map<String, String> headers = {
-        'Content-Type': 'application/json',
-        "Authorization": "Bearer $token"
-      };
       setState(() {
         isLoading = true;
       });
 
-
-      Future.delayed(Duration(seconds: 0), () async{
-
       var response2 = await http.post(Uri.parse(apiUrl),
-          headers:headers,
+          headers: headers,
           body: jsonEncode(apiData));
 
       if (response2.statusCode == 200) {
-        var jsonResponse2 = json.decode(response2.body);
+        Map<String, dynamic> responseJson = jsonDecode(response2.body);
+        PaymentNewResponse paymentResponse = PaymentNewResponse.fromJson(responseJson);
 
-        var responseData2 = jsonResponse2['data'];
+        if (paymentResponse.data != null) {
+          print('Transaction Status: ${paymentResponse.data!.transactionStatus}');
+          print('Ticket No: ${paymentResponse.data!.ticketNo}');
+        } else {
+          Get.to(() => PendingScreen());
+          print('Response data is null');
+        }
 
-        var responceStatus = responseData2['responceStatus'];
-        var transactionId = responseData2['transactionId'];
-        var isResponceReceived = responseData2['isResponceReceived'];
         setState(() {
           isLoading = false;
         });
 
-        print('$responceStatus status');
-        if (responceStatus == 'PAYMENT_SUCCESS') {
+        if (paymentResponse.data!.transactionStatus == 'PAYMENT_SUCCESS') {
           showCustomSnackBar("SUCCESS", context, isError: false);
-         // print("$sepratedList Separated List");
-
           appNamesList.clear();
 
-          var paymentRequest2 = PaymentRequest2(
-              sourceStopId: widget.sourceStopId,
-              destinationStopId: widget.destinationStopId,
-              discountype: discountType,
-              txnStatus: responceStatus == "PAYMENT_SUCCESS" ? "SUCCESS" : "FAILED",
-              merchantId: "",
-              sourcecompanycode: widget.serviceType == "AMTS" ? "103" : "102",
-              destinationcompanycode:
-              widget.serviceType == "AMTS" ? "103" : "102",
-              fpTransactionId: "",
-              routeCode: widget.routeCode,
-              externalTxnId: "",
-              merchantTxnId: merchantTxnId,
-              transactionDateTime: "",
-              serviceType: widget.serviceType,
-              paymentType: 1,
-              paymentState: "",
-              pgServiceTransactionId: "",
-              pgTransactionId: "");
-
-          BlocProvider.of<PaymentBloc>(context).add(
-            GetQRCodeEvent(paymentRequest: paymentRequest2),
-          );
-
-          Get.to(() => PaymentDetailsScreen());
-        }
-        else if (responceStatus == null || responceStatus == 'PAYMENT_PENDING'
-        ) {
+          Get.to(() => NewPaymentDetailsScreen(
+            qrCode: paymentResponse.data!.qrCode ?? "",
+            serviceType: widget.serviceType ?? "",
+            ticketNo: paymentResponse.data!.ticketNo ?? "",
+            passName: paymentResponse.data!.passName ?? "",
+            sourceStopName: paymentResponse.data!.sourceStopName ?? "",
+            destinationStopName: paymentResponse.data!.destinationStopName ?? "",
+            routeCode: paymentResponse.data!.routeCode ?? "",
+            ticketType: paymentResponse.data!.ticketType ?? "",
+            fareAmt: paymentResponse.data!.fareAmt ?? "",
+            length:  "1",
+          ));
+        } else if (paymentResponse.data!.transactionStatus == null || paymentResponse.data!.transactionStatus == 'PAYMENT_PENDING') {
           showCustomSnackBar("PENDING", context, isError: false);
-
-          var paymentRequest2 = PaymentRequest2(
-              sourceStopId: widget.sourceStopId,
-              destinationStopId: widget.destinationStopId,
-              discountype: discountType,
-              txnStatus:"PENDING",
-              merchantId: "",
-              sourcecompanycode: widget.serviceType == "AMTS" ? "103" : "102",
-              destinationcompanycode:
-              widget.serviceType == "AMTS" ? "103" : "102",
-              fpTransactionId: "",
-              routeCode: widget.routeCode,
-              externalTxnId: "",
-              merchantTxnId: merchantTxnId,
-              transactionDateTime: "",
-              serviceType: widget.serviceType,
-              paymentType: 1,
-              paymentState: "",
-              pgServiceTransactionId: "",
-              pgTransactionId: "");
-
-          BlocProvider.of<PaymentBloc>(context).add(
-            GetQRCodeEvent(paymentRequest: paymentRequest2),
-          );
           Get.to(() => PendingScreen());
           appNamesList.clear();
-        }
-        else if (responceStatus == 'PAYMENT_ERROR') {
+        } else if (paymentResponse.data!.transactionStatus == 'PAYMENT_ERROR') {
           showCustomSnackBar("FAILED", context, isError: false);
-
-          var paymentRequest2 = PaymentRequest2(
-              sourceStopId: widget.sourceStopId,
-              destinationStopId: widget.destinationStopId,
-              discountype: discountType,
-              txnStatus:"FAILED",
-              merchantId: "",
-              sourcecompanycode: widget.serviceType == "AMTS" ? "103" : "102",
-              destinationcompanycode:
-              widget.serviceType == "AMTS" ? "103" : "102",
-              fpTransactionId: "",
-              routeCode: widget.routeCode,
-              externalTxnId: "",
-              merchantTxnId: merchantTxnId,
-              transactionDateTime: "",
-              serviceType: widget.serviceType,
-              paymentType: 1,
-              paymentState: "",
-              pgServiceTransactionId: "",
-              pgTransactionId: "");
-
-          BlocProvider.of<PaymentBloc>(context).add(
-            GetQRCodeEvent(paymentRequest: paymentRequest2),
-          );
           appNamesList.clear();
           Get.toNamed(RouteHelper.transactionStatus);
+        } else {
+          print("pending case else");
+          Get.to(() => PendingScreen());
         }
-      } else {
-        appNamesList.clear();
-        print('Request failed with status code: ${response2.statusCode}');
-      }
-      });
       }
       else {
-        print(token);
-
-
-        throw Exception('Failed to load data');
+        print('new pending');
+        Get.to(PendingScreen());
+        //appNamesList.clear();
+        print('Request failed with status code: ${response2.statusCode}');
       }
-
-
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      showCustomSnackBar("Please try again", context);
+      throw Exception('Failed to load data');
+    }
   }
 
   setPassengerData(int adultsCount, int kidsCount) {
@@ -1033,3 +881,134 @@ class _PassengerDetailsState extends State<PassengerDetails> {
     return (number % 1 == 0) ? number.toInt().toString() : value;
   }
 }
+
+
+// Map<String, String> apiData = {"merchantTransactionId": merchantTxnId!};
+// var apiUrl = 'https://www.transportapp.co.in/PhonepePG/PayResponce';
+// // SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+// // String? token = sharedPreferences.getString(AppConstant.accessToken);
+//
+// Map<String, String> headers = {
+//   'Content-Type': 'application/json',
+//   "Authorization": "Bearer $token"
+// };
+// setState(() {
+//   isLoading = true;
+// });
+//
+//
+// Future.delayed(Duration(seconds: 0), () async{
+//
+// var response2 = await http.post(Uri.parse(apiUrl),
+//     headers:headers,
+//     body: jsonEncode(apiData));
+//
+// if (response2.statusCode == 200) {
+//   var jsonResponse2 = json.decode(response2.body);
+//
+//   var responseData2 = jsonResponse2['data'];
+//
+//   var responceStatus = responseData2['responceStatus'];
+//   var transactionId = responseData2['transactionId'];
+//   var isResponceReceived = responseData2['isResponceReceived'];
+//   setState(() {
+//     isLoading = false;
+//   });
+//
+//   print('$responceStatus status');
+//   if (responceStatus == 'PAYMENT_SUCCESS') {
+//     showCustomSnackBar("SUCCESS", context, isError: false);
+//    // print("$sepratedList Separated List");
+//
+//     appNamesList.clear();
+//
+//     var paymentRequest2 = PaymentRequest2(
+//         sourceStopId: widget.sourceStopId,
+//         destinationStopId: widget.destinationStopId,
+//         discountype: discountType,
+//         txnStatus: responceStatus == "PAYMENT_SUCCESS" ? "SUCCESS" : "FAILED",
+//         merchantId: "",
+//         sourcecompanycode: widget.serviceType == "AMTS" ? "103" : "102",
+//         destinationcompanycode:
+//         widget.serviceType == "AMTS" ? "103" : "102",
+//         fpTransactionId: "",
+//         routeCode: widget.routeCode,
+//         externalTxnId: "",
+//         merchantTxnId: merchantTxnId,
+//         transactionDateTime: "",
+//         serviceType: widget.serviceType,
+//         paymentType: 1,
+//         paymentState: "",
+//         pgServiceTransactionId: "",
+//         pgTransactionId: "");
+//
+//     BlocProvider.of<PaymentBloc>(context).add(
+//       GetQRCodeEvent(paymentRequest: paymentRequest2),
+//     );
+//
+//     Get.to(() => PaymentDetailsScreen());
+//   }
+//   else if (responceStatus == null || responceStatus == 'PAYMENT_PENDING'
+//   ) {
+//     showCustomSnackBar("PENDING", context, isError: false);
+//
+//     var paymentRequest2 = PaymentRequest2(
+//         sourceStopId: widget.sourceStopId,
+//         destinationStopId: widget.destinationStopId,
+//         discountype: discountType,
+//         txnStatus:"PENDING",
+//         merchantId: "",
+//         sourcecompanycode: widget.serviceType == "AMTS" ? "103" : "102",
+//         destinationcompanycode:
+//         widget.serviceType == "AMTS" ? "103" : "102",
+//         fpTransactionId: "",
+//         routeCode: widget.routeCode,
+//         externalTxnId: "",
+//         merchantTxnId: merchantTxnId,
+//         transactionDateTime: "",
+//         serviceType: widget.serviceType,
+//         paymentType: 1,
+//         paymentState: "",
+//         pgServiceTransactionId: "",
+//         pgTransactionId: "");
+//
+//     BlocProvider.of<PaymentBloc>(context).add(
+//       GetQRCodeEvent(paymentRequest: paymentRequest2),
+//     );
+//     Get.to(() => PendingScreen());
+//     appNamesList.clear();
+//   }
+//   else if (responceStatus == 'PAYMENT_ERROR') {
+//     showCustomSnackBar("FAILED", context, isError: false);
+//
+//     var paymentRequest2 = PaymentRequest2(
+//         sourceStopId: widget.sourceStopId,
+//         destinationStopId: widget.destinationStopId,
+//         discountype: discountType,
+//         txnStatus:"FAILED",
+//         merchantId: "",
+//         sourcecompanycode: widget.serviceType == "AMTS" ? "103" : "102",
+//         destinationcompanycode:
+//         widget.serviceType == "AMTS" ? "103" : "102",
+//         fpTransactionId: "",
+//         routeCode: widget.routeCode,
+//         externalTxnId: "",
+//         merchantTxnId: merchantTxnId,
+//         transactionDateTime: "",
+//         serviceType: widget.serviceType,
+//         paymentType: 1,
+//         paymentState: "",
+//         pgServiceTransactionId: "",
+//         pgTransactionId: "");
+//
+//     BlocProvider.of<PaymentBloc>(context).add(
+//       GetQRCodeEvent(paymentRequest: paymentRequest2),
+//     );
+//     appNamesList.clear();
+//     Get.toNamed(RouteHelper.transactionStatus);
+//   }
+// } else {
+//   appNamesList.clear();
+//   print('Request failed with status code: ${response2.statusCode}');
+// }
+// });

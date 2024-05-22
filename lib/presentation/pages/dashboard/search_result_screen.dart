@@ -199,7 +199,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                                       state.searchRouteResponse.data![index].routeDetails!.length > 1 ? state.searchRouteResponse.data![index].routeDetails![1].routeCode ?? "" : "",
                                       state.searchRouteResponse.data![index].routeDetails!.length > 1 ? state.searchRouteResponse.data![index].routeDetails![1].startStopSequenceNumber.toString() : "",
                                       state.searchRouteResponse.data![index].routeDetails!.length > 1 ? state.searchRouteResponse.data![index].routeDetails![1].endStopSequenceNumber.toString() : "",
-                                      state.searchRouteResponse.data![index].endTime.toString(),
+                                      state.searchRouteResponse.data![index].endTime ?? "",
                                       state.searchRouteResponse.data![index].routeDetails![0].startStopSequenceNumber.toString(),
                                       state.searchRouteResponse.data![index].routeDetails![0].endStopSequenceNumber.toString(),
                                       state.searchRouteResponse.data![index].routeDetails![0].startStopCode ?? "",
@@ -232,7 +232,7 @@ class _SearchResultScreenState extends State<SearchResultScreen> {
                                             widget.startRoute ?? "",
                                             widget.endRoute ?? "",
                                              "",
-                                            "BRTS",""),
+                                            "BRTS","","h"),
                                         arguments: [
                                           widget.startRouteName,
                                           widget.endRouteName,

@@ -159,7 +159,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         onSubmit: () {},
                         capitalization: TextCapitalization.words,
                         divider: false,
-                        hintText: "abc",
+                        hintText: "Yash",
                       ),
                       const SizedBox(
                         height: Dimensions.dp20,
@@ -183,7 +183,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         onSubmit: () {},
                         capitalization: TextCapitalization.words,
                         divider: false,
-                        hintText: "xyz",
+                        hintText: "Patel",
                       ),
                       const SizedBox(
                         height: Dimensions.dp20,
@@ -206,7 +206,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         onSubmit: () {},
                         capitalization: TextCapitalization.words,
                         divider: false,
-                        hintText: "abcxyz@gmail.com",
+                        hintText: "yash123@gmail.com",
                       ),
                       const SizedBox(
                         height: Dimensions.dp20,
