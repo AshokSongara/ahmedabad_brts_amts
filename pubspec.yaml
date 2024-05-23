@@ -67,7 +67,6 @@ dependencies:
   move_to_background: ^1.0.2
   double_back_to_close_app: ^2.1.0
   package_info_plus: ^3.1.2
-  sentry_flutter: ^8.1.0
   upi_pay: ^1.0.1
 
 
