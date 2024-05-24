@@ -33,7 +33,8 @@ import 'package:get_upi/get_upi.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:upi_pay/upi_pay.dart';
+import 'package:upi_chooser/upi_apps.dart';
+import 'package:upi_chooser/upi_chooser.dart';
 
 class PassengerDetails extends StatefulWidget {
   const PassengerDetails(
@@ -66,6 +67,7 @@ class _PassengerDetailsState extends State<PassengerDetails> {
   String? serviceTypee;
   List<UpiObject> appNamesList = [];
   UpiObject? selectedPackageName;
+  final upiChooser = UpiChooser();
 
   // bool areButtonsVisible = false;
   // bool areupiappsvisible = false;
@@ -131,12 +133,11 @@ class _PassengerDetailsState extends State<PassengerDetails> {
             icon: element.icon));
       });
     } else if (Platform.isIOS) {
-      final List<ApplicationMeta> appMetaList =
-          await UpiPay.getInstalledUpiApplications();
-      appMetaList.forEach((element) {
+      List<UpiApps>? upiAppsData = await upiChooser.getUpiAppList();
+      upiAppsData.forEach((element) {
         appNamesList.add(UpiObject(
-            name: element.upiApplication.appName,
-            packageName: element.packageName,
+            name: element.displayName ?? "",
+            packageName: element.appUri ?? "",
             icon: ''));
       });
     }
@@ -733,12 +734,11 @@ class _PassengerDetailsState extends State<PassengerDetails> {
           appNamesList.add(element);
         });
       } else if (Platform.isIOS) {
-        final List<ApplicationMeta> appMetaList =
-            await UpiPay.getInstalledUpiApplications();
-        appMetaList.forEach((element) {
+        List<UpiApps>? upiAppsData = await upiChooser.getUpiAppList();
+        upiAppsData.forEach((element) {
           appNamesList.add(UpiObject(
-              name: element.upiApplication.appName,
-              packageName: element.packageName,
+              name: element.displayName ?? "",
+              packageName: element.appUri ?? "",
               icon: ''));
         });
       }
