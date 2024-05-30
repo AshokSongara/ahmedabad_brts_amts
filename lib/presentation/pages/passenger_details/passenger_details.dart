@@ -745,12 +745,21 @@ class _PassengerDetailsState extends State<PassengerDetails> {
 
       String result = '';
       try {
-        var data = {"intentUrl": intentUrl, "packageName": packageName};
+        if (Platform.isAndroid) {
+          var data = {"intentUrl": intentUrl, "packageName": packageName};
 
-        MethodChannel channel = const MethodChannel('nativeChannel');
-        result = await channel.invokeMethod('startPayment', data);
-        print('$result resultttttt');
-        //  appNamesList.clear();
+          MethodChannel channel = const MethodChannel('nativeChannel');
+          result = await channel.invokeMethod('startPayment', data);
+        } else {
+          String? paymentIntent = intentUrl?.replaceAll("://", "/");
+          var data = {
+            "intentUrl": packageName + paymentIntent!,
+            "packageName": packageName
+          };
+
+          MethodChannel channel = const MethodChannel('nativeChannel');
+          result = await channel.invokeMethod('startPayment', data);
+        }
       } on PlatformException catch (e) {
         //Get.to(PendingScreen());
         print('Failed 2: ${e.message}');
