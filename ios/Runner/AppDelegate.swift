@@ -18,7 +18,7 @@ import Flutter
               let data:[String:String] = args as![String:String]
               let url = URL(string : data["intentUrl"] ?? "")
               UIApplication.shared.open(url!);
-              result("Payment Response")
+              result("Payment successful")
           }
       }
         
